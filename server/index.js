@@ -3,9 +3,6 @@ const config = require('config');
 
 const manifest = {
   server: {},
-  connections: [{
-    port: 8000,
-  }],
   registrations: [{
     plugin: {
       register: 'good',
@@ -24,7 +21,12 @@ const manifest = {
       options: config.mongodb,
     },
   }, {
+    plugin: './users',
+  }, {
     plugin: './oauth',
+  }],
+  connections: [{
+    port: 8000,
   }],
 };
 
