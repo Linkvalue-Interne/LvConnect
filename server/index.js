@@ -29,11 +29,9 @@ const options = {
 };
 
 Glue.compose(manifest, options)
-  .then((server) => {
-    return server.start()
-      .then(() => {
-        console.log('hapi days!');
-      });
+  .then((server) => server.start())
+  .then(() => {
+    console.log('hapi days!');
   })
   .catch((err) => {
     console.error(err.stack);
