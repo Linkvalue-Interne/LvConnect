@@ -1,4 +1,5 @@
 const Glue = require('glue');
+const config = require('config');
 
 const manifest = {
   server: {},
@@ -18,6 +19,11 @@ const manifest = {
       },
     },
   }, {
+    plugin: {
+      register: './mongodb',
+      options: config.mongodb,
+    },
+  }, {
     plugin: './oauth',
   }],
 };
@@ -27,10 +33,7 @@ const options = {
 };
 
 Glue.compose(manifest, options)
-  .then(server => server.start())
-  .then(() => {
-    console.log('hapi days!');
-  })
+  .then(server => server.start().then(() => server.log('info', 'Server started')))
   .catch((err) => {
     console.error(err.stack);
     process.exit(1);
