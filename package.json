@@ -20,5 +20,9 @@
     "good": "^7.0.2",
     "good-console": "^6.1.2",
     "hapi": "^15.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^3.5.0",
+    "eslint-config-airbnb": "^11.1.0"
   }
 }
