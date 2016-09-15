@@ -1,5 +1,3 @@
-'use strict';
-
 const Glue = require('glue');
 
 const manifest = {
@@ -16,20 +14,20 @@ const manifest = {
             module: 'good-console',
             args: [{ log: '*', response: '*' }],
           }, 'stdout'],
-        }
-      }
-    }
+        },
+      },
+    },
   }, {
     plugin: './oauth',
-  }]
+  }],
 };
 
 const options = {
-  relativeTo: __dirname
+  relativeTo: __dirname,
 };
 
 Glue.compose(manifest, options)
-  .then((server) => server.start())
+  .then(server => server.start())
   .then(() => {
     console.log('hapi days!');
   })
