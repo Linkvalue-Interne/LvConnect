@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const applicationSchema = new mongoose.Schema({
   appId: String,
   appSecret: String,
-  redirectUri: String,
+  redirectUris: [String],
   allowedScopes: [String],
   allowedGrantTypes: [String],
 });
