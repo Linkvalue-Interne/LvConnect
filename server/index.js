@@ -3,6 +3,7 @@
 const Glue = require('glue');
 
 const manifest = {
+  server: {},
   connections: [{
     port: 8000,
   }],
@@ -12,7 +13,8 @@ const manifest = {
       options: {
         reporters: {
           consoleReporter: [{
-            module: 'good-console'
+            module: 'good-console',
+            args: [{ log: '*', response: '*' }],
           }, 'stdout'],
         }
       }
@@ -28,9 +30,10 @@ const options = {
 
 Glue.compose(manifest, options)
   .then((server) => {
-    server.start(() => {
-      console.log('hapi days!');
-    });
+    return server.start()
+      .then(() => {
+        console.log('hapi days!');
+      });
   })
   .catch((err) => {
     console.error(err.stack);

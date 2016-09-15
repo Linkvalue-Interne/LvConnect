@@ -1,5 +1,5 @@
-exports.register = () => {
-  return Promise.resolve();
+exports.register = (server, options, next) => {
+  next();
 };
 
 exports.register.attributes = {
