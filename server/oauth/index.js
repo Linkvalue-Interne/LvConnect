@@ -2,9 +2,23 @@ const moment = require('moment');
 const models = require('./models');
 const routes = require('./routes');
 
+const validScopes = [
+  'user:get',
+  'user:create',
+  'user:delete',
+  'user:modify',
+  'application:get',
+  'application:create',
+  'application:delete',
+  'application:modify',
+  'profile:get',
+  'profile:modify',
+];
+
 exports.register = (server, { accessTokenTTL, refreshTokenTTL }, next) => {
   server.expose('models', models);
   server.expose('accessTokenTTL', moment.duration(accessTokenTTL).seconds());
+  server.expose('validScopes', validScopes);
 
   const { AccessToken, RefreshToken, Application } = models;
 

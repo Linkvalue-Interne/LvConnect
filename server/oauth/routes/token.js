@@ -1,7 +1,12 @@
 const Joi = require('joi');
 const Boom = require('boom');
 
-const grantTypes = ['password', 'refresh_token', 'authorization_code'];
+const grantTypes = [
+  'password',
+  'refresh_token',
+  'authorization_code',
+  'client_credentials',
+];
 
 function errorFactory(error) {
   const err = Boom.badRequest();
@@ -41,6 +46,7 @@ function handlePassword(req, application) {
 
 function handleRefreshToken(req, application) {
   const { RefreshToken } = req.server.plugins.oauth.models;
+  const { validScopes } = req.server.plugins.oauth;
 
   return RefreshToken.findOne({
     token: req.payload.refresh_token,
@@ -78,7 +84,9 @@ module.exports = {
         refresh_token: Joi.alternatives().when('grant_type', { is: 'refresh_token', then: Joi.string().required() }),
         code: Joi.alternatives().when('grant_type', { is: 'authorization_code', then: Joi.string().required() }),
         redirect_uri: Joi.alternatives().when('grant_type', { is: 'authorization_code', then: Joi.string().required() }),
-        scope: Joi.alternatives().when('grant_type', { is: 'password', then: Joi.array().items(Joi.string()) }),
+        scope: Joi.array().items(Joi.string())
+          .when('grant_type', { is: 'refresh_token', then: Joi.optional() })
+          .when('grant_type', { is: 'password', then: Joi.required() }),
       }),
     },
   },
@@ -88,6 +96,7 @@ module.exports = {
       case 'password': return rep(handlePassword(req, app));
       case 'refresh_token': return rep(handleRefreshToken(req, app));
       case 'authorization_code': return rep(handleAuthorizationCode(req, app));
+      case 'client_credentials': return rep(errorFactory('unsupported_grant_type'));
       default: return rep(errorFactory('unsupported_grant_type'));
     }
   },
