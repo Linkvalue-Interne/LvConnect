@@ -29,6 +29,7 @@
     "joi": "^9.0.4",
     "moment": "^2.15.0",
     "mongoose": "^4.6.0",
+    "ovh": "2.0.1",
     "uuid": "^2.0.2"
   },
   "devDependencies": {
