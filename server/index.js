@@ -16,6 +16,8 @@ const manifest = {
       },
     },
   }, {
+    plugin: 'hapi-auth-basic',
+  }, {
     plugin: {
       register: './mongodb',
       options: config.mongodb,
@@ -23,7 +25,10 @@ const manifest = {
   }, {
     plugin: './users',
   }, {
-    plugin: './oauth',
+    plugin: {
+      register: './oauth',
+      options: config.oauth,
+    },
   }],
   connections: [{
     host: 'localhost',

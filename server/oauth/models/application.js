@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const applicationSchema = new mongoose.Schema({
-  appId: String,
-  appSecret: String,
+  appId: { type: String, index: true },
+  appSecret: { type: String, index: true },
   redirectUris: [String],
   allowedScopes: [String],
   allowedGrantTypes: [String],
