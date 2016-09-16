@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const Boom = require('boom');
+const _ = require('lodash');
 
 const grantTypes = [
   'password',
@@ -14,20 +15,30 @@ function errorFactory(error) {
   return err;
 }
 
-function generateTokens(req, user, application, scopes) {
+function generateTokens(req, user, application, scope) {
   const { generateAccessToken, generateRefreshToken } = req.server.methods;
   const { refreshTokenTTL } = req.server.plugins.oauth;
 
   return Promise.all([
-    generateAccessToken(user, application, scopes),
-    generateRefreshToken(user, application, scopes),
+    generateAccessToken(user, application, scope),
+    generateRefreshToken(user, application, scope),
   ]).then(([accessToken, refreshToken]) => ({
     access_token: accessToken.token,
     token_type: 'bearer',
     expires_in: refreshTokenTTL,
     refresh_token: refreshToken.token,
-    scope: scopes,
+    scope,
   }));
+}
+
+function checkScope(target, scopes) {
+  return !_.some(target, scope => !_.includes(scopes, scope));
+}
+
+function getAuthorization(req, user, application) {
+  const { Authorization } = req.server.plugins.users.models;
+
+  return Authorization.findOne({ user, application });
 }
 
 function handlePassword(req, application) {
@@ -36,17 +47,25 @@ function handlePassword(req, application) {
   return User.findOne({ email: req.payload.username })
     .then((user) => {
       if (user === null) return errorFactory('invalid_grant');
-      return user.comparePassword(req.payload.password)
-        .then((validPassword) => {
-          if (!validPassword) return errorFactory('invalid_grant');
-          return generateTokens(req, user, application, req.payload.scopes);
+      return getAuthorization(req, user, application)
+        .then((authorization) => {
+          if (authorization === null) return errorFactory('invalid_grant');
+          let scopes = authorization.allowedScopes;
+          if (req.payload.scope) {
+            if (!checkScope(req.payload.scope, scopes)) throw errorFactory('invalid_scope');
+            scopes = req.payload.scope;
+          }
+          return user.comparePassword(req.payload.password)
+            .then((validPassword) => {
+              if (!validPassword) return errorFactory('invalid_grant');
+              return generateTokens(req, user, application, scopes);
+            });
         });
     });
 }
 
 function handleRefreshToken(req, application) {
   const { RefreshToken } = req.server.plugins.oauth.models;
-  const { validScopes } = req.server.plugins.oauth;
 
   return RefreshToken.findOne({
     token: req.payload.refresh_token,
@@ -54,7 +73,16 @@ function handleRefreshToken(req, application) {
     application,
   }).then((refreshToken) => {
     if (refreshToken === null) return errorFactory('invalid_grant');
-    return generateTokens(req, refreshToken.user, application, req.payload.scopes);
+    return getAuthorization(req, refreshToken.user, application)
+      .then((authorization) => {
+        if (authorization === null) return errorFactory('invalid_grant');
+        let scopes = authorization.allowedScopes;
+        if (req.payload.scope) {
+          if (!checkScope(req.payload.scope, scopes)) throw errorFactory('invalid_scope');
+          scopes = req.payload.scope;
+        }
+        return generateTokens(req, refreshToken.user, application, scopes);
+      });
   });
 }
 
@@ -67,7 +95,7 @@ function handleAuthorizationCode(req, application) {
     expireAt: { $gt: Date.now() },
   }).then((authorizationCode) => {
     if (authorizationCode === null) return errorFactory('invalid_grant');
-    return generateTokens(req, authorizationCode.user, application, req.payload.scopes);
+    return generateTokens(req, authorizationCode.user, application, req.payload.scope);
   });
 }
 
@@ -86,12 +114,18 @@ module.exports = {
         redirect_uri: Joi.alternatives().when('grant_type', { is: 'authorization_code', then: Joi.string().required() }),
         scope: Joi.array().items(Joi.string())
           .when('grant_type', { is: 'refresh_token', then: Joi.optional() })
-          .when('grant_type', { is: 'password', then: Joi.required() }),
+          .when('grant_type', { is: 'password', then: Joi.optional() }),
       }),
     },
   },
   handler(req, rep) {
     const app = req.auth.credentials;
+    const { validScopes } = req.server.plugins.oauth;
+
+    if (req.payload.scope && !checkScope(req.payload.scope, validScopes)) {
+      throw errorFactory('invalid_scope');
+    }
+
     switch (req.payload.grant_type) {
       case 'password': return rep(handlePassword(req, app));
       case 'refresh_token': return rep(handleRefreshToken(req, app));
