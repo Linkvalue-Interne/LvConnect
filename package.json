@@ -2,7 +2,7 @@
   "name": "lvconnect",
   "version": "0.0.1",
   "description": "Authentication platform for LinkValue",
-  "main": "./index.js",
+  "main": "./server/index.js",
   "scripts": {
     "dev": "nodemon .",
     "lint": "eslint '**/*.js'",
