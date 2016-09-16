@@ -11,6 +11,7 @@ module.exports = {
   },
   handler(req, res) {
     const { User } = req.server.plugins.users.models;
+
     const userPromise = User
       .findOne({ _id: req.params.user })
       .select('-password')
@@ -19,6 +20,7 @@ module.exports = {
         if (!user) {
           return Boom.notFound('User Not Found');
         }
+
         return user;
       });
 

@@ -15,9 +15,12 @@ module.exports = {
       firstName: req.payload.firstName,
       lastName: req.payload.lastName,
       email: req.payload.email,
-      password: req.payload.plainPassword, // todo: we should encrypt the password or hash it
     });
 
-    res.mongodb(user.save(), ['password']);
+    const userPromise = user
+      .hashPassword(req.payload.plainPassword)
+      .then(() => user.save());
+
+    res.mongodb(userPromise, ['password']);
   },
 };

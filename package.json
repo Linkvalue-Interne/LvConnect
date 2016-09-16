@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/LinkValue/LvConnect#readme",
   "dependencies": {
+    "bcrypt": "0.8.7",
     "boom": "4.0.0",
     "config": "^1.21.0",
     "glue": "^4.0.0",
