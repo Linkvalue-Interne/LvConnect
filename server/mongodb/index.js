@@ -7,13 +7,15 @@ function mongodbSerializer(value, omit) {
     return value.map(v => mongodbSerializer(v, omit));
   }
 
-  const omitted = omit.reduce((map, key) => Object.assign(map, { [key]: undefined }), {});
-
-  return Object.assign(value.toJSON(), omitted, {
-    _id: undefined,
-    __v: undefined,
-    id: value._id,
+  const payload = Object.assign(value.toJSON(), {
+    id: value._id.toString(),
   });
+
+  omit.concat(['_id', '__v']).forEach((key) => {
+    delete payload[key];
+  });
+
+  return payload;
 }
 
 function mongodbReply(value, omit = []) {

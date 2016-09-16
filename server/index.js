@@ -26,17 +26,13 @@ const manifest = {
     plugin: './oauth',
   }],
   connections: [{
+    host: 'localhost',
     port: 8000,
   }],
 };
 
-const options = {
-  relativeTo: __dirname,
-};
-
-Glue.compose(manifest, options)
-  .then(server => server.start().then(() => server.log('info', 'Server started')))
-  .catch((err) => {
-    console.error(err.stack);
-    process.exit(1);
+module.exports = function createServer() {
+  return Glue.compose(manifest, {
+    relativeTo: __dirname,
   });
+};

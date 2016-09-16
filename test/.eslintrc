@@ -1,0 +1,15 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "babel"
+  ],
+  "env": {
+    "mocha": true
+  },
+  "rules": {
+    "generator-star-spacing": 0,
+    "func-names": 0,
+    "import/no-extraneous-dependencies": 0,
+    "babel/generator-star-spacing": 1
+  }
+}
