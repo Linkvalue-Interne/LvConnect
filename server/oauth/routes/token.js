@@ -1,6 +1,5 @@
 const Joi = require('joi');
 const Boom = require('boom');
-const _ = require('lodash');
 
 const grantTypes = [
   'password',
@@ -32,7 +31,7 @@ function generateTokens(req, user, application, scope) {
 }
 
 function checkScope(target, scopes) {
-  return !_.some(target, scope => !_.includes(scopes, scope));
+  return !target.some(scope => !scopes.includes(scope));
 }
 
 function getAuthorization(req, user, application) {
