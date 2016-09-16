@@ -34,12 +34,6 @@ function checkScope(target, scopes) {
   return !target.some(scope => !scopes.includes(scope));
 }
 
-function getAuthorization(req, user, application) {
-  const { Authorization } = req.server.plugins.users.models;
-
-  return Authorization.findOne({ user, application });
-}
-
 function handlePassword(req, application) {
   const { User } = req.server.plugins.users.models;
   const scopes = req.payload.scope || application.allowedScopes;
@@ -50,7 +44,7 @@ function handlePassword(req, application) {
 }
 
 function handleRefreshToken(req, application) {
-  const { RefreshToken } = req.server.plugins.oauth.models;
+  const { RefreshToken, Authorization } = req.server.plugins.oauth.models;
 
   return RefreshToken.findOne({
     token: req.payload.refresh_token,
@@ -58,7 +52,7 @@ function handleRefreshToken(req, application) {
     application,
   }).then((refreshToken) => {
     if (refreshToken === null) return errorFactory('invalid_grant');
-    return getAuthorization(req, refreshToken.user, application)
+    return Authorization.findOne({ user: refreshToken.user, application })
       .then((authorization) => {
         if (authorization === null) return errorFactory('invalid_grant');
         let scopes = authorization.allowedScopes;
