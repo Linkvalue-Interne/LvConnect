@@ -3,6 +3,7 @@ const models = require('./models');
 const routes = require('./routes');
 
 const validScopes = [
+  'all',
   'user:get',
   'user:create',
   'user:delete',

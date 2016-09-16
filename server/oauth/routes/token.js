@@ -43,23 +43,15 @@ function getAuthorization(req, user, application) {
 
 function handlePassword(req, application) {
   const { User } = req.server.plugins.users.models;
+  const scopes = req.payload.scope || application.allowedScopes;
 
   return User.findOne({ email: req.payload.username })
     .then((user) => {
       if (user === null) return errorFactory('invalid_grant');
-      return getAuthorization(req, user, application)
-        .then((authorization) => {
-          if (authorization === null) return errorFactory('invalid_grant');
-          let scopes = authorization.allowedScopes;
-          if (req.payload.scope) {
-            if (!checkScope(req.payload.scope, scopes)) throw errorFactory('invalid_scope');
-            scopes = req.payload.scope;
-          }
-          return user.comparePassword(req.payload.password)
-            .then((validPassword) => {
-              if (!validPassword) return errorFactory('invalid_grant');
-              return generateTokens(req, user, application, scopes);
-            });
+      return user.comparePassword(req.payload.password)
+        .then((validPassword) => {
+          if (!validPassword) return errorFactory('invalid_grant');
+          return generateTokens(req, user, application, scopes);
         });
     });
 }
