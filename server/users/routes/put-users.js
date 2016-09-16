@@ -6,7 +6,7 @@ module.exports = {
   path: '/users/{user}',
   config: {
     validate: {
-      payload,
+      payload: payload.put,
       params,
     },
   },
@@ -25,10 +25,9 @@ module.exports = {
           .assign(user, {
             firstName: req.payload.firstName,
             lastName: req.payload.lastName,
-            email: req.payload.email,
+            fallbackEmail: req.payload.fallbackEmail,
           })
-          .hashPassword(req.payload.plainPassword)
-          .then(() => user.save());
+          .save();
       });
 
     res.mongodb(userPromise, ['password']);

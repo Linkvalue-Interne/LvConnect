@@ -1,4 +1,4 @@
-# Endpoint: /users
+# Endpoint: `/users`
 
 This endpoint deals with users.
 
@@ -6,33 +6,17 @@ This endpoint deals with users.
 
 Retrieve the whole collection of users.
 
-### Response example
+#### Response payload
 
-```json
+```js
 [
   {
-    "firstName": "Jacky",
-    "lastName": "Michelle",
-    "email": "jacky.michelle@link-value.fr",
-    "password": "youporn",
-    "id": "57dab587c4b5df5e7c696c76",
-    "createdAt": "2016-09-15T14:51:51.551Z"
-  },
-  {
-    "id": "57dab0934e0b3d4beed41363",
-    "email": "pjacky.michelle@link-value.fr",
-    "firstName": "JackPy",
-    "lastName": "Michelple",
-    "password": "pornhub",
-    "createdAt": null
-  },
-  {
-    "id": "57dab0c84e0b3d4beed41364",
-    "email": "pjacky.michelle@link-value.fr",
-    "firstName": "JackPy",
-    "lastName": "Michelple",
-    "password": "pornhub",
-    "createdAt": null
+    "id": String,
+    "firstName": String,
+    "lastName": String,
+    "email": String,
+    "fallbackEmail": String,
+    "createdAt": Date
   }
 ]
 ```
@@ -41,27 +25,28 @@ Retrieve the whole collection of users.
 
 Creates a new user.
 
-### Payload
+#### Request payload
 
-```json
+```js
 {
-  "firstName": String,
-  "lastName": String,
-  "email": String,
-  "plainPassword": String
+  "firstName": String,      // required
+  "lastName": String,       // required
+  "email": String,          // required
+  "fallbackEmail": String,   
+  "plainPassword": String   // required
 }
 ```
 
-### Response example
+#### Response payload
 
-```json
+```js
 {
-  "id": "57dab0934e0b3d4beed41363",
-  "email": "pjacky.michelle@link-value.fr",
-  "firstName": "JackPy",
-  "lastName": "Michelple",
-  "password": "pornhub",
-  "createdAt": null
+  "id": String,
+  "firstName": String,
+  "lastName": String,
+  "email": String,
+  "fallbackEmail": String,
+  "createdAt": Date
 }
 ```
 
@@ -69,16 +54,16 @@ Creates a new user.
 
 Retrieve an user.
 
-### Response example
+#### Response payload
 
-```json
+```js
 {
-  "id": "57dab0c84e0b3d4beed41364",
-  "email": "pjacky.michelle@link-value.fr",
-  "firstName": "JackPy",
-  "lastName": "Michelple",
-  "password": "pornhub",
-  "createdAt": null
+  "id": String,
+  "firstName": String,
+  "lastName": String,
+  "email": String,
+  "fallbackEmail": String,
+  "createdAt": Date
 }
 ```
 
@@ -86,27 +71,14 @@ Retrieve an user.
 
 Updates an user.
 
-### Payload
+#### Request payload
 
-```json
+```js
 {
   "firstName": String,
   "lastName": String,
   "email": String,
-  "plainPassword": String
-}
-```
-
-### Response example
-
-```json
-{
-  "firstName": "Jacky",
-  "lastName": "Michelle",
-  "email": "jacky.michelle@link-value.fr",
-  "password": "youporn",
-  "id": "57dab587c4b5df5e7c696c76",
-  "createdAt": "2016-09-15T14:51:51.551Z"
+  "fallbackEmail": String
 }
 ```
 

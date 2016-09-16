@@ -5,7 +5,7 @@ module.exports = {
   path: '/users',
   config: {
     validate: {
-      payload,
+      payload: payload.post,
     },
   },
   handler(req, res) {
@@ -15,6 +15,7 @@ module.exports = {
       firstName: req.payload.firstName,
       lastName: req.payload.lastName,
       email: req.payload.email,
+      fallbackEmail: req.payload.fallbackEmail,
     });
 
     const userPromise = user

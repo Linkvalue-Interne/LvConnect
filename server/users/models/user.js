@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   email: { type: String, index: true },
+  fallbackEmail: String,
   password: String,
   createdAt: { type: Date, default: Date.now },
 });
