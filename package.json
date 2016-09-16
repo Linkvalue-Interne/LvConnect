@@ -27,6 +27,7 @@
     "handlebars": "^4.0.5",
     "hapi": "^15.0.3",
     "hapi-auth-basic": "^4.2.0",
+    "hapi-auth-bearer-token": "^4.2.1",
     "hapi-auth-cookie": "^6.1.1",
     "joi": "^9.0.4",
     "moment": "^2.15.0",

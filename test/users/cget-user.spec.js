@@ -17,6 +17,9 @@ describe('/users', () => {
       const response = await server.inject({
         method: 'GET',
         url: '/users',
+        headers: {
+          Authorization: 'Bearer foo-token',
+        },
       });
 
       // Then

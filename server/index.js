@@ -20,6 +20,8 @@ const manifest = {
   }, {
     plugin: 'hapi-auth-basic',
   }, {
+    plugin: 'hapi-auth-bearer-token',
+  }, {
     plugin: 'vision',
   }, {
     plugin: {
