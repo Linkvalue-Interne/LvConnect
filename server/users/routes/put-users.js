@@ -29,6 +29,6 @@ module.exports = {
           .save();
       });
 
-    res(userPromise);
+    res.mongodb(userPromise, ['password']);
   },
 };

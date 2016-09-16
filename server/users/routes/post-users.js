@@ -17,6 +17,7 @@ module.exports = {
       email: req.payload.email,
       password: req.payload.plainPassword, // todo: we should encrypt the password or hash it
     });
-    res(user.save());
+
+    res.mongodb(user.save(), ['password']);
   },
 };
