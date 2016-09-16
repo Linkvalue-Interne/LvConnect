@@ -40,6 +40,8 @@ const manifest = {
       register: './oauth',
       options: config.oauth,
     },
+  }, {
+    plugin: './dashboard',
   }],
   connections: [{
     host: 'localhost',
