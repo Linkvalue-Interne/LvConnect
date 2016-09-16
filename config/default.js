@@ -8,4 +8,15 @@ module.exports = {
     accessTokenTTL: '2D',
     refreshTokenTTL: '2W',
   },
+  login: {
+    cache: {
+      ttl: 3 * 24 * 60 * 60 * 1000,
+    },
+    cookie: {
+      secret: '12345678901234567890123456789012',
+      name: 'lvconnect',
+      redirect: '/login',
+      isSecure: false,
+    },
+  },
 };

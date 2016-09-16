@@ -29,7 +29,10 @@ const manifest = {
   }, {
     plugin: './users',
   }, {
-    plugin: './login',
+    plugin: {
+      register: './login',
+      options: config.login,
+    },
   }, {
     plugin: {
       register: './oauth',
