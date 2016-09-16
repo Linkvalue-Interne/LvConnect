@@ -5,9 +5,16 @@ const testSetup = require('../setup');
 
 describe('/users', () => {
   describe('GET', () => {
+    let server;
+    before(async function () {
+      server = await testSetup();
+    });
+
+    after(() => server.stop());
+
     it('should return list of users', async function () {
       // Given
-      const response = await testSetup({
+      const response = await server.inject({
         method: 'GET',
         url: '/users',
       });

@@ -13,10 +13,10 @@ function loadFixtures(server) {
   return Promise.all(promises);
 }
 
-module.exports = async function testSetup(options) {
+module.exports = async function testSetup() {
   const server = await createServer();
 
   return await dropDatabase(server)
     .then(() => loadFixtures(server))
-    .then(() => server.inject(options));
+    .then(() => server);
 };

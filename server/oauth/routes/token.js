@@ -31,8 +31,11 @@ function handlePassword(req, application) {
   return User.findOne({ email: req.payload.username })
     .then((user) => {
       if (user === null) return errorFactory('invalid_grant');
-      if (user.password !== req.payload.password) return errorFactory('invalid_grant');
-      return generateTokens(req, user, application, req.payload.scopes);
+      return user.comparePassword(req.payload.password)
+        .then((validPassword) => {
+          if (!validPassword) return errorFactory('invalid_grant');
+          return generateTokens(req, user, application, req.payload.scopes);
+        });
     });
 }
 
@@ -40,7 +43,7 @@ function handleRefreshToken(req, application) {
   const { RefreshToken } = req.server.plugins.oauth.models;
 
   return RefreshToken.findOne({
-    token: req.payload.refreshToken,
+    token: req.payload.refresh_token,
     expireAt: { $gt: Date.now() },
     application,
   }).then((refreshToken) => {
@@ -69,19 +72,19 @@ module.exports = {
     auth: 'application',
     validate: {
       payload: Joi.object({
-        grantType: Joi.string().valid(grantTypes).required(),
-        username: Joi.alternatives().when('grantType', { is: 'password', then: Joi.string().required() }),
-        password: Joi.alternatives().when('grantType', { is: 'password', then: Joi.string().required() }),
-        refreshToken: Joi.alternatives().when('grantType', { is: 'refresh_token', then: Joi.string().required() }),
-        code: Joi.alternatives().when('grantType', { is: 'authorization_code', then: Joi.string().required() }),
-        redirectUri: Joi.alternatives().when('grantType', { is: 'authorization_code', then: Joi.string().required() }),
-        scope: Joi.alternatives().when('grantType', { is: 'password', then: Joi.array().items(Joi.string()) }),
+        grant_type: Joi.string().valid(grantTypes).required(),
+        username: Joi.alternatives().when('grant_type', { is: 'password', then: Joi.string().required() }),
+        password: Joi.alternatives().when('grant_type', { is: 'password', then: Joi.string().required() }),
+        refresh_token: Joi.alternatives().when('grant_type', { is: 'refresh_token', then: Joi.string().required() }),
+        code: Joi.alternatives().when('grant_type', { is: 'authorization_code', then: Joi.string().required() }),
+        redirect_uri: Joi.alternatives().when('grant_type', { is: 'authorization_code', then: Joi.string().required() }),
+        scope: Joi.alternatives().when('grant_type', { is: 'password', then: Joi.array().items(Joi.string()) }),
       }),
     },
   },
   handler(req, rep) {
     const app = req.auth.credentials;
-    switch (req.payload.grantType) {
+    switch (req.payload.grant_type) {
       case 'password': return rep(handlePassword(req, app));
       case 'refresh_token': return rep(handleRefreshToken(req, app));
       case 'authorization_code': return rep(handleAuthorizationCode(req, app));
