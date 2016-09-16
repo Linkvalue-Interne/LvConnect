@@ -16,7 +16,11 @@ const manifest = {
       },
     },
   }, {
+    plugin: 'hapi-auth-cookie',
+  }, {
     plugin: 'hapi-auth-basic',
+  }, {
+    plugin: 'vision',
   }, {
     plugin: {
       register: './mongodb',
@@ -24,6 +28,8 @@ const manifest = {
     },
   }, {
     plugin: './users',
+  }, {
+    plugin: './login',
   }, {
     plugin: {
       register: './oauth',
