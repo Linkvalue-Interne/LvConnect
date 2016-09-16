@@ -45,15 +45,9 @@ function handlePassword(req, application) {
   const { User } = req.server.plugins.users.models;
   const scopes = req.payload.scope || application.allowedScopes;
 
-  return User.findOne({ email: req.payload.username })
-    .then((user) => {
-      if (user === null) return errorFactory('invalid_grant');
-      return user.comparePassword(req.payload.password)
-        .then((validPassword) => {
-          if (!validPassword) return errorFactory('invalid_grant');
-          return generateTokens(req, user, application, scopes);
-        });
-    });
+  return User.findOneByEmailAndPassword(req.payload.username, req.payload.password)
+    .then(user => generateTokens(req, user, application, scopes))
+    .catch(() => errorFactory('invalid_grant'));
 }
 
 function handleRefreshToken(req, application) {

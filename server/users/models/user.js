@@ -33,4 +33,17 @@ userSchema.methods.comparePassword = function comparePassword(password) {
   });
 };
 
+userSchema.statics.findOneByEmailAndPassword = function findOneByEmailAndPassword(email, password) {
+  return this.findOne({ email })
+    .then((user) => {
+      if (user === null) throw Error('user_not_found');
+      return user.comparePassword(password)
+        .then((validPassword) => {
+          if (!validPassword) throw Error('invalid_password');
+
+          return user;
+        });
+    });
+};
+
 module.exports = mongoose.model('User', userSchema);

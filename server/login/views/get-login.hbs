@@ -2,7 +2,8 @@
   <div class="entry">
     <h1>Login</h1>
     <div class="body">
-      <form method="post">
+      {{error}}
+      <form method="post" action="/login">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" />
         <label for="password">password</label>
