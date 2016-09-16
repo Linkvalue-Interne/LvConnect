@@ -13,6 +13,7 @@ module.exports = {
     const { User } = req.server.plugins.users.models;
     const userPromise = User
       .findOne({ _id: req.params.user })
+      .select('-password')
       .exec()
       .then((user) => {
         if (!user) {
@@ -21,6 +22,6 @@ module.exports = {
         return user;
       });
 
-    res(userPromise);
+    res.mongodb(userPromise);
   },
 };

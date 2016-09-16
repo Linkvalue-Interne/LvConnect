@@ -1,4 +1,3 @@
-const Boom = require('boom');
 const { params } = require('./user-validation');
 
 module.exports = {
@@ -13,7 +12,8 @@ module.exports = {
     const { User } = req.server.plugins.users.models;
     const userPromise = User
       .remove({ _id: req.params.user })
-      .exec();
+      .exec()
+      .then(() => ({ deleted: true }));
 
     res(userPromise);
   },

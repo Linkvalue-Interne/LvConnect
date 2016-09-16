@@ -15,11 +15,11 @@ Retrieve the whole collection of users.
     "lastName": "Michelle",
     "email": "jacky.michelle@link-value.fr",
     "password": "youporn",
-    "_id": "57dab587c4b5df5e7c696c76",
+    "id": "57dab587c4b5df5e7c696c76",
     "createdAt": "2016-09-15T14:51:51.551Z"
   },
   {
-    "_id": "57dab0934e0b3d4beed41363",
+    "id": "57dab0934e0b3d4beed41363",
     "email": "pjacky.michelle@link-value.fr",
     "firstName": "JackPy",
     "lastName": "Michelple",
@@ -27,7 +27,7 @@ Retrieve the whole collection of users.
     "createdAt": null
   },
   {
-    "_id": "57dab0c84e0b3d4beed41364",
+    "id": "57dab0c84e0b3d4beed41364",
     "email": "pjacky.michelle@link-value.fr",
     "firstName": "JackPy",
     "lastName": "Michelple",
@@ -56,7 +56,7 @@ Creates a new user.
 
 ```json
 {
-  "_id": "57dab0934e0b3d4beed41363",
+  "id": "57dab0934e0b3d4beed41363",
   "email": "pjacky.michelle@link-value.fr",
   "firstName": "JackPy",
   "lastName": "Michelple",
@@ -73,7 +73,7 @@ Retrieve an user.
 
 ```json
 {
-  "_id": "57dab0c84e0b3d4beed41364",
+  "id": "57dab0c84e0b3d4beed41364",
   "email": "pjacky.michelle@link-value.fr",
   "firstName": "JackPy",
   "lastName": "Michelple",
@@ -105,7 +105,7 @@ Updates an user.
   "lastName": "Michelle",
   "email": "jacky.michelle@link-value.fr",
   "password": "youporn",
-  "_id": "57dab587c4b5df5e7c696c76",
+  "id": "57dab587c4b5df5e7c696c76",
   "createdAt": "2016-09-15T14:51:51.551Z"
 }
 ```

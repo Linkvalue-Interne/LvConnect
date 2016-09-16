@@ -3,6 +3,12 @@ module.exports = {
   path: '/users',
   handler(req, res) {
     const { User } = req.server.plugins.users.models;
-    res(User.find().exec());
+
+    const userPromise = User
+      .find()
+      .select('-password')
+      .exec();
+
+    res.mongodb(userPromise);
   },
 };
