@@ -19,32 +19,16 @@ module.exports = {
       email: req.payload.email,
     });
 
-    const userPromise = user
-      .hashPassword(req.payload.plainPassword)
-      .then(() => user.save())
-      .then((persistedUser) => {
-        // We gonna split the email to get user@domain.ext
-        // We need it later to request OVH API.
-        const emailParts = {
-          user: null,
-          domain: null,
-          ext: null,
-        };
-        req.payload.email.replace(
-          new RegExp('^(.+)@(.+)\\.(\\w+)$', 'i'), ($0, $1, $2, $3) => {
-            emailParts.user = $1;
-            emailParts.domain = $2;
-            emailParts.ext = $3;
-          }
-        );
+    // We gonna split the email to get username@domain.ext
+    // We need it later to request OVH API.
+    const [, username, domain, ext] = user.email.match(/^(.+)@(.+)\.(\w+)$/i);
 
-        ovh.request('POST', `/email/domain/${emailParts.domain}.${emailParts.ext}/account`, {
-          accountName: emailParts.user,
-          password: req.payload.plainPassword,
-        });
-
-        return persistedUser;
-      });
+    const userPromise = ovh.requestPromised('POST', `/email/domain/${domain}.${ext}/account`, {
+      accountName: username,
+      password: req.payload.plainPassword,
+    })
+      .then(() => user.hashPassword(req.payload.plainPassword))
+      .then(() => user.save());
 
     res.mongodb(userPromise, ['password']);
   },
