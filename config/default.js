@@ -3,6 +3,14 @@ module.exports = {
     hostname: 'localhost',
     port: 8000,
   },
+  logs: {
+    reporters: {
+      consoleReporter: [{
+        module: 'good-console',
+        args: [{ log: '*', response: '*' }],
+      }, 'stdout'],
+    },
+  },
   mongodb: {
     host: 'localhost',
     port: 27017,

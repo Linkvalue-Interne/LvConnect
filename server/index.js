@@ -6,14 +6,7 @@ const manifest = {
   registrations: [{
     plugin: {
       register: 'good',
-      options: {
-        reporters: {
-          consoleReporter: [{
-            module: 'good-console',
-            args: [{ log: '*', response: '*' }],
-          }, 'stdout'],
-        },
-      },
+      options: config.logs,
     },
   }, {
     plugin: 'hapi-auth-cookie',
