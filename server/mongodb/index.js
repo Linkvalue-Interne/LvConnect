@@ -19,7 +19,7 @@ function mongodbSerializer(value, omit) {
 }
 
 function mongodbReply(value, omit = []) {
-  if (value.then) {
+  if (Promise.resolve(value) === value) {
     return this.response(value.then(payload => mongodbSerializer(payload, omit)));
   }
   return this.response(mongodbSerializer(value, omit));
