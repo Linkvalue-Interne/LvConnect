@@ -1,6 +1,4 @@
 const { payload } = require('./user-validation');
-const config = require('config');
-const ovh = require('ovh')(config.ovh);
 
 module.exports = {
   method: 'POST',
