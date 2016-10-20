@@ -1,9 +1,7 @@
 module.exports = {
-  ovh: {
-    endpoint: '',
-    appKey: '',
-    appSecret: '',
-    consumerKey: '',
+  host: {
+    hostname: 'localhost',
+    port: 8000,
   },
   mongodb: {
     host: 'localhost',
@@ -18,6 +16,12 @@ module.exports = {
     config: {
       shutdownTimeout: 5000,
     },
+  },
+  ovh: {
+    endpoint: '',
+    appKey: '',
+    appSecret: '',
+    consumerKey: '',
   },
   oauth: {
     accessTokenTTL: '2D',

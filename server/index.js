@@ -51,8 +51,8 @@ const manifest = {
     plugin: './tasks',
   }],
   connections: [{
-    host: 'localhost',
-    port: 8000,
+    host: config.host.hostname,
+    port: config.host.port,
   }],
 };
 
