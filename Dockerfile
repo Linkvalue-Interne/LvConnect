@@ -1,4 +1,4 @@
-FROM node:6.5
+FROM node:boron
 
 # Install app dependencies
 ENV NODE_ENV=production
