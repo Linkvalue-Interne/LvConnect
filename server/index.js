@@ -41,6 +41,8 @@ const manifest = {
       options: config.oauth,
     },
   }, {
+    plugin: './dashboard',
+  }, {
     plugin: {
       register: './kue',
       options: config.kue,
