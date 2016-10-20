@@ -21,11 +21,11 @@ exports.register = (server, { cache, cookie }, next) => {
     redirectTo: cookie.redirect,
     isSecure: cookie.isSecure,
     validateFunc(request, session, callback) {
-      cache.get(session.id, (err, cached) => {
+      appCache.get(session.sid, (err, cached) => {
         if (err) return callback(err, false);
         if (!cached) return callback(null, false);
 
-        return callback(null, true, cached.account);
+        return callback(null, true, cached.user);
       });
     },
   });
