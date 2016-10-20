@@ -30,6 +30,7 @@
     "hapi-auth-bearer-token": "^4.2.1",
     "hapi-auth-cookie": "^6.1.1",
     "joi": "^9.0.4",
+    "kue": "^0.11.1",
     "moment": "^2.15.0",
     "mongoose": "^4.6.0",
     "uuid": "^2.0.2",

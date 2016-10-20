@@ -40,6 +40,13 @@ const manifest = {
       register: './oauth',
       options: config.oauth,
     },
+  }, {
+    plugin: {
+      register: './kue',
+      options: config.kue,
+    },
+  }, {
+    plugin: './tasks',
   }],
   connections: [{
     host: 'localhost',
