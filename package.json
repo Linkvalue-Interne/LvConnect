@@ -4,7 +4,7 @@
   "description": "Authentication platform for LinkValue",
   "main": "./server/index.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon .",
+    "dev": "NODE_ENV=development nodemon . -e js,hbs",
     "lint": "eslint '**/*.js'",
     "test": "NODE_ENV=test mocha --compilers js:babel-register --recursive test",
     "prod": "mkdir -p ./logs/forever && NODE_ENV=production forever start  -o ./logs/forever/forever-out.log -e ./logs/forever/forever-err.log server/index.js"
@@ -33,6 +33,7 @@
     "hapi-auth-basic": "^4.2.0",
     "hapi-auth-bearer-token": "^4.2.1",
     "hapi-auth-cookie": "^6.1.1",
+    "inert": "^4.0.2",
     "joi": "^9.0.4",
     "kue": "^0.11.1",
     "moment": "^2.15.0",

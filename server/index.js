@@ -17,6 +17,8 @@ const manifest = {
   }, {
     plugin: 'vision',
   }, {
+    plugin: 'inert',
+  }, {
     plugin: {
       register: './mongodb',
       options: config.mongodb,

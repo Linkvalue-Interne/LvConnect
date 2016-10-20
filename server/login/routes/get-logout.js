@@ -1,6 +1,3 @@
-const Joi = require('joi');
-const uuid = require('uuid');
-
 module.exports = {
   method: 'GET',
   path: '/logout',
