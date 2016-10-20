@@ -12,6 +12,7 @@ module.exports = {
   },
   handler(req, res) {
     const { User } = req.server.plugins.users.models;
+    const { createThirdPartyAccounts } = req.server.plugins.tasks;
 
     const user = new User({
       firstName: req.payload.firstName,
@@ -20,17 +21,15 @@ module.exports = {
       fallbackEmail: req.payload.fallbackEmail,
     });
 
-    // We gonna split the email to get username@domain.ext
-    // We need it later to request OVH API.
-    const [, username, domain, ext] = user.email.match(/^(.+)@(.+)\.(\w+)$/i);
-
-    const userPromise = ovh.requestPromised('POST', `/email/domain/${domain}.${ext}/account`, {
-      accountName: username,
-      password: req.payload.plainPassword,
-    })
-      .then(() => user.hashPassword(req.payload.plainPassword))
-      .then(() => user.save());
-
-    res.mongodb(userPromise, ['password']);
+    res.mongodb(user
+      .hashPassword(req.payload.plainPassword)
+      .then(() => user.save())
+      .then((savedUser) => {
+        createThirdPartyAccounts({
+          email: user.email,
+          plainPassword: req.payload.plainPassword,
+        }).save();
+        return savedUser;
+      }), ['password']);
   },
 };

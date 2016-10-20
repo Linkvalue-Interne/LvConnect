@@ -1,8 +1,8 @@
-const helloWorld = require('./hello-world');
+const createThirdPartyAccounts = require('./create-third-party-accounts');
 
 exports.register = (server, options, next) => {
   const tasks = [
-    helloWorld,
+    createThirdPartyAccounts,
   ];
 
   const { queue } = server.plugins.kue;
