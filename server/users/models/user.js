@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   email: { type: String, index: true },
+  fallbackEmail: String,
   password: String,
   createdAt: { type: Date, default: Date.now },
 });
@@ -30,6 +31,19 @@ userSchema.methods.comparePassword = function comparePassword(password) {
       return resolve(res);
     });
   });
+};
+
+userSchema.statics.findOneByEmailAndPassword = function findOneByEmailAndPassword(email, password) {
+  return this.findOne({ email })
+    .then((user) => {
+      if (user === null) throw Error('user_not_found');
+      return user.comparePassword(password)
+        .then((validPassword) => {
+          if (!validPassword) throw Error('invalid_password');
+
+          return user;
+        });
+    });
 };
 
 module.exports = mongoose.model('User', userSchema);
