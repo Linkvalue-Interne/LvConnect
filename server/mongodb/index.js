@@ -25,10 +25,10 @@ function mongodbReply(value, omit = []) {
   return this.response(mongodbSerializer(value, omit));
 }
 
-exports.register = (server, { user, password, host, port, database, config }, next) => {
+exports.register = (server, { username, password, host, port, database, config }, next) => {
   server.decorate('reply', 'mongodb', mongodbReply);
 
-  const userPart = user ? `${user}:${password}@` : '';
+  const userPart = username ? `${username}:${password}@` : '';
   mongoose.connect(`mongodb://${userPart}${host}:${port}/${database}`, config)
     .then(() => {
       server.on('stop', () => mongoose.disconnect());
