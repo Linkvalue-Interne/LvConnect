@@ -20,7 +20,7 @@ module.exports = {
   mongodb: {
     host: 'localhost',
     port: 27017,
-    database: 'lvconnect',
+    database: 'lvconnect?authSource=admin',
     username: 'linkvalue-deploy',
     password: 'OSbmSJJGBxQau5H5',
   },

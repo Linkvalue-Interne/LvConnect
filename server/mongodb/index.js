@@ -29,7 +29,7 @@ exports.register = (server, { user, password, host, port, database, config }, ne
   server.decorate('reply', 'mongodb', mongodbReply);
 
   const userPart = user ? `${user}:${password}@` : '';
-  mongoose.connect(`mongodb://${userPart}${host}:${port}/${database}`, { config })
+  mongoose.connect(`mongodb://${userPart}${host}:${port}/${database}`, config)
     .then(() => {
       server.on('stop', () => mongoose.disconnect());
       server.expose('mongoose', mongoose);
