@@ -17,6 +17,13 @@ module.exports = {
     hostname: 'lvconnect.link-value.fr',
     port: 8000,
   },
+  mongodb: {
+    host: 'localhost',
+    port: 27017,
+    database: 'lvconnect',
+    username: 'linkvalue-deploy',
+    password: 'OSbmSJJGBxQau5H5',
+  },
   logs: {
     reporters: {
       accessReporting: reportingFactory('./logs/hapi/hapi-out.log', { log: '*', response: '*' }),
