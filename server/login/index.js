@@ -37,5 +37,5 @@ exports.register = (server, { cache, cookie }, next) => {
 exports.register.attributes = {
   name: 'login',
   version: '0.0.1',
-  dependencies: ['users', 'vision', 'hapi-auth-cookie'],
+  dependencies: ['users', 'vision', 'inert', 'hapi-auth-cookie'],
 };
