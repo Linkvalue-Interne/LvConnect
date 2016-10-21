@@ -10,6 +10,7 @@ module.exports = {
   },
   handler(req, res) {
     const { User } = req.server.plugins.users.models;
+    const { createOVHAccount } = req.server.plugins.tasks;
 
     const user = new User({
       firstName: req.payload.firstName,
@@ -18,10 +19,16 @@ module.exports = {
       fallbackEmail: req.payload.fallbackEmail,
     });
 
-    const userPromise = user
+    res.mongodb(user
       .hashPassword(req.payload.plainPassword)
-      .then(() => user.save());
-
-    res.mongodb(userPromise, ['password']);
+      .then(() => user.save())
+      .then((savedUser) => {
+        createOVHAccount({
+          user: savedUser,
+          email: user.email,
+          plainPassword: req.payload.plainPassword,
+        }).save();
+        return savedUser;
+      }), ['password']);
   },
 };

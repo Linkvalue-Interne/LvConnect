@@ -4,9 +4,10 @@ const bcrypt = require('bcrypt');
 const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  email: { type: String, index: true },
+  email: { type: String, index: true, unique: true },
   fallbackEmail: String,
   password: String,
+  thirdParty: Object,
   createdAt: { type: Date, default: Date.now },
 });
 

@@ -13,7 +13,7 @@ exports.register = (server, { cache, cookie }, next) => {
     expiresIn: cache.ttl,
   });
 
-  server.app.cache = appCache;
+  server.app.cache = appCache; // eslint-disable-line no-param-reassign
 
   server.auth.strategy('session', 'cookie', {
     password: cookie.secret,
@@ -25,7 +25,10 @@ exports.register = (server, { cache, cookie }, next) => {
         if (err) return callback(err, false);
         if (!cached) return callback(null, false);
 
-        return callback(null, true, cached.user);
+        const { User } = server.plugins.users.models;
+
+        return User.findById(cached.user._id)
+          .then(user => callback(null, !!user, user));
       });
     },
   });
@@ -37,5 +40,5 @@ exports.register = (server, { cache, cookie }, next) => {
 exports.register.attributes = {
   name: 'login',
   version: '0.0.1',
-  dependencies: ['users', 'vision', 'hapi-auth-cookie'],
+  dependencies: ['users', 'vision', 'inert', 'hapi-auth-cookie'],
 };

@@ -3,6 +3,14 @@ module.exports = {
     hostname: 'localhost',
     port: 8000,
   },
+  logs: {
+    reporters: {
+      consoleReporter: [{
+        module: 'good-console',
+        args: [{ log: '*', response: '*', worker: '*' }],
+      }, 'stdout'],
+    },
+  },
   mongodb: {
     host: 'localhost',
     port: 27017,
@@ -16,6 +24,12 @@ module.exports = {
     config: {
       shutdownTimeout: 5000,
     },
+  },
+  ovh: {
+    endpoint: '',
+    appKey: '',
+    appSecret: '',
+    consumerKey: '',
   },
   oauth: {
     accessTokenTTL: '2D',

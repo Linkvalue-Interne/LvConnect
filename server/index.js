@@ -6,14 +6,7 @@ const manifest = {
   registrations: [{
     plugin: {
       register: 'good',
-      options: {
-        reporters: {
-          consoleReporter: [{
-            module: 'good-console',
-            args: [{ log: '*', response: '*' }],
-          }, 'stdout'],
-        },
-      },
+      options: config.logs,
     },
   }, {
     plugin: 'hapi-auth-cookie',
@@ -23,6 +16,8 @@ const manifest = {
     plugin: 'hapi-auth-bearer-token',
   }, {
     plugin: 'vision',
+  }, {
+    plugin: 'inert',
   }, {
     plugin: {
       register: './mongodb',
@@ -44,11 +39,9 @@ const manifest = {
     plugin: './dashboard',
   }, {
     plugin: {
-      register: './kue',
+      register: './tasks',
       options: config.kue,
     },
-  }, {
-    plugin: './tasks',
   }],
   connections: [{
     host: config.host.hostname,
@@ -69,7 +62,7 @@ if (require.main === module) {
     .then(server => server.start().then(() => server))
     .then(server => server.log('info', `Server started on port ${server.connections[0].info.uri}`))
     .catch((err) => {
-      console.error(err.stack);
+      console.error(err.stack); // eslint-disable-line no-console
       process.exit(1);
     });
 }
