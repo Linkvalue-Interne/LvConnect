@@ -64,7 +64,7 @@ if (require.main === module) {
     .then(server => server.start().then(() => server))
     .then(server => server.log('info', `Server started on port ${server.connections[0].info.uri}`))
     .catch((err) => {
-      console.error(err.stack);
+      console.error(err.stack); // eslint-disable-line no-console
       process.exit(1);
     });
 }

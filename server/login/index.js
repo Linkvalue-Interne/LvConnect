@@ -13,7 +13,7 @@ exports.register = (server, { cache, cookie }, next) => {
     expiresIn: cache.ttl,
   });
 
-  server.app.cache = appCache;
+  server.app.cache = appCache; // eslint-disable-line no-param-reassign
 
   server.auth.strategy('session', 'cookie', {
     password: cookie.secret,
