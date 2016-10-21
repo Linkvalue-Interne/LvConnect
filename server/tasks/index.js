@@ -1,13 +1,22 @@
-const createThirdPartyAccounts = require('./create-third-party-accounts');
+const kue = require('kue');
 
-exports.register = (server, options, next) => {
-  const tasks = [
-    createThirdPartyAccounts,
-  ];
+const workers = require('./workers');
 
-  const { queue } = server.plugins.kue;
+exports.register = (server, { host, port, db, prefix, config }, next) => {
+  const queue = kue.createQueue({
+    prefix,
+    redis: {
+      port,
+      host,
+      db,
+    },
+  });
 
-  tasks.forEach(({ name, initWorker }) => {
+  server.on('stop', () => queue.shutdown(config.shutdownTimeout, (err) => {
+    server.log('info', `Kue shutdown: ${err || ''}`);
+  }));
+
+  workers.forEach(({ name, initWorker }) => {
     const worker = initWorker(server);
 
     queue.process(name, worker);
@@ -20,5 +29,4 @@ exports.register = (server, options, next) => {
 exports.register.attributes = {
   name: 'tasks',
   version: '0.0.1',
-  dependencies: ['kue'],
 };

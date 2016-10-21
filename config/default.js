@@ -7,7 +7,7 @@ module.exports = {
     reporters: {
       consoleReporter: [{
         module: 'good-console',
-        args: [{ log: '*', response: '*' }],
+        args: [{ log: '*', response: '*', worker: '*' }],
       }, 'stdout'],
     },
   },

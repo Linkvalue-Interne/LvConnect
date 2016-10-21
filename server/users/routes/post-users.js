@@ -10,7 +10,7 @@ module.exports = {
   },
   handler(req, res) {
     const { User } = req.server.plugins.users.models;
-    const { createThirdPartyAccounts } = req.server.plugins.tasks;
+    const { createOVHAccount } = req.server.plugins.tasks;
 
     const user = new User({
       firstName: req.payload.firstName,
@@ -23,7 +23,8 @@ module.exports = {
       .hashPassword(req.payload.plainPassword)
       .then(() => user.save())
       .then((savedUser) => {
-        createThirdPartyAccounts({
+        createOVHAccount({
+          user: savedUser,
           email: user.email,
           plainPassword: req.payload.plainPassword,
         }).save();

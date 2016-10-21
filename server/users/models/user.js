@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, index: true },
   fallbackEmail: String,
   password: String,
+  thirdParty: Object,
   createdAt: { type: Date, default: Date.now },
 });
 

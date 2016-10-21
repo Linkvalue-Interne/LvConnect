@@ -39,11 +39,9 @@ const manifest = {
     plugin: './dashboard',
   }, {
     plugin: {
-      register: './kue',
+      register: './tasks',
       options: config.kue,
     },
-  }, {
-    plugin: './tasks',
   }],
   connections: [{
     host: config.host.hostname,
