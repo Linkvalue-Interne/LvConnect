@@ -5,7 +5,7 @@ const User = require('../server/users/models/user');
 
 mongoose.Promise = global.Promise;
 
-const userPart = mongodb.user ? `${mongodb.user}:${mongodb.password}@` : '';
+const userPart = mongodb.username ? `${mongodb.username}:${mongodb.password}@` : '';
 mongoose.connect(`mongodb://${userPart}${mongodb.host}:${mongodb.port}/${mongodb.database}`, mongodb.config)
   .then(() => {
     const user = new User({
