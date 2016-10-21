@@ -1,7 +1,9 @@
 {
   "name": "lvconnect",
+  "private": true,
   "version": "0.1.2",
   "description": "Authentication platform for LinkValue",
+  "license": "Proprietary",
   "main": "./server/index.js",
   "scripts": {
     "dev": "NODE_ENV=development nodemon . -e js,hbs",
