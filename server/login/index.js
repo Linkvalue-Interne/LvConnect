@@ -25,7 +25,10 @@ exports.register = (server, { cache, cookie }, next) => {
         if (err) return callback(err, false);
         if (!cached) return callback(null, false);
 
-        return callback(null, true, cached.user);
+        const { User } = server.plugins.users.models;
+
+        return User.findById(cached.user._id)
+          .then(user => callback(null, !!user, user));
       });
     },
   });
