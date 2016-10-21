@@ -1,7 +1,7 @@
 {
   "name": "lvconnect",
   "private": true,
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Authentication platform for LinkValue",
   "license": "Proprietary",
   "main": "./server/index.js",
