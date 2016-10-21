@@ -31,6 +31,7 @@ module.exports = {
       })
       .catch(() => {
         res.view('get-login', {
+          email: req.payload.email,
           error: 'Invalid username or password.',
         });
       });
