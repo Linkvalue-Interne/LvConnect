@@ -10,7 +10,7 @@
     "dev": "NODE_ENV=development nodemon . -e js,hbs",
     "lint": "eslint '**/*.js'",
     "test": "NODE_ENV=test mocha --compilers js:babel-register --recursive test",
-    "prod": "mkdir -p ./logs/forever && NODE_ENV=production forever start  -o ./logs/forever/forever-out.log -e ./logs/forever/forever-err.log server/index.js"
+    "prod": "mkdir -p ./logs/forever && NODE_ENV=production forever start forever.json"
   },
   "repository": {
     "type": "git",
