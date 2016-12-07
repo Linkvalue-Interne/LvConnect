@@ -1,20 +1,8 @@
 const moment = require('moment');
+const Boom = require('boom');
 const models = require('./models');
 const routes = require('./routes');
-
-const validScopes = [
-  'all',
-  'user:get',
-  'user:create',
-  'user:delete',
-  'user:modify',
-  'application:get',
-  'application:create',
-  'application:delete',
-  'application:modify',
-  'profile:get',
-  'profile:modify',
-];
+const validScopes = require('./scopes');
 
 exports.register = (server, { accessTokenTTL, refreshTokenTTL }, next) => {
   server.expose('models', models);
@@ -47,10 +35,10 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL }, next) => {
     validateFunc(req, appId, appSecret, cb) {
       Application.findOne({ appId, appSecret })
         .then((application) => {
-          if (application === null) return cb(null, false);
+          if (application === null) return cb(Boom.unauthorized('invalid_client'), false);
           return cb(null, true, application);
         })
-        .catch(cb);
+        .catch(err => cb(Boom.wrap(err), false));
     },
   });
 

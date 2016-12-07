@@ -8,6 +8,9 @@ Generates authentication tokens according to `grant_type`. The following grants 
 - password
 - refresh_token
 
+This endpoint requires client authentication (to be sure that the application is authorized to request tokens).
+You must provide client credentials (client id and client secret) in the `Authorization` header as `Basic` credentials.
+
 #### Request payload for password grant
 
 ```js
@@ -28,3 +31,10 @@ Generates authentication tokens according to `grant_type`. The following grants 
   "scope": Array<String>          // optional
 }
 ```
+
+#### Error codes
+
+- `unsupported_grant_type`: the request grant type is not in the supported list.
+- `invalid_client`: the provided client id and secret don't match any application.
+- `invalid_grant`: user credentials, refresh token or authorization code is invalid.
+- `invalid_scope`: The requested scope is not consistent with the scope allowed by the application, refresh token or authorization code.

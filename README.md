@@ -27,6 +27,15 @@ The server listens to `localhost:5000` in dev and to `lvconnect.linkvalue.fr` fo
 
 ## Api reference
 
-Bellow is the list of available endpoints:
+Bellow are listed all the endpoints available for now in the application.
+
+#### Public endpoints
 - [/oauth](docs/endpoint-oauth.md) (Authentication endpoint)
+
+#### Protected endpoint
+
+All the endpoints listed below are protected and requires authentication with an access token.
+This token must be issued rom the oauth enpoint (see documentation above).
+This token must be passed in the `Authorization` header as `Bearer`.
+
 - [/users](docs/endpoint-users.md) (Users endpoint)
