@@ -11,7 +11,7 @@ const grantTypes = [
 
 function generateTokens(req, user, application, scope) {
   const { generateAccessToken, generateRefreshToken } = req.server.methods;
-  const { refreshTokenTTL } = req.server.plugins.oauth;
+  const { accessTokenTTL } = req.server.plugins.oauth;
 
   return Promise.all([
     generateAccessToken(user, application, scope),
@@ -19,7 +19,7 @@ function generateTokens(req, user, application, scope) {
   ]).then(([accessToken, refreshToken]) => ({
     access_token: accessToken.token,
     token_type: 'bearer',
-    expires_in: refreshTokenTTL,
+    expires_in: accessTokenTTL,
     refresh_token: refreshToken.token,
     scope,
   }));
@@ -46,7 +46,7 @@ function handleRefreshToken(req, application) {
     expireAt: { $gt: Date.now() },
     application,
   }).then((refreshToken) => {
-    if (refreshToken === null) {
+    if (refreshToken === null || refreshToken.expireAt < new Date()) {
       return Boom.unauthorized('invalid_grant');
     }
 
