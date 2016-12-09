@@ -85,3 +85,21 @@ Updates an user.
 ## `DELETE /users/{id}`
 
 Deletes an user.
+
+
+## `GET /users/me`
+
+Retrieve the user corresponding to given access token.
+
+#### Response payload
+
+```js
+{
+  "id": String,
+  "firstName": String,
+  "lastName": String,
+  "email": String,
+  "fallbackEmail": String,
+  "createdAt": Date
+}
+```

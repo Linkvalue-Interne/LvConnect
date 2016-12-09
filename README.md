@@ -27,7 +27,7 @@ The server listens to `localhost:5000` in dev and to `lvconnect.linkvalue.fr` fo
 
 ## Api reference
 
-Bellow are listed all the endpoints available for now in the application.
+Below are listed all the endpoints available for now in the application.
 
 #### Public endpoints
 - [/oauth](docs/endpoint-oauth.md) (Authentication endpoint)

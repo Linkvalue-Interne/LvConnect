@@ -48,7 +48,7 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL }, next) => {
         .populate('user')
         .exec()
         .then((token) => {
-          if (!token) return cb(Boom.unauthorized('invalid_token'), false);
+          if (!token || !token.user) return cb(Boom.unauthorized('invalid_token'), false);
           if (token.expireAt < new Date()) return cb(Boom.unauthorized('token_expired'), false);
           return cb(null, true, token.user);
         });
