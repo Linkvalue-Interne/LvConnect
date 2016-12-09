@@ -32,8 +32,8 @@ module.exports = {
     consumerKey: '',
   },
   oauth: {
-    accessTokenTTL: '2D',
-    refreshTokenTTL: '2W',
+    accessTokenTTL: 'P2D',
+    refreshTokenTTL: 'P2W',
   },
   login: {
     cache: {

@@ -1,24 +1,12 @@
 const moment = require('moment');
+const Boom = require('boom');
 const models = require('./models');
 const routes = require('./routes');
-
-const validScopes = [
-  'all',
-  'user:get',
-  'user:create',
-  'user:delete',
-  'user:modify',
-  'application:get',
-  'application:create',
-  'application:delete',
-  'application:modify',
-  'profile:get',
-  'profile:modify',
-];
+const validScopes = require('./scopes');
 
 exports.register = (server, { accessTokenTTL, refreshTokenTTL }, next) => {
   server.expose('models', models);
-  server.expose('accessTokenTTL', moment.duration(accessTokenTTL).seconds());
+  server.expose('accessTokenTTL', moment.duration(accessTokenTTL).asSeconds());
   server.expose('validScopes', validScopes);
 
   const { AccessToken, RefreshToken, Application } = models;
@@ -27,7 +15,7 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL }, next) => {
     const token = new AccessToken({
       user,
       application,
-      expireAt: moment().add(moment.duration(accessTokenTTL)),
+      expireAt: moment().add(moment.duration(accessTokenTTL)).toDate(),
       scopes,
     });
     return token.save();
@@ -37,7 +25,7 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL }, next) => {
     const token = new RefreshToken({
       user,
       application,
-      expireAt: moment().add(moment.duration(refreshTokenTTL)),
+      expireAt: moment().add(moment.duration(refreshTokenTTL)).toDate(),
       scopes,
     });
     return token.save();
@@ -47,10 +35,10 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL }, next) => {
     validateFunc(req, appId, appSecret, cb) {
       Application.findOne({ appId, appSecret })
         .then((application) => {
-          if (application === null) return cb(null, false);
+          if (application === null) return cb(Boom.unauthorized('invalid_client'), false);
           return cb(null, true, application);
         })
-        .catch(cb);
+        .catch(err => cb(Boom.wrap(err), false));
     },
   });
 
@@ -60,7 +48,8 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL }, next) => {
         .populate('user')
         .exec()
         .then((token) => {
-          if (!token) return cb(null, false);
+          if (!token || !token.user) return cb(Boom.unauthorized('invalid_token'), false);
+          if (token.expireAt < new Date()) return cb(Boom.unauthorized('token_expired'), false);
           return cb(null, true, token.user);
         });
     },
