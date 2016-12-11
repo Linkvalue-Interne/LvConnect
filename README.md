@@ -34,8 +34,8 @@ Below are listed all the endpoints available for now in the application.
 
 #### Protected endpoint
 
-All the endpoints listed below are protected and requires authentication with an access token.
-This token must be issued rom the oauth enpoint (see documentation above).
+All the endpoints listed below are protected and require authentication with an access token.
+This token must be issued from the oauth endpoint (see documentation above).
 This token must be passed in the `Authorization` header as `Bearer`.
 
 - [/users](docs/endpoint-users.md) (Users endpoint)
