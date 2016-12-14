@@ -16,7 +16,7 @@ function loadFixtures(server) {
 module.exports = async function testSetup() {
   const server = await createServer();
 
-  return await dropDatabase(server)
+  await dropDatabase(server)
     .then(() => loadFixtures(server))
     .then(() => server);
 };
