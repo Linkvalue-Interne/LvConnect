@@ -3,13 +3,19 @@ const Boom = require('boom');
 const rightsError = Boom.forbidden('insufficient_rights');
 
 // Role checking middleware
-function hasRoleInList(...roles) {
+function hasRoleInList(roles, ignoreOnFail) {
   return {
     method(request, reply) {
       const hasGivenRole = roles.some(role => request.auth.credentials.roles.some(r => r === role));
-      return reply(hasGivenRole ? undefined : rightsError);
+
+      if (!hasGivenRole) {
+        return reply(rightsError, false);
+      }
+
+      return reply(null, true);
     },
     assign: 'hasRights',
+    failAction: ignoreOnFail ? 'ignore' : undefined,
   };
 }
 
@@ -17,7 +23,12 @@ function hasRoleInList(...roles) {
 const isConnectedUser = {
   method(request, reply) {
     const isSelf = request.params.user === request.auth.credentials._id.toString();
-    return reply(isSelf || rightsError);
+
+    if (!isSelf) {
+      return reply(rightsError, false);
+    }
+
+    return reply(null, true);
   },
   assign: 'isConnectedUser',
   failAction: 'ignore',

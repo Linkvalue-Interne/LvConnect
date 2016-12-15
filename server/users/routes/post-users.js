@@ -6,7 +6,7 @@ module.exports = {
   method: 'POST',
   path: '/users',
   config: {
-    pre: [hasRoleInList('rh', 'staff')],
+    pre: [hasRoleInList(['rh', 'staff'])],
     validate: {
       payload: payload.post,
     },
@@ -20,6 +20,7 @@ module.exports = {
       lastName: req.payload.lastName,
       email: req.payload.email,
       fallbackEmail: req.payload.fallbackEmail,
+      roles: req.payload.roles,
     });
 
     const userPromise = user
@@ -40,6 +41,6 @@ module.exports = {
         return Promise.reject(Boom.wrap(err));
       });
 
-    res.mongodb(userPromise, ['password']);
+    res.mongodb(userPromise, ['password']).code(201);
   },
 };

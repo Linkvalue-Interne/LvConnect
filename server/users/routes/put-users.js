@@ -6,7 +6,7 @@ module.exports = {
   method: 'PUT',
   path: '/users/{user}',
   config: {
-    pre: [isConnectedUser, hasRoleInList('rh', 'staff')],
+    pre: [isConnectedUser, hasRoleInList(['rh', 'staff'], true)],
     validate: {
       payload: payload.put,
       params,
@@ -15,8 +15,12 @@ module.exports = {
   handler(req, res) {
     const { User } = req.server.plugins.users.models;
 
+    if (!req.pre.isConnectedUser && !req.pre.hasRights) {
+      return res(rightsError);
+    }
+
     // User can't edit his roles if doesn't have rights.
-    if (req.pre.isOwner && !req.pre.hasRights && req.payload.roles) {
+    if (req.pre.isConnectedUser && !req.pre.hasRights && req.payload.roles) {
       return res(rightsError);
     }
 
