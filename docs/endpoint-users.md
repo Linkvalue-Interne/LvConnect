@@ -4,13 +4,16 @@ This endpoint deals with users.
 
 ## `GET /users`
 
-Retrieve the whole collection of users.
+Retrieve the whole collection of users. Accepts the following filter params:
+- `limit`: Limit the number of results per page (default: 20).
+- `page`: Select a page of results (default: 1).
+- `email`: Find a user by its email (strict matching).
 
 #### Response payload
 
 ```js
-[
-  {
+{
+  "results": [{
     "id": String,
     "firstName": String,
     "lastName": String,
@@ -18,8 +21,11 @@ Retrieve the whole collection of users.
     "fallbackEmail": String,
     "createdAt": Date,
     "roles": [String]
-  }
-]
+  }],
+  "page": Number,      // Requested page.
+  "limit": Number,     // Requested limit of results per page.
+  "pageCount": Number  // Amount of pages regarding the results per page.
+}
 ```
 
 ## `POST /users`
