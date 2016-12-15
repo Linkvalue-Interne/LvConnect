@@ -16,14 +16,16 @@ Retrieve the whole collection of users.
     "lastName": String,
     "email": String,
     "fallbackEmail": String,
-    "createdAt": Date
+    "createdAt": Date,
+    "roles": [String]
   }
 ]
 ```
 
 ## `POST /users`
 
-Creates a new user.
+Creates a new user. Requires to specify at least one valid role in: tech, hr, staff, business and board.
+Also requires to have either hr or staff in logged user roles to perform request.
 
 #### Request payload
 
@@ -34,6 +36,7 @@ Creates a new user.
   "email": String,          // required
   "fallbackEmail": String,   
   "plainPassword": String   // required
+  "roles": [String]         // required
 }
 ```
 
@@ -46,7 +49,8 @@ Creates a new user.
   "lastName": String,
   "email": String,
   "fallbackEmail": String,
-  "createdAt": Date
+  "createdAt": Date,
+  "roles": [String]
 }
 ```
 
@@ -63,13 +67,15 @@ Retrieve an user.
   "lastName": String,
   "email": String,
   "fallbackEmail": String,
-  "createdAt": Date
+  "createdAt": Date,
+  "roles": [String]
 }
 ```
 
 ## `PUT /users/{id}`
 
-Updates an user.
+Updates an user. Connected user can edit himself.
+To edit user roles, connected user requires either hr or staff in his roles.
 
 #### Request payload
 
@@ -78,14 +84,23 @@ Updates an user.
   "firstName": String,
   "lastName": String,
   "email": String,
-  "fallbackEmail": String
+  "fallbackEmail": String,
+  "roles": [String]         // requires hr/staff role
 }
 ```
 
 ## `DELETE /users/{id}`
 
 Deletes an user.
+To delete a user, connected user requires either hr or staff in his roles.
 
+#### Request payload
+
+```js
+{
+  "deleted": Boolean,
+}
+```
 
 ## `GET /users/me`
 
@@ -100,6 +115,7 @@ Retrieve the user corresponding to given access token.
   "lastName": String,
   "email": String,
   "fallbackEmail": String,
-  "createdAt": Date
+  "createdAt": Date,
+  "roles": [String]
 }
 ```

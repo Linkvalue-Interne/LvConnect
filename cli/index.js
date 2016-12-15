@@ -13,6 +13,13 @@ mongoose.connect(`mongodb://${userPart}${mongodb.host}:${mongodb.port}/${mongodb
       lastName: 'admin',
       email: 'admin@link-value.fr',
       fallbackEmail: 'admin@link-value.fr',
+      roles: [
+        'tech',
+        'business',
+        'hr',
+        'staff',
+        'board',
+      ],
     });
 
     return user.hashPassword('admin');

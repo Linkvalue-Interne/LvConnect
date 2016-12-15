@@ -1,9 +1,12 @@
+const Boom = require('boom');
+const { hasRoleInList } = require('../middlewares');
 const { payload } = require('./user-validation');
 
 module.exports = {
   method: 'POST',
   path: '/users',
   config: {
+    pre: [hasRoleInList('rh', 'staff')],
     validate: {
       payload: payload.post,
     },
@@ -19,7 +22,7 @@ module.exports = {
       fallbackEmail: req.payload.fallbackEmail,
     });
 
-    res.mongodb(user
+    const userPromise = user
       .hashPassword(req.payload.plainPassword)
       .then(() => user.save())
       .then((savedUser) => {
@@ -29,6 +32,14 @@ module.exports = {
           plainPassword: req.payload.plainPassword,
         }).save();
         return savedUser;
-      }), ['password']);
+      })
+      .catch((err) => {
+        if (err.message.startsWith('E11000')) {
+          return Promise.reject(Boom.badRequest('email_already_used'));
+        }
+        return Promise.reject(Boom.wrap(err));
+      });
+
+    res.mongodb(userPromise, ['password']);
   },
 };
