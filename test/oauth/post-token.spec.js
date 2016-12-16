@@ -24,15 +24,16 @@ describe('/oauth/token', () => {
           grant_type: 'password',
           username: fixUser.email,
           password: 'password',
-          scope: ['all'],
+          scope: ['users:get'],
         },
         credentials: new Application(fixApp),
       });
 
       // Then
-      expect(response.statusCode).to.equal(200);
+      expect(response.statusCode).to.equal(201);
       expect(response.result.access_token).to.be.a('string');
       expect(response.result.refresh_token).to.be.a('string');
+      expect(response.result.scope).to.deep.equal(['users:get']);
     });
   });
 });

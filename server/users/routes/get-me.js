@@ -1,14 +1,12 @@
+const { hasScopeInList } = require('../middlewares');
+
 module.exports = {
   method: 'GET',
   path: '/users/me',
+  config: {
+    pre: [hasScopeInList('profile:get')],
+  },
   handler(req, res) {
-    const { User } = req.server.plugins.users.models;
-
-    const userPromise = User
-      .findById(req.auth.credentials._id)
-      .select('-password')
-      .exec();
-
-    return res.mongodb(userPromise);
+    return res.mongodb(req.auth.credentials.user, ['password']);
   },
 };

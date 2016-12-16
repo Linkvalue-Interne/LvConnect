@@ -1,9 +1,11 @@
+const { hasRoleInList, hasScopeInList } = require('../middlewares');
 const { params } = require('./user-validation');
 
 module.exports = {
   method: 'DELETE',
   path: '/users/{user}',
   config: {
+    pre: [hasScopeInList('users:delete'), hasRoleInList(['rh', 'staff'])],
     validate: {
       params,
     },

@@ -1,16 +1,15 @@
 const { expect } = require('chai');
 
-const fixUser = require('../fixtures/users')[0];
-const fixApp = require('../fixtures/applications')[0];
+const [fixAdminUser, fixTechUser] = require('../fixtures/users');
 const testSetup = require('../setup');
 
 describe('/users', () => {
   describe('GET', () => {
     let server;
-    let Application;
+    let User;
     before(async function () {
       server = await testSetup();
-      Application = server.plugins.oauth.models.Application;
+      User = server.plugins.users.models.User;
     });
 
     after(() => server.stop());
@@ -20,15 +19,74 @@ describe('/users', () => {
       const response = await server.inject({
         method: 'GET',
         url: '/users',
-        credentials: new Application(fixApp),
+        credentials: {
+          scopes: ['users:get'],
+          user: new User(fixAdminUser),
+        },
       });
 
       // Then
+      const [result] = response.result.results;
       expect(response.statusCode).to.equal(200);
-      expect(response.result[0].lastName).to.equal(fixUser.lastName);
-      expect(response.result[0].firstName).to.equal(fixUser.firstName);
-      expect(response.result[0].email).to.equal(fixUser.email);
-      expect(response.result[0].createdAt.toString()).to.equal(fixUser.createdAt.toString());
+      expect(result.lastName).to.equal(fixAdminUser.lastName);
+      expect(result.firstName).to.equal(fixAdminUser.firstName);
+      expect(result.email).to.equal(fixAdminUser.email);
+      expect(result.createdAt.toString()).to.equal(fixAdminUser.createdAt.toString());
+    });
+
+    it('should handle pagination', async function () {
+      // Given
+      const response = await server.inject({
+        method: 'GET',
+        url: '/users?limit=1&page=2',
+        credentials: {
+          scopes: ['users:get'],
+          user: new User(fixAdminUser),
+        },
+      });
+
+      // Then
+      const [result] = response.result.results;
+      expect(response.statusCode).to.equal(200);
+      expect(result.lastName).to.equal(fixTechUser.lastName);
+      expect(result.firstName).to.equal(fixTechUser.firstName);
+      expect(result.email).to.equal(fixTechUser.email);
+      expect(result.createdAt.toString()).to.equal(fixTechUser.createdAt.toString());
+    });
+
+    it('should filter by email', async function () {
+      // Given
+      const response = await server.inject({
+        method: 'GET',
+        url: '/users?email=baz@qux.com',
+        credentials: {
+          scopes: ['users:get'],
+          user: new User(fixAdminUser),
+        },
+      });
+
+      // Then
+      const [result] = response.result.results;
+      expect(response.statusCode).to.equal(200);
+      expect(result.lastName).to.equal(fixTechUser.lastName);
+      expect(result.firstName).to.equal(fixTechUser.firstName);
+      expect(result.email).to.equal(fixTechUser.email);
+      expect(result.createdAt.toString()).to.equal(fixTechUser.createdAt.toString());
+    });
+
+    it('should fail if scope is missing', async function () {
+      // Given
+      const response = await server.inject({
+        method: 'GET',
+        url: '/users?email=baz@qux.com',
+        credentials: {
+          scopes: [],
+          user: new User(fixAdminUser),
+        },
+      });
+
+      // Then
+      expect(response.statusCode).to.equal(403);
     });
   });
 });

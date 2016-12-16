@@ -7,9 +7,12 @@ function mongodbSerializer(value, omit) {
     return value.map(v => mongodbSerializer(v, omit));
   }
 
-  const payload = Object.assign(value.toJSON(), {
-    id: value._id.toString(),
-  });
+  let payload = value;
+  if (value.toJSON) {
+    payload = Object.assign(value.toJSON(), {
+      id: value._id.toString(),
+    });
+  }
 
   omit.concat(['_id', '__v']).forEach((key) => {
     delete payload[key];

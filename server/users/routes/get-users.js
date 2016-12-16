@@ -1,10 +1,12 @@
 const Boom = require('boom');
 const { params } = require('./user-validation');
+const { hasScopeInList } = require('../middlewares');
 
 module.exports = {
   method: 'GET',
   path: '/users/{user}',
   config: {
+    pre: [hasScopeInList('users:get', 'profile:get')],
     validate: {
       params,
     },

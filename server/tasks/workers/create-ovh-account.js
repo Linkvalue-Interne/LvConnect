@@ -11,8 +11,13 @@ exports.initWorker = server =>
 
     const [, accountName, domain, ext] = email.match(/^(.+)@(.+)\.(\w+)$/i);
 
-    user.thirdParty.ovh = 'pending';
-    user.save()
+    server.plugins.users.models.User
+      .update({ _id: user._id }, {
+        $set: {
+          thirdParty: Object.assign({}, user.thirdParty, { ovh: 'pending' }),
+        },
+      })
+      .exec()
       .then(() => ovh.requestPromised('POST', `/email/domain/${domain}.${ext}/account`, {
         accountName,
         password: plainPassword,
