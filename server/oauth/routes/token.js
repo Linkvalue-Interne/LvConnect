@@ -31,7 +31,10 @@ function checkScope(target, scopes) {
 
 function handlePassword(req, application) {
   const { User } = req.server.plugins.users.models;
-  const scopes = req.payload.scope || application.allowedScopes;
+  const scopes = req.payload.scope || validScopes;
+  if (!checkScope(scopes, application.allowedScopes)) {
+    return Promise.reject(Boom.unauthorized('invalid_scope'));
+  }
 
   return User.findOneByEmailAndPassword(req.payload.username, req.payload.password)
     .catch(() => Promise.reject(Boom.unauthorized('invalid_grant')))
@@ -76,6 +79,15 @@ function handleAuthorizationCode(req, application) {
   });
 }
 
+function handleClientCredentials(req, application) {
+  const scopes = (req.payload.scope || validScopes).filter(scope => /users:get/.test(scope));
+  if (!checkScope(scopes, application.allowedScopes)) {
+    return Promise.reject(Boom.unauthorized('invalid_scope'));
+  }
+
+  return generateTokens(req, null, application, scopes);
+}
+
 module.exports = {
   method: 'POST',
   path: '/oauth/token',
@@ -117,7 +129,7 @@ module.exports = {
       case 'authorization_code':
         return rep(handleAuthorizationCode(req, app)).code(201);
       case 'client_credentials':
-        return rep(Boom.badRequest('unsupported_grant_type'));
+        return rep(handleClientCredentials(req, app)).code(201);
       default:
         return rep(Boom.badRequest('unsupported_grant_type'));
     }

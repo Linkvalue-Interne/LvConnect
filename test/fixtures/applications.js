@@ -2,6 +2,6 @@ module.exports = [{
   appId: 'test-app',
   appSecret: 'app-secret',
   redirectUris: ['http://localhost/redirect'],
-  allowedScopes: ['all'],
+  allowedScopes: ['users:get'],
   allowedGrantTypes: ['password'],
 }];

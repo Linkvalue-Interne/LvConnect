@@ -19,7 +19,10 @@ describe('/users', () => {
       const response = await server.inject({
         method: 'POST',
         url: '/users',
-        credentials: new User(fixAdminUser),
+        credentials: {
+          scopes: ['users:create'],
+          user: new User(fixAdminUser),
+        },
         payload: {
           firstName: fixAdminUser.firstName,
           lastName: fixAdminUser.lastName,
@@ -44,7 +47,10 @@ describe('/users', () => {
       const response = await server.inject({
         method: 'POST',
         url: '/users',
-        credentials: new User(fixTechUser),
+        credentials: {
+          scopes: ['users:create'],
+          user: new User(fixTechUser),
+        },
         payload: {
           firstName: fixAdminUser.firstName,
           lastName: fixAdminUser.lastName,

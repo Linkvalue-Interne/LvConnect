@@ -19,7 +19,10 @@ describe('/users', () => {
       const response = await server.inject({
         method: 'GET',
         url: '/users',
-        credentials: new User(fixAdminUser),
+        credentials: {
+          scopes: ['users:get'],
+          user: new User(fixAdminUser),
+        },
       });
 
       // Then
@@ -36,7 +39,10 @@ describe('/users', () => {
       const response = await server.inject({
         method: 'GET',
         url: '/users?limit=1&page=2',
-        credentials: new User(fixAdminUser),
+        credentials: {
+          scopes: ['users:get'],
+          user: new User(fixAdminUser),
+        },
       });
 
       // Then
@@ -53,7 +59,10 @@ describe('/users', () => {
       const response = await server.inject({
         method: 'GET',
         url: '/users?email=baz@qux.com',
-        credentials: new User(fixAdminUser),
+        credentials: {
+          scopes: ['users:get'],
+          user: new User(fixAdminUser),
+        },
       });
 
       // Then
@@ -63,6 +72,21 @@ describe('/users', () => {
       expect(result.firstName).to.equal(fixTechUser.firstName);
       expect(result.email).to.equal(fixTechUser.email);
       expect(result.createdAt.toString()).to.equal(fixTechUser.createdAt.toString());
+    });
+
+    it('should fail if scope is missing', async function () {
+      // Given
+      const response = await server.inject({
+        method: 'GET',
+        url: '/users?email=baz@qux.com',
+        credentials: {
+          scopes: [],
+          user: new User(fixAdminUser),
+        },
+      });
+
+      // Then
+      expect(response.statusCode).to.equal(403);
     });
   });
 });

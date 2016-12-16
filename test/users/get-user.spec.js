@@ -22,7 +22,10 @@ describe('/users/{id}', () => {
       const response = await server.inject({
         method: 'GET',
         url: `/users/${savedUser._id}`,
-        credentials: new User(fixUser),
+        credentials: {
+          scopes: ['users:get'],
+          user: new User(fixUser),
+        },
         payload: {
           firstName: 'hello',
           lastName: 'world',

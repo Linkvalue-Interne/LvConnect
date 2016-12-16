@@ -1,9 +1,11 @@
 const Joi = require('joi');
+const { hasScopeInList } = require('../middlewares');
 
 module.exports = {
   method: 'GET',
   path: '/users',
   config: {
+    pre: [hasScopeInList('users:get')],
     validate: {
       query: Joi.object().keys({
         email: Joi.string().email(),

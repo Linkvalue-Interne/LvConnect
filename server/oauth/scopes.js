@@ -1,13 +1,8 @@
 module.exports = [
-  'all',
-  'user:get',
-  'user:create',
-  'user:delete',
-  'user:modify',
-  'application:get',
-  'application:create',
-  'application:delete',
-  'application:modify',
+  'users:get',
+  'users:create',
+  'users:delete',
+  'users:modify',
   'profile:get',
   'profile:modify',
 ];

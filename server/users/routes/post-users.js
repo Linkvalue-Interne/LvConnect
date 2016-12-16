@@ -1,12 +1,12 @@
 const Boom = require('boom');
-const { hasRoleInList } = require('../middlewares');
+const { hasRoleInList, hasScopeInList } = require('../middlewares');
 const { payload } = require('./user-validation');
 
 module.exports = {
   method: 'POST',
   path: '/users',
   config: {
-    pre: [hasRoleInList(['rh', 'staff'])],
+    pre: [hasScopeInList('users:create'), hasRoleInList(['rh', 'staff'])],
     validate: {
       payload: payload.post,
     },

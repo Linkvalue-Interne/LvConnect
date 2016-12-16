@@ -22,7 +22,10 @@ describe('/users/{id}', () => {
       const response = await server.inject({
         method: 'PUT',
         url: `/users/${savedUser._id}`,
-        credentials: new User(fixAdminUser),
+        credentials: {
+          scopes: ['users:modify'],
+          user: new User(fixAdminUser),
+        },
         payload: {
           firstName: 'hello',
           lastName: 'world',
@@ -47,7 +50,10 @@ describe('/users/{id}', () => {
       const response = await server.inject({
         method: 'PUT',
         url: `/users/${savedUser._id}`,
-        credentials: new User(fixTechUser),
+        credentials: {
+          scopes: ['users:modify'],
+          user: new User(fixTechUser),
+        },
         payload: {
           firstName: 'hello',
           lastName: 'world',
@@ -66,7 +72,10 @@ describe('/users/{id}', () => {
       const response = await server.inject({
         method: 'PUT',
         url: `/users/${savedUser._id}`,
-        credentials: savedUser,
+        credentials: {
+          scopes: ['profile:modify'],
+          user: savedUser,
+        },
         payload: {
           firstName: 'hello',
           lastName: 'world',
@@ -84,7 +93,10 @@ describe('/users/{id}', () => {
       const response = await server.inject({
         method: 'PUT',
         url: `/users/${savedUser._id}`,
-        credentials: savedUser,
+        credentials: {
+          scopes: ['profile:modify'],
+          user: savedUser,
+        },
         payload: {
           firstName: 'hello',
           lastName: 'world',

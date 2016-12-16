@@ -20,7 +20,10 @@ describe('/users/me', () => {
       const response = await server.inject({
         method: 'GET',
         url: '/users/me',
-        credentials: new User(fixUser),
+        credentials: {
+          scopes: ['profile:get'],
+          user: new User(fixUser),
+        },
       });
 
       // Then
@@ -29,6 +32,21 @@ describe('/users/me', () => {
       expect(response.result.firstName).to.equal(fixUser.firstName);
       expect(response.result.email).to.equal(fixUser.email);
       expect(response.result.createdAt.toString()).to.equal(fixUser.createdAt.toString());
+    });
+
+    it('should reject if scope is missing', async function () {
+      // Given
+      const response = await server.inject({
+        method: 'GET',
+        url: '/users/me',
+        credentials: {
+          scopes: [],
+          user: new User(fixUser),
+        },
+      });
+
+      // Then
+      expect(response.statusCode).to.equal(403);
     });
   });
 });

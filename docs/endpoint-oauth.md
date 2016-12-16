@@ -7,6 +7,7 @@ This endpoint deals with OAuth authentication.
 Generates authentication tokens according to `grant_type`. The following grants are allowed:
 - password
 - refresh_token
+- client_credentials
 
 This endpoint requires client authentication (to be sure that the application is authorized to request tokens).
 You must provide client credentials (client id and client secret) in the `Authorization` header as `Basic` credentials.
@@ -29,6 +30,16 @@ You must provide client credentials (client id and client secret) in the `Author
   "grant_type": "refresh_token",  // required
   "refresh_token": String,        // required
   "scope": Array<String>          // optional
+}
+```
+
+#### Request payload for client_credentials grant
+
+This grant type allows only the read.
+
+```js
+{
+  "grant_type": "client_credentials"  // required
 }
 ```
 

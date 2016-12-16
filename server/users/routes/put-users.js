@@ -1,12 +1,12 @@
 const Boom = require('boom');
-const { hasRoleInList, isConnectedUser, rightsError } = require('../middlewares');
+const { hasRoleInList, isConnectedUser, hasScopeInList } = require('../middlewares');
 const { payload, params } = require('./user-validation');
 
 module.exports = {
   method: 'PUT',
   path: '/users/{user}',
   config: {
-    pre: [isConnectedUser, hasRoleInList(['rh', 'staff'], true)],
+    pre: [hasScopeInList('users:modify', 'profile:modify'), isConnectedUser, hasRoleInList(['rh', 'staff'], true)],
     validate: {
       payload: payload.put,
       params,
@@ -14,14 +14,23 @@ module.exports = {
   },
   handler(req, res) {
     const { User } = req.server.plugins.users.models;
+    const { isConnectedUser: isSelf, hasRights, scopes } = req.pre;
+    const hasEditAnyUserScope = scopes.indexOf('users:modify') !== -1;
+    const hasEditSelfScope = scopes.indexOf('profile:modify') !== -1;
 
-    if (!req.pre.isConnectedUser && !req.pre.hasRights) {
-      return res(rightsError);
+    // Check can edit other users
+    if (!isSelf && (!hasRights || !hasEditAnyUserScope)) {
+      return res(Boom.forbidden('insufficient_rights'));
+    }
+
+    // Check can edit self
+    if (isSelf && !hasEditSelfScope && !hasEditAnyUserScope) {
+      return res(Boom.forbidden('insufficient_rights'));
     }
 
     // User can't edit his roles if doesn't have rights.
-    if (req.pre.isConnectedUser && !req.pre.hasRights && req.payload.roles) {
-      return res(rightsError);
+    if (isSelf && !hasRights && req.payload.roles) {
+      return res(Boom.forbidden('insufficient_rights'));
     }
 
     const userPromise = User

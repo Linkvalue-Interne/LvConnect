@@ -24,7 +24,10 @@ describe('/users/{id}', () => {
       const response = await server.inject({
         method: 'DELETE',
         url: `/users/${savedUser._id}`,
-        credentials: new User(fixAdminUser),
+        credentials: {
+          scopes: ['users:delete'],
+          user: new User(fixAdminUser),
+        },
         payload: {
           firstName: 'hello',
           lastName: 'world',
@@ -45,7 +48,10 @@ describe('/users/{id}', () => {
       const response = await server.inject({
         method: 'DELETE',
         url: `/users/${savedUser._id}`,
-        credentials: new User(fixTechUser),
+        credentials: {
+          scopes: ['users:delete'],
+          user: new User(fixTechUser),
+        },
         payload: {
           firstName: 'hello',
           lastName: 'world',
@@ -57,6 +63,27 @@ describe('/users/{id}', () => {
       // Then
       expect(response.statusCode).to.equal(403);
       expect(userCount).to.equal(userFixtures.length + 1);
+    });
+
+    it('should reject if scope is missing', async function () {
+      // Given
+      savedUser = await User.create({ email: 'test@test.com' });
+      const response = await server.inject({
+        method: 'DELETE',
+        url: `/users/${savedUser._id}`,
+        credentials: {
+          scopes: [],
+          user: new User(fixTechUser),
+        },
+        payload: {
+          firstName: 'hello',
+          lastName: 'world',
+          fallbackEmail: 'hello@world.com',
+        },
+      });
+
+      // Then
+      expect(response.statusCode).to.equal(403);
     });
   });
 });
