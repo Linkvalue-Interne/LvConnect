@@ -23,7 +23,7 @@ Or if you want the production mode:
 npm run prod
 ```
 
-The server listens to `localhost:5000` in dev and to `lvconnect.linkvalue.fr` for prod.
+The server listens to `localhost:5000` in dev and to `lvconnect.link-value.fr` for prod.
 
 ## Api reference
 
