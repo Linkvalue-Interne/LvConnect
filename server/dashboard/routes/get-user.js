@@ -1,0 +1,20 @@
+module.exports = {
+  method: 'GET',
+  path: '/dashboard/users/{user}',
+  config: { auth: 'session' },
+  handler(req, res) {
+    const { User } = req.server.plugins.users.models;
+
+    User
+      .findOne({ _id: req.params.user })
+      .exec()
+      .then((user) => {
+        if (!user) return res.view('404');
+        return res.view('get-user', {
+          userData: user,
+          adminRoles: ['rh', 'staff'],
+        });
+      })
+      .catch(res);
+  },
+};

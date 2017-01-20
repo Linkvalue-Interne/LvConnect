@@ -1,0 +1,60 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <h3>Create User</h3>
+  </div>
+</div>
+
+<div class="mdl-grid">
+  <form class="mdl-cell mdl-cell--6-col mdl-cell--3-offset-desktop mdl-cell--1-offset-tablet mdl-card mdl-shadow--2dp" method="POST">
+    <div class="mdl-card__supporting-text mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="firstNameInput" name="firstName" value="{{newUser.firstName}}" required>
+        <label class="mdl-textfield__label" for="firstNameInput">First Name</label>
+      </div>
+
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="lastNameInput" name="lastName" value="{{newUser.lastName}}" required>
+        <label class="mdl-textfield__label" for="lastNameInput">Last Name</label>
+      </div>
+
+      <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="email" id="emailInput" value="{{newUser.email}}" name="email" required>
+        <label class="mdl-textfield__label" for="emailInput">LV Email</label>
+      </div>
+
+      <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="email" id="fallbackEmailInput" name="fallbackEmail" value="{{newUser.fallbackEmail}}" required>
+        <label class="mdl-textfield__label" for="fallbackEmailInput">Fallback Email</label>
+      </div>
+
+      <div class="mdl-cell mdl-cell--12-col mdl-grid">
+        {{#each validRoles as |role|}}
+        <div class="mdl-cell mdl-cell--4-col">
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="role-checkbox-{{ role }}">
+            <input type="checkbox" name="roles" value="{{ role }}" id="role-checkbox-{{ role }}" class="mdl-checkbox__input"{{#ifIncludes @root.newUser.roles role}} checked{{/ifIncludes}}>
+            <span class="mdl-checkbox__label">{{ role }}</span>
+          </label>
+        </div>
+        {{/each}}
+      </div>
+
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="password" id="plainPasswordInput" name="plainPassword" pattern=".{6,}" required>
+        <label class="mdl-textfield__label" for="plainPasswordInput">Password</label>
+      </div>
+
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="password" id="plainPasswordCheckInput" name="plainPasswordCheck" pattern=".{6,}" required>
+        <label class="mdl-textfield__label" for="plainPasswordCheckInput">Repeat Password</label>
+      </div>
+    </div>
+
+    <div class="mdl-card__actions mdl-card--border">
+      <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">
+        Create User
+      </button>
+    </div>
+  </form>
+</div>
+
+<script defer src="/dashboard/assets/js/pristine-form.js"></script>

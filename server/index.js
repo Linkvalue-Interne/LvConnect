@@ -2,7 +2,9 @@ const Glue = require('glue');
 const config = require('config');
 
 const manifest = {
-  server: {},
+  server: {
+    cache: config.server.cache,
+  },
   registrations: [{
     plugin: {
       register: 'good',

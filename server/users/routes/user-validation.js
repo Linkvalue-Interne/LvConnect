@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { Types } = require('mongoose');
 
-const validRoles = [
+const validRoles = exports.validRoles = [
   'tech',
   'business',
   'hr',
@@ -29,3 +29,5 @@ exports.payload = {
 exports.params = (value, options, next) => {
   next(Types.ObjectId.isValid(value.user) ? null : new Error('Invalid User Id'), value);
 };
+
+exports.validRoles = validRoles;

@@ -1,4 +1,5 @@
 module.exports = {
+  server: {},
   host: {
     hostname: 'localhost',
     port: 8000,
@@ -20,7 +21,7 @@ module.exports = {
     host: 'localhost',
     port: 6379,
     db: 0,
-    prefix: 'lvc-kue:',
+    prefix: 'lvc-kue',
     config: {
       shutdownTimeout: 5000,
     },

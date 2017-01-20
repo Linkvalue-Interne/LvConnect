@@ -1,10 +1,10 @@
 module.exports = {
   method: 'GET',
-  path: '/dashboard',
+  path: '/dashboard/apps/create',
   config: { auth: 'session' },
   handler(req, res) {
-    res.view('get-dashboard', {
-      pageTitle: 'Welcome',
+    res.view('create-app', {
+      user: req.auth.credentials,
     });
   },
 };

@@ -1,0 +1,38 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <h3>{{userData.firstName}} {{userData.lastName}}</h3>
+  </div>
+</div>
+
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--3-offset-desktop mdl-cell--1-offset-tablet mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__supporting-text mdl-grid">
+      <div class="mdl-cell mdl-cell--12-col">
+        Name: {{userData.firstName}} {{userData.lastName}}
+      </div>
+
+      <div class="mdl-cell mdl-cell--12-col">
+        Email: <a href="mailto:{{userData.email}}">{{userData.email}}</a>
+      </div>
+
+      <div class="mdl-cell mdl-cell--12-col">
+        Fallback Email: <a href="mailto:{{userData.fallbackEmail}}">{{userData.fallbackEmail}}</a>
+      </div>
+
+      <div class="mdl-cell mdl-cell--12-col">
+        {{#each userData.roles as |role|}}
+          <span class="mdl-chip">
+            <span class="mdl-chip__text">{{role}}</span>
+          </span>
+        {{/each}}
+      </div>
+    </div>
+    {{#ifHasRole adminRoles}}
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/dashboard/users/{{@root.userData._id}}/edit">
+          Edit
+        </a>
+      </div>
+    {{/ifHasRole}}
+  </div>
+</div>

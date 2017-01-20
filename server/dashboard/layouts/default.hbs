@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{pageTitle}} - LvConnect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Material Design Lite -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
+    <script defer async src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+
+    <!-- LvConnect -->
+    <link rel="stylesheet" href="/dashboard/assets/css/dashboard.css">
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <div class="mdl-layout-spacer"></div>
+          <div>
+            <span class="header-name">{{user.firstName}} {{user.lastName}}</span>
+            <img class="header-avatar" src="https://www.gravatar.com/avatar/{{hash}}" alt="Avatar" id="profile-button">
+            <div class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="profile-button">
+              <a class="mdl-menu__item" href="/dashboard">Profile</a>
+              <a class="mdl-menu__item" href="/logout">Logout</a>
+            </div>
+          </div>
+          <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="text" name="sample" id="fixed-header-drawer-exp">
+            </div>
+          </div>-->
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">LvConnect</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="/dashboard">Overview</a>
+          <a class="mdl-navigation__link" href="/dashboard/users">Users</a>
+          <a class="mdl-navigation__link" href="/dashboard/apps">Applications</a>
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        {{{content}}}
+      </main>
+    </div>
+  </body>
+</html>
