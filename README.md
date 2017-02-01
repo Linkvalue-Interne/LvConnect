@@ -9,18 +9,18 @@ You will need to have on your machine:
 - [MongoDB](https://www.mongodb.com/) (>3.x.x)
 
 Then run in your cloned folder:
-```
-npm install
+```shell
+yarn
 ```
 
 If you want to work on this project, run:
-```
-npm run dev
+```shell
+yarn dev
 ```
 
 Or if you want the production mode:
-```
-npm run prod
+```shell
+yarn prod
 ```
 
 The server listens to `localhost:5000` in dev and to `lvconnect.link-value.fr` for prod.
