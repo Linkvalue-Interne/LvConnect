@@ -7,6 +7,7 @@ module.exports = {
 
     Application.findOne({ _id: req.params.id })
       .then(app => res.view('create-app', {
+        pageTitle: 'Edit app',
         user: req.auth.credentials,
         app,
       }));

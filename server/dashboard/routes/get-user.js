@@ -11,6 +11,7 @@ module.exports = {
       .then((user) => {
         if (!user) return res.view('404');
         return res.view('get-user', {
+          pageTitle: `${user.firstName} ${user.lastName}`,
           userData: user,
           adminRoles: ['rh', 'staff'],
         });

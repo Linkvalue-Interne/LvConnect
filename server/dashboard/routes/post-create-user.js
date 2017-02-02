@@ -18,6 +18,7 @@ module.exports = {
       failAction: (req, res, src, error) => {
         req.server.log('info', error);
         res.view('create-user', {
+          pageTitle: 'Add new partner',
           newUser: req.payload,
           validRoles,
         });
@@ -45,6 +46,7 @@ module.exports = {
       })
       .catch(() => {
         res.view('create-user', {
+          pageTitle: 'Add new partner',
           newUser: body,
           validRoles,
         });

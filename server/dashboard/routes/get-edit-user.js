@@ -17,6 +17,7 @@ module.exports = {
       .then((user) => {
         if (!user) return res.view('404');
         return res.view('edit-user', {
+          pageTitle: 'Edit partner',
           userData: user,
           validRoles,
         });

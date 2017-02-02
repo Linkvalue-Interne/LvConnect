@@ -13,12 +13,13 @@ module.exports = {
         firstName: Joi.string().min(2).required(),
         lastName: Joi.string().min(2).required(),
         fallbackEmail: Joi.string().email().required(),
-        description: Joi.string().max(255),
+        description: Joi.string().empty('').max(255),
         roles: Joi.array().items(Joi.string().valid(validRoles)).single().min(1)
           .required(),
       }),
       failAction: (req, res, src, error) => {
         res.view('edit-user', {
+          pageTitle: 'Edit partner',
           userData: req.payload,
           validRoles,
           error,

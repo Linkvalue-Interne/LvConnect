@@ -8,11 +8,10 @@ module.exports = {
     Application
       .find()
       .select('-appSecret')
-      .sort('appId')
       .then((apps) => {
         res.view('get-apps', {
-          user: req.auth.credentials,
-            apps,
+          pageTitle: 'Applications',
+          apps,
         });
       });
   },

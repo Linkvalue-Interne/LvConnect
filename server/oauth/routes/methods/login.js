@@ -20,6 +20,7 @@ module.exports = function login(req, res) {
     })
     .catch(() => {
       res.view('oauth-login', {
+        pageTitle: 'Login',
         email: req.payload.email,
         appId: req.query.app_id,
         redirectUri: req.query.redirect_uri,

@@ -1,7 +1,7 @@
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
     <h3>
-      {{#if app }}
+      {{#if editMode }}
         Edit Application
       {{else  }}
         Create Application
@@ -36,7 +36,7 @@
       </div>
 
     </div>
-    {{#if app}}
+    {{#if editMode}}
       <div class="mdl-card__supporting-text mdl-grid">
         App id: {{app.appId}}<br/>
         App secret: {{app.appSecret}}
@@ -45,7 +45,7 @@
 
     <div class="mdl-card__actions mdl-card--border">
       <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">
-        {{#if app }}
+        {{#if editMode }}
           Edit Application
         {{else  }}
           Create Application

@@ -14,6 +14,7 @@ module.exports = {
         req.server.log('info', src);
         req.server.log('info', error);
         res.view('create-application', {
+          pageTitle: 'Create application',
           user: req.auth.credentials,
           errors: error,
         });
@@ -34,6 +35,7 @@ module.exports = {
       })
       .catch(() => {
         res.view('create-app', {
+          pageTitle: 'Create application',
           user: req.auth.credentials,
         });
       });

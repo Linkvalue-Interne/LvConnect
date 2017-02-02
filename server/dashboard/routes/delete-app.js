@@ -3,10 +3,9 @@ module.exports = {
   path: '/dashboard/apps/delete/{id}',
   config: { auth: 'session' },
   handler(req, res) {
-
     const { Application } = req.server.plugins.oauth.models;
 
-    Application.findOne({_id:req.params.id})
+    Application.findOne({ _id: req.params.id })
       .remove()
       .then(() => {
         Application
@@ -15,6 +14,7 @@ module.exports = {
           .sort('appId')
           .then((apps) => {
             res.view('get-apps', {
+              pageTitle: 'Applications',
               user: req.auth.credentials,
               apps,
             });
