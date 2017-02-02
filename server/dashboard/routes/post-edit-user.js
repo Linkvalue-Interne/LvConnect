@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const Joi = require('joi');
 const { validRoles } = require('../../users/routes/user-validation');
 const { hasRoleInList } = require('../middlewares');
@@ -14,14 +13,15 @@ module.exports = {
         firstName: Joi.string().min(2).required(),
         lastName: Joi.string().min(2).required(),
         fallbackEmail: Joi.string().email().required(),
+        description: Joi.string().max(255),
         roles: Joi.array().items(Joi.string().valid(validRoles)).single().min(1)
           .required(),
       }),
       failAction: (req, res, src, error) => {
-        req.server.log('info', error);
-        res.view('create-user', {
+        res.view('edit-user', {
           userData: req.payload,
           validRoles,
+          error,
         });
       },
     },

@@ -5,18 +5,25 @@
 </div>
 
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--6-col mdl-cell--3-offset-desktop mdl-cell--1-offset-tablet mdl-card mdl-shadow--2dp">
+  <div class="user-card mdl-cell mdl-cell--6-col mdl-cell--3-offset-desktop mdl-cell--1-offset-tablet mdl-card mdl-shadow--2dp">
+    <a
+      class="mdl-card__title"
+      style="background-image: url('{{userData.profilePictureUrl}}')"
+      href="/dashboard/users/{{userData.id}}">
+      <div class="card-title-shade"></div>
+      <h2 class="mdl-card__title-text">{{userData.firstName}} {{userData.lastName}}</h2>
+    </a>
     <div class="mdl-card__supporting-text mdl-grid">
-      <div class="mdl-cell mdl-cell--12-col">
-        Name: {{userData.firstName}} {{userData.lastName}}
-      </div>
-
       <div class="mdl-cell mdl-cell--12-col">
         Email: <a href="mailto:{{userData.email}}">{{userData.email}}</a>
       </div>
 
       <div class="mdl-cell mdl-cell--12-col">
         Fallback Email: <a href="mailto:{{userData.fallbackEmail}}">{{userData.fallbackEmail}}</a>
+      </div>
+
+      <div class="mdl-cell mdl-cell--12-col">
+        Description: {{userData.description}}
       </div>
 
       <div class="mdl-cell mdl-cell--12-col">

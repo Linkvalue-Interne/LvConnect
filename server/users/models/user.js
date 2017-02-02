@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema({
   firstName: String,
@@ -10,7 +11,14 @@ const userSchema = new mongoose.Schema({
   roles: [String],
   thirdParty: Object,
   createdAt: { type: Date, default: Date.now },
+  description: String,
 });
+
+userSchema.virtual('profilePictureUrl').get(function getProfilePictureUrl(value) {
+  return value || `https://www.gravatar.com/avatar/${crypto.createHash('md5').update(this.email).digest('hex')}?s=200`;
+});
+
+userSchema.set('toJSON', { virtuals: true });
 
 userSchema.methods.hashPassword = function hashPassword(password) {
   return bcrypt.hash(password, 10).then((hash) => {

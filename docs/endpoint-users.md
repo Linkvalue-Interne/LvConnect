@@ -19,6 +19,8 @@ Retrieve the whole collection of users. Accepts the following filter params:
     "lastName": String,
     "email": String,
     "fallbackEmail": String,
+    "description": String,
+    "pictureProfileUrl": String,
     "createdAt": Date,
     "roles": [String]
   }],
@@ -37,12 +39,13 @@ Also requires to have either hr or staff in logged user roles to perform request
 
 ```js
 {
-  "firstName": String,      // required
-  "lastName": String,       // required
-  "email": String,          // required
-  "fallbackEmail": String,   
-  "plainPassword": String   // required
-  "roles": [String]         // required
+  "firstName": String,          // required
+  "lastName": String,           // required
+  "email": String,              // required
+  "fallbackEmail": String,
+  "description": String,
+  "plainPassword": String       // required
+  "roles": [String]             // required
 }
 ```
 
@@ -55,6 +58,8 @@ Also requires to have either hr or staff in logged user roles to perform request
   "lastName": String,
   "email": String,
   "fallbackEmail": String,
+  "description": String,
+  "pictureProfileUrl": String,
   "createdAt": Date,
   "roles": [String]
 }
@@ -73,6 +78,8 @@ Retrieve an user.
   "lastName": String,
   "email": String,
   "fallbackEmail": String,
+  "description": String,
+  "pictureProfileUrl": String,
   "createdAt": Date,
   "roles": [String]
 }
@@ -91,6 +98,7 @@ To edit user roles, connected user requires either hr or staff in his roles.
   "lastName": String,
   "email": String,
   "fallbackEmail": String,
+  "description": String,
   "roles": [String]         // requires hr/staff role
 }
 ```
@@ -121,6 +129,8 @@ Retrieve the user corresponding to given access token.
   "lastName": String,
   "email": String,
   "fallbackEmail": String,
+  "description": String,
+  "pictureProfileUrl": String,
   "createdAt": Date,
   "roles": [String]
 }
