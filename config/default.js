@@ -37,6 +37,12 @@ module.exports = {
     refreshTokenTTL: 'P2W',
     authorizationCodeTTL: 'T10M',
   },
+  csrf: {
+    skip: req => !/(\/oauth\/authorize|\/dashboard|\/login)/.test(req.path),
+    cookieOptions: {
+      isSecure: false,
+    },
+  },
   login: {
     cache: {
       ttl: 3 * 24 * 60 * 60 * 1000,

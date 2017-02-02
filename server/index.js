@@ -19,6 +19,11 @@ const manifest = {
   }, {
     plugin: 'hapi-auth-bearer-token',
   }, {
+    plugin: {
+      register: 'crumb',
+      options: config.csrf,
+    },
+  }, {
     plugin: 'vision',
   }, {
     plugin: 'inert',
