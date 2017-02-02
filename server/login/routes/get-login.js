@@ -6,6 +6,7 @@ module.exports = {
       mode: 'optional',
       strategies: ['session'],
     },
+    plugins: { 'hapi-auth-cookie': { redirectTo: false } },
   },
   handler(req, res) {
     if (!req.auth.isAuthenticated) {

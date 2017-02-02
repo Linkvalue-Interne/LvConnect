@@ -8,12 +8,11 @@ exports.register = (server, { cache, cookie }, next) => {
     path: 'views',
   });
 
-  const appCache = server.cache({
+  server.app.cache = server.cache({ // eslint-disable-line no-param-reassign
+    cache: 'redisCache',
     segment: 'sessions',
     expiresIn: cache.ttl,
   });
-
-  server.app.cache = appCache; // eslint-disable-line no-param-reassign
 
   server.auth.strategy('session', 'cookie', {
     password: cookie.secret,
@@ -21,7 +20,7 @@ exports.register = (server, { cache, cookie }, next) => {
     redirectTo: cookie.redirect,
     isSecure: cookie.isSecure,
     validateFunc(request, session, callback) {
-      appCache.get(session.sid, (err, cached) => {
+      request.server.app.cache.get(session.sid, (err, cached) => {
         if (err) return callback(err, false);
         if (!cached) return callback(null, false);
 

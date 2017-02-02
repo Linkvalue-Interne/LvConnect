@@ -1,6 +1,7 @@
 module.exports = {
   server: {
     cache: {
+      name: 'redisCache',
       engine: 'catbox-redis',
       host: 'localhost',
       port: 6379,

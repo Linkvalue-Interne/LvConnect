@@ -5,7 +5,11 @@ module.exports = {
   method: 'GET',
   path: '/oauth/authorize',
   config: {
-    auth: false,
+    auth: {
+      mode: 'optional',
+      strategies: ['session'],
+    },
+    plugins: { 'hapi-auth-cookie': { redirectTo: false } },
     validate: {
       query: Joi.object().keys({
         app_id: Joi.string().required(),
@@ -14,16 +18,14 @@ module.exports = {
     },
   },
   handler(req, res) {
-    req.server.auth.test('session', req, (err, credentials) => {
-      if (err) {
-        return res.view('oauth-login', {
-          pageTitle: 'Login',
-          appId: req.query.app_id,
-          redirectUri: req.query.redirect_uri,
-        });
-      }
+    if (!req.auth.isAuthenticated) {
+      return res.view('oauth-login', {
+        pageTitle: 'Login',
+        appId: req.query.app_id,
+        redirectUri: req.query.redirect_uri,
+      });
+    }
 
-      return displayPermissions(req, res, credentials);
-    });
+    return displayPermissions(req, res);
   },
 };

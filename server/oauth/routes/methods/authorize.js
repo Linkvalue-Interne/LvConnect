@@ -1,4 +1,5 @@
 const Boom = require('boom');
+const _ = require('lodash');
 
 module.exports = function authorize(req, res) {
   const { models: { Authorization, Application }, validScopes } = req.server.plugins.oauth;
@@ -14,8 +15,9 @@ module.exports = function authorize(req, res) {
       }
 
       const scopes = req.payload.scopes.split(',');
-      if (scopes.some(perm => !validScopes.find(scope => perm.startsWith(scope)))) {
-        return Promise.reject(Boom.badRequest('Invalid scopes.'));
+      const invalidScopes = _.difference(scopes, _.intersection(validScopes, application.allowedScopes));
+      if (invalidScopes.length > 0) {
+        return Promise.reject(Boom.badRequest(`Invalid scopes: ${invalidScopes.join(',')}.`));
       }
 
       if (authorization === null) {

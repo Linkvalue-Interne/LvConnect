@@ -6,7 +6,11 @@ module.exports = {
   method: 'POST',
   path: '/oauth/authorize',
   config: {
-    auth: 'session',
+    auth: {
+      mode: 'optional',
+      strategies: ['session'],
+    },
+    plugins: { 'hapi-auth-cookie': { redirectTo: false } },
     validate: {
       payload: Joi.object({
         step: Joi.string().valid('login', 'permissions').required(),
@@ -35,6 +39,14 @@ module.exports = {
   handler(req, res) {
     if (req.payload.step === 'login') {
       return login(req, res);
+    }
+
+    if (!req.auth.isAuthenticated) {
+      return res.view('oauth-login', {
+        pageTitle: 'Login',
+        appId: req.query.app_id,
+        redirectUri: req.query.redirect_uri,
+      });
     }
 
     return authorize(req, res);
