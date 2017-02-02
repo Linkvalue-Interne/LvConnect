@@ -35,6 +35,7 @@ module.exports = {
   oauth: {
     accessTokenTTL: 'P2D',
     refreshTokenTTL: 'P2W',
+    authorizationCodeTTL: 'T10M',
   },
   login: {
     cache: {

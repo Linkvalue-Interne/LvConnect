@@ -1,0 +1,7 @@
+.oauth-container {
+  padding: 1rem;
+}
+
+.oauth-already-granted {
+  opacity: 0.5;
+}

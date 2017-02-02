@@ -41,6 +41,8 @@
     "joi": "^10.0.5",
     "kue": "^0.11.1",
     "lodash": "^4.17.2",
+    "material-design-icons": "^3.0.1",
+    "material-design-lite": "^1.3.0",
     "moment": "^2.15.0",
     "mongoose": "^4.6.0",
     "ovh": "2.0.1",

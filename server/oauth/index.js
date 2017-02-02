@@ -1,15 +1,24 @@
 const moment = require('moment');
+const handlebars = require('handlebars');
 const Boom = require('boom');
 const models = require('./models');
 const routes = require('./routes');
 const validScopes = require('./scopes');
 
-exports.register = (server, { accessTokenTTL, refreshTokenTTL }, next) => {
+exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCodeTTL }, next) => {
   server.expose('models', models);
   server.expose('accessTokenTTL', moment.duration(accessTokenTTL).asSeconds());
   server.expose('validScopes', validScopes);
 
-  const { AccessToken, RefreshToken, Application } = models;
+  const { AccessToken, RefreshToken, AuthorizationCode, Application } = models;
+
+  server.views({
+    engines: { hbs: handlebars },
+    relativeTo: __dirname,
+    layout: 'default',
+    layoutPath: 'layouts',
+    path: 'views',
+  });
 
   server.method('generateAccessToken', (user, application, scopes) => {
     const token = new AccessToken({
@@ -26,6 +35,16 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL }, next) => {
       user,
       application,
       expireAt: moment().add(moment.duration(refreshTokenTTL)).toDate(),
+      scopes,
+    });
+    return token.save();
+  });
+
+  server.method('generateAuthorizationCode', (user, application, scopes) => {
+    const token = new AuthorizationCode({
+      user,
+      application,
+      expireAt: moment().add(moment.duration(authorizationCodeTTL)).toDate(),
       scopes,
     });
     return token.save();

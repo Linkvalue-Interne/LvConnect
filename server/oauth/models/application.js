@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 const uuid = require('uuid/v4');
-const crypto = require('crypto');
-
-function uuidHash() {
-  const shaSum = crypto.createHash('sha1');
-  shaSum.update(uuid.v4());
-  return shaSum.digest('hex');
-}
+const uuidHash = require('./uuid-hash');
 
 const applicationSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },

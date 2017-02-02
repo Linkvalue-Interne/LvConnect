@@ -1,0 +1,20 @@
+<form method="post" action="/oauth/authorize?app_id={{appId}}&redirect_uri={{redirectUri}}" class="mdl-card mdl-shadow--2dp login-card">
+  <div class="mdl-card__title login-card__title"></div>
+  <div class="mdl-card__supporting-text mdl-card--border login-card__body">
+    {{error}}
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="email" id="email" name="email" value="{{email}}">
+      <label class="mdl-textfield__label" for="email">Email</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="password" id="password" name="password">
+      <label class="mdl-textfield__label" for="password">Mot de passe</label>
+    </div>
+    <input type="hidden" id="step" name="step" value="login">
+  </div>
+  <div class="mdl-card__actions mdl-card--border">
+    <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">
+      Se connecter
+    </button>
+  </div>
+</form>
