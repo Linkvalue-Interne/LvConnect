@@ -31,4 +31,11 @@ module.exports = {
       workerReporting: reportingFactory('./logs/hapi/hapi-worker.log', { worker: '*' }),
     },
   },
+  trello: {
+    org: '54eb7142caddc666cbb12405',
+    boards: ['562e0f3822bc1b14cc196615'],
+  },
+  github: {
+    org: 'LinkValue',
+  },
 };

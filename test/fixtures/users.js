@@ -5,6 +5,10 @@ module.exports = [{
   password: '$2a$10$lNbtFeWS1GuquR50WIzWTekc9UychxS7vzkQAy/G8liWQSwRKsNSW', // password
   roles: ['rh', 'staff', 'board', 'tech', 'business'],
   createdAt: new Date(),
+  thirdParty: {},
+  githubHandle: 'lvtest1', // lvtest1 / lvtest1
+  trelloHandle: 'lvtest1', // lvtest1 / lvlvlvlv
+  slackHandle: 'lvtest',
 }, {
   firstName: 'Baz',
   lastName: 'Qux',

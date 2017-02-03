@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema({
   fallbackEmail: String,
   password: String,
   roles: [String],
+  githubHandle: String,
+  trelloHandle: String,
   thirdParty: Object,
   createdAt: { type: Date, default: Date.now },
   description: String,
