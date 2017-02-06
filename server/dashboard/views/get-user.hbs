@@ -33,6 +33,11 @@
           </span>
         {{/each}}
       </div>
+
+      <div class="mdl-cell mdl-cell--12-col">
+        Services:
+        {{#serviceStatusList userData}}{{/serviceStatusList}}
+      </div>
     </div>
     {{#ifHasRole adminRoles}}
       <div class="mdl-card__actions mdl-card--border">

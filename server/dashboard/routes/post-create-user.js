@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const Joi = require('joi');
-const { payload, validRoles } = require('../../users/routes/user-validation');
+const { validRoles } = require('../../users/routes/user-validation');
 const { hasRoleInList } = require('../middlewares');
 
 module.exports = {
@@ -10,10 +10,18 @@ module.exports = {
     pre: [hasRoleInList(['rh', 'staff'])],
     auth: 'session',
     validate: {
-      payload: payload.post.keys({
-        plainPasswordCheck: Joi.string().required(),
-        roles: Joi.array().items(Joi.string().valid(validRoles)).single().min(1)
+      payload: Joi.object().keys({
+        firstName: Joi.string().min(2).required(),
+        lastName: Joi.string().min(2).required(),
+        plainPassword: Joi.string().min(6).required(),
+        email: Joi.string().email().required(),
+        description: Joi.string().max(255).allow(''),
+        fallbackEmail: Joi.string().email(),
+        roles: Joi.array().items(Joi.string().valid(validRoles)).min(1).single()
           .required(),
+        githubHandle: Joi.string().allow(''),
+        trelloHandle: Joi.string().allow(''),
+        plainPasswordCheck: Joi.string().required(),
       }),
       failAction: (req, res, src, error) => {
         req.server.log('info', error);
@@ -21,34 +29,40 @@ module.exports = {
           pageTitle: 'Add new partner',
           newUser: req.payload,
           validRoles,
+          error,
         });
       },
     },
   },
   handler(req, res) {
     const { User } = req.server.plugins.users.models;
+    const { githubOrgUserLink, trelloOrgUserLink } = req.server.plugins.tasks;
 
     const body = req.payload;
 
-    const user = new User(_.pick(body, [
-      'firstName',
-      'lastName',
-      'email',
-      'fallbackEmail',
-      'roles',
+    const user = new User(_.omit(body, [
+      'plainPassword',
     ]));
 
     user
       .hashPassword(body.plainPassword)
       .then(() => user.save())
-      .then(() => {
+      .then((savedUser) => {
+        if (savedUser.githubHandle) {
+          githubOrgUserLink({ user: savedUser });
+        }
+        if (savedUser.trelloHandle) {
+          trelloOrgUserLink({ user: savedUser });
+        }
         res.redirect('/dashboard/users');
       })
-      .catch(() => {
+      .catch((error) => {
+        req.server.log('error', error);
         res.view('create-user', {
           pageTitle: 'Add new partner',
           newUser: body,
           validRoles,
+          error,
         });
       });
   },

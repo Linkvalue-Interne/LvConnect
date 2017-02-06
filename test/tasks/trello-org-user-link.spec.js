@@ -18,9 +18,11 @@ describe('Trello user onboarding', () => {
 
   it('should add user to Trello boards', async function () {
     // When
-    await trelloWorker.initWorker(console)({ data: { user: new User(fixUser) } }, noop);
+    const user = await User.findOne({ email: fixUser.email });
+    await trelloWorker.initWorker(server)({ data: { user } }, noop);
 
     // Then
-    expect(fixUser.thirdParty.trello).to.equal('success');
+    const editedUser = await User.findOne({ email: fixUser.email });
+    expect(editedUser.thirdParty.trello).to.equal('success');
   });
 });

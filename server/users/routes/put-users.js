@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Boom = require('boom');
 const { hasRoleInList, isConnectedUser, hasScopeInList } = require('../middlewares');
 const { payload, params } = require('./user-validation');
@@ -17,6 +18,7 @@ module.exports = {
     const { isConnectedUser: isSelf, hasRights, scopes } = req.pre;
     const hasEditAnyUserScope = scopes.indexOf('users:modify') !== -1;
     const hasEditSelfScope = scopes.indexOf('profile:modify') !== -1;
+    const { githubOrgUserLink, trelloOrgUserLink } = req.server.plugins.tasks;
 
     // Check can edit other users
     if (!isSelf && (!hasRights || !hasEditAnyUserScope)) {
@@ -34,21 +36,21 @@ module.exports = {
     }
 
     const userPromise = User
-      .findOne({ _id: req.params.user })
+      .findOneAndUpdate({ _id: req.params.user }, { $set: req.payload }, { new: true })
       .exec()
-      .then((user) => {
-        if (!user) {
+      .then((savedUser) => {
+        if (!savedUser) {
           return Promise.reject(Boom.notFound('User Not Found'));
         }
 
-        return Object
-          .assign(user, {
-            firstName: req.payload.firstName || user.firstName,
-            lastName: req.payload.lastName || user.lastName,
-            fallbackEmail: req.payload.fallbackEmail || user.fallbackEmail,
-            roles: req.payload.roles || user.roles,
-          })
-          .save();
+        if (savedUser.githubHandle && savedUser.thirdParty.github !== 'success') {
+          githubOrgUserLink({ user: savedUser });
+        }
+        if (savedUser.trelloHandle && savedUser.thirdParty.trello !== 'success') {
+          trelloOrgUserLink({ user: savedUser });
+        }
+
+        return Promise.resolve(savedUser);
       });
 
     return res.mongodb(userPromise, ['password']);

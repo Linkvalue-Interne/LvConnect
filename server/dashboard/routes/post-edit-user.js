@@ -16,6 +16,8 @@ module.exports = {
         description: Joi.string().empty('').max(255),
         roles: Joi.array().items(Joi.string().valid(validRoles)).single().min(1)
           .required(),
+        githubHandle: Joi.string().allow(''),
+        trelloHandle: Joi.string().allow(''),
       }),
       failAction: (req, res, src, error) => {
         res.view('edit-user', {
@@ -31,11 +33,20 @@ module.exports = {
     const { User } = req.server.plugins.users.models;
     const body = req.payload;
     const userId = req.params.user;
+    const { githubOrgUserLink, trelloOrgUserLink } = req.server.plugins.tasks;
 
     User
-      .update({ _id: userId }, { $set: body })
+      .findOneAndUpdate({ _id: userId }, { $set: body }, { new: true })
       .exec()
-      .then(() => res.redirect(`/dashboard/users/${userId}`))
+      .then((savedUser) => {
+        if (savedUser.githubHandle && savedUser.thirdParty.github !== 'success') {
+          githubOrgUserLink({ user: savedUser });
+        }
+        if (savedUser.trelloHandle && savedUser.thirdParty.trello !== 'success') {
+          trelloOrgUserLink({ user: savedUser });
+        }
+        res.redirect(`/dashboard/users/${userId}`);
+      })
       .catch(res);
   },
 };

@@ -7,6 +7,7 @@ exports.initWorker = server =>
   (job, done) => {
     const { user } = job.data;
     const { trelloHandle } = user;
+    const { User } = server.plugins.users.models;
 
     if (!trelloHandle || !trelloHandle.length) {
       return done();
@@ -14,13 +15,9 @@ exports.initWorker = server =>
 
     server.log('worker', `Task ${exports.name}: Trello user add to org/boards starting`);
 
-    const trello = new TrelloApi(
-      config.trello.apiKey,
-      config.trello.apiToken,
-    );
+    const trello = new TrelloApi(config.trello.apiKey, config.trello.apiToken);
 
-    user.thirdParty.trello = 'pending';
-    return user.save()
+    return User.update({ _id: user._id }, { $set: { 'thirdParty.trello': 'pending' } })
       .then(() => new Promise((resolve, reject) => {
         trello.put(`/1/organizations/${config.trello.org}/members/${trelloHandle}`, {
           type: 'normal',
@@ -48,14 +45,12 @@ exports.initWorker = server =>
       .then(() => {
         server.log('worker', `Task ${exports.name}: ${trelloHandle} Trello user added to boards`);
 
-        user.thirdParty.trello = 'success';
-        return user.save();
+        return User.update({ _id: user._id }, { $set: { 'thirdParty.trello': 'success' } });
       })
       .catch((err) => {
         server.log('worker', `Task ${exports.name} : Failed with error \n ${err}`);
 
-        user.thirdParty.trello = 'error';
-        return user.save();
+        return User.update({ _id: user._id }, { $set: { 'thirdParty.github': 'error' } });
       })
       .then(() => done())
       .catch(done);

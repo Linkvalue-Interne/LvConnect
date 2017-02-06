@@ -18,9 +18,11 @@ describe('Github user onboarding', () => {
 
   it('should add user to Github org', async function () {
     // When
-    await githubWorker.initWorker(console)({ data: { user: new User(fixUser) } }, noop);
+    const user = await User.findOne({ email: fixUser.email });
+    await githubWorker.initWorker(server)({ data: { user } }, noop);
 
     // Then
-    expect(fixUser.thirdParty.github).to.equal('success');
+    const editedUser = await User.findOne({ email: fixUser.email });
+    expect(editedUser.thirdParty.github).to.equal('success');
   });
 });

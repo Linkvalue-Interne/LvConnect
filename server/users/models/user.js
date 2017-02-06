@@ -11,7 +11,11 @@ const userSchema = new mongoose.Schema({
   roles: [String],
   githubHandle: String,
   trelloHandle: String,
-  thirdParty: Object,
+  thirdParty: {
+    github: { type: String, default: 'stopped' },
+    trello: { type: String, default: 'stopped' },
+    slack: { type: String, default: 'stopped' },
+  },
   createdAt: { type: Date, default: Date.now },
   description: String,
 });

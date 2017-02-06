@@ -7,6 +7,7 @@ exports.initWorker = server =>
   (job, done) => {
     const { user } = job.data;
     const { githubHandle } = user;
+    const { User } = server.plugins.users.models;
 
     if (!githubHandle || !githubHandle.length) {
       return done();
@@ -20,8 +21,7 @@ exports.initWorker = server =>
       token: config.github.apiToken,
     });
 
-    user.thirdParty.github = 'pending';
-    return user.save()
+    return User.update({ _id: user._id }, { $set: { 'thirdParty.github': 'pending' } })
       .then(() => github.orgs.addOrgMembership({
         org: config.github.org,
         username: githubHandle,
@@ -30,14 +30,12 @@ exports.initWorker = server =>
       .then(() => {
         server.log('worker', `Task ${exports.name}: ${githubHandle} GitHub user added to org`);
 
-        user.thirdParty.github = 'success';
-        return user.save();
+        return User.update({ _id: user._id }, { $set: { 'thirdParty.github': 'success' } });
       })
       .catch((err) => {
         server.log('worker', `Task ${exports.name} : Failed with error \n ${err}`);
 
-        user.thirdParty.github = 'error';
-        return user.save();
+        return User.update({ _id: user._id }, { $set: { 'thirdParty.github': 'error' } });
       })
       .then(() => done())
       .catch(done);

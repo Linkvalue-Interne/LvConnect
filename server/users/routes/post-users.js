@@ -13,7 +13,7 @@ module.exports = {
   },
   handler(req, res) {
     const { User } = req.server.plugins.users.models;
-    const { createOVHAccount } = req.server.plugins.tasks;
+    const { githubOrgUserLink, trelloOrgUserLink } = req.server.plugins.tasks;
 
     const user = new User({
       firstName: req.payload.firstName,
@@ -27,11 +27,12 @@ module.exports = {
       .hashPassword(req.payload.plainPassword)
       .then(() => user.save())
       .then((savedUser) => {
-        createOVHAccount({
-          user: savedUser,
-          email: user.email,
-          plainPassword: req.payload.plainPassword,
-        }).save();
+        if (user.githubHandle) {
+          githubOrgUserLink({ user: savedUser });
+        }
+        if (user.trelloHandle) {
+          trelloOrgUserLink({ user: savedUser });
+        }
         return savedUser;
       })
       .catch((err) => {

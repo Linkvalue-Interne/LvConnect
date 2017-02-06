@@ -18,9 +18,11 @@ describe('Slack user onboarding', () => {
 
   it('should add user to Slack team', async function () {
     // When
-    await slackWorker.initWorker(console)({ data: { user: new User(fixUser) } }, noop);
+    const user = await User.findOne({ email: fixUser.email });
+    await slackWorker.initWorker(server)({ data: { user } }, noop);
 
     // Then
-    expect(fixUser.thirdParty.slack).to.equal('error'); // Error because we need paid plan to use SCIM API :(
+    const editedUser = await User.findOne({ email: fixUser.email });
+    expect(editedUser.thirdParty.slack).to.equal('error'); // Error because we need paid plan to use SCIM API :(
   });
 });

@@ -5,6 +5,7 @@ exports.name = 'slackOrgUserCreate';
 
 exports.initWorker = server =>
   (job, done) => {
+    const { User } = server.plugins.users.models;
     const { user } = job.data;
     const {
       firstName,
@@ -17,8 +18,7 @@ exports.initWorker = server =>
 
     server.log('worker', `Task ${exports.name}: Slack user add create`);
 
-    user.thirdParty.slack = 'pending';
-    return user.save()
+    return User.update({ _id: user._id }, { $set: { 'thirdParty.slack': 'pending' } })
       .then(() => request({
         baseUrl: 'https://api.slack.com/scim/v1/',
         uri: '/Users',
@@ -48,14 +48,12 @@ exports.initWorker = server =>
       .then(() => {
         server.log('worker', `Task ${exports.name}: Slack user created`);
 
-        user.thirdParty.slack = 'success';
-        return user.save();
+        return User.update({ _id: user._id }, { $set: { 'thirdParty.slack': 'success' } });
       })
       .catch((err) => {
         server.log('worker', `Task ${exports.name} : Failed with error \n ${err}`);
 
-        user.thirdParty.slack = 'error';
-        return user.save();
+        return User.update({ _id: user._id }, { $set: { 'thirdParty.slack': 'error' } });
       })
       .then(() => done())
       .catch(done);
