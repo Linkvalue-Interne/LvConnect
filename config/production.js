@@ -13,16 +13,30 @@ function reportingFactory(path, options) {
 }
 
 module.exports = {
+  server: {
+    cache: {
+      name: 'redisCache',
+      engine: 'catbox-redis',
+      host: process.env.REDIS_URL,
+      database: 0,
+      partition: 'lvc-cache',
+    },
+  },
   host: {
     hostname: 'lvconnect.link-value.fr',
     port: 8000,
   },
   mongodb: {
-    host: 'localhost',
-    port: 27017,
-    database: 'lvconnect?authSource=admin',
-    username: 'linkvalue-deploy',
-    password: 'OSbmSJJGBxQau5H5',
+    host: 'ds145039.mlab.com',
+    port: 45039,
+    database: 'heroku_fcp37rmh',
+    username: 'heroku_fcp37rmh',
+    password: '4lqc04tkc8n4oogo873im9eo4o',
+  },
+  kue: {
+    host: process.env.REDIS_URL,
+    db: 0,
+    prefix: 'lvc-kue',
   },
   logs: {
     reporters: {
