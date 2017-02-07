@@ -2,14 +2,10 @@ const kue = require('kue');
 
 const workers = require('./workers');
 
-exports.register = (server, { host, port, db, prefix, config }, next) => {
+exports.register = (server, { redis, prefix, config }, next) => {
   const queue = kue.createQueue({
     prefix,
-    redis: {
-      port,
-      host,
-      db,
-    },
+    redis,
   });
 
   server.on('stop', () => queue.shutdown(config.shutdownTimeout, (err) => {

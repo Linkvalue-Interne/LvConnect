@@ -17,14 +17,14 @@ module.exports = {
     cache: {
       name: 'redisCache',
       engine: 'catbox-redis',
-      host: process.env.REDIS_URL,
+      socket: process.env.REDIS_URL,
       database: 0,
       partition: 'lvc-cache',
     },
   },
   host: {
-    hostname: 'lvconnect.link-value.fr',
-    port: 8000,
+    hostname: 'localhost',
+    port: process.env.PORT || 8000,
   },
   mongodb: {
     host: 'ds145039.mlab.com',
@@ -34,8 +34,7 @@ module.exports = {
     password: '4lqc04tkc8n4oogo873im9eo4o',
   },
   kue: {
-    host: process.env.REDIS_URL,
-    db: 0,
+    redis: `${process.env.REDIS_URL}/1`,
     prefix: 'lvc-kue',
   },
   logs: {

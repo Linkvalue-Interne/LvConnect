@@ -15,9 +15,11 @@ module.exports = {
     database: 'lvconnect',
   },
   kue: {
-    host: 'localhost',
-    port: 6379,
-    db: 0,
+    redis: {
+      host: 'localhost',
+      port: 6379,
+      db: 0,
+    },
     prefix: 'lvc-kue',
     config: {
       shutdownTimeout: 5000,
