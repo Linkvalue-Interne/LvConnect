@@ -10,7 +10,8 @@
     "dev": "NODE_ENV=development nodemon . -e js,hbs",
     "lint": "eslint '**/*.js'",
     "test": "NODE_ENV=test mocha --compilers js:babel-register --recursive test",
-    "prod": "mkdir -p ./logs/forever && NODE_ENV=production forever start forever.json"
+    "prod": "mkdir -p ./logs/forever && NODE_ENV=production forever start forever.json",
+    "heroku-postbuild": "npm rebuild bcrypt"
   },
   "repository": {
     "type": "git",
