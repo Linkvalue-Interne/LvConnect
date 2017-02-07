@@ -14,6 +14,15 @@ module.exports = {
     port: 27017,
     database: 'lvconnect_test',
   },
+  kue: {
+    host: 'localhost',
+    port: 6379,
+    db: 0,
+    prefix: 'lvc-kue',
+    config: {
+      shutdownTimeout: 5000,
+    },
+  },
   csrf: {
     skip: () => true,
     cookieOptions: {

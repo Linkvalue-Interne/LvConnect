@@ -12,20 +12,6 @@ module.exports = {
       }, 'stdout'],
     },
   },
-  mongodb: {
-    host: 'localhost',
-    port: 27017,
-    database: 'lvconnect',
-  },
-  kue: {
-    host: 'localhost',
-    port: 6379,
-    db: 0,
-    prefix: 'lvc-kue',
-    config: {
-      shutdownTimeout: 5000,
-    },
-  },
   ovh: {
     endpoint: '',
     appKey: '',
