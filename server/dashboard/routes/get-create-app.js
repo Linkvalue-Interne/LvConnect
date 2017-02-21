@@ -6,6 +6,7 @@ module.exports = {
     res.view('create-app', {
       pageTitle: 'Create application',
       user: req.auth.credentials,
+      validScopes: req.server.plugins.oauth.validScopes,
     });
   },
 };

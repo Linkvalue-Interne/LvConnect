@@ -9,6 +9,8 @@ module.exports = {
       payload: Joi.object({
         name: Joi.string().min(2).max(255).required(),
         description: Joi.string().min(2).max(255).required(),
+        allowedScopes: Joi.array().items(Joi.string()),
+        redirectUri: Joi.string().uri().required(),
       }),
       failAction: (req, res, src, error) => {
         req.server.log('info', src);
@@ -23,6 +25,7 @@ module.exports = {
               app,
               errors: error,
               editMode: true,
+              validScopes: req.server.plugins.oauth.validScopes,
             });
           });
       },
@@ -32,11 +35,17 @@ module.exports = {
     const { Application } = req.server.plugins.oauth.models;
 
     Application.findOne({ _id: req.params.id })
-      .then(app => Object.assign(app, req.payload).save().catch(() => res.view('create-app', {
+      .then(app => Object.assign(app, {
+        name: req.payload.name,
+        description: req.payload.description,
+        allowedScopes: req.payload.allowedScopes,
+        redirectUris: [req.payload.redirectUri],
+      }).save().catch(() => res.view('create-app', {
         pageTitle: 'Edit app',
         user: req.auth.credentials,
         app,
         editMode: true,
+        validScopes: req.server.plugins.oauth.validScopes,
       })))
       .then(() => res.redirect('/dashboard/apps'))
       .catch(() => res.view('get-apps', {

@@ -8,9 +8,7 @@
       {{/if }}
     </h3>
   </div>
-</div>
 
-<div class="mdl-grid">
   <div class="mdl-layout__header-row mdl-cell--3-offset-desktop mdl-cell--1-offset-tablet errors">
     {{#each errors }}
       {{#each this.details }}
@@ -24,8 +22,8 @@
     <div class="mdl-card__supporting-text mdl-grid">
       <div
         class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" id="appIdInput" name="name" value="{{ app.name }}" required>
-        <label class="mdl-textfield__label" for="appIdInput">Name</label>
+        <input class="mdl-textfield__input" type="text" id="nameInput" name="name" value="{{ app.name }}" required>
+        <label class="mdl-textfield__label" for="nameInput">Name</label>
       </div>
 
       <div
@@ -35,12 +33,32 @@
         <label class="mdl-textfield__label" for="descriptionInput">Description</label>
       </div>
 
+      <div
+        class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="redirectUriInput" name="redirectUri"
+               value="{{ app.redirectUris.[0] }}" required>
+        <label class="mdl-textfield__label" for="redirectUriInput">Redirect URI</label>
+      </div>
+
+      {{#each validScopes as |scope|}}
+        <div class="mdl-cell mdl-cell--6-col">
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+            <input type="checkbox" name="allowedScopes" value="{{ scope }}" class="mdl-checkbox__input"{{#ifIncludes
+              @root.app.allowedScopes scope}} checked{{/ifIncludes}}>
+            <span class="mdl-checkbox__label">{{ scope }}</span>
+          </label>
+        </div>
+      {{/each}}
+
       <input type="hidden" name="crumb" value="{{crumb}}">
     </div>
+
     {{#if editMode}}
       <div class="mdl-card__supporting-text mdl-grid">
-        App id: {{app.appId}}<br/>
-        App secret: {{app.appSecret}}
+        <div class="mdl-cell mdl-cell--12-col">
+          <b>App id</b>: {{app.appId}}<br/>
+          <b>App secret</b>: {{app.appSecret}}
+        </div>
       </div>
     {{/if}}
 

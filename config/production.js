@@ -23,7 +23,6 @@ module.exports = {
     },
   },
   host: {
-    hostname: 'localhost',
     port: process.env.PORT || 8000,
   },
   mongodb: {

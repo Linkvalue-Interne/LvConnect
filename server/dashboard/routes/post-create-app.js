@@ -9,14 +9,15 @@ module.exports = {
       payload: Joi.object({
         name: Joi.string().min(2).max(255).required(),
         description: Joi.string().min(2).max(255).required(),
+        allowedScopes: Joi.array().items(Joi.string()),
+        redirectUri: Joi.string().uri().required(),
       }),
       failAction: (req, res, src, error) => {
-        req.server.log('info', src);
-        req.server.log('info', error);
-        res.view('create-application', {
+        res.view('create-app', {
           pageTitle: 'Create application',
           user: req.auth.credentials,
           errors: error,
+          validScopes: req.server.plugins.oauth.validScopes,
         });
       },
     },
@@ -27,6 +28,8 @@ module.exports = {
     const app = new Application({
       name: req.payload.name,
       description: req.payload.description,
+      allowedScopes: req.payload.allowedScopes,
+      redirectUris: [req.payload.redirectUri],
     });
 
     app.save()
@@ -37,6 +40,7 @@ module.exports = {
         res.view('create-app', {
           pageTitle: 'Create application',
           user: req.auth.credentials,
+          validScopes: req.server.plugins.oauth.validScopes,
         });
       });
   },

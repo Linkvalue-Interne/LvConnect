@@ -10,6 +10,8 @@ module.exports = {
         pageTitle: 'Edit app',
         user: req.auth.credentials,
         app,
+        editMode: true,
+        validScopes: req.server.plugins.oauth.validScopes,
       }));
   },
 };
