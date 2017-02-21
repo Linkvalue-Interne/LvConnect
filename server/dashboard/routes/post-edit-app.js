@@ -9,7 +9,7 @@ module.exports = {
       payload: Joi.object({
         name: Joi.string().min(2).max(255).required(),
         description: Joi.string().min(2).max(255).required(),
-        allowedScopes: Joi.array().items(Joi.string()),
+        allowedScopes: Joi.array().items(Joi.string()).single(),
         redirectUri: Joi.string().uri().required(),
       }),
       failAction: (req, res, src, error) => {
