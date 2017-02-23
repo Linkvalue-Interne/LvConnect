@@ -31,7 +31,8 @@ function checkScope(target, scopes) {
 
 function handlePassword(req, application) {
   const { User } = req.server.plugins.users.models;
-  const scopes = req.payload.scope || validScopes;
+
+  const scopes = req.payload.scope || application.allowedScopes;
   if (!checkScope(scopes, application.allowedScopes)) {
     return Promise.reject(Boom.unauthorized('invalid_scope'));
   }
@@ -53,13 +54,11 @@ function handleRefreshToken(req, application) {
       return Boom.unauthorized('invalid_grant');
     }
 
-    let { scopes } = refreshToken.scopes;
-    if (req.payload.scope) {
-      if (!checkScope(req.payload.scope, scopes)) {
-        return Boom.unauthorized('invalid_scope');
-      }
-      scopes = req.payload.scope;
+    const scopes = req.payload.scope || application.allowedScopes;
+    if (!checkScope(scopes, application.allowedScopes)) {
+      return Promise.reject(Boom.unauthorized('invalid_scope'));
     }
+
     return generateTokens(req, refreshToken.user, application, scopes);
   });
 }
@@ -75,7 +74,13 @@ function handleAuthorizationCode(req, application) {
     if (authorizationCode === null) {
       return Boom.unauthorized('invalid_grant');
     }
-    return generateTokens(req, authorizationCode.user, application, req.payload.scope);
+
+    const scopes = req.payload.scope || application.allowedScopes;
+    if (!checkScope(scopes, application.allowedScopes)) {
+      return Promise.reject(Boom.unauthorized('invalid_scope'));
+    }
+
+    return generateTokens(req, authorizationCode.user, application, scopes);
   });
 }
 
