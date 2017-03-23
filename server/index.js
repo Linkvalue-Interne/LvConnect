@@ -55,6 +55,11 @@ const manifest = {
   connections: [{
     host: config.host.hostname,
     port: config.host.port,
+    routes: {
+      cors: {
+        origin: ['*'],
+      },
+    },
   }],
 };
 

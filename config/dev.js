@@ -1,4 +1,7 @@
 module.exports = {
+  host: {
+    hostname: 'localhost',
+  },
   server: {
     cache: {
       name: 'redisCache',
