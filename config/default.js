@@ -20,7 +20,7 @@ module.exports = {
   oauth: {
     accessTokenTTL: 'P2D',
     refreshTokenTTL: 'P2W',
-    authorizationCodeTTL: 'T10M',
+    authorizationCodeTTL: 'PT10M',
   },
   csrf: {
     skip: req => !/(\/oauth\/authorize|\/dashboard|\/login)/.test(req.path),
