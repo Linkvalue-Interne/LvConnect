@@ -18,7 +18,4 @@ deploy_production:
   environment:
     name: production
     url: https://lvconnect.link-value.fr
-  tags:
-    - docker
-    - node
 
