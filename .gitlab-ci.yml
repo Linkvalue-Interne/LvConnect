@@ -11,7 +11,7 @@ deploy_production:
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - mkdir -p ~/.ssh
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-    - ssh linkvalue@62.4.5.247 rm -rf lvconnect && git clone git@gitlab.com:LinkValue/Lab/LvConnect.git lvconnect && yarn install
+    - ssh linkvalue@62.4.5.247 "rm -rf lvconnect && git clone git@gitlab.com:LinkValue/Lab/LvConnect.git lvconnect && cd lvconnect && yarn install"
   only:
     - master
   when: manual
@@ -20,4 +20,5 @@ deploy_production:
     url: https://lvconnect.link-value.fr
   tags:
     - docker
- 
+    - node
+
