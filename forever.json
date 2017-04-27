@@ -1,9 +1,0 @@
-{
-  "uid": "lvconnect",
-  "script": "./server/index.js",
-  "path": "./logs/forever",
-  "logFile": "forever.log",
-  "outFile": "./logs/forever/forever-stdout.log",
-  "errFile": "./logs/forever/forever-stderr.log",
-  "append": true
-}
