@@ -12,6 +12,11 @@ module.exports = {
     },
   },
   handler(req, res) {
+    const { scopes, user: { _id } } = req.auth.credentials;
+    if (scopes.indexOf('users:get') === -1 && req.params.user !== _id) {
+      return res(Boom.forbidden('Insufficient rights'));
+    }
+
     const { User } = req.server.plugins.users.models;
 
     const userPromise = User
@@ -26,6 +31,6 @@ module.exports = {
         return user;
       });
 
-    res.mongodb(userPromise);
+    return res.mongodb(userPromise);
   },
 };
