@@ -1,7 +1,22 @@
 image: node:boron
 
 stages:
+  - test
   - deploy
+
+unit_tests:
+  stage: test
+  script:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - yarn
+    - yarn test
+  cache:
+    paths:
+    - node_modules/
+  only:
+    - master
+  tags:
+    - node
 
 deploy_staging:
   stage: deploy
