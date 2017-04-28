@@ -1,4 +1,6 @@
 image: node:boron
+services:
+  - mongo
 
 stages:
   - test
