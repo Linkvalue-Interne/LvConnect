@@ -9,6 +9,10 @@ Retrieve the whole collection of users. Accepts the following filter params:
 - `page`: Select a page of results (default: 1).
 - `email`: Find a user by its email (strict matching).
 
+#### Requires
+
+- Scope: `users:get`
+
 #### Response payload
 
 ```js
@@ -34,6 +38,11 @@ Retrieve the whole collection of users. Accepts the following filter params:
 
 Creates a new user. Requires to specify at least one valid role in: tech, hr, staff, business and board.
 Also requires to have either hr or staff in logged user roles to perform request.
+
+#### Requires
+
+- Role: `rh` or `staff`
+- Scope: `users:create`
 
 #### Request payload
 
@@ -67,7 +76,11 @@ Also requires to have either hr or staff in logged user roles to perform request
 
 ## `GET /users/{id}`
 
-Retrieve an user.
+Retrieve a user.
+
+#### Requires
+
+- Scope: `users:get` or `profile:get` if self getting
 
 #### Response payload
 
@@ -87,8 +100,13 @@ Retrieve an user.
 
 ## `PUT /users/{id}`
 
-Updates an user. Connected user can edit himself.
+Updates a user. Connected user can edit himself.
 To edit user roles, connected user requires either hr or staff in his roles.
+
+#### Requires
+
+- Role: `rh` or `staff`
+- Scope: `users:modify` or `profile:modify` if self editing
 
 #### Request payload
 
@@ -108,6 +126,11 @@ To edit user roles, connected user requires either hr or staff in his roles.
 Deletes an user.
 To delete a user, connected user requires either hr or staff in his roles.
 
+#### Requires
+
+- Role: `rh` or `staff`
+- Scope: `users:delete`
+
 #### Request payload
 
 ```js
@@ -119,6 +142,10 @@ To delete a user, connected user requires either hr or staff in his roles.
 ## `GET /users/me`
 
 Retrieve the user corresponding to given access token.
+
+#### Requires
+
+- Scope: `profile:get`
 
 #### Response payload
 

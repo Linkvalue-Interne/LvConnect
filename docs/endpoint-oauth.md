@@ -8,9 +8,14 @@ Generates authentication tokens according to `grant_type`. The following grants 
 - password
 - refresh_token
 - client_credentials
+- authorization_code
 
 This endpoint requires client authentication (to be sure that the application is authorized to request tokens).
 You must provide client credentials (client id and client secret) in the `Authorization` header as `Basic` credentials.
+
+The token can be generated to allow only specific scopes. These scopes must be present in your application allowed
+scope list or it will trigger an `invalid_scope` error. By default the scope of the token will be all the allowed scopes
+of your application.
 
 #### Request payload for password grant
 
@@ -40,6 +45,15 @@ This grant type allows only the read.
 ```js
 {
   "grant_type": "client_credentials"  // required
+}
+```
+
+#### Request payload for authorization_code grant
+
+```js
+{
+  "grant_type": "authorization_code",  // required
+  "code": "your_authorization_code"    // required
 }
 ```
 
