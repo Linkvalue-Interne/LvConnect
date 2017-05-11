@@ -6,6 +6,8 @@ This project aims to unify login over all LinkValue apps with an authentication 
 
 Below are listed all the endpoints available for now in the application.
 
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3e4e5a81552f2a8d6e7e#?env%5BProd%5D=W3siZW5hYmxlZCI6dHJ1ZSwia2V5IjoiaG9zdCIsInZhbHVlIjoiaHR0cHM6Ly9sdmNvbm5lY3QubGluay12YWx1ZS5mciIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJ1c2VyX2lkIiwidmFsdWUiOiI1OTAyMTU5Y2NkY2Y0NTBhZTE5ZDQxMzQiLCJ0eXBlIjoidGV4dCJ9LHsiZW5hYmxlZCI6dHJ1ZSwia2V5IjoiYWNjZXNzX3Rva2VuIiwidmFsdWUiOiI3OWM1YTJiYy0zOGZlLTQwNGUtODAzYi0yNjViZTliNzkzZDYiLCJ0eXBlIjoidGV4dCJ9XQ==)
+
 #### Public endpoints
 - [/oauth](docs/endpoint-oauth.md) (Authentication endpoint)
 
