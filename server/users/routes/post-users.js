@@ -32,6 +32,7 @@ module.exports = {
         if (user.trelloHandle) {
           trelloOrgUserLink({ user: savedUser });
         }
+        req.server.plugins.mailjet.sendAccountCreationMail(req.payload);
         return savedUser;
       })
       .catch((err) => {

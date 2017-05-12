@@ -9,7 +9,7 @@ exports.initWorker = server =>
     const { githubHandle } = user;
     const { User } = server.plugins.users.models;
 
-    if (!githubHandle || !githubHandle.length) {
+    if (!githubHandle || !githubHandle.length || !config.github.apiToken || !config.github.org) {
       return done();
     }
 

@@ -38,5 +38,5 @@ exports.register = (server, options, next) => {
 exports.register.attributes = {
   name: 'dashboard',
   version: '0.0.1',
-  dependencies: ['vision'],
+  dependencies: ['vision', 'mailjet', 'users'],
 };

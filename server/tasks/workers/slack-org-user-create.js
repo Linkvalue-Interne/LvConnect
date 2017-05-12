@@ -5,6 +5,10 @@ exports.name = 'slackOrgUserCreate';
 
 exports.initWorker = server =>
   (job, done) => {
+    if (!config.slack.apiToken) {
+      done();
+    }
+
     const { User } = server.plugins.users.models;
     const { user } = job.data;
     const {

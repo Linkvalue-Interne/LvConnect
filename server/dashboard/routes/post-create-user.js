@@ -28,6 +28,7 @@ module.exports = {
           pageTitle: 'Add new partner',
           userData: req.payload,
           validRoles,
+          validCities,
           error,
         });
       },
@@ -53,6 +54,7 @@ module.exports = {
         if (savedUser.trelloHandle) {
           trelloOrgUserLink({ user: savedUser });
         }
+        req.server.plugins.mailjet.sendAccountCreationMail(body);
         res.redirect('/dashboard/users');
       })
       .catch((error) => {

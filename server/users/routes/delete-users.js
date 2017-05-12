@@ -16,7 +16,7 @@ module.exports = {
     const userPromise = User
       .remove({ _id: req.params.user })
       .exec()
-      .then(() => req.server.methods.cleanupUserAuth(req.auth.credentials.user._id))
+      .then(() => req.server.methods.cleanupUserAuth(req.params.user))
       .then(() => ({ deleted: true }));
 
     res(userPromise);

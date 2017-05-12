@@ -11,7 +11,7 @@ module.exports = {
     const { User } = req.server.plugins.users.models;
 
     return User.remove({ _id: req.params.id })
-      .then(() => req.server.methods.cleanupUserAuth(req.auth.credentials._id))
+      .then(() => req.server.methods.cleanupUserAuth(req.params.id))
       .then(() => res.redirect('/dashboard/users'));
   },
 };

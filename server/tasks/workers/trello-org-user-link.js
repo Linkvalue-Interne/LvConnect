@@ -9,7 +9,7 @@ exports.initWorker = server =>
     const { trelloHandle } = user;
     const { User } = server.plugins.users.models;
 
-    if (!trelloHandle || !trelloHandle.length) {
+    if (!trelloHandle || !trelloHandle.length || !config.trello.apiKey || !config.trello.apiToken) {
       return done();
     }
 

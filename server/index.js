@@ -33,6 +33,11 @@ const manifest = {
       options: config.mongodb,
     },
   }, {
+    plugin: {
+      register: './mailjet',
+      options: config.mailjet,
+    },
+  }, {
     plugin: './users',
   }, {
     plugin: {

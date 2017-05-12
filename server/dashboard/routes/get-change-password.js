@@ -3,7 +3,11 @@ module.exports = {
   path: '/dashboard/change-password',
   config: { auth: 'session' },
   handler(req, res) {
-    res.view('change-password', {
+    if (!req.auth.credentials.needPasswordChange) {
+      return res.redirect('/dashboard');
+    }
+
+    return res.view('change-password', {
       pageTitle: 'Password change',
     });
   },

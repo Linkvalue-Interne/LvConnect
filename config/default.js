@@ -11,12 +11,6 @@ module.exports = {
       }, 'stdout'],
     },
   },
-  ovh: {
-    endpoint: '',
-    appKey: '',
-    appSecret: '',
-    consumerKey: '',
-  },
   oauth: {
     accessTokenTTL: 'P2D',
     refreshTokenTTL: 'P2W',
@@ -39,12 +33,7 @@ module.exports = {
       isSecure: false,
     },
   },
-  trello: {
-    org: '5894626eefa015d31c4550bc',
-    boards: ['589462b539075913888623ec'],
-  },
-  github: {
-    org: 'lvtestorg',
-  },
+  trello: {},
+  github: {},
   slack: {},
 };
