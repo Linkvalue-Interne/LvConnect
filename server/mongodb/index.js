@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 function mongodbSerializer(value, omit) {
+  if (!value) {
+    return value;
+  }
+
   if (Array.isArray(value)) {
     return value.map(v => mongodbSerializer(v, omit));
   }

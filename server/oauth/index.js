@@ -14,7 +14,7 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCode
   server.expose('accessTokenTTL', moment.duration(accessTokenTTL).asSeconds());
   server.expose('validScopes', validScopes);
 
-  const { AccessToken, RefreshToken, AuthorizationCode, Application } = models;
+  const { AccessToken, RefreshToken, AuthorizationCode, Authorization, Application } = models;
 
   server.views({
     engines: { hbs: handlebars },
@@ -55,6 +55,11 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCode
     return token.save();
   });
 
+  server.method('cleanupUserAuth', (user) => {
+    const cleanupModels = [AccessToken, RefreshToken, AuthorizationCode, Authorization];
+    return Promise.all(cleanupModels.map(model => model.remove({ user }).exec()));
+  });
+
   server.auth.strategy('application', 'basic', {
     validateFunc(req, appId, appSecret, cb) {
       Application.findOne({ appId, appSecret })
@@ -72,7 +77,7 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCode
         .populate('user')
         .exec()
         .then((token) => {
-          if (!token) return cb(Boom.unauthorized('invalid_token'), false);
+          if (!token || !token.user) return cb(Boom.unauthorized('invalid_token'), false);
           if (token.expireAt < new Date()) return cb(Boom.unauthorized('token_expired'), false);
           return cb(null, true, token);
         });
