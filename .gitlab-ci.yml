@@ -1,6 +1,7 @@
 image: node:boron
 services:
-  - mongo
+  - mongo:latest
+  - redis:latest
 
 stages:
   - test
