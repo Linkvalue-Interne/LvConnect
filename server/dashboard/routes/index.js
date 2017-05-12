@@ -13,6 +13,8 @@ const getEditApplication = require('./get-edit-app');
 const postCreateApplication = require('./post-create-app');
 const postEditApplication = require('./post-edit-app');
 const deleteApplication = require('./delete-app');
+const getChangePassword = require('./get-change-password');
+const postChangePassword = require('./post-change-password');
 
 module.exports = [
   getDashboard,
@@ -30,4 +32,6 @@ module.exports = [
   postCreateApplication,
   postEditApplication,
   deleteApplication,
+  getChangePassword,
+  postChangePassword,
 ];

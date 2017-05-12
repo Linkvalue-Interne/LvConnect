@@ -52,6 +52,6 @@ module.exports = {
         return Promise.resolve(savedUser);
       });
 
-    return res.mongodb(userPromise, ['password', 'thirdParty']);
+    return res.mongodb(userPromise, ['password', 'thirdParty', 'needPasswordChange']);
   },
 };

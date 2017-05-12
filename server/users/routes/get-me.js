@@ -7,6 +7,6 @@ module.exports = {
     pre: [hasScopeInList('profile:get')],
   },
   handler(req, res) {
-    return res.mongodb(req.auth.credentials.user, ['password']);
+    return res.mongodb(req.auth.credentials.user, ['password', 'thirdParty', 'needPasswordChange']);
   },
 };

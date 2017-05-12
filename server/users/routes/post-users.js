@@ -41,6 +41,6 @@ module.exports = {
         return Promise.reject(Boom.wrap(err));
       });
 
-    res.mongodb(userPromise, ['password']).code(201);
+    res.mongodb(userPromise, ['password', 'thirdParty', 'needPasswordChange']).code(201);
   },
 };

@@ -62,7 +62,6 @@
     "chai": "^3.5.0",
     "eslint": "^3.8.1",
     "eslint-config-airbnb-base": "^11.0.0",
-    "eslint-plugin-babel": "^4.0.0",
     "eslint-plugin-import": "^2.0.1",
     "mocha": "^3.0.2",
     "nodemon": "^1.10.2"

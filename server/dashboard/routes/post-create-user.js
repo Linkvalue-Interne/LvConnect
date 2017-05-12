@@ -14,6 +14,7 @@ module.exports = {
         firstName: Joi.string().min(2).required(),
         lastName: Joi.string().min(2).required(),
         plainPassword: Joi.string().min(6).required(),
+        plainPasswordCheck: Joi.string().required(),
         email: Joi.string().email().required(),
         description: Joi.string().max(255).allow(''),
         roles: Joi.array().items(Joi.string().valid(validRoles)).min(1).single()
@@ -21,7 +22,6 @@ module.exports = {
         githubHandle: Joi.string().allow(''),
         trelloHandle: Joi.string().allow(''),
         city: Joi.string().valid(validCities).required(),
-        plainPasswordCheck: Joi.string().required(),
       }),
       failAction: (req, res, src, error) => {
         res.view('create-user', {

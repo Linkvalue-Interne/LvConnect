@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   description: String,
   city: String,
+  needPasswordChange: { type: Boolean, default: true },
 });
 
 userSchema.virtual('profilePictureUrl').get(function getProfilePictureUrl(value) {

@@ -17,6 +17,21 @@ exports.register = (server, options, next) => {
   });
   server.route(routes);
 
+  // Middleware to force user to reset his password
+  const ignoredRoutes = ['/assets', '/login', '/change-password'];
+  server.ext({
+    type: 'onPreHandler',
+    method(req, res) {
+      if (!ignoredRoutes.some(r => req.path.includes(r)) && req.auth.credentials.needPasswordChange) {
+        return res().redirect('/dashboard/change-password');
+      }
+      return res.continue();
+    },
+    options: {
+      sandbox: 'plugin',
+    },
+  });
+
   next();
 };
 

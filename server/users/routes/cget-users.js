@@ -25,7 +25,7 @@ module.exports = {
       .where(email ? { email: { $eq: email } } : null)
       .limit(limit)
       .skip(page * limit || 0)
-      .select('-password -thirdParty')
+      .select('-password -thirdParty -needPasswordChange')
       .exec();
 
     const countPromise = User.count();
