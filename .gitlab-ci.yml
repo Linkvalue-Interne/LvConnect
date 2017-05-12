@@ -4,23 +4,7 @@ services:
   - redis:latest
 
 stages:
-  - test
   - deploy
-
-unit_tests:
-  stage: test
-  script:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-    - yarn
-    - yarn lint
-    - yarn test
-  cache:
-    paths:
-    - node_modules/
-  only:
-    - master
-  tags:
-    - node
 
 deploy_staging:
   stage: deploy
