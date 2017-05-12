@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { validRoles } = require('../../users/routes/user-validation');
+const { validRoles, validCities } = require('../../users/routes/user-validation');
 const { hasRoleInList } = require('../middlewares');
 
 module.exports = {
@@ -23,6 +23,7 @@ module.exports = {
         pageTitle: 'Edit partner',
         userData: req.payload,
         validRoles,
+        validCities,
         error,
         editMode: true,
       }),
