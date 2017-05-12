@@ -14,4 +14,13 @@ module.exports = [{
       ],
     },
   },
+}, {
+  method: 'GET',
+  path: '/',
+  config: {
+    auth: false,
+  },
+  handler(req, res) {
+    return res.redirect('/dashboard');
+  },
 }];

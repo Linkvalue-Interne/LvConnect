@@ -11,7 +11,7 @@ module.exports = {
       .sort('lastName firstName')
       .then((users) => {
         res.view('get-users', {
-          pageTitle: 'Users list',
+          pageTitle: 'Partners list',
           users,
           adminRoles: ['rh', 'board'],
         });

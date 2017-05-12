@@ -6,9 +6,6 @@ module.exports = [{
   roles: ['rh', 'com', 'board', 'tech', 'business', 'finance'],
   createdAt: new Date(),
   thirdParty: {},
-  githubHandle: 'lvtest1', // lvtest1 / lvtest1
-  trelloHandle: 'lvtest1', // lvtest1 / lvlvlvlv
-  slackHandle: 'lvtest',
 }, {
   firstName: 'Baz',
   lastName: 'Qux',
