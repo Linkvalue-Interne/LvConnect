@@ -26,6 +26,14 @@ module.exports = {
       });
     }
 
+    if (req.auth.credentials.needPasswordChange) {
+      return res.view('oauth-change-password', {
+        pageTitle: 'Change password',
+        appId: req.query.app_id,
+        redirectUri: req.query.redirect_uri,
+      });
+    }
+
     return displayPermissions(req, res);
   },
 };

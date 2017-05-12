@@ -6,6 +6,7 @@ module.exports = [{
   roles: ['rh', 'com', 'board', 'tech', 'business', 'finance'],
   createdAt: new Date(),
   city: 'Paris',
+  needPasswordChange: false,
 }, {
   firstName: 'Baz',
   lastName: 'Qux',
@@ -14,4 +15,5 @@ module.exports = [{
   roles: ['tech'],
   createdAt: new Date(),
   city: 'Lyon',
+  needPasswordChange: false,
 }];

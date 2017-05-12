@@ -5,6 +5,10 @@ const models = require('./models');
 const routes = require('./routes');
 const validScopes = require('./scopes');
 
+const contextBuilder = req => (!req.auth.credentials ? {} : {
+  user: req.auth.credentials,
+});
+
 exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCodeTTL }, next) => {
   server.expose('models', models);
   server.expose('accessTokenTTL', moment.duration(accessTokenTTL).asSeconds());
@@ -18,6 +22,7 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCode
     layout: 'default',
     layoutPath: 'layouts',
     path: 'views',
+    context: contextBuilder,
   });
 
   server.method('generateAccessToken', (user, application, scopes) => {

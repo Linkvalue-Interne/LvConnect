@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const login = require('./methods/login');
 const authorize = require('./methods/authorize');
+const changePassword = require('./methods/change-password');
 
 module.exports = {
   method: 'POST',
@@ -13,7 +14,7 @@ module.exports = {
     plugins: { 'hapi-auth-cookie': { redirectTo: false } },
     validate: {
       payload: Joi.object({
-        step: Joi.string().valid('login', 'permissions').required(),
+        step: Joi.string().valid('login', 'permissions', 'change-password').required(),
         email: Joi.alternatives().when('step', {
           is: 'login',
           then: Joi.string().required(),
@@ -29,6 +30,16 @@ module.exports = {
           then: Joi.string().required(),
           otherwise: Joi.any().forbidden(),
         }),
+        plainPassword: Joi.alternatives().when('step', {
+          is: 'change-password',
+          then: Joi.string().required().min(6),
+          otherwise: Joi.any().forbidden(),
+        }),
+        plainPasswordCheck: Joi.alternatives().when('step', {
+          is: 'change-password',
+          then: Joi.string().required().min(6),
+          otherwise: Joi.any().forbidden(),
+        }),
       }),
       query: Joi.object().keys({
         app_id: Joi.string().required(),
@@ -39,6 +50,10 @@ module.exports = {
   handler(req, res) {
     if (req.payload.step === 'login') {
       return login(req, res);
+    }
+
+    if (req.payload.step === 'change-password') {
+      return changePassword(req, res);
     }
 
     if (!req.auth.isAuthenticated) {

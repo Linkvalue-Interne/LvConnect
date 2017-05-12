@@ -5,3 +5,14 @@
 .oauth-already-granted {
   opacity: 0.5;
 }
+
+.oauth-header-name {
+  text-transform: capitalize;
+  padding-right: 10px;
+}
+
+.oauth-header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
