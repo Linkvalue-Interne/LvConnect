@@ -5,7 +5,7 @@ module.exports = [{
   password: '$2a$10$lNbtFeWS1GuquR50WIzWTekc9UychxS7vzkQAy/G8liWQSwRKsNSW', // password
   roles: ['rh', 'com', 'board', 'tech', 'business', 'finance'],
   createdAt: new Date(),
-  thirdParty: {},
+  city: 'Paris',
 }, {
   firstName: 'Baz',
   lastName: 'Qux',
@@ -13,4 +13,5 @@ module.exports = [{
   password: '$2a$10$lNbtFeWS1GuquR50WIzWTekc9UychxS7vzkQAy/G8liWQSwRKsNSW', // password
   roles: ['tech'],
   createdAt: new Date(),
+  city: 'Lyon',
 }];

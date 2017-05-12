@@ -21,7 +21,7 @@ module.exports = {
 
     const userPromise = User
       .findOne({ _id: req.params.user })
-      .select('-password')
+      .select('-password -thirdParty')
       .exec()
       .then((user) => {
         if (!user) {

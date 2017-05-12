@@ -19,7 +19,6 @@ module.exports = {
       firstName: req.payload.firstName,
       lastName: req.payload.lastName,
       email: req.payload.email,
-      fallbackEmail: req.payload.fallbackEmail,
       roles: req.payload.roles,
     });
 

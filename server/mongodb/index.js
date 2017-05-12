@@ -7,6 +7,10 @@ function mongodbSerializer(value, omit) {
     return value.map(v => mongodbSerializer(v, omit));
   }
 
+  if (value.results && Array.isArray(value.results)) {
+    return Object.assign({}, value, { results: value.results.map(v => mongodbSerializer(v, omit)) });
+  }
+
   let payload = value;
   if (value.toJSON) {
     payload = Object.assign(value.toJSON(), {

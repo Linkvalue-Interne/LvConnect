@@ -1,5 +1,5 @@
 const { hasRoleInList } = require('../middlewares');
-const { validRoles } = require('../../users/routes/user-validation');
+const { validRoles, validCities } = require('../../users/routes/user-validation');
 
 module.exports = {
   method: 'GET',
@@ -20,6 +20,7 @@ module.exports = {
           pageTitle: 'Edit partner',
           userData: user,
           validRoles,
+          validCities,
           editMode: true,
         });
       })

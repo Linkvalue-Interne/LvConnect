@@ -11,7 +11,6 @@ exports.initWorker = server =>
       firstName,
       lastName,
       email,
-      fallbackEmail,
       slackHandle,
       profilePictureUrl,
     } = user;
@@ -40,8 +39,6 @@ exports.initWorker = server =>
           emails: [{
             value: email,
             primary: true,
-          }, {
-            value: fallbackEmail,
           }],
         },
       }))

@@ -31,7 +31,6 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          fallbackEmail: 'hello@world.com',
         },
       });
       const userCount = await User.count({});
@@ -55,7 +54,6 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          fallbackEmail: 'hello@world.com',
         },
       });
       const userCount = await User.count({});
@@ -78,7 +76,6 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          fallbackEmail: 'hello@world.com',
         },
       });
 

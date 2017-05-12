@@ -29,8 +29,8 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          fallbackEmail: 'hello@world.com',
           roles: ['tech', 'hr'],
+          city: 'Paris',
         },
       });
 
@@ -38,10 +38,10 @@ describe('/users/{id}', () => {
       expect(response.statusCode).to.equal(200);
       expect(response.result.firstName).to.equal('hello');
       expect(response.result.lastName).to.equal('world');
-      expect(response.result.fallbackEmail).to.equal('hello@world.com');
       expect(response.result.email).to.equal('foo@bar.com');
       expect(response.result.createdAt).to.be.a('date');
       expect(response.result.roles).to.deep.equal(['tech', 'hr']);
+      expect(response.result.city).to.equal('Paris');
     });
 
     it('should reject if user has insufficient rights', async function () {
@@ -57,7 +57,6 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          fallbackEmail: 'hello@world.com',
           roles: ['tech', 'hr'],
         },
       });
@@ -79,7 +78,6 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          fallbackEmail: 'hello@world.com',
         },
       });
 
@@ -100,7 +98,6 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          fallbackEmail: 'hello@world.com',
           roles: ['tech'],
         },
       });

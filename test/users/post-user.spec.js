@@ -27,9 +27,9 @@ describe('/users', () => {
           firstName: fixAdminUser.firstName,
           lastName: fixAdminUser.lastName,
           email: fixAdminUser.email,
-          fallbackEmail: fixAdminUser.fallbackEmail,
           plainPassword: 'admin1234',
           roles: ['tech'],
+          city: 'Lyon',
         },
       });
 
@@ -55,9 +55,9 @@ describe('/users', () => {
           firstName: fixAdminUser.firstName,
           lastName: fixAdminUser.lastName,
           email: fixAdminUser.email,
-          fallbackEmail: fixAdminUser.fallbackEmail,
           plainPassword: 'admin1234',
           roles: ['tech'],
+          city: 'Lyon',
         },
       });
 

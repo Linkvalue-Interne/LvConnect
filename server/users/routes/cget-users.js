@@ -17,7 +17,7 @@ module.exports = {
   handler(req, res) {
     const { User } = req.server.plugins.users.models;
     const limit = req.query.limit || 20;
-    const page = req.query.page - 1;
+    const page = req.query.page - 1 || 0;
     const email = req.query.email;
 
     const resultPromise = User
@@ -25,7 +25,7 @@ module.exports = {
       .where(email ? { email: { $eq: email } } : null)
       .limit(limit)
       .skip(page * limit || 0)
-      .select('-password')
+      .select('-password -thirdParty')
       .exec();
 
     const countPromise = User.count();
@@ -34,7 +34,7 @@ module.exports = {
       .then(([results, count]) => ({
         results,
         pageCount: Math.ceil(count / limit),
-        page,
+        page: page + 1,
         limit,
       }));
 

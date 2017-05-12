@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const Joi = require('joi');
-const { validRoles } = require('../../users/routes/user-validation');
+const { validRoles, validCities } = require('../../users/routes/user-validation');
 const { hasRoleInList } = require('../middlewares');
 
 module.exports = {
@@ -16,11 +16,11 @@ module.exports = {
         plainPassword: Joi.string().min(6).required(),
         email: Joi.string().email().required(),
         description: Joi.string().max(255).allow(''),
-        fallbackEmail: Joi.string().email(),
         roles: Joi.array().items(Joi.string().valid(validRoles)).min(1).single()
           .required(),
         githubHandle: Joi.string().allow(''),
         trelloHandle: Joi.string().allow(''),
+        city: Joi.string().valid(validCities).required(),
         plainPasswordCheck: Joi.string().required(),
       }),
       failAction: (req, res, src, error) => {

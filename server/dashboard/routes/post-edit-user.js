@@ -17,6 +17,7 @@ module.exports = {
           .required(),
         githubHandle: Joi.string().allow(''),
         trelloHandle: Joi.string().allow(''),
+        city: Joi.string().allow(''),
       }),
       failAction: (req, res, src, error) => res.view('create-user', {
         pageTitle: 'Edit partner',

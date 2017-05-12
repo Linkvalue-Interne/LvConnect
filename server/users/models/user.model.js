@@ -6,7 +6,6 @@ const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   email: { type: String, index: true, unique: true },
-  fallbackEmail: String,
   password: String,
   roles: [String],
   githubHandle: String,
@@ -18,6 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   createdAt: { type: Date, default: Date.now },
   description: String,
+  city: String,
 });
 
 userSchema.virtual('profilePictureUrl').get(function getProfilePictureUrl(value) {

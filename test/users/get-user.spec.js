@@ -29,7 +29,6 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          fallbackEmail: 'hello@world.com',
         },
       };
 
@@ -52,7 +51,6 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          fallbackEmail: 'hello@world.com',
         },
       });
 
@@ -61,7 +59,6 @@ describe('/users/{id}', () => {
       expect(response.result.lastName).to.equal(fixUser.lastName);
       expect(response.result.firstName).to.equal(fixUser.firstName);
       expect(response.result.email).to.equal(fixUser.email);
-      expect(response.result.fallbackEmail).to.equal(fixUser.fallbackEmail);
       expect(response.result.createdAt.toString()).to.equal(fixUser.createdAt.toString());
     });
   });

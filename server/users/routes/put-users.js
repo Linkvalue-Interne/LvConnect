@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const Boom = require('boom');
 const { hasRoleInList, isConnectedUser, hasScopeInList } = require('../middlewares');
 const { payload, params } = require('./user-validation');
@@ -53,6 +52,6 @@ module.exports = {
         return Promise.resolve(savedUser);
       });
 
-    return res.mongodb(userPromise, ['password']);
+    return res.mongodb(userPromise, ['password', 'thirdParty']);
   },
 };

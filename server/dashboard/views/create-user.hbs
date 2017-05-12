@@ -1,3 +1,18 @@
+<script type="text/javascript">
+  function autoFillEmail(el) {
+    if (el.value) {
+      return;
+    }
+
+    const firstName = document.querySelector('#firstNameInput').value || '';
+    const lastName = document.querySelector('#lastNameInput').value || '';
+
+    if (firstName.length && lastName.length) {
+      el.value = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@link-value.fr`;
+    }
+  }
+</script>
+
 <div class="mdl-grid">
   <form class="mdl-cell mdl-cell--6-col mdl-cell--3-offset-desktop mdl-cell--1-offset-tablet mdl-card mdl-shadow--2dp"
         method="POST">
@@ -30,7 +45,7 @@
       {{#unless editMode}}
         <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
           <input class="mdl-textfield__input" type="email" id="emailInput" name="email"
-                 value="{{userData.email}}" required>
+                 value="{{userData.email}}" required onfocus="autoFillEmail(this)">
           <label class="mdl-textfield__label" for="emailInput">Email</label>
         </div>
       {{/unless}}
@@ -64,6 +79,16 @@
         <label class="mdl-textfield__label" for="descriptionInput">Description</label>
         <span class="mdl-textfield__error"></span>
       </div>
+
+      {{#each validCities as |city|}}
+        <div class="mdl-cell mdl-cell--4-col">
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="city-radio-{{ city }}">
+            <input type="radio" name="city" value="{{ city }}" id="city-radio-{{ city }}"
+                   class="mdl-radio__button" {{#ifEquals @root.userData.city city}}checked{{/ifEquals}}>
+            <span class="mdl-radio__label">{{ city }}</span>
+          </label>
+        </div>
+      {{/each}}
 
       <input type="hidden" name="crumb" value="{{crumb}}">
     </div>

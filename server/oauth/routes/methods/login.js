@@ -10,7 +10,6 @@ module.exports = function login(req, res) {
 
       req.server.app.cache.set(sid, { user }, 0, (err) => {
         if (err) {
-          console.log(err);
           throw err;
         }
 
