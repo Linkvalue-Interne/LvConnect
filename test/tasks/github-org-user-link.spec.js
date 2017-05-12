@@ -5,7 +5,7 @@ const [fixUser] = require('../fixtures/users');
 const githubWorker = require('../../server/tasks/workers/github-org-user-link');
 const testSetup = require('../setup');
 
-describe('Github user onboarding', () => {
+describe.skip('Github user onboarding', () => {
   let server;
   let User;
 

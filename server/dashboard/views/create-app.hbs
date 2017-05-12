@@ -1,25 +1,19 @@
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
     <h3>
-      {{#if editMode }}
+      {{#if editMode}}
         Edit Application
-      {{else  }}
+      {{else}}
         Create Application
-      {{/if }}
+      {{/if}}
     </h3>
-  </div>
-
-  <div class="mdl-layout__header-row mdl-cell--3-offset-desktop mdl-cell--1-offset-tablet errors">
-    {{#each errors }}
-      {{#each this.details }}
-        <p>{{  this.message }}</p>
-      {{/each }}
-    {{/each   }}
   </div>
 
   <form class="mdl-cell mdl-cell--6-col mdl-cell--3-offset-desktop mdl-cell--1-offset-tablet mdl-card mdl-shadow--2dp"
         method="POST">
     <div class="mdl-card__supporting-text mdl-grid">
+      {{error.message}}
+
       <div
         class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" id="nameInput" name="name" value="{{ app.name }}" required>
@@ -65,9 +59,9 @@
     <div class="mdl-card__actions mdl-card--border">
       <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">
         {{#if editMode }}
-          Edit Application
+          Save
         {{else  }}
-          Create Application
+          Create application
         {{/if }}
       </button>
     </div>

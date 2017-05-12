@@ -5,8 +5,9 @@ const validRoles = exports.validRoles = [
   'tech',
   'business',
   'hr',
-  'staff',
   'board',
+  'com',
+  'finance',
 ];
 
 exports.payload = {

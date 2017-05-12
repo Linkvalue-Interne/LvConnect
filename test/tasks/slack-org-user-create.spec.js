@@ -5,7 +5,7 @@ const [fixUser] = require('../fixtures/users');
 const slackWorker = require('../../server/tasks/workers/slack-org-user-create');
 const testSetup = require('../setup');
 
-describe('Slack user onboarding', () => {
+describe.skip('Slack user onboarding', () => {
   let server;
   let User;
 

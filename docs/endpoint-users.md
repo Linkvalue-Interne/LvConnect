@@ -36,12 +36,12 @@ Retrieve the whole collection of users. Accepts the following filter params:
 
 ## `POST /users`
 
-Creates a new user. Requires to specify at least one valid role in: tech, hr, staff, business and board.
-Also requires to have either hr or staff in logged user roles to perform request.
+Creates a new user. Requires to specify at least one valid role in: tech, hr, finance, com, business and board.
+Also requires to have either hr or board in logged user roles to perform request.
 
 #### Requires
 
-- Role: `rh` or `staff`
+- Role: `rh` or `board`
 - Scope: `users:create`
 
 #### Request payload
@@ -53,7 +53,7 @@ Also requires to have either hr or staff in logged user roles to perform request
   "email": String,              // required
   "fallbackEmail": String,
   "description": String,
-  "plainPassword": String       // required
+  "plainPassword": String,      // required
   "roles": [String]             // required
 }
 ```
@@ -101,11 +101,11 @@ Retrieve a user.
 ## `PUT /users/{id}`
 
 Updates a user. Connected user can edit himself.
-To edit user roles, connected user requires either hr or staff in his roles.
+To edit user roles, connected user requires either hr or board in his roles.
 
 #### Requires
 
-- Role: `rh` or `staff`
+- Role: `rh` or `board`
 - Scope: `users:modify` or `profile:modify` if self editing
 
 #### Request payload
@@ -117,18 +117,18 @@ To edit user roles, connected user requires either hr or staff in his roles.
   "email": String,
   "fallbackEmail": String,
   "description": String,
-  "roles": [String]         // requires hr/staff role
+  "roles": [String]         // requires hr/board role
 }
 ```
 
 ## `DELETE /users/{id}`
 
 Deletes an user.
-To delete a user, connected user requires either hr or staff in his roles.
+To delete a user, connected user requires either hr or board in his roles.
 
 #### Requires
 
-- Role: `rh` or `staff`
+- Role: `rh` or `board`
 - Scope: `users:delete`
 
 #### Request payload

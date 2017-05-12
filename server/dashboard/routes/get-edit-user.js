@@ -5,7 +5,7 @@ module.exports = {
   method: 'GET',
   path: '/dashboard/users/{user}/edit',
   config: {
-    pre: [hasRoleInList(['rh', 'staff'])],
+    pre: [hasRoleInList(['rh', 'board'])],
     auth: 'session',
   },
   handler(req, res) {
@@ -16,10 +16,11 @@ module.exports = {
       .exec()
       .then((user) => {
         if (!user) return res.view('404');
-        return res.view('edit-user', {
+        return res.view('create-user', {
           pageTitle: 'Edit partner',
           userData: user,
           validRoles,
+          editMode: true,
         });
       })
       .catch(res);

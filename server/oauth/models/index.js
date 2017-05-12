@@ -1,5 +1,5 @@
-exports.AccessToken = require('./access-token');
-exports.Application = require('./application');
-exports.Authorization = require('./authorization');
-exports.AuthorizationCode = require('./authorization-code');
-exports.RefreshToken = require('./refresh-token');
+exports.AccessToken = require('./access-token.model');
+exports.Application = require('./application.model');
+exports.Authorization = require('./authorization.model');
+exports.AuthorizationCode = require('./authorization-code.model');
+exports.RefreshToken = require('./refresh-token.model');

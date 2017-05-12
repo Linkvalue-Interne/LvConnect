@@ -6,7 +6,7 @@ module.exports = {
   method: 'POST',
   path: '/users',
   config: {
-    pre: [hasScopeInList('users:create'), hasRoleInList(['rh', 'staff'])],
+    pre: [hasScopeInList('users:create'), hasRoleInList(['rh', 'board'])],
     validate: {
       payload: payload.post,
     },

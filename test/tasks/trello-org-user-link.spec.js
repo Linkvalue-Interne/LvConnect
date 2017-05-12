@@ -5,7 +5,7 @@ const [fixUser] = require('../fixtures/users');
 const trelloWorker = require('../../server/tasks/workers/trello-org-user-link');
 const testSetup = require('../setup');
 
-describe('Trello user onboarding', () => {
+describe.skip('Trello user onboarding', () => {
   let server;
   let User;
 

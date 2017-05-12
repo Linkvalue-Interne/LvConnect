@@ -5,7 +5,7 @@ module.exports = {
   method: 'DELETE',
   path: '/users/{user}',
   config: {
-    pre: [hasScopeInList('users:delete'), hasRoleInList(['rh', 'staff'])],
+    pre: [hasScopeInList('users:delete'), hasRoleInList(['rh', 'board'])],
     validate: {
       params,
     },

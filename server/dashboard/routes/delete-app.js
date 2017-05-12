@@ -5,20 +5,7 @@ module.exports = {
   handler(req, res) {
     const { Application } = req.server.plugins.oauth.models;
 
-    Application.findOne({ _id: req.params.id })
-      .remove()
-      .then(() => {
-        Application
-          .find()
-          .select('-appSecret')
-          .sort('appId')
-          .then((apps) => {
-            res.view('get-apps', {
-              pageTitle: 'Applications',
-              user: req.auth.credentials,
-              apps,
-            });
-          });
-      });
+    return Application.remove({ _id: req.params.id })
+      .then(() => res.redirect('/dashboard/apps'));
   },
 };

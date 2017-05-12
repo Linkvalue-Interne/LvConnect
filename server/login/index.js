@@ -19,6 +19,7 @@ exports.register = (server, { cache, cookie }, next) => {
     cookie: cookie.name,
     redirectTo: cookie.redirect,
     isSecure: cookie.isSecure,
+    clearInvalid: true,
     validateFunc(request, session, callback) {
       request.server.app.cache.get(session.sid, (err, cached) => {
         if (err) return callback(err, false);

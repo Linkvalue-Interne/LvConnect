@@ -6,27 +6,25 @@ module.exports = {
   method: 'POST',
   path: '/dashboard/users/{user}/edit',
   config: {
-    pre: [hasRoleInList(['rh', 'staff'])],
+    pre: [hasRoleInList(['rh', 'board'])],
     auth: 'session',
     validate: {
       payload: Joi.object({
         firstName: Joi.string().min(2).required(),
         lastName: Joi.string().min(2).required(),
-        fallbackEmail: Joi.string().email().required(),
         description: Joi.string().empty('').max(255),
         roles: Joi.array().items(Joi.string().valid(validRoles)).single().min(1)
           .required(),
         githubHandle: Joi.string().allow(''),
         trelloHandle: Joi.string().allow(''),
       }),
-      failAction: (req, res, src, error) => {
-        res.view('edit-user', {
-          pageTitle: 'Edit partner',
-          userData: req.payload,
-          validRoles,
-          error,
-        });
-      },
+      failAction: (req, res, src, error) => res.view('create-user', {
+        pageTitle: 'Edit partner',
+        userData: req.payload,
+        validRoles,
+        error,
+        editMode: true,
+      }),
     },
   },
   handler(req, res) {
@@ -45,7 +43,7 @@ module.exports = {
         if (savedUser.trelloHandle && savedUser.thirdParty.trello !== 'success') {
           trelloOrgUserLink({ user: savedUser });
         }
-        res.redirect(`/dashboard/users/${userId}`);
+        return res.redirect(`/dashboard/users/${userId}`);
       })
       .catch(res);
   },

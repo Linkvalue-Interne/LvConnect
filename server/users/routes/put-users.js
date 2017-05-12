@@ -7,7 +7,7 @@ module.exports = {
   method: 'PUT',
   path: '/users/{user}',
   config: {
-    pre: [hasScopeInList('users:modify', 'profile:modify'), isConnectedUser, hasRoleInList(['rh', 'staff'], true)],
+    pre: [hasScopeInList('users:modify', 'profile:modify'), isConnectedUser, hasRoleInList(['rh', 'board'], true)],
     validate: {
       payload: payload.put,
       params,

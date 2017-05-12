@@ -13,7 +13,7 @@ module.exports = {
         res.view('get-users', {
           pageTitle: 'Users list',
           users,
-          adminRoles: ['rh', 'staff'],
+          adminRoles: ['rh', 'board'],
         });
       });
   },

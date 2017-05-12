@@ -7,7 +7,7 @@ module.exports = {
   method: 'POST',
   path: '/dashboard/users/create',
   config: {
-    pre: [hasRoleInList(['rh', 'staff'])],
+    pre: [hasRoleInList(['rh', 'board'])],
     auth: 'session',
     validate: {
       payload: Joi.object().keys({
@@ -24,10 +24,9 @@ module.exports = {
         plainPasswordCheck: Joi.string().required(),
       }),
       failAction: (req, res, src, error) => {
-        req.server.log('info', error);
         res.view('create-user', {
           pageTitle: 'Add new partner',
-          newUser: req.payload,
+          userData: req.payload,
           validRoles,
           error,
         });
@@ -57,10 +56,9 @@ module.exports = {
         res.redirect('/dashboard/users');
       })
       .catch((error) => {
-        req.server.log('error', error);
         res.view('create-user', {
           pageTitle: 'Add new partner',
-          newUser: body,
+          userData: body,
           validRoles,
           error,
         });

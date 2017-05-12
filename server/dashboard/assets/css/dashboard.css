@@ -38,3 +38,7 @@
   z-index: 4;
   text-transform: capitalize;
 }
+
+.mdl-button--danger {
+  color: red;
+}

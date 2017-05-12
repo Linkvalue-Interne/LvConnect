@@ -5,6 +5,7 @@ const getCreateUser = require('./get-create-user');
 const postCreateUser = require('./post-create-user');
 const getEditUser = require('./get-edit-user');
 const postEditUser = require('./post-edit-user');
+const deleteUser = require('./delete-user');
 const getAssets = require('./get-assets');
 const getApplications = require('./get-apps');
 const getCreateApplication = require('./get-create-app');
@@ -21,6 +22,7 @@ module.exports = [
   postCreateUser,
   getEditUser,
   postEditUser,
+  deleteUser,
   getAssets,
   getApplications,
   getCreateApplication,

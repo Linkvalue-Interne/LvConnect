@@ -17,13 +17,12 @@ module.exports = {
         req.server.log('info', error);
         const { Application } = req.server.plugins.oauth.models;
 
-        /* TODO: handle form errors */
-        Application.findOne({ _id: req.params.id })
+        Application.findById(req.params.id)
           .then((app) => {
             res.view('create-app', {
               pageTitle: 'Edit app',
               app,
-              errors: error,
+              error,
               editMode: true,
               validScopes: req.server.plugins.oauth.validScopes,
             });
@@ -34,23 +33,28 @@ module.exports = {
   handler(req, res) {
     const { Application } = req.server.plugins.oauth.models;
 
-    Application.findOne({ _id: req.params.id })
-      .then(app => Object.assign(app, {
-        name: req.payload.name,
-        description: req.payload.description,
-        allowedScopes: req.payload.allowedScopes,
-        redirectUris: [req.payload.redirectUri],
-      }).save().catch(() => res.view('create-app', {
-        pageTitle: 'Edit app',
-        user: req.auth.credentials,
-        app,
-        editMode: true,
-        validScopes: req.server.plugins.oauth.validScopes,
-      })))
-      .then(() => res.redirect('/dashboard/apps'))
-      .catch(() => res.view('get-apps', {
-        pageTitle: 'Applications',
-        user: req.auth.credentials,
-      }));
+    Application.findById(req.params.id)
+      .then((app) => {
+        if (!app) {
+          return res.redirect('/dashboard/apps');
+        }
+
+        return Object
+          .assign(app, {
+            name: req.payload.name,
+            description: req.payload.description,
+            allowedScopes: req.payload.allowedScopes,
+            redirectUris: [req.payload.redirectUri],
+          })
+          .save()
+          .then(() => res.redirect('/dashboard/apps'))
+          .catch(() => res.view('create-app', {
+            pageTitle: 'Edit app',
+            user: req.auth.credentials,
+            app,
+            editMode: true,
+            validScopes: req.server.plugins.oauth.validScopes,
+          }));
+      });
   },
 };

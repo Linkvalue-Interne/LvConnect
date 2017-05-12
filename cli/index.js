@@ -1,7 +1,7 @@
 const { mongodb } = require('config');
 const mongoose = require('mongoose');
 
-const User = require('../server/users/models/user');
+const User = require('../server/users/models/user.model');
 
 mongoose.Promise = global.Promise;
 
@@ -17,7 +17,8 @@ mongoose.connect(`mongodb://${userPart}${mongodb.host}:${mongodb.port}/${mongodb
         'tech',
         'business',
         'hr',
-        'staff',
+        'com',
+        'finance',
         'board',
       ],
     });
