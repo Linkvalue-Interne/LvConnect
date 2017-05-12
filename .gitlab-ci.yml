@@ -12,6 +12,7 @@ unit_tests:
   script:
     - curl -o- -L https://yarnpkg.com/install.sh | bash
     - yarn
+    - yarn lint
     - yarn test
   cache:
     paths:

@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const { mongodb } = require('config');
 const mongoose = require('mongoose');
 
