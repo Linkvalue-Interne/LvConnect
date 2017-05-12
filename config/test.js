@@ -9,7 +9,7 @@ module.exports = {
     },
   },
   mongodb: {
-    host: 'localhost',
+    host: 'mongo',
     port: 27017,
     database: 'lvconnect_test',
   },
