@@ -4,7 +4,7 @@ module.exports = {
   method: 'POST',
   path: '/dashboard/change-password',
   config: {
-    auth: 'session',
+    auth: { strategies: ['query-token', 'session'] },
     validate: {
       payload: {
         plainPassword: Joi.string().min(6).required(),
@@ -36,7 +36,7 @@ module.exports = {
             user.needPasswordChange = false;
             return user.save();
           })
-          .then(() => res.redirect('/dashboard'));
+          .then(() => res.redirect(req.query.redirect_uri || '/dashboard'));
       })
       .catch(() => res.view('change-password', {
         pageTitle: 'Password change',
