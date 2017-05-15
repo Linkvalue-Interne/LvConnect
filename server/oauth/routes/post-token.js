@@ -22,6 +22,7 @@ function generateTokens(req, user, application, scope) {
     expires_in: accessTokenTTL,
     refresh_token: refreshToken.token,
     scope,
+    need_password_change: user.needPasswordChange,
   }));
 }
 

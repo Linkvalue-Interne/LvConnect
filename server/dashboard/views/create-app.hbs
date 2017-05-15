@@ -1,16 +1,15 @@
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--12-col">
-    <h3>
-      {{#if editMode}}
-        Edit Application
-      {{else}}
-        Create Application
-      {{/if}}
-    </h3>
-  </div>
-
   <form class="mdl-cell mdl-cell--6-col mdl-cell--3-offset-desktop mdl-cell--1-offset-tablet mdl-card mdl-shadow--2dp"
         method="POST">
+    <div class="mdl-card__title">
+      <h3 class="mdl-card__title-text">
+        {{#if editMode}}
+          Edit Application
+        {{else}}
+          Create Application
+        {{/if}}
+      </h3>
+    </div>
     <div class="mdl-card__supporting-text mdl-grid">
       {{error.message}}
 
@@ -47,15 +46,6 @@
       <input type="hidden" name="crumb" value="{{crumb}}">
     </div>
 
-    {{#if editMode}}
-      <div class="mdl-card__supporting-text mdl-grid">
-        <div class="mdl-cell mdl-cell--12-col">
-          <b>App id</b>: {{app.appId}}<br/>
-          <b>App secret</b>: {{app.appSecret}}
-        </div>
-      </div>
-    {{/if}}
-
     <div class="mdl-card__actions mdl-card--border">
       <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">
         {{#if editMode }}
@@ -66,4 +56,23 @@
       </button>
     </div>
   </form>
+
+  {{#if editMode}}
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--3-offset-desktop mdl-cell--1-offset-tablet mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h3 class="mdl-card__title-text">
+          Application credentials
+        </h3>
+      </div>
+      <div class="mdl-card__supporting-text mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col">
+          <b>App id</b>: {{app.appId}}<br/>
+          <b>App secret</b>: {{app.appSecret}}
+        </div>
+      </div>
+      <div class="mdl-card__supporting-text mdl-grid">
+        Do not store those credentials on repositories and do not share publicly.
+      </div>
+    </div>
+  {{/if}}
 </div>

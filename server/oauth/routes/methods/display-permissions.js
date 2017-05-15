@@ -42,6 +42,12 @@ module.exports = function displayPermissions(req, res) {
   const user = req.auth.credentials;
 
   return Application.findOne({ appId })
+    .then((application) => {
+      if (!application) {
+        throw Boom.notFound('Application not found');
+      }
+      return application;
+    })
     .then(application => Authorization.findOne({ user, application }).then(auth => [auth, application]))
     .then(([authorization, application]) => {
       if (!application.redirectUris.find(uri => req.query.redirect_uri === uri)) {

@@ -36,4 +36,5 @@ module.exports = {
   trello: {},
   github: {},
   slack: {},
+  mailjet: {},
 };
