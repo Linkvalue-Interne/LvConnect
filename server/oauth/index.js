@@ -60,6 +60,11 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCode
     return Promise.all(cleanupModels.map(model => model.remove({ user }).exec()));
   });
 
+  server.method('cleanupUserTokens', (user) => {
+    const cleanupModels = [AccessToken, RefreshToken, AuthorizationCode];
+    return Promise.all(cleanupModels.map(model => model.remove({ user }).exec()));
+  });
+
   server.auth.strategy('application', 'basic', {
     validateFunc(req, appId, appSecret, cb) {
       Application.findOne({ appId, appSecret })
