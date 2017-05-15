@@ -36,12 +36,15 @@ module.exports = {
             user.needPasswordChange = false;
             return user.save();
           })
-          .then(() => req.server.plugins.oauth.cleanupUserTokens(user))
+          .then(() => req.server.plugins.oauth.cleanupUserTokens(user._id))
           .then(() => res.redirect(req.query.redirect_uri || '/dashboard'));
       })
-      .catch(() => res.view('change-password', {
-        pageTitle: 'Password change',
-        error: 'An unknown error occurred',
-      }).code(401));
+      .catch((err) => {
+        console.error('error', err);
+        res.view('change-password', {
+          pageTitle: 'Password change',
+          error: 'An unknown error occurred',
+        }).code(401);
+      });
   },
 };
