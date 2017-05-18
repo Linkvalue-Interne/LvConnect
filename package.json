@@ -38,7 +38,7 @@
     "hapi": "^16.0.1",
     "hapi-auth-basic": "^4.2.0",
     "hapi-auth-bearer-token": "^4.2.1",
-    "hapi-auth-cookie": "^6.1.1",
+    "hapi-auth-cookie": "7.0.0",
     "inert": "^4.0.2",
     "joi": "^10.0.5",
     "kue": "^0.11.1",
@@ -64,7 +64,7 @@
     "chai": "^3.5.0",
     "commander": "^2.9.0",
     "eslint": "^3.8.1",
-    "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.0.1",
     "mocha": "^3.0.2",
     "nodemon": "^1.10.2"
