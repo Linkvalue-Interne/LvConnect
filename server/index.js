@@ -1,3 +1,16 @@
+const pmx = require('pmx');
+
+let pmxProbe;
+if (require.main === module && process.env.NODE_ENV === 'production') {
+  pmxProbe = pmx.init({
+    http: true,
+    errors: true,
+    custom_probes: true, // Auto expose JS Loop Latency and HTTP req/s as custom metrics
+    network: true, // Network monitoring at the application level
+    ports: true, // Shows which ports your app is listening on (default: false)
+  });
+}
+
 const Glue = require('glue');
 const config = require('config');
 
@@ -88,6 +101,15 @@ if (require.main === module) {
       process.on('unhandledRejection', (reason) => {
         server.log('error', `Unhandled rejection: ${reason.stack}`);
       });
+
+      // Error probing
+      if (pmxProbe) {
+        server.on('log', (event, { error }) => {
+          if (error) {
+            pmxProbe.notify(event.data);
+          }
+        });
+      }
     })
     .catch((err) => {
       console.error(err.stack); // eslint-disable-line no-console
