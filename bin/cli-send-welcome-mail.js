@@ -32,7 +32,9 @@ module.exports = (email) => {
         FromEmail: 'no-reply@link-value.fr',
         FromName: 'LVConnect',
         Subject: 'Your LVConnect account is ready',
-        'Html-part': emailTemplate({ userData }),
+        'Html-part': emailTemplate({
+          userData: Object.assign({}, userData.toJSON(), { plainPassword: 'Bonjour1234' }),
+        }),
         Recipients: [{ Email: userData.email }],
       };
 
