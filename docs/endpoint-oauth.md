@@ -17,6 +17,22 @@ The token can be generated to allow only specific scopes. These scopes must be p
 scope list or it will trigger an `invalid_scope` error. By default the scope of the token will be all the allowed scopes
 of your application.
 
+#### Required password change
+
+:warning: The response payload can contain the `needPasswordChange` field set to true. This field tells if the user has
+changed his password since account creation. If present you must redirect the user to LVConnect to the following
+address:
+
+```
+http://lvconnect.link-value.fr/dashboard/change-password?access_token=token&redirect_uri=http://yourdomain.com
+```
+
+Required query params:
+- `access_token`: the token you received from `POST /oauth/token` endpoint.
+
+Optional query param:
+- `redirect_uri`: an url to redirect the user to when password is successfully changed.
+
 #### Request payload for password grant
 
 ```js

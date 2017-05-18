@@ -64,6 +64,10 @@ module.exports = {
   slack: {
     apiToken: '',
   },
+  mailjet: {
+    apiKey: '',
+    apiToken: '',
+  },
 };
 ```
 
@@ -89,3 +93,28 @@ npm version [patch|minor|major]
 This tag will trigger a deployment job in GitLabCI for production environment.
 You'll have to manually start the job to prevent unwanted deployments.
 To accept the job got to the [Job](https://gitlab.com/LinkValue/Lab/LvConnect/builds) interface of GitLab.
+
+## CLI
+
+LVConnect has a command line interface to help you do quick tasks. To run the cli, use the following command:
+
+```shell
+./bin/cli.js [command] [...options]
+```
+
+Here's the command help (you can also access it by using the `--help` option):
+
+```
+Usage: cli [options] [command]
+
+
+  Commands:
+
+    create-superuser           Creates admin user with admin@link-value.fr/admin
+    send-welcome-mail [email]  Send welcome email to given email address
+
+  Options:
+
+    -h, --help     output usage information
+    -V, --version  output the version number
+```
