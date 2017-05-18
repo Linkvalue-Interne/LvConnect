@@ -26,6 +26,13 @@ module.exports = {
   host: {
     port: process.env.PORT || 8000,
   },
+  login: {
+    cookie: {
+      secret: '&é"(§è!çà)-azertyuiop1234567890%',
+      name: 'lvconnect',
+      isSecure: false,
+    },
+  },
   mongodb: {
     host: 'localhost',
     port: 27017,
