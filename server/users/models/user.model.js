@@ -22,7 +22,12 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.virtual('profilePictureUrl').get(function getProfilePictureUrl(value) {
-  return value || `https://www.gravatar.com/avatar/${crypto.createHash('md5').update(this.email).digest('hex')}?s=200`;
+  if (value) {
+    return value;
+  }
+
+  const emailHash = crypto.createHash('md5').update(this.email || '').digest('hex');
+  return `https://www.gravatar.com/avatar/${emailHash}?s=200`;
 });
 
 userSchema.set('toJSON', { virtuals: true });
