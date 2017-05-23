@@ -18,7 +18,7 @@ exports.register = (server, config, next) => {
     },
   });
 
-  server.on({ name: 'request-internal', filter: 'received' }, (req) => {
+  server.on({ name: 'request-internal', filter: 'handler' }, (req) => {
     if (!/\/(assets|favicon|metrics)/.test(req.path)) {
       requestCounter.labels(req.method, req.route.path).inc();
     }
