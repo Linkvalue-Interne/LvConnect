@@ -34,16 +34,6 @@ exports.register = (server, { apiKey, apiToken }, next) => {
       .catch(err => server.log('error', err));
   });
 
-  server.route({
-    method: 'GET',
-    path: '/test',
-    config: { auth: false },
-    handler(req, res) {
-      req.server.plugins.mailjet.sendAccountCreationMail();
-      res('Hello');
-    },
-  });
-
   next();
 };
 

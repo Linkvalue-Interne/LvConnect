@@ -1,4 +1,4 @@
-const createServer = require('../server');
+const { createServer } = require('../server/create-server');
 const fixtures = require('./fixtures');
 
 function dropDatabase(server) {

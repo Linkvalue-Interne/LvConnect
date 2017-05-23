@@ -1,5 +1,4 @@
 const Boom = require('boom');
-const uuid = require('uuid');
 const handlebars = require('handlebars');
 const routes = require('./routes');
 

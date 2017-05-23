@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = [{
   method: 'GET',
-  path: '/mdl/{param*}',
+  path: '/assets/{param*}',
   config: {
     auth: false,
   },

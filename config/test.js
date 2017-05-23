@@ -9,13 +9,13 @@ module.exports = {
     },
   },
   mongodb: {
-    host: 'mongo',
+    host: 'localhost',
     port: 27017,
     database: 'lvconnect_test',
   },
   kue: {
     redis: {
-      host: 'redis',
+      host: 'localhost',
       port: 6379,
       db: 0,
     },
