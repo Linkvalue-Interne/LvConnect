@@ -38,9 +38,9 @@ const manifest = {
       options: config.mailjet,
     },
   }, {
-    plugin: './monitoring',
-  }, {
     plugin: './users',
+  }, {
+    plugin: './monitoring',
   }, {
     plugin: {
       register: './login',
