@@ -16,3 +16,20 @@
   height: 40px;
   border-radius: 20px;
 }
+
+.oauth-login-btn,
+.oauth-login-btn--with-avatar {
+  display: flex;
+  margin: 5px;
+}
+
+.oauth-login-btn--with-avatar {
+  padding-right: 0;
+}
+
+.oauth-login-btn--with-avatar img {
+  display: block;
+  margin-left: 1rem;
+  width: 36px;
+  height: 36px;
+}

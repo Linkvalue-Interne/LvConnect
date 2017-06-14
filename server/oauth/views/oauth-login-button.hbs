@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LVConnect login button</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Material Design Lite -->
+  <link rel="stylesheet" href="/assets/material-icons.css">
+  <link rel="stylesheet" href="/assets/material.blue-light_blue.min.css"/>
+  <script defer async src="/assets/material.min.js"></script>
+
+  <!-- LvConnect -->
+  <link rel="stylesheet" href="/oauth/assets/css/oauth.css">
+</head>
+<body>
+<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored oauth-login-btn{{#if firstName}}--with-avatar{{/if}}">
+  {{#if firstName}}
+    Continue as {{firstName}}
+    <img class="" src="{{profilePictureUrl}}" alt="Avatar">
+  {{else}}
+    Login with LVConnect
+  {{/if}}
+</button>
+</body>
+</html>
