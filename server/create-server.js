@@ -26,6 +26,8 @@ const manifest = {
   }, {
     plugin: 'vision',
   }, {
+    plugin: 'scooter',
+  }, {
     plugin: 'inert',
   }, {
     plugin: {

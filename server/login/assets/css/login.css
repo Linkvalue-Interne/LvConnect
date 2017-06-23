@@ -33,3 +33,29 @@ body {
   height: 146px;
   background: url('/login/assets/images/logo.png') center / contain no-repeat;
 }
+
+.login-card__error,
+.login-card__success {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  color: white;
+}
+
+.login-card__error i,
+.login-card__success i {
+  margin-right: 5px;
+}
+
+.login-card__error {
+  background: #d50000;
+}
+
+.login-card__success {
+  background: #00d500;
+}
+
+.login-card__text {
+  margin-bottom: 10px;
+}

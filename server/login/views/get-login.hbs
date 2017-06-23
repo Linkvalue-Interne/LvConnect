@@ -1,43 +1,23 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Login - LvConnect</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Material Design Lite -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.light_blue-blue.min.css" />
-    <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
-
-    <!-- LvConnect -->
-    <link rel="stylesheet" href="/login/assets/css/login.css">
-  </head>
-  <body>
-  <div class="login-page">
-    <div class="mdl-grid login-page__grid">
-      <div class="mdl-cell mdl-cell--12-col  mdl-cell--6-col-tablet mdl-cell--1-offset-tablet mdl-cell--4-col-desktop  mdl-cell--4-offset-desktop">
-        <form method="post" action="/login" class="mdl-card mdl-shadow--2dp login-card">
-          <div class="mdl-card__title login-card__title"></div>
-          <div class="mdl-card__supporting-text mdl-card--border login-card__body">
-            {{error}}
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="email" id="email" name="email" value="{{email}}" required>
-              <label class="mdl-textfield__label" for="email">Email</label>
-            </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="password" id="password" name="password" required>
-              <label class="mdl-textfield__label" for="password">Mot de passe</label>
-            </div>
-            <input type="hidden" name="crumb" value="{{crumb}}">
-          </div>
-          <div class="mdl-card__actions mdl-card--border">
-            <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">
-              Se connecter
-            </button>
-          </div>
-        </form>
-      </div>
+<form method="post" action="/login" class="mdl-card mdl-shadow--2dp login-card">
+  <div class="mdl-card__title login-card__title"></div>
+  <div class="mdl-card__supporting-text mdl-card--border login-card__body">
+    {{error}}
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="email" id="email" name="email" value="{{email}}" required>
+      <label class="mdl-textfield__label" for="email">Email</label>
     </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="password" id="password" name="password" required>
+      <label class="mdl-textfield__label" for="password">Mot de passe</label>
+    </div>
+    <input type="hidden" name="crumb" value="{{crumb}}">
   </div>
-  </body>
-</html>
+  <div class="mdl-card__actions mdl-card--border">
+    <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">
+      Login
+    </button>
+    <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="/forgot-password">
+      Forgot password
+    </a>
+  </div>
+</form>

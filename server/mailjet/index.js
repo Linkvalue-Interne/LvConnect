@@ -15,24 +15,36 @@ exports.register = (server, { apiKey, apiToken }, next) => {
     server.expose('accountCreatedTemplate', handlebars.compile(buffer.toString()));
   });
 
-  server.expose('sendAccountCreationMail', (userData) => {
+  fs.readFile(path.join(__dirname, 'templates/password-reset.hbs'), (err, buffer) => {
+    server.expose('passwordResetTemplate', handlebars.compile(buffer.toString()));
+  });
+
+  function sendLVConnectEmail(emailData) {
     if (!isMailJetEnabled) {
       return Promise.resolve();
     }
 
     const sendEmail = mailjetAPI.post('send');
 
-    const emailData = {
-      FromEmail: 'no-reply@link-value.fr',
-      FromName: 'LVConnect',
-      Subject: 'Your LVConnect account is ready',
-      'Html-part': server.plugins.mailjet.accountCreatedTemplate({ userData }),
-      Recipients: [{ Email: userData.email }],
-    };
-
     return sendEmail.request(emailData)
       .catch(err => server.log('error', err));
-  });
+  }
+
+  server.expose('sendAccountCreationMail', userData => sendLVConnectEmail({
+    FromEmail: 'no-reply@link-value.fr',
+    FromName: 'LVConnect',
+    Subject: 'Your LVConnect account is ready',
+    'Html-part': server.plugins.mailjet.accountCreatedTemplate({ userData }),
+    Recipients: [{ Email: userData.email }],
+  }));
+
+  server.expose('sendPasswordResetMail', (userData, token) => sendLVConnectEmail({
+    FromEmail: 'no-reply@link-value.fr',
+    FromName: 'LVConnect',
+    Subject: 'Reset LVConnect account password',
+    'Html-part': server.plugins.mailjet.passwordResetTemplate({ userData, token }),
+    Recipients: [{ Email: userData.email }],
+  }));
 
   next();
 };

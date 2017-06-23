@@ -1,5 +1,7 @@
 const Boom = require('boom');
 const handlebars = require('handlebars');
+const crypto = require('crypto');
+
 const routes = require('./routes');
 
 const contextBuilder = req => (!req.auth.credentials ? {} : {
@@ -22,6 +24,24 @@ exports.register = (server, options, next) => {
     },
   });
 
+  // Auth strategy for fast reconnect from password reset email
+  server.auth.strategy('pkey-token', 'bearer-access-token', {
+    accessTokenName: 'pkey',
+    allowQueryToken: true,
+    validateFunc(pkey, cb) {
+      const hashedToken = crypto.createHmac('sha512', 'hello').update(pkey).digest('hex');
+      this.server.app.passwordResetCache.get(hashedToken, (err, cached) => {
+        if (err) return cb(err, false);
+        if (!cached) return cb(null, false);
+
+        const { User } = server.plugins.users.models;
+
+        return User.findById(cached)
+          .then(user => cb(null, !!user, user, { pkey }));
+      });
+    },
+  });
+
   server.views({
     engines: { hbs: handlebars },
     relativeTo: __dirname,
@@ -39,7 +59,7 @@ exports.register = (server, options, next) => {
     type: 'onPreHandler',
     method(req, res) {
       if (!ignoredRoutes.some(r => req.path.includes(r)) && req.auth.credentials.needPasswordChange) {
-        return res().redirect('/dashboard/change-password');
+        return res().redirect('/dashboard/change-password?forced=true');
       }
       return res.continue();
     },

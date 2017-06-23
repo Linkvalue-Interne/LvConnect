@@ -17,14 +17,16 @@ module.exports = {
     authorizationCodeTTL: 'PT10M',
   },
   csrf: {
-    skip: req => !/(\/oauth\/authorize|\/dashboard|\/login)/.test(req.path),
+    skip: req => !/(\/oauth\/authorize|\/dashboard|\/login|\/forgot-password)/.test(req.path),
     cookieOptions: {
       isSecure: false,
     },
   },
   login: {
     cache: {
-      ttl: 3 * 24 * 60 * 60 * 1000,
+      listsTTL: 30 * 24 * 60 * 60 * 1000,
+      sessionsTTL: 3 * 24 * 60 * 60 * 1000,
+      passwordResetTTL: 60 * 60 * 1000,
     },
     cookie: {
       secret: '12345678901234567890123456789012',

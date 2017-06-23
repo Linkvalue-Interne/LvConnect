@@ -49,11 +49,11 @@
     "mongoose": "^4.6.0",
     "node-mailjet": "^3.0.6",
     "node-trello": "^1.1.2",
-    "ovh": "2.0.1",
     "pmx": "^1.2.0",
     "prom-client": "^9.0.0",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
+    "scooter": "^4.0.0",
     "uuid": "^3.0.1",
     "vision": "^4.1.1"
   },
