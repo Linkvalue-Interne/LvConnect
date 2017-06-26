@@ -65,7 +65,10 @@ exports.register = (server, { cache, cookie }, next) => {
     return fetchUserSessionsFromCache(uid)
       .then(sessions => saveUserSessionsToCache(uid, Object.assign(sessions || {}, { [sid]: true })))
       .then(() => saveUserSessionToCache(sid, { uid, device: req.plugins.scooter.toJSON().device.family }))
-      .then(() => req.cookieAuth.set({ sid }));
+      .then(() => {
+        req.cookieAuth.set({ sid });
+        return user;
+      });
   });
 
   server.expose('destroySession', sid => dropSession(sid));
