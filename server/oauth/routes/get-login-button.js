@@ -12,6 +12,7 @@ module.exports = {
   },
   handler(req, res) {
     const context = req.auth.isAuthenticated ? req.auth.credentials.toJSON() : {};
-    return res.view('oauth-login-button', context, { layout: false });
+    return res.view('oauth-login-button', context, { layout: false })
+      .header('X-Frame-Options', 'ALLOWALL');
   },
 };

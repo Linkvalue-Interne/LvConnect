@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="overflow-y: hidden">
 <head>
   <title>LVConnect login button</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="/oauth/assets/css/oauth.css">
 </head>
 <body>
-<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored oauth-login-btn{{#if firstName}}--with-avatar{{/if}}">
+<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored oauth-login-btn{{#if firstName}}--with-avatar{{/if}}"
+        onclick="window.parent.postMessage({ type: 'lvClickLoginButton' }, '*')">
   {{#if firstName}}
     Continue as {{firstName}}
     <img class="" src="{{profilePictureUrl}}" alt="Avatar">

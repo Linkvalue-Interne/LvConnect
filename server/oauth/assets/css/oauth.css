@@ -20,7 +20,7 @@
 .oauth-login-btn,
 .oauth-login-btn--with-avatar {
   display: flex;
-  margin: 5px;
+  margin: 5px auto;
 }
 
 .oauth-login-btn--with-avatar {
