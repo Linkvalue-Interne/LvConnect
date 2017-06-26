@@ -67,6 +67,7 @@ exports.register = (server, { cache, cookie }, next) => {
       .then(() => saveUserSessionToCache(sid, { uid, device: req.plugins.scooter.toJSON().device.family }))
       .then(() => {
         req.cookieAuth.set({ sid });
+        req.auth.credentials = user;
         return user;
       });
   });
