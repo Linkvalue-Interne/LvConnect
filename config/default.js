@@ -33,6 +33,7 @@ module.exports = {
       name: 'lvconnect',
       redirect: '/login',
       isSecure: false,
+      isSameSite: 'Lax',
     },
   },
   trello: {},
