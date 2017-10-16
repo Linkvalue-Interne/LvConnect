@@ -8,6 +8,8 @@ Retrieve the whole collection of users. Accepts the following filter params:
 - `limit`: Limit the number of results per page (default: 20).
 - `page`: Select a page of results (default: 1).
 - `email`: Find a user by its email (strict matching).
+- `ids`: Get a list of users by ids.
+- `search`: Get a list of users who's first name and last name match search.
 
 #### Requires
 

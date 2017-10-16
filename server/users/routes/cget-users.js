@@ -9,6 +9,8 @@ module.exports = {
     validate: {
       query: Joi.object().keys({
         email: Joi.string().email(),
+        ids: Joi.array().items(Joi.string()).single(),
+        search: Joi.string().max(50),
         limit: Joi.number().min(1).max(100),
         page: Joi.number().min(1),
       }),
@@ -18,17 +20,32 @@ module.exports = {
     const { User } = req.server.plugins.users.models;
     const limit = req.query.limit || 20;
     const page = req.query.page - 1 || 0;
-    const email = req.query.email;
+    const { email, search, ids } = req.query;
 
-    const resultPromise = User
-      .find()
-      .where(email ? { email: { $eq: email } } : null)
+    function applyFilters(query) {
+      if (ids) {
+        query.where({ _id: { $in: ids } });
+        return query;
+      }
+      if (email) {
+        query.where({ email: { $eq: email } });
+      }
+      if (search) {
+        const searchRegexp = new RegExp(search, 'ig');
+        query.or([{ firstName: { $regex: searchRegexp } }, { firstName: { $regex: searchRegexp } }]);
+      }
+      return query;
+    }
+
+    const userQuery = applyFilters(User.find());
+
+    const resultPromise = userQuery
       .limit(limit)
       .skip(page * limit || 0)
       .select('-password -thirdParty -needPasswordChange')
       .exec();
 
-    const countPromise = User.count();
+    const countPromise = applyFilters(User.count());
 
     const usersPromise = Promise.all([resultPromise, countPromise])
       .then(([results, count]) => ({
