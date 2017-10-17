@@ -13,7 +13,7 @@ module.exports = {
   },
   oauth: {
     accessTokenTTL: 'P2D',
-    refreshTokenTTL: 'P2W',
+    refreshTokenTTL: 'P1M',
     authorizationCodeTTL: 'PT10M',
   },
   csrf: {
