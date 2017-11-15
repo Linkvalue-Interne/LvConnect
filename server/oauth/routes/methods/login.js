@@ -13,6 +13,8 @@ module.exports = function login(req, res) {
         appId: req.query.app_id,
         redirectUri: req.query.redirect_uri,
         error: 'Invalid username or password.',
+        state: req.query.state,
+        scope: req.query.scope,
       });
     });
 };

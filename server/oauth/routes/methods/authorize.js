@@ -33,6 +33,9 @@ module.exports = function authorize(req, res) {
       }).then(() => [application, scopes]);
     })
     .then(([application, scopes]) => generateAuthorizationCode(user, application, scopes))
-    .then(authorizationCode => res.redirect(`${redirectUri}?code=${authorizationCode.code}`))
+    .then((authorizationCode) => {
+      const state = req.query.state ? `&state=${req.query.state}` : '';
+      return res.redirect(`${redirectUri}?code=${authorizationCode.code}${state}`);
+    })
     .catch(error => res(Boom.wrap(error)));
 };

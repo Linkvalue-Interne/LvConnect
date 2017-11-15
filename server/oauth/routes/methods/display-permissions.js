@@ -55,14 +55,16 @@ module.exports = function displayPermissions(req, res) {
       }
 
       let diffPermissions = [];
+      const requestedScopes = req.query.scope ?
+        _.intersection(application.allowedScopes, req.query.scope) : application.allowedScopes;
       if (authorization === null) {
-        diffPermissions = application.allowedScopes;
+        diffPermissions = requestedScopes;
       } else {
-        diffPermissions = _.difference(application.allowedScopes, authorization.allowedScopes);
+        diffPermissions = _.difference(requestedScopes, authorization.allowedScopes);
       }
 
       const permissionsToAllow = diffPermissions.map(perm => mappings[perm]);
-      const permissionsAllowed = _.difference(application.allowedScopes, diffPermissions).map(perm => mappings[perm]);
+      const permissionsAllowed = _.difference(requestedScopes, diffPermissions).map(perm => mappings[perm]);
 
       // Ask for missing permissions
       if (!authorization || diffPermissions.length > 0) {
@@ -74,12 +76,15 @@ module.exports = function displayPermissions(req, res) {
           permissionsToAllow,
           permissionsAllowed,
           permissions: diffPermissions,
+          state: req.query.state,
+          scope: req.query.scope,
         });
       }
 
       // Redirect if all permissions are already granted
+      const state = req.query.state ? `&state=${req.query.state}` : '';
       return generateAuthorizationCode(user, application, application.allowedScopes)
-        .then(authorizationCode => res.redirect(`${redirectUri}?code=${authorizationCode.code}`));
+        .then(authorizationCode => res.redirect(`${redirectUri}?code=${authorizationCode.code}${state}`));
     })
     .catch(error => res(Boom.wrap(error)));
 };

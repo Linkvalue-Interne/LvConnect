@@ -5,6 +5,10 @@ module.exports = function changePassword(req, res) {
     return res.view('oauth-change-password', {
       pageTitle: 'Password change',
       error: 'Passwords don\'t match',
+      appId: req.query.app_id,
+      redirectUri: req.query.redirect_uri,
+      state: req.query.state,
+      scope: req.query.scope,
     }).code(401);
   }
 
@@ -18,6 +22,8 @@ module.exports = function changePassword(req, res) {
           error: 'You must choose a password different from the previous one',
           appId: req.query.app_id,
           redirectUri: req.query.redirect_uri,
+          state: req.query.state,
+          scope: req.query.scope,
         }).code(401);
       }
 
@@ -33,5 +39,7 @@ module.exports = function changePassword(req, res) {
       error: 'An unknown error occurred',
       appId: req.query.app_id,
       redirectUri: req.query.redirect_uri,
+      state: req.query.state,
+      scope: req.query.scope,
     }).code(401));
 };

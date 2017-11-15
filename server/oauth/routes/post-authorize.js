@@ -1,7 +1,9 @@
 const Joi = require('joi');
+
 const login = require('./methods/login');
 const authorize = require('./methods/authorize');
 const changePassword = require('./methods/change-password');
+const validScopes = require('../scopes');
 
 module.exports = {
   method: 'POST',
@@ -44,6 +46,9 @@ module.exports = {
       query: Joi.object().keys({
         app_id: Joi.string().required(),
         redirect_uri: Joi.string().required(),
+        response_type: Joi.string().valid(['code']),
+        state: Joi.string().max(255),
+        scope: Joi.array().items(Joi.string().valid(validScopes)).single(),
       }),
     },
   },
@@ -61,6 +66,7 @@ module.exports = {
         pageTitle: 'Login',
         appId: req.query.app_id,
         redirectUri: req.query.redirect_uri,
+        state: req.query.state,
       });
     }
 
