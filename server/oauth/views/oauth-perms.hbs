@@ -42,7 +42,7 @@
     <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">
       Accept
     </button>
-    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="{{redirectUri}}?error=true">
+    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="{{redirectUri}}?error=true{{#if state}}&state={{state}}{{/if}}">
       Decline
     </a>
   </div>
