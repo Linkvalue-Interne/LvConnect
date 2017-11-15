@@ -1,6 +1,8 @@
 const _ = require('lodash');
 const Boom = require('boom');
 
+const validScopes = require('../../scopes');
+
 const mappings = {
   'users:get': {
     label: 'Read all partner information',
@@ -37,11 +39,11 @@ const mappings = {
 
 module.exports = function displayPermissions(req, res) {
   const { Authorization, Application } = req.server.plugins.oauth.models;
-  const { redirect_uri: redirectUri, app_id: appId } = req.query;
+  const { redirect_uri: redirectUri, app_id: appId, client_id: clientId } = req.query;
   const { generateAuthorizationCode } = req.server.methods;
   const user = req.auth.credentials;
 
-  return Application.findOne({ appId })
+  return Application.findOne({ appId: appId || clientId })
     .then((application) => {
       if (!application) {
         throw Boom.notFound('Application not found');
@@ -54,9 +56,15 @@ module.exports = function displayPermissions(req, res) {
         return Promise.reject(Boom.badRequest('Invalid redirect URI.'));
       }
 
+      const queryScopes = req.query.scope ? req.query.scope.split(' ') : [];
+      const invalidScope = queryScopes.find(scope => validScopes.indexOf(scope) === -1);
+      if (invalidScope) {
+        return res(Boom.badRequest(`Scope ${invalidScope} is invalid.`));
+      }
+
       let diffPermissions = [];
-      const requestedScopes = req.query.scope ?
-        _.intersection(application.allowedScopes, req.query.scope) : application.allowedScopes;
+      const requestedScopes = queryScopes.length > 0 ?
+        _.intersection(application.allowedScopes, queryScopes) : application.allowedScopes;
       if (authorization === null) {
         diffPermissions = requestedScopes;
       } else {
@@ -71,7 +79,7 @@ module.exports = function displayPermissions(req, res) {
         return res.view('oauth-perms', {
           pageTitle: application.name,
           appName: application.name,
-          appId: req.query.app_id,
+          appId: req.query.app_id || req.query.client_id,
           redirectUri: req.query.redirect_uri,
           permissionsToAllow,
           permissionsAllowed,

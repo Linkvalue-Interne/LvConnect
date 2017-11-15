@@ -10,7 +10,7 @@ module.exports = function login(req, res) {
       res.view('oauth-login', {
         pageTitle: 'Login',
         email: req.payload.email,
-        appId: req.query.app_id,
+        appId: req.query.app_id || req.query.client_id,
         redirectUri: req.query.redirect_uri,
         error: 'Invalid username or password.',
         state: req.query.state,

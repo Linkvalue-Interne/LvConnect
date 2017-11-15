@@ -1,9 +1,9 @@
 const Joi = require('joi');
+const Boom = require('boom');
 
 const login = require('./methods/login');
 const authorize = require('./methods/authorize');
 const changePassword = require('./methods/change-password');
-const validScopes = require('../scopes');
 
 module.exports = {
   method: 'POST',
@@ -44,15 +44,20 @@ module.exports = {
         }),
       }),
       query: Joi.object().keys({
-        app_id: Joi.string().required(),
+        app_id: Joi.string(),
+        client_id: Joi.string(),
         redirect_uri: Joi.string().required(),
         response_type: Joi.string().valid(['code']),
         state: Joi.string().max(255),
-        scope: Joi.array().items(Joi.string().valid(validScopes)).single(),
+        scope: Joi.string(),
       }),
     },
   },
   handler(req, res) {
+    if (!req.query.app_id && !req.query.client_id) {
+      return res(Boom.badRequest('You must specify either app_id or client_id query param.'));
+    }
+
     if (req.payload.step === 'login') {
       return login(req, res);
     }
@@ -64,7 +69,7 @@ module.exports = {
     if (!req.auth.isAuthenticated) {
       return res.view('oauth-login', {
         pageTitle: 'Login',
-        appId: req.query.app_id,
+        appId: req.query.app_id || req.query.client_id,
         redirectUri: req.query.redirect_uri,
         state: req.query.state,
       });

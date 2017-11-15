@@ -2,7 +2,6 @@ const Boom = require('boom');
 const Joi = require('joi');
 
 const displayPermissions = require('./methods/display-permissions');
-const validScopes = require('../scopes');
 
 module.exports = {
   method: 'GET',
@@ -20,7 +19,7 @@ module.exports = {
         redirect_uri: Joi.string().required(),
         response_type: Joi.string().valid(['code']),
         state: Joi.string().max(255),
-        scope: Joi.array().items(Joi.string().valid(validScopes)).single(),
+        scope: Joi.string(),
       }),
     },
   },
@@ -32,7 +31,7 @@ module.exports = {
     if (!req.auth.isAuthenticated) {
       return res.view('oauth-login', {
         pageTitle: 'Login',
-        appId: req.query.app_id,
+        appId: req.query.app_id || req.query.client_id,
         redirectUri: req.query.redirect_uri,
         state: req.query.state,
         scope: req.query.scope,
@@ -42,7 +41,7 @@ module.exports = {
     if (req.auth.credentials.needPasswordChange) {
       return res.view('oauth-change-password', {
         pageTitle: 'Change password',
-        appId: req.query.app_id,
+        appId: req.query.app_id || req.query.client_id,
         redirectUri: req.query.redirect_uri,
         state: req.query.state,
         scope: req.query.scope,
