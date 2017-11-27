@@ -1,3 +1,19 @@
+<a name="1.6.0"></a>
+# [1.6.0](https://github.com/LinkValue/LvConnect/compare/v1.5.0...v1.6.0) (2017-11-27)
+
+
+### Bug Fixes
+
+* **oauth:** Add missing state when canceling authorization pipe ([190a630](https://github.com/LinkValue/LvConnect/commit/190a630))
+
+
+### Features
+
+* **oauth:** Add missing query params to authorization endpoint ([7438ad4](https://github.com/LinkValue/LvConnect/commit/7438ad4))
+* **oauth:** Fix client_id query param on authorization endpoint ([00a8a97](https://github.com/LinkValue/LvConnect/commit/00a8a97))
+
+
+
 <a name="1.5.0"></a>
 # [1.5.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.4.2...v1.5.0) (2017-10-17)
 
