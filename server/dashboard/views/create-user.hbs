@@ -42,13 +42,11 @@
         <label class="mdl-textfield__label" for="lastNameInput">Last Name</label>
       </div>
 
-      {{#unless editMode}}
-        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" type="email" id="emailInput" name="email"
-                 value="{{userData.email}}" required onfocus="autoFillEmail(this)">
-          <label class="mdl-textfield__label" for="emailInput">Email</label>
-        </div>
-      {{/unless}}
+      <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="email" id="emailInput" name="email"
+               value="{{userData.email}}" required onfocus="autoFillEmail(this)">
+        <label class="mdl-textfield__label" for="emailInput">Email</label>
+      </div>
 
       {{#unless editMode}}
         <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-textfield mdl-js-textfield mdl-textfield--floating-label">

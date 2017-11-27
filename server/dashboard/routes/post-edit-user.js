@@ -12,6 +12,7 @@ module.exports = {
       payload: Joi.object({
         firstName: Joi.string().min(2).required(),
         lastName: Joi.string().min(2).required(),
+        email: Joi.string().email(),
         description: Joi.string().empty('').max(255),
         roles: Joi.array().items(Joi.string().valid(validRoles)).single().min(1)
           .required(),
