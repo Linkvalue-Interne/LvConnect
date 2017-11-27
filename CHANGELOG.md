@@ -1,3 +1,18 @@
+<a name="1.6.2"></a>
+## [1.6.2](https://github.com/LinkValue/LvConnect/compare/v1.6.1...v1.6.2) (2017-11-27)
+
+
+### Bug Fixes
+
+* **oauth:** fixed issue with not found application by client_id ([b20cf47](https://github.com/LinkValue/LvConnect/commit/b20cf47))
+
+
+### Features
+
+* **dashboard:** Add possibility to edit the email address ([6dc9685](https://github.com/LinkValue/LvConnect/commit/6dc9685))
+
+
+
 <a name="1.6.1"></a>
 ## [1.6.1](https://github.com/LinkValue/LvConnect/compare/v1.6.0...v1.6.1) (2017-11-27)
 
