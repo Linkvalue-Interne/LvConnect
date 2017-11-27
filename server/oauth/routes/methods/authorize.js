@@ -4,10 +4,10 @@ const _ = require('lodash');
 module.exports = function authorize(req, res) {
   const { models: { Authorization, Application }, validScopes } = req.server.plugins.oauth;
   const { generateAuthorizationCode } = req.server.methods;
-  const { redirect_uri: redirectUri, app_id: appId } = req.query;
+  const { redirect_uri: redirectUri, app_id: appId, client_id: clientId } = req.query;
   const user = req.auth.credentials;
 
-  return Application.findOne({ appId })
+  return Application.findOne({ appId: clientId || appId })
     .then(application => Authorization.findOne({ user, application }).then(auth => [auth, application]))
     .then(([authorization, application]) => {
       if (!application.redirectUris.find(uri => redirectUri === uri)) {
