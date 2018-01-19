@@ -2,6 +2,7 @@ const _ = require('lodash');
 const Boom = require('boom');
 
 const validScopes = require('../../scopes');
+const getFormUrl = require('./get-form-url');
 
 const mappings = {
   'users:get': {
@@ -39,9 +40,10 @@ const mappings = {
 
 module.exports = function displayPermissions(req, res) {
   const { Authorization, Application } = req.server.plugins.oauth.models;
-  const { redirect_uri: redirectUri, app_id: appId, client_id: clientId } = req.query;
-  const { generateAuthorizationCode } = req.server.methods;
+  const { redirect_uri: redirectUri, app_id: appId, client_id: clientId, response_type: responseType } = req.query;
+  const { generateAuthorizationCode, generateAccessToken } = req.server.methods;
   const user = req.auth.credentials;
+  const url = getFormUrl(req);
 
   return Application.findOne({ appId: appId || clientId })
     .then((application) => {
@@ -79,18 +81,21 @@ module.exports = function displayPermissions(req, res) {
         return res.view('oauth-perms', {
           pageTitle: application.name,
           appName: application.name,
-          appId: req.query.app_id || req.query.client_id,
-          redirectUri: req.query.redirect_uri,
+          url,
           permissionsToAllow,
           permissionsAllowed,
           permissions: diffPermissions,
-          state: req.query.state,
-          scope: req.query.scope,
         });
       }
 
       // Redirect if all permissions are already granted
       const state = req.query.state ? `&state=${req.query.state}` : '';
+
+      if (responseType === 'token') {
+        return generateAccessToken(user, application, application.allowedScopes)
+          .then(accessToken => res.redirect(`${redirectUri}?token=${accessToken.token}${state}`));
+      }
+
       return generateAuthorizationCode(user, application, application.allowedScopes)
         .then(authorizationCode => res.redirect(`${redirectUri}?code=${authorizationCode.code}${state}`));
     })

@@ -4,6 +4,7 @@ const Boom = require('boom');
 const login = require('./methods/login');
 const authorize = require('./methods/authorize');
 const changePassword = require('./methods/change-password');
+const getFormUrl = require('./methods/get-form-url');
 
 module.exports = {
   method: 'POST',
@@ -47,7 +48,7 @@ module.exports = {
         app_id: Joi.string(),
         client_id: Joi.string(),
         redirect_uri: Joi.string().required(),
-        response_type: Joi.string().valid(['code']),
+        response_type: Joi.string().valid(['code', 'token']),
         state: Joi.string().max(255),
         scope: Joi.string(),
       }),
@@ -69,9 +70,7 @@ module.exports = {
     if (!req.auth.isAuthenticated) {
       return res.view('oauth-login', {
         pageTitle: 'Login',
-        appId: req.query.app_id || req.query.client_id,
-        redirectUri: req.query.redirect_uri,
-        state: req.query.state,
+        url: getFormUrl(req),
       });
     }
 

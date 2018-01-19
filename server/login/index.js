@@ -43,7 +43,7 @@ exports.register = (server, { cache, cookie }, next) => {
 
   function saveUserSessionsToCache(key, sessions) {
     return new Promise((resolve, reject) =>
-      server.app.sessionsListcache.set(key, sessions, null, err => (err ? reject(err) : resolve())));
+      server.app.sessionsListcache.set(key, sessions, cache.sessionsTTL, err => (err ? reject(err) : resolve())));
   }
 
   function dropSession(sid) {

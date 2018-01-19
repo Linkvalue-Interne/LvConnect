@@ -3,8 +3,8 @@ const _ = require('lodash');
 
 module.exports = function authorize(req, res) {
   const { models: { Authorization, Application }, validScopes } = req.server.plugins.oauth;
-  const { generateAuthorizationCode } = req.server.methods;
-  const { redirect_uri: redirectUri, app_id: appId, client_id: clientId } = req.query;
+  const { generateAuthorizationCode, generateAccessToken } = req.server.methods;
+  const { redirect_uri: redirectUri, app_id: appId, client_id: clientId, response_type: responseType } = req.query;
   const user = req.auth.credentials;
 
   return Application.findOne({ appId: clientId || appId })
@@ -32,10 +32,15 @@ module.exports = function authorize(req, res) {
         $set: { allowedScopes: scopes },
       }).then(() => [application, scopes]);
     })
-    .then(([application, scopes]) => generateAuthorizationCode(user, application, scopes))
-    .then((authorizationCode) => {
+    .then(([application, scopes]) => {
       const state = req.query.state ? `&state=${req.query.state}` : '';
-      return res.redirect(`${redirectUri}?code=${authorizationCode.code}${state}`);
+      if (responseType === 'token') {
+        return generateAccessToken(user, application, scopes)
+          .then(accessToken => res.redirect(`${redirectUri}?token=${accessToken.token}${state}`));
+      }
+
+      return generateAuthorizationCode(user, application, scopes)
+        .then(authorizationCode => res.redirect(`${redirectUri}?code=${authorizationCode.code}${state}`));
     })
     .catch(error => res(Boom.wrap(error)));
 };

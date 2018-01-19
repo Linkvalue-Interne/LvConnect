@@ -1,14 +1,14 @@
 const displayPermissions = require('./display-permissions');
+const getFormUrl = require('./get-form-url');
 
 module.exports = function changePassword(req, res) {
+  const url = getFormUrl(req);
+
   if (req.payload.plainPassword !== req.payload.plainPasswordCheck) {
     return res.view('oauth-change-password', {
       pageTitle: 'Password change',
       error: 'Passwords don\'t match',
-      appId: req.query.app_id || req.query.client_id,
-      redirectUri: req.query.redirect_uri,
-      state: req.query.state,
-      scope: req.query.scope,
+      url,
     }).code(401);
   }
 
@@ -20,10 +20,7 @@ module.exports = function changePassword(req, res) {
         return res.view('oauth-change-password', {
           pageTitle: 'Password change',
           error: 'You must choose a password different from the previous one',
-          appId: req.query.app_id || req.query.client_id,
-          redirectUri: req.query.redirect_uri,
-          state: req.query.state,
-          scope: req.query.scope,
+          url,
         }).code(401);
       }
 
@@ -37,9 +34,6 @@ module.exports = function changePassword(req, res) {
     .catch(() => res.view('oauth-change-password', {
       pageTitle: 'Password change',
       error: 'An unknown error occurred',
-      appId: req.query.app_id || req.query.client_id,
-      redirectUri: req.query.redirect_uri,
-      state: req.query.state,
-      scope: req.query.scope,
+      url,
     }).code(401));
 };

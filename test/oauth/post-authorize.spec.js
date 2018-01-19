@@ -36,7 +36,7 @@ describe('/oauth/authorize', () => {
       // When
       const response = await server.inject({
         method: 'POST',
-        url: `/oauth/authorize?app_id=${fixApp.appId}&redirect_uri=${fixApp.redirectUris[0]}`,
+        url: `/oauth/authorize?client_id=${fixApp.appId}&redirect_uri=${fixApp.redirectUris[0]}`,
         payload: {
           step: 'login',
           email: fixUser.email,
