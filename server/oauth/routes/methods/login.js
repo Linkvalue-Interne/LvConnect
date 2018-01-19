@@ -1,20 +1,31 @@
 const displayPermissions = require('./display-permissions');
+const getFormUrl = require('./get-form-url');
 
 module.exports = function login(req, res) {
   const { User } = req.server.plugins.users.models;
+  const url = getFormUrl(req);
 
   return User.findOneByEmailAndPassword(req.payload.email, req.payload.password)
-    .then(user => req.server.plugins.login.loginUser(req, user))
-    .then(user => displayPermissions(req, res, user))
-    .catch(() => {
+    .then((user) => {
+      if (!user) {
+        return res.view('oauth-login', {
+          pageTitle: 'Login',
+          email: req.payload.email,
+          error: 'Invalid username or password.',
+          url,
+        });
+      }
+
+      return req.server.plugins.login.loginUser(req, user)
+        .then(() => displayPermissions(req, res, user));
+    })
+    .catch((e) => {
+      req.server.log('error', e);
       res.view('oauth-login', {
         pageTitle: 'Login',
         email: req.payload.email,
-        appId: req.query.app_id || req.query.client_id,
-        redirectUri: req.query.redirect_uri,
-        error: 'Invalid username or password.',
-        state: req.query.state,
-        scope: req.query.scope,
+        error: 'An error occurred during login.',
+        url,
       });
     });
 };

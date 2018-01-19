@@ -104,8 +104,15 @@ URIs of the app.
 {
   "app_id": String,          // required
   "redirect_uri": String     // required
+  "response_type": String    // optionnal
+  "state": String            // optionnal
 }
 ```
+
+The `response_type` query param is default to `code` which outputs an authorization code in the `code` query param to
+the redirect uri. When set to `token` it outputs an access token to the redirect uri in the `token` query param.
+
+You can pass any additional state to the redirect uri by setting the `state` query param.
 
 ## `POST /oauth/authorize`
 
