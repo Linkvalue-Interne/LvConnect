@@ -10,7 +10,7 @@ module.exports = {
         name: Joi.string().min(2).max(255).required(),
         description: Joi.string().min(2).max(255).required(),
         allowedScopes: Joi.array().items(Joi.string()).single(),
-        redirectUri: Joi.string().uri().required(),
+        redirectUris: Joi.string().required(),
       }),
       failAction: (req, res, src, error) => {
         req.server.log('info', src);
@@ -25,6 +25,7 @@ module.exports = {
               error,
               editMode: true,
               validScopes: req.server.plugins.oauth.validScopes,
+              splitRedirectUris: app.redirectUris.join('\n'),
             });
           });
       },
@@ -44,7 +45,7 @@ module.exports = {
             name: req.payload.name,
             description: req.payload.description,
             allowedScopes: req.payload.allowedScopes,
-            redirectUris: [req.payload.redirectUri],
+            redirectUris: req.payload.redirectUris.split(/\r?\n/),
           })
           .save()
           .then(() => res.redirect('/dashboard/apps'))
@@ -54,6 +55,7 @@ module.exports = {
             app,
             editMode: true,
             validScopes: req.server.plugins.oauth.validScopes,
+            splitRedirectUris: app.redirectUris.join('\n'),
           }));
       });
   },

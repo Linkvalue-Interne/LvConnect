@@ -1,10 +1,16 @@
 image: node:boron
-services:
-  - mongo:latest
-  - redis:latest
 
 stages:
+  - test
   - deploy
+
+lint_and_test:
+  stage: test
+  script:
+    - yarn
+    - yarn lint
+  tags:
+    - node
 
 deploy_staging:
   stage: deploy

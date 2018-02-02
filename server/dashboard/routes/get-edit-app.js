@@ -12,6 +12,7 @@ module.exports = {
         app,
         editMode: true,
         validScopes: req.server.plugins.oauth.validScopes,
+        splitRedirectUris: app.redirectUris.join('\n'),
       }));
   },
 };

@@ -10,7 +10,7 @@ module.exports = {
         name: Joi.string().min(2).max(255).required(),
         description: Joi.string().min(2).max(255).required(),
         allowedScopes: Joi.array().items(Joi.string()).single(),
-        redirectUri: Joi.string().uri().required(),
+        redirectUris: Joi.string().required(),
       }),
       failAction: (req, res, src, error) => {
         res.view('create-app', {
@@ -29,7 +29,7 @@ module.exports = {
       name: req.payload.name,
       description: req.payload.description,
       allowedScopes: req.payload.allowedScopes,
-      redirectUris: [req.payload.redirectUri],
+      redirectUris: req.payload.redirectUris.split(/\r?\n/),
     });
 
     app.save()
@@ -41,6 +41,7 @@ module.exports = {
           pageTitle: 'Create application',
           user: req.auth.credentials,
           validScopes: req.server.plugins.oauth.validScopes,
+          splitRedirectUris: app.redirectUris.join('\n'),
         });
       });
   },
