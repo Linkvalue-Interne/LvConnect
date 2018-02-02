@@ -5,6 +5,7 @@
   },
   "rules": {
     "no-underscore-dangle": 0,
-    "max-len": ["error", 120]
+    "max-len": ["error", 120],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.js", "**/*.spec.js", "./bin/*.js"]}]
   }
 }

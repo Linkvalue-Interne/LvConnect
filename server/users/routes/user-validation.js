@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { Types } = require('mongoose');
 
-const validRoles = exports.validRoles = [
+const validRoles = [
   'tech',
   'business',
   'hr',
@@ -10,11 +10,14 @@ const validRoles = exports.validRoles = [
   'finance',
 ];
 
-const validCities = exports.validCities = [
+const validCities = [
   'Lyon',
   'Lille',
   'Paris',
 ];
+
+exports.validRoles = validRoles;
+exports.validCities = validCities;
 
 exports.payload = {
   post: Joi.object().keys({

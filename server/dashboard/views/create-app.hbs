@@ -28,9 +28,9 @@
 
       <div
         class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" id="redirectUriInput" name="redirectUri"
-               value="{{ app.redirectUris.[0] }}" required>
-        <label class="mdl-textfield__label" for="redirectUriInput">Redirect URI</label>
+        <textarea class="mdl-textfield__input" type="text" id="redirectUriInput" name="redirectUris"
+                  rows="4" required placeholder="URIs separated by carriage return">{{ splitRedirectUris }}</textarea>
+        <label class="mdl-textfield__label" for="redirectUriInput">Redirect URIs</label>
       </div>
 
       {{#each validScopes as |scope|}}
