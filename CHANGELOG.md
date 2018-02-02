@@ -1,3 +1,15 @@
+<a name="1.7.0"></a>
+# [1.7.0](https://github.com/LinkValue/LvConnect/compare/v1.6.2...v1.7.0) (2018-02-02)
+
+
+### Features
+
+* **dashboard:** Add possibility to have multiple redirect uris for apps ([165f883](https://github.com/LinkValue/LvConnect/commit/165f883))
+* **oauth:** Add forgot password link in oauth modal ([63289aa](https://github.com/LinkValue/LvConnect/commit/63289aa))
+* **oauth:** Add response type token for authorization pipeline ([919db16](https://github.com/LinkValue/LvConnect/commit/919db16))
+
+
+
 <a name="1.6.2"></a>
 ## [1.6.2](https://github.com/LinkValue/LvConnect/compare/v1.6.1...v1.6.2) (2017-11-27)
 
