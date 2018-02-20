@@ -10,20 +10,20 @@ module.exports = function login(req, res) {
         .then(() => displayPermissions(req, res, user)))
     .catch((e) => {
       if (e.message === 'user_not_found' || e.message === 'invalid_password') {
-        return res.code(401).view('oauth-login', {
+        return res.view('oauth-login', {
           pageTitle: 'Login',
           email: req.payload.email,
           error: 'Invalid username or password.',
           url,
-        });
+        }).code(401)
       }
 
       req.server.log('error', e);
-      return res.code(500).view('oauth-login', {
+      return res.view('oauth-login', {
         pageTitle: 'Login',
         email: req.payload.email,
         error: 'An error occurred during login.',
         url,
-      });
+      }).code(500);
     });
 };

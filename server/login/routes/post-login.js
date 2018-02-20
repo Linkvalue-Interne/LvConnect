@@ -19,10 +19,10 @@ module.exports = {
       .then(user => req.server.plugins.login.loginUser(req, user))
       .then(() => res.redirect('/dashboard'))
       .catch(() => {
-        res.code(401).view('get-login', {
+        res.view('get-login', {
           email: req.payload.email,
           error: 'Invalid username or password.',
-        });
+        }).code(401);
       });
   },
 };
