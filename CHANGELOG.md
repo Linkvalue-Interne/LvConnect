@@ -1,3 +1,15 @@
+<a name="1.7.1"></a>
+## [1.7.1](https://github.com/LinkValue/LvConnect/compare/v1.7.0...v1.7.1) (2018-02-20)
+
+
+### Bug Fixes
+
+* **oauth:** fix lint error ([60bb840](https://github.com/LinkValue/LvConnect/commit/60bb840))
+* **oauth:** fixed bad usage of Hapi reply interface ([ccb8a82](https://github.com/LinkValue/LvConnect/commit/ccb8a82))
+* **oauth:** fixed oauth login error message and HTTP codes ([d8586e9](https://github.com/LinkValue/LvConnect/commit/d8586e9))
+
+
+
 <a name="1.7.0"></a>
 # [1.7.0](https://github.com/LinkValue/LvConnect/compare/v1.6.2...v1.7.0) (2018-02-02)
 
