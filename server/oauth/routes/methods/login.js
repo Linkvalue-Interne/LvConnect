@@ -15,7 +15,7 @@ module.exports = function login(req, res) {
           email: req.payload.email,
           error: 'Invalid username or password.',
           url,
-        }).code(401)
+        }).code(401);
       }
 
       req.server.log('error', e);
