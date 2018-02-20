@@ -6,9 +6,11 @@ module.exports = function login(req, res) {
   const url = getFormUrl(req);
 
   return User.findOneByEmailAndPassword(req.payload.email, req.payload.password)
-    .then((user) => {
-      if (!user) {
-        return res.view('oauth-login', {
+    .then(user => req.server.plugins.login.loginUser(req, user)
+        .then(() => displayPermissions(req, res, user)))
+    .catch((e) => {
+      if (e.message === 'user_not_found' || e.message === 'invalid_password') {
+        return res.code(401).view('oauth-login', {
           pageTitle: 'Login',
           email: req.payload.email,
           error: 'Invalid username or password.',
@@ -16,12 +18,8 @@ module.exports = function login(req, res) {
         });
       }
 
-      return req.server.plugins.login.loginUser(req, user)
-        .then(() => displayPermissions(req, res, user));
-    })
-    .catch((e) => {
       req.server.log('error', e);
-      res.view('oauth-login', {
+      return res.code(500).view('oauth-login', {
         pageTitle: 'Login',
         email: req.payload.email,
         error: 'An error occurred during login.',
