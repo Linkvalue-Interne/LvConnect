@@ -1,6 +1,7 @@
-/node_modules
+**/node_modules/
+**/flow-typed/npm/
 
-npm-debug.log
 /logs
+*.log
 
 config/local.*

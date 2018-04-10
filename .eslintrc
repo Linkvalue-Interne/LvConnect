@@ -4,8 +4,11 @@
     "node": true
   },
   "rules": {
-    "no-underscore-dangle": 0,
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
     "max-len": ["error", 120],
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.js", "**/*.spec.js", "./bin/*.js"]}]
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["**/*.test.js", "**/*.spec.js", "./bin/*.js"] }
+    ]
   }
 }

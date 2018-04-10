@@ -1,15 +1,20 @@
 {
   "name": "lvconnect",
   "private": true,
+  "workspaces": [
+    "server",
+    "app"
+  ],
   "version": "1.7.1",
   "description": "Authentication platform for LinkValue",
   "license": "Proprietary",
   "main": "./server/index.js",
   "scripts": {
-    "create-superuser": "NODE_ENV=production ./bin/cli.js create-superuser",
-    "dev": "NODE_ENV=dev nodemon . -e js,hbs",
-    "lint": "eslint '**/*.js'",
-    "test": "NODE_ENV=test mocha --compilers js:babel-register --recursive test",
+    "create-superuser": "NODE_ENV=production lvconnect create-superuser",
+    "dev": "nodemon .",
+    "dev:front": "yarn workspace lvconnect-front dev",
+    "lint": "eslint '**/*.{js,jsx}'",
+    "test": "yarn workspace lvconnect-back run test",
     "heroku-postbuild": "npm rebuild bcrypt",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "version": "npm run changelog && git add CHANGELOG.md"
@@ -23,57 +28,15 @@
     "url": "https://github.com/LinkValue/LvConnect/issues"
   },
   "homepage": "https://github.com/LinkValue/LvConnect#readme",
-  "dependencies": {
-    "bcrypt": "^1.0.1",
-    "boom": "^4.0.0",
-    "catbox-redis": "^2.0.2",
-    "config": "^1.21.0",
-    "crumb": "^6.0.3",
-    "forever": "^0.15.2",
-    "github": "^8.1.1",
-    "glue": "^4.0.0",
-    "good": "^7.0.2",
-    "good-console": "^6.2.0",
-    "good-file": "^6.0.1",
-    "good-squeeze": "^5.0.0",
-    "handlebars": "^4.0.5",
-    "hapi": "^16.0.1",
-    "hapi-auth-basic": "^4.2.0",
-    "hapi-auth-bearer-token": "^4.2.1",
-    "hapi-auth-cookie": "7.0.0",
-    "inert": "^4.0.2",
-    "joi": "^10.0.5",
-    "kue": "^0.11.1",
-    "lodash": "^4.17.2",
-    "material-design-icons": "^3.0.1",
-    "material-design-lite": "^1.3.0",
-    "moment": "^2.15.0",
-    "mongoose": "^4.6.0",
-    "node-mailjet": "^3.0.6",
-    "node-trello": "^1.1.2",
-    "pmx": "^1.2.0",
-    "prom-client": "^9.0.0",
-    "request": "^2.79.0",
-    "request-promise": "^4.1.1",
-    "scooter": "^4.0.0",
-    "uuid": "^3.0.1",
-    "vision": "^4.1.1"
-  },
   "devDependencies": {
-    "babel-eslint": "^7.0.0",
-    "babel-plugin-transform-async-to-generator": "^6.8.0",
-    "babel-register": "^6.14.0",
+    "babel-eslint": "^8.2.2",
     "catbox-memory": "^2.0.4",
     "chai": "^3.5.0",
-    "commander": "^2.9.0",
     "conventional-changelog-cli": "^1.3.4",
-    "eslint": "^3.8.1",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.0.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.10.0",
     "mocha": "^3.0.2",
-    "nodemon": "^1.10.2"
-  },
-  "bin": {
-    "cli": "./bin/cli.js"
+    "nodemon": "^1.17.3"
   }
 }
