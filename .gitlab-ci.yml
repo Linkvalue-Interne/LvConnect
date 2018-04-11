@@ -16,7 +16,7 @@ deploy_staging:
   image: tmaier/dpl:latest
   stage: deploy
   script:
-    - dpl --provider=heroku --app=cracra-staging --api-key=$HEROKU_STAGING_API_KEY
+    - dpl --provider=heroku --app=lvconnect --api-key=$HEROKU_STAGING_API_KEY
   only:
     - master
   except:
