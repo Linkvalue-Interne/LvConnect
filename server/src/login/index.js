@@ -72,7 +72,11 @@ exports.register = (server, { cache, cookie }, next) => {
       });
   });
 
-  server.expose('destroySession', sid => dropSession(sid));
+  server.expose('logoutUser', async (req) => {
+    console.log(req.state[cookie.name].sid);
+    await dropSession(req.state[cookie.name].sid);
+    req.cookieAuth.clear();
+  });
 
   server.expose('resetPassword', (user) => {
     const rawToken = Array.from({ length: 5 }).map(() => Buffer.from(uuidV4()).toString('base64')).join('');

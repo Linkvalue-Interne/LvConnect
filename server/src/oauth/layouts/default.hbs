@@ -10,34 +10,26 @@
   <script defer async src="/assets/material.min.js"></script>
 
   <!-- LvConnect -->
-  <link rel="stylesheet" href="/login/assets/css/login.css">
   <link rel="stylesheet" href="/oauth/assets/css/oauth.css">
 </head>
 <body>
-<div class="mdl-layout mdl-js-layout">
-  <header class="mdl-layout__header mdl-layout__header--scroll">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
       <span class="mdl-layout-title">LvConnect</span>
       <div class="mdl-layout-spacer"></div>
-      <div>
-        <span class="oauth-header-name">{{user.firstName}} {{user.lastName}}</span>
-        <img class="oauth-header-avatar" src="https://www.gravatar.com/avatar/{{hash}}" alt="Avatar" id="profile-button">
-        <div class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="profile-button">
-          <a class="mdl-menu__item" href="/dashboard">Profile</a>
-          <a class="mdl-menu__item" href="/logout">Logout</a>
+      {{#if user}}
+        <div>
+          <span class="oauth-header-name">{{user.firstName}} {{user.lastName}}</span>
+          <img class="oauth-header-avatar" src="https://www.gravatar.com/avatar/{{hash}}" alt="Avatar" id="profile-button">
+          <div class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="profile-button">
+            <a class="mdl-menu__item" href="{{logoutUrl}}">Logout</a>
+          </div>
         </div>
-      </div>
-      <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
-        <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
-          <i class="material-icons">search</i>
-        </label>
-        <div class="mdl-textfield__expandable-holder">
-          <input class="mdl-textfield__input" type="text" name="sample" id="fixed-header-drawer-exp">
-        </div>
-      </div>-->
+      {{/if}}
     </div>
   </header>
-  <main class="mdl-layout__content">
+  <main class="mdl-layout__content oauth-layout">
     <div class="oauth-container">
       {{{content}}}
     </div>

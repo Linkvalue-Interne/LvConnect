@@ -4,9 +4,8 @@ module.exports = {
   config: {
     auth: 'session',
   },
-  handler(req, res) {
-    req.server.plugins.login.destroySession(req.auth.artifacts.sid);
-    req.cookieAuth.clear();
-    return res.redirect('/login');
+  async handler(req, res) {
+    await req.server.plugins.login.logoutUser(req);
+    return res.redirect(req.query.redirect ? decodeURI(req.query.redirect) : '/login');
   },
 };

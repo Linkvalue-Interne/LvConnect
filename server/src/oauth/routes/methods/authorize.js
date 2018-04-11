@@ -39,13 +39,14 @@ module.exports = function authorize(req, res) {
     })
     .then(([application, scopes]) => {
       const state = req.query.state ? `&state=${req.query.state}` : '';
+      const decodedRedirectUri = decodeURIComponent(redirectUri);
       if (responseType === 'token') {
         return generateAccessToken(user, application, scopes)
-          .then(accessToken => res.redirect(`${redirectUri}?token=${accessToken.token}${state}`));
+          .then(accessToken => res.redirect(`${decodedRedirectUri}?token=${accessToken.token}${state}`));
       }
 
       return generateAuthorizationCode(user, application, scopes)
-        .then(authorizationCode => res.redirect(`${redirectUri}?code=${authorizationCode.code}${state}`));
+        .then(authorizationCode => res.redirect(`${decodedRedirectUri}?code=${authorizationCode.code}${state}`));
     })
     .catch(error => res(Boom.wrap(error)));
 };

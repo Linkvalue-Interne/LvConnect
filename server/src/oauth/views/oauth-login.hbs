@@ -1,9 +1,11 @@
 <form
   method="post"
   action="{{url}}"
-  class="mdl-card mdl-shadow--2dp login-card">
-  <div class="mdl-card__title login-card__title"></div>
-  <div class="mdl-card__supporting-text mdl-card--border login-card__body">
+  class="mdl-card mdl-shadow--2dp oauth-card">
+  <div class="mdl-card__title mdl-card--border oauth-card__title">
+    <div class="oauth-card__title-image"></div>
+  </div>
+  <div class="mdl-card__supporting-text oauth-card__body">
     {{error}}
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
       <input class="mdl-textfield__input" type="email" id="email" name="email" value="{{email}}">
