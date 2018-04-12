@@ -40,4 +40,7 @@ module.exports = {
   github: {},
   slack: {},
   mailjet: {},
+  monitoring: {
+    metricsPath: '/metrics',
+  },
 };

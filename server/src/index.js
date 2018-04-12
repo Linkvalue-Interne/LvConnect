@@ -42,7 +42,10 @@ const manifest = {
   }, {
     plugin: './users',
   }, {
-    plugin: './monitoring',
+    plugin: {
+      register: './monitoring',
+      options: config.monitoring,
+    },
   }, {
     plugin: {
       register: './login',
