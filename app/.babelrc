@@ -13,26 +13,11 @@
   "plugins": [
     "react-hot-loader/babel",
     "@babel/plugin-proposal-object-rest-spread",
-    "@babel/plugin-proposal-class-properties",
-    "babel-plugin-styled-components"
+    "@babel/plugin-proposal-class-properties"
   ],
   "env": {
     "test": {
-      "presets": ["@babel/env", "@babel/react", "@babel/flow"],
-      "plugins": [
-        "@babel/plugin-proposal-object-rest-spread",
-        "@babel/plugin-proposal-class-properties",
-        "babel-plugin-styled-components"
-      ]
-    },
-    "production": {
-      "plugins": [
-        "@babel/plugin-proposal-object-rest-spread",
-        "@babel/plugin-proposal-class-properties",
-        ["babel-plugin-styled-components", {
-          "displayName": false
-        }]
-      ]
+      "presets": ["@babel/env", "@babel/react", "@babel/flow"]
     }
   }
 }
