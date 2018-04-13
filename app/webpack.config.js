@@ -42,9 +42,10 @@ module.exports = {
     historyApiFallback: true,
     overlay: true,
     progress: true,
-    proxy: {
-      '/users': 'http://localhost:8000/users',
-    },
+    proxy: [{
+      context: ['/oauth', '/users'],
+      target: 'http://localhost:8000',
+    }],
   },
   plugins: [
     new CleanWebpackPlugin(['./dist']),
