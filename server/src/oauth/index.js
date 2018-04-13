@@ -4,9 +4,13 @@ const Boom = require('boom');
 const models = require('./models');
 const routes = require('./routes');
 const validScopes = require('./scopes');
+const getFormUrl = require('./routes/methods/get-form-url');
 
 const contextBuilder = req => (!req.auth.credentials ? {} : {
   user: req.auth.credentials,
+  logoutUrl: `/logout?redirect=${encodeURIComponent(getFormUrl(req))}`,
+  redirectUri: req.query.redirect_uri,
+  state: req.query.state,
 });
 
 exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCodeTTL }, next) => {
