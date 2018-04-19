@@ -15,14 +15,14 @@ function generateTokens(req, user, application, scope) {
 
   return Promise.all([
     generateAccessToken(user, application, scope),
-    generateRefreshToken(user, application, scope),
+    user ? generateRefreshToken(user, application, scope) : undefined,
   ]).then(([accessToken, refreshToken]) => ({
     access_token: accessToken.token,
     token_type: 'bearer',
     expires_in: accessTokenTTL,
-    refresh_token: refreshToken.token,
+    refresh_token: refreshToken && refreshToken.token,
     scope,
-    need_password_change: !!user && user.needPasswordChange,
+    need_password_change: user ? user.needPasswordChange : undefined,
   }));
 }
 

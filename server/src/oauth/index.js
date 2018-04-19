@@ -38,6 +38,7 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCode
   server.method('generateAccessToken', (user, application, scopes) => {
     const token = new AccessToken({
       user,
+      isClientCredentialsToken: !user,
       application,
       expireAt: moment().add(moment.duration(accessTokenTTL)).toDate(),
       scopes,
@@ -92,7 +93,9 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCode
         .populate('user')
         .exec()
         .then((token) => {
-          if (!token || !token.user) return cb(Boom.unauthorized('invalid_token'), false);
+          if (!token || (!token.user && !token.isClientCredentialsToken)) {
+            return cb(Boom.unauthorized('invalid_token'), false);
+          }
           if (token.expireAt < new Date()) return cb(Boom.unauthorized('token_expired'), false);
           return cb(null, true, token);
         });
