@@ -1,3 +1,21 @@
+<a name="1.7.2"></a>
+## [1.7.2](https://github.com/LinkValue/LvConnect/compare/v1.7.1...v1.7.2) (2018-04-19)
+
+
+### Bug Fixes
+
+* **oauth:** Fix client credentials grant ([7e42071](https://github.com/LinkValue/LvConnect/commit/7e42071))
+
+
+### Features
+
+* **app:** Add basic login in frontend app ([0a18eb4](https://github.com/LinkValue/LvConnect/commit/0a18eb4))
+* **app:** Add workspaces for frontend ([f3c805f](https://github.com/LinkValue/LvConnect/commit/f3c805f))
+* **monitoring:** Add more metrics to monitoring ([ad0d35c](https://github.com/LinkValue/LvConnect/commit/ad0d35c))
+* **oauth:** Better design of oauth authorization pipe ([12bf21c](https://github.com/LinkValue/LvConnect/commit/12bf21c))
+
+
+
 <a name="1.7.1"></a>
 ## [1.7.1](https://github.com/LinkValue/LvConnect/compare/v1.7.0...v1.7.1) (2018-02-20)
 
