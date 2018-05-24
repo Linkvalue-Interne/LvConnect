@@ -1,4 +1,4 @@
-image: node:boron
+image: node:carbon
 
 stages:
   - test
