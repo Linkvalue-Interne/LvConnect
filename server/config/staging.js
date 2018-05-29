@@ -26,11 +26,7 @@ module.exports = {
     port: process.env.PORT || 8000,
   },
   mongodb: {
-    host: 'ds145039.mlab.com',
-    port: 45039,
-    database: 'heroku_fcp37rmh',
-    username: 'heroku_fcp37rmh',
-    password: '4lqc04tkc8n4oogo873im9eo4o',
+    url: process.env.MONGODB_URI,
   },
   kue: {
     redis: `${process.env.REDIS_URL}/1`,
