@@ -7,7 +7,7 @@
     "dev": "webpack-dev-server --hot",
     "test": "jest",
     "typecheck": "flow",
-    "postinstall": "flow-typed install -s -o"
+    "install:types": "flow-typed install -s -o"
   },
   "repository": {
     "type": "git",

@@ -34,7 +34,7 @@ module.exports = function authorize(req, res) {
       }
 
       return Authorization.findByIdAndUpdate(authorization._id, {
-        $set: { allowedScopes: scopes },
+        $set: { allowedScopes: [...authorization.allowedScopes, ...scopes] },
       }).then(() => [application, scopes]);
     })
     .then(([application, scopes]) => {
