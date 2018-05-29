@@ -1,3 +1,13 @@
+<a name="1.7.6"></a>
+## [1.7.6](https://github.com/LinkValue/LvConnect/compare/v1.7.5...v1.7.6) (2018-05-29)
+
+
+### Bug Fixes
+
+* **config:** Fix mongo url config ([f71b455](https://github.com/LinkValue/LvConnect/commit/f71b455))
+
+
+
 <a name="1.7.5"></a>
 ## [1.7.5](https://github.com/LinkValue/LvConnect/compare/v1.7.4...v1.7.5) (2018-05-29)
 
