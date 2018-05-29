@@ -1,3 +1,13 @@
+<a name="1.7.4"></a>
+## [1.7.4](https://github.com/LinkValue/LvConnect/compare/v1.7.3...v1.7.4) (2018-05-29)
+
+
+### Bug Fixes
+
+* **oauth:** Fix OAuth authorization update ([206bfac](https://github.com/LinkValue/LvConnect/commit/206bfac))
+
+
+
 <a name="1.7.3"></a>
 ## [1.7.3](https://github.com/LinkValue/LvConnect/compare/v1.7.2...v1.7.3) (2018-05-24)
 
