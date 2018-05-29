@@ -1,3 +1,13 @@
+<a name="1.7.5"></a>
+## [1.7.5](https://github.com/LinkValue/LvConnect/compare/v1.7.4...v1.7.5) (2018-05-29)
+
+
+### Bug Fixes
+
+* **config:** Fix configuration for production ([a5f0bd2](https://github.com/LinkValue/LvConnect/commit/a5f0bd2))
+
+
+
 <a name="1.7.4"></a>
 ## [1.7.4](https://github.com/LinkValue/LvConnect/compare/v1.7.3...v1.7.4) (2018-05-29)
 
