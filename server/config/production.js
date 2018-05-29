@@ -17,8 +17,7 @@ module.exports = {
     cache: {
       name: 'redisCache',
       engine: 'catbox-redis',
-      host: 'localhost',
-      port: 6379,
+      socket: process.env.REDIS_URL,
       database: 0,
       partition: 'lvc-cache',
     },
@@ -26,27 +25,22 @@ module.exports = {
   host: {
     port: process.env.PORT || 8000,
   },
+  mongodb: {
+    host: 'ds139690.mlab.com',
+    port: 45039,
+    database: 'heroku_236486nb',
+    username: 'heroku_236486nb',
+    password: 'iklh0dk9thvi65d3iq7orjei69',
+  },
+  kue: {
+    redis: `${process.env.REDIS_URL}/1`,
+    prefix: 'lvc-kue',
+  },
   login: {
     cookie: {
       secret: '&é"(§è!çà)-azertyuiop1234567890%',
       name: 'lvconnect',
       isSecure: true,
-    },
-  },
-  mongodb: {
-    host: 'localhost',
-    port: 27017,
-    database: 'lvconnect',
-  },
-  kue: {
-    redis: {
-      host: 'localhost',
-      port: 6379,
-      db: 0,
-    },
-    prefix: 'lvc-kue',
-    config: {
-      shutdownTimeout: 5000,
     },
   },
   logs: {
