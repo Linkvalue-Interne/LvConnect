@@ -49,7 +49,7 @@ exports.register = (server, config, next) => {
   server.decorate('reply', 'mongodb', mongodbReply);
 
   const userPart = username ? `${username}:${password}@` : '';
-  mongoose.connect(url || `mongodb://${userPart}${host}:${port}/${database}`)
+  mongoose.connect(url || `mongodb://${userPart}${host}:${port}/${database}`, { useMongoClient: true })
     .then(() => {
       server.on('stop', () => mongoose.disconnect());
       server.expose('mongoose', mongoose);
