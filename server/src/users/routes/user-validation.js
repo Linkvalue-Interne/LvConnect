@@ -30,6 +30,7 @@ exports.payload = {
     githubHandle: Joi.string(),
     trelloHandle: Joi.string(),
     city: Joi.string().valid(validCities).required(),
+    profilePictureUrl: Joi.string().uri().allow(null),
   }),
   put: Joi.object().keys({
     firstName: Joi.string().min(2),
@@ -39,6 +40,7 @@ exports.payload = {
     githubHandle: Joi.string(),
     trelloHandle: Joi.string(),
     city: Joi.string().valid(validCities),
+    profilePictureUrl: Joi.string().uri().allow(null),
   }),
 };
 

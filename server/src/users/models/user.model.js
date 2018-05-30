@@ -2,11 +2,18 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
+const defaultProfilePictureUrl = () => {
+  const emailHash = crypto.createHash('md5').update(this.email || '').digest('hex');
+  return `https://www.gravatar.com/avatar/${emailHash}?s=200`;
+};
+
 const toUpperCase = value => value.toUpperCase();
+
 const userSchema = new mongoose.Schema({
   firstName: String,
   email: { type: String, index: true, unique: true },
   lastName: { type: String, get: toUpperCase, set: toUpperCase },
+  profilePictureUrl: { type: String, default: defaultProfilePictureUrl },
   password: String,
   roles: [String],
   githubHandle: String,
@@ -20,15 +27,6 @@ const userSchema = new mongoose.Schema({
   description: String,
   city: String,
   needPasswordChange: { type: Boolean, default: true },
-});
-
-userSchema.virtual('profilePictureUrl').get(function getProfilePictureUrl(value) {
-  if (value) {
-    return value;
-  }
-
-  const emailHash = crypto.createHash('md5').update(this.email || '').digest('hex');
-  return `https://www.gravatar.com/avatar/${emailHash}?s=200`;
 });
 
 userSchema.set('toJSON', { getters: true });
