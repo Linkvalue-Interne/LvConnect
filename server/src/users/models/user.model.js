@@ -11,8 +11,11 @@ const toUpperCase = value => value.toUpperCase();
 
 const userSchema = new mongoose.Schema({
   firstName: String,
-  email: { type: String, index: true, unique: true },
   lastName: { type: String, get: toUpperCase, set: toUpperCase },
+  email: { type: String, index: true, unique: true },
+  tags: [String],
+  phone: String,
+  job: String,
   profilePictureUrl: { type: String, default: defaultProfilePictureUrl },
   password: String,
   roles: [String],
