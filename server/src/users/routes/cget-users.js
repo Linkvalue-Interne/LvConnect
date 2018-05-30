@@ -32,7 +32,7 @@ module.exports = {
       }
       if (search) {
         const searchRegexp = new RegExp(search, 'ig');
-        query.or([{ firstName: { $regex: searchRegexp } }, { firstName: { $regex: searchRegexp } }]);
+        query.or([{ firstName: { $regex: searchRegexp } }, { lastName: { $regex: searchRegexp } }]);
       }
       return query;
     }

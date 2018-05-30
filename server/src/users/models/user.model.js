@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
+const toUpperCase = value => value.toUpperCase();
 const userSchema = new mongoose.Schema({
   firstName: String,
-  lastName: String,
   email: { type: String, index: true, unique: true },
+  lastName: { type: String, get: toUpperCase, set: toUpperCase },
   password: String,
   roles: [String],
   githubHandle: String,
@@ -30,7 +31,7 @@ userSchema.virtual('profilePictureUrl').get(function getProfilePictureUrl(value)
   return `https://www.gravatar.com/avatar/${emailHash}?s=200`;
 });
 
-userSchema.set('toJSON', { virtuals: true });
+userSchema.set('toJSON', { getters: true });
 
 userSchema.methods.hashPassword = function hashPassword(password) {
   return bcrypt.hash(password, 10).then((hash) => {
