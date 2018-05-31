@@ -5964,6 +5964,14 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+libphonenumber-js@^1.2.14:
+  version "1.2.14"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.2.14.tgz#289ffe50d19b0ee762d0b3f50a7a286270e8f423"
+  dependencies:
+    minimist "^1.2.0"
+    semver-compare "^1.0.0"
+    xml2js "^0.4.17"
+
 listenercount@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/listenercount/-/listenercount-1.0.1.tgz#84c8a72ab59c4725321480c975e6508342e70937"
@@ -8614,7 +8622,7 @@ sax@0.5.x:
   version "0.5.8"
   resolved "https://registry.yarnpkg.com/sax/-/sax-0.5.8.tgz#d472db228eb331c2506b0e8c15524adb939d12c1"
 
-sax@^1.2.4:
+sax@>=0.6.0, sax@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
@@ -8651,6 +8659,10 @@ selfsigned@^1.9.1:
   resolved "https://registry.yarnpkg.com/selfsigned/-/selfsigned-1.10.3.tgz#d628ecf9e3735f84e8bafba936b3cf85bea43823"
   dependencies:
     node-forge "0.7.5"
+
+semver-compare@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/semver-compare/-/semver-compare-1.0.0.tgz#0dee216a1c941ab37e9efb1788f6afc5ff5537fc"
 
 semver-diff@^2.0.0:
   version "2.1.0"
@@ -10216,6 +10228,17 @@ write@^0.2.1:
 xdg-basedir@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-3.0.0.tgz#496b2cc109eca8dbacfe2dc72b603c17c5870ad4"
+
+xml2js@^0.4.17:
+  version "0.4.19"
+  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.19.tgz#686c20f213209e94abf0d1bcf1efaa291c7827a7"
+  dependencies:
+    sax ">=0.6.0"
+    xmlbuilder "~9.0.1"
+
+xmlbuilder@~9.0.1:
+  version "9.0.7"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
 
 xregexp@2.0.0:
   version "2.0.0"
