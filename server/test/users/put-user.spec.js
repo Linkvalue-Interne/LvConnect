@@ -37,7 +37,7 @@ describe('/users/{id}', () => {
       // Then
       expect(response.statusCode).to.equal(200);
       expect(response.result.firstName).to.equal('hello');
-      expect(response.result.lastName).to.equal('world');
+      expect(response.result.lastName).to.equal('WORLD');
       expect(response.result.email).to.equal('foo@bar.com');
       expect(response.result.createdAt).to.be.a('date');
       expect(response.result.roles).to.deep.equal(['tech', 'hr']);

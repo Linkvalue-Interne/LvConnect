@@ -56,7 +56,7 @@ describe('/users/{id}', () => {
 
       // Then
       expect(response.statusCode).to.equal(200);
-      expect(response.result.lastName).to.equal(fixUser.lastName);
+      expect(response.result.lastName).to.equal(fixUser.lastName.toUpperCase());
       expect(response.result.firstName).to.equal(fixUser.firstName);
       expect(response.result.email).to.equal(fixUser.email);
       expect(response.result.createdAt.toString()).to.equal(fixUser.createdAt.toString());
