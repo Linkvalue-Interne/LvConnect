@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const { Types } = require('mongoose');
+const { isValidNumber } = require('libphonenumber-js');
 
 const validRoles = [
   'tech',
@@ -19,6 +20,27 @@ const validCities = [
 exports.validRoles = validRoles;
 exports.validCities = validCities;
 
+const customJoi = Joi.extend(joi => ({
+  base: joi.string(),
+  name: 'string',
+  language: {
+    phone: 'needs to be a proper french phone number',
+  },
+  rules: [
+    {
+      name: 'phone',
+      validate(params, value, state, options) {
+        if (!isValidNumber(value, 'FR')) {
+          return this.createError('string.phone', { v: value }, state, options);
+        }
+
+        return value;
+      },
+    },
+  ],
+}));
+
+
 exports.payload = {
   post: Joi.object().keys({
     firstName: Joi.string().min(2).required(),
@@ -30,7 +52,7 @@ exports.payload = {
     githubHandle: Joi.string(),
     trelloHandle: Joi.string(),
     city: Joi.string().valid(validCities).required(),
-    phone: Joi.string(),
+    phone: customJoi.string().phone(),
     job: Joi.string(),
     tags: Joi.array().items(Joi.string()),
     profilePictureUrl: Joi.string().uri().allow(null),
@@ -43,7 +65,7 @@ exports.payload = {
     githubHandle: Joi.string(),
     trelloHandle: Joi.string(),
     city: Joi.string().valid(validCities),
-    phone: Joi.string(),
+    phone: customJoi.string().phone(),
     job: Joi.string(),
     tags: Joi.array().items(Joi.string()),
     profilePictureUrl: Joi.string().uri().allow(null),
