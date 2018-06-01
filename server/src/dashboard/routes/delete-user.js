@@ -1,10 +1,11 @@
 const { hasRoleInList } = require('../middlewares');
+const { BOARD, HR } = require('../../roles');
 
 module.exports = {
   method: 'GET',
   path: '/dashboard/users/{id}/delete',
   config: {
-    pre: [hasRoleInList(['rh', 'board'])],
+    pre: [hasRoleInList([BOARD, HR])],
     auth: 'session',
   },
   handler(req, res) {

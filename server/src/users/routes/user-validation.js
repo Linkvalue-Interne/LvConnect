@@ -1,14 +1,8 @@
 const Joi = require('joi');
 const { Types } = require('mongoose');
+const roles = require('../../roles');
 
-const validRoles = [
-  'tech',
-  'business',
-  'hr',
-  'board',
-  'com',
-  'finance',
-];
+const validRoles = Object.values(roles);
 
 const validCities = [
   'Lyon',

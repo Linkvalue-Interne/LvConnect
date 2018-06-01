@@ -1,3 +1,5 @@
+const { HR, BOARD } = require('../../roles');
+
 module.exports = {
   method: 'GET',
   path: '/dashboard/users',
@@ -13,7 +15,7 @@ module.exports = {
         res.view('get-users', {
           pageTitle: 'Partners list',
           users,
-          adminRoles: ['rh', 'board'],
+          adminRoles: [HR, BOARD],
         });
       });
   },

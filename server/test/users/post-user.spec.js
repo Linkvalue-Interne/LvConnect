@@ -2,6 +2,7 @@ const { expect } = require('chai');
 
 const [fixAdminUser, fixTechUser] = require('../fixtures/users');
 const testSetup = require('../setup');
+const { TECH } = require('../../src/roles');
 
 describe('/users', () => {
   describe('POST', () => {
@@ -28,7 +29,7 @@ describe('/users', () => {
           lastName: fixAdminUser.lastName,
           email: fixAdminUser.email,
           plainPassword: 'admin1234',
-          roles: ['tech'],
+          roles: [TECH],
           city: 'Lyon',
         },
       });
@@ -39,7 +40,7 @@ describe('/users', () => {
       expect(response.result.firstName).to.equal(fixAdminUser.firstName);
       expect(response.result.email).to.equal(fixAdminUser.email);
       expect(response.result.createdAt).to.be.a('date');
-      expect(response.result.roles).to.deep.equal(['tech']);
+      expect(response.result.roles).to.deep.equal([TECH]);
     });
 
     it('should reject if user has insufficient rights', async function () {
@@ -56,7 +57,7 @@ describe('/users', () => {
           lastName: fixAdminUser.lastName,
           email: fixAdminUser.email,
           plainPassword: 'admin1234',
-          roles: ['tech'],
+          roles: [TECH],
           city: 'Lyon',
         },
       });

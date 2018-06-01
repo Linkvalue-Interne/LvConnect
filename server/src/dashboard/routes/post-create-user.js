@@ -2,12 +2,13 @@ const _ = require('lodash');
 const Joi = require('joi');
 const { validRoles, validCities } = require('../../users/routes/user-validation');
 const { hasRoleInList } = require('../middlewares');
+const { BOARD, HR } = require('../../roles');
 
 module.exports = {
   method: 'POST',
   path: '/dashboard/users/create',
   config: {
-    pre: [hasRoleInList(['rh', 'board'])],
+    pre: [hasRoleInList([BOARD, HR])],
     auth: 'session',
     validate: {
       payload: Joi.object().keys({

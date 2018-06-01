@@ -2,6 +2,7 @@
 
 const { mongodb } = require('config');
 const mongoose = require('mongoose');
+const roles = require('../src/roles');
 
 mongoose.Promise = global.Promise;
 
@@ -16,14 +17,7 @@ module.exports = () => {
         lastName: 'admin',
         email: 'admin@link-value.fr',
         fallbackEmail: 'admin@link-value.fr',
-        roles: [
-          'tech',
-          'business',
-          'hr',
-          'com',
-          'finance',
-          'board',
-        ],
+        roles: Object.values(roles),
       });
 
       return user.hashPassword('admin');

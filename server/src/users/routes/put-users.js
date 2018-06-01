@@ -1,12 +1,13 @@
 const Boom = require('boom');
 const { hasRoleInList, isConnectedUser, hasScopeInList } = require('../middlewares');
 const { payload, params } = require('./user-validation');
+const { BOARD, HR } = require('../../roles');
 
 module.exports = {
   method: 'PUT',
   path: '/users/{user}',
   config: {
-    pre: [hasScopeInList('users:modify', 'profile:modify'), isConnectedUser, hasRoleInList(['rh', 'board'], true)],
+    pre: [hasScopeInList('users:modify', 'profile:modify'), isConnectedUser, hasRoleInList([BOARD, HR], true)],
     validate: {
       payload: payload.put,
       params,

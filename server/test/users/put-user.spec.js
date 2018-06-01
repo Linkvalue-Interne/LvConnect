@@ -2,6 +2,7 @@ const { expect } = require('chai');
 
 const [fixAdminUser, fixTechUser] = require('../fixtures/users');
 const testSetup = require('../setup');
+const { TECH, HR } = require('../../src/roles');
 
 describe('/users/{id}', () => {
   describe('PUT', () => {
@@ -29,7 +30,7 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          roles: ['tech', 'hr'],
+          roles: [TECH, HR],
           city: 'Paris',
         },
       });
@@ -40,7 +41,7 @@ describe('/users/{id}', () => {
       expect(response.result.lastName).to.equal('world');
       expect(response.result.email).to.equal('foo@bar.com');
       expect(response.result.createdAt).to.be.a('date');
-      expect(response.result.roles).to.deep.equal(['tech', 'hr']);
+      expect(response.result.roles).to.deep.equal([TECH, HR]);
       expect(response.result.city).to.equal('Paris');
     });
 
@@ -57,7 +58,7 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          roles: ['tech', 'hr'],
+          roles: [TECH, HR],
         },
       });
 
@@ -98,7 +99,7 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          roles: ['tech'],
+          roles: [TECH],
         },
       });
 

@@ -1,11 +1,12 @@
 const { hasRoleInList } = require('../middlewares');
 const { validRoles, validCities } = require('../../users/routes/user-validation');
+const { BOARD, HR } = require('../../roles');
 
 module.exports = {
   method: 'GET',
   path: '/dashboard/users/{user}/edit',
   config: {
-    pre: [hasRoleInList(['rh', 'board'])],
+    pre: [hasRoleInList([BOARD, HR])],
     auth: 'session',
   },
   handler(req, res) {
