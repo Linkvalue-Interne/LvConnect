@@ -4,6 +4,7 @@ module.exports = [{
   email: 'foo@bar.com',
   password: '$2a$10$lNbtFeWS1GuquR50WIzWTekc9UychxS7vzkQAy/G8liWQSwRKsNSW', // password
   roles: ['rh', 'com', 'board', 'tech', 'business', 'finance'],
+  profilePictureUrl: 'http://foo.bar',
   createdAt: new Date(),
   city: 'Paris',
   needPasswordChange: false,
