@@ -1,118 +1,118 @@
 <a name="1.7.6"></a>
-## [1.7.6](https://github.com/LinkValue/LvConnect/compare/v1.7.5...v1.7.6) (2018-05-29)
+## [1.7.6](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.7.5...v1.7.6) (2018-05-29)
 
 
 ### Bug Fixes
 
-* **config:** Fix mongo url config ([f71b455](https://github.com/LinkValue/LvConnect/commit/f71b455))
+* **config:** Fix mongo url config ([f71b455](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/f71b455))
 
 
 
 <a name="1.7.5"></a>
-## [1.7.5](https://github.com/LinkValue/LvConnect/compare/v1.7.4...v1.7.5) (2018-05-29)
+## [1.7.5](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.7.4...v1.7.5) (2018-05-29)
 
 
 ### Bug Fixes
 
-* **config:** Fix configuration for production ([a5f0bd2](https://github.com/LinkValue/LvConnect/commit/a5f0bd2))
+* **config:** Fix configuration for production ([a5f0bd2](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/a5f0bd2))
 
 
 
 <a name="1.7.4"></a>
-## [1.7.4](https://github.com/LinkValue/LvConnect/compare/v1.7.3...v1.7.4) (2018-05-29)
+## [1.7.4](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.7.3...v1.7.4) (2018-05-29)
 
 
 ### Bug Fixes
 
-* **oauth:** Fix OAuth authorization update ([206bfac](https://github.com/LinkValue/LvConnect/commit/206bfac))
+* **oauth:** Fix OAuth authorization update ([206bfac](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/206bfac))
 
 
 
 <a name="1.7.3"></a>
-## [1.7.3](https://github.com/LinkValue/LvConnect/compare/v1.7.2...v1.7.3) (2018-05-24)
+## [1.7.3](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.7.2...v1.7.3) (2018-05-24)
 
 
 ### Bug Fixes
 
-* **oauth:** Better support of client credentials grant ([30ad699](https://github.com/LinkValue/LvConnect/commit/30ad699))
+* **oauth:** Better support of client credentials grant ([30ad699](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/30ad699))
 
 
 
 <a name="1.7.2"></a>
-## [1.7.2](https://github.com/LinkValue/LvConnect/compare/v1.7.1...v1.7.2) (2018-04-19)
+## [1.7.2](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.7.1...v1.7.2) (2018-04-19)
 
 
 ### Bug Fixes
 
-* **oauth:** Fix client credentials grant ([7e42071](https://github.com/LinkValue/LvConnect/commit/7e42071))
+* **oauth:** Fix client credentials grant ([7e42071](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/7e42071))
 
 
 ### Features
 
-* **app:** Add basic login in frontend app ([0a18eb4](https://github.com/LinkValue/LvConnect/commit/0a18eb4))
-* **app:** Add workspaces for frontend ([f3c805f](https://github.com/LinkValue/LvConnect/commit/f3c805f))
-* **monitoring:** Add more metrics to monitoring ([ad0d35c](https://github.com/LinkValue/LvConnect/commit/ad0d35c))
-* **oauth:** Better design of oauth authorization pipe ([12bf21c](https://github.com/LinkValue/LvConnect/commit/12bf21c))
+* **app:** Add basic login in frontend app ([0a18eb4](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/0a18eb4))
+* **app:** Add workspaces for frontend ([f3c805f](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/f3c805f))
+* **monitoring:** Add more metrics to monitoring ([ad0d35c](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/ad0d35c))
+* **oauth:** Better design of oauth authorization pipe ([12bf21c](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/12bf21c))
 
 
 
 <a name="1.7.1"></a>
-## [1.7.1](https://github.com/LinkValue/LvConnect/compare/v1.7.0...v1.7.1) (2018-02-20)
+## [1.7.1](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.7.0...v1.7.1) (2018-02-20)
 
 
 ### Bug Fixes
 
-* **oauth:** fix lint error ([60bb840](https://github.com/LinkValue/LvConnect/commit/60bb840))
-* **oauth:** fixed bad usage of Hapi reply interface ([ccb8a82](https://github.com/LinkValue/LvConnect/commit/ccb8a82))
-* **oauth:** fixed oauth login error message and HTTP codes ([d8586e9](https://github.com/LinkValue/LvConnect/commit/d8586e9))
+* **oauth:** fix lint error ([60bb840](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/60bb840))
+* **oauth:** fixed bad usage of Hapi reply interface ([ccb8a82](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/ccb8a82))
+* **oauth:** fixed oauth login error message and HTTP codes ([d8586e9](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/d8586e9))
 
 
 
 <a name="1.7.0"></a>
-# [1.7.0](https://github.com/LinkValue/LvConnect/compare/v1.6.2...v1.7.0) (2018-02-02)
+# [1.7.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.6.2...v1.7.0) (2018-02-02)
 
 
 ### Features
 
-* **dashboard:** Add possibility to have multiple redirect uris for apps ([165f883](https://github.com/LinkValue/LvConnect/commit/165f883))
-* **oauth:** Add forgot password link in oauth modal ([63289aa](https://github.com/LinkValue/LvConnect/commit/63289aa))
-* **oauth:** Add response type token for authorization pipeline ([919db16](https://github.com/LinkValue/LvConnect/commit/919db16))
+* **dashboard:** Add possibility to have multiple redirect uris for apps ([165f883](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/165f883))
+* **oauth:** Add forgot password link in oauth modal ([63289aa](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/63289aa))
+* **oauth:** Add response type token for authorization pipeline ([919db16](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/919db16))
 
 
 
 <a name="1.6.2"></a>
-## [1.6.2](https://github.com/LinkValue/LvConnect/compare/v1.6.1...v1.6.2) (2017-11-27)
+## [1.6.2](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.6.1...v1.6.2) (2017-11-27)
 
 
 ### Bug Fixes
 
-* **oauth:** fixed issue with not found application by client_id ([b20cf47](https://github.com/LinkValue/LvConnect/commit/b20cf47))
+* **oauth:** fixed issue with not found application by client_id ([b20cf47](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/b20cf47))
 
 
 ### Features
 
-* **dashboard:** Add possibility to edit the email address ([6dc9685](https://github.com/LinkValue/LvConnect/commit/6dc9685))
+* **dashboard:** Add possibility to edit the email address ([6dc9685](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/6dc9685))
 
 
 
 <a name="1.6.1"></a>
-## [1.6.1](https://github.com/LinkValue/LvConnect/compare/v1.6.0...v1.6.1) (2017-11-27)
+## [1.6.1](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.6.0...v1.6.1) (2017-11-27)
 
 
 
 <a name="1.6.0"></a>
-# [1.6.0](https://github.com/LinkValue/LvConnect/compare/v1.5.0...v1.6.0) (2017-11-27)
+# [1.6.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.5.0...v1.6.0) (2017-11-27)
 
 
 ### Bug Fixes
 
-* **oauth:** Add missing state when canceling authorization pipe ([190a630](https://github.com/LinkValue/LvConnect/commit/190a630))
+* **oauth:** Add missing state when canceling authorization pipe ([190a630](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/190a630))
 
 
 ### Features
 
-* **oauth:** Add missing query params to authorization endpoint ([7438ad4](https://github.com/LinkValue/LvConnect/commit/7438ad4))
-* **oauth:** Fix client_id query param on authorization endpoint ([00a8a97](https://github.com/LinkValue/LvConnect/commit/00a8a97))
+* **oauth:** Add missing query params to authorization endpoint ([7438ad4](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/7438ad4))
+* **oauth:** Fix client_id query param on authorization endpoint ([00a8a97](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/00a8a97))
 
 
 

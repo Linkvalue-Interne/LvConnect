@@ -21,13 +21,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LinkValue/LvConnect.git"
+    "url": "git+https://gitlab.com/LinkValue/Lab/LVConnect/LvConnect.git"
   },
   "author": "LinkValue",
   "bugs": {
-    "url": "https://github.com/LinkValue/LvConnect/issues"
+    "url": "https://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/issues"
   },
-  "homepage": "https://github.com/LinkValue/LvConnect#readme",
+  "homepage": "https://gitlab.com/LinkValue/Lab/LVConnect/LvConnect#readme",
   "devDependencies": {
     "babel-eslint": "^8.2.2",
     "catbox-memory": "^2.0.4",
