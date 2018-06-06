@@ -39,7 +39,10 @@ module.exports = {
   trello: {},
   github: {},
   slack: {},
-  mailjet: {},
+  mailjet: {
+    apiKey: process.env.MAILJET_API_KEY,
+    apiToken: process.env.MAILJET_API_TOKEN,
+  },
   monitoring: {
     metricsPath: '/metrics',
   },
