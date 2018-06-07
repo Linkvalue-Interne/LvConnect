@@ -1,3 +1,14 @@
+<a name="1.7.7"></a>
+## [1.7.7](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.7.6...v1.7.7) (2018-06-07)
+
+
+### Bug Fixes
+
+* **mailjet:** Fix disabled mailjet on production ([5a85962](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/5a85962))
+* **roles:** Fixed hr role which was named rh in most places ([29ff35a](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/29ff35a))
+
+
+
 <a name="1.7.6"></a>
 ## [1.7.6](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.7.5...v1.7.6) (2018-05-29)
 
