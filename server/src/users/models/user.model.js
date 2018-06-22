@@ -1,11 +1,25 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const { formatNumber, parseNumber } = require('libphonenumber-js');
+
+const defaultProfilePictureUrl = () => {
+  const emailHash = crypto.createHash('md5').update(this.email || '').digest('hex');
+  return `https://www.gravatar.com/avatar/${emailHash}?s=200`;
+};
+
+const formatPhoneNumber = phone => formatNumber(parseNumber(phone, 'FR'), 'International');
+
+const toUpperCase = value => value.toUpperCase();
 
 const userSchema = new mongoose.Schema({
   firstName: String,
-  lastName: String,
+  lastName: { type: String, get: toUpperCase, set: toUpperCase },
   email: { type: String, index: true, unique: true },
+  tags: [String],
+  phone: { type: String, set: formatPhoneNumber },
+  job: String,
+  profilePictureUrl: { type: String, default: defaultProfilePictureUrl },
   password: String,
   roles: [String],
   githubHandle: String,
@@ -21,16 +35,7 @@ const userSchema = new mongoose.Schema({
   needPasswordChange: { type: Boolean, default: true },
 });
 
-userSchema.virtual('profilePictureUrl').get(function getProfilePictureUrl(value) {
-  if (value) {
-    return value;
-  }
-
-  const emailHash = crypto.createHash('md5').update(this.email || '').digest('hex');
-  return `https://www.gravatar.com/avatar/${emailHash}?s=200`;
-});
-
-userSchema.set('toJSON', { virtuals: true });
+userSchema.set('toJSON', { getters: true });
 
 userSchema.methods.hashPassword = function hashPassword(password) {
   return bcrypt.hash(password, 10).then((hash) => {

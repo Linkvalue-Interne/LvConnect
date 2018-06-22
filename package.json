@@ -11,7 +11,7 @@
   "main": "./server/index.js",
   "scripts": {
     "create-superuser": "NODE_ENV=production lvconnect create-superuser",
-    "dev": "nodemon .",
+    "dev": "NODE_ENV=dev nodemon .",
     "dev:front": "yarn workspace lvconnect-front dev",
     "lint": "eslint '**/*.{js,jsx}'",
     "test": "yarn workspace lvconnect-back run test",
@@ -38,5 +38,8 @@
     "eslint-plugin-import": "^2.10.0",
     "mocha": "^3.0.2",
     "nodemon": "^1.17.3"
+  },
+  "engines": {
+    "node": "^8.11.2"
   }
 }

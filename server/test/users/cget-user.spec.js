@@ -28,7 +28,7 @@ describe('/users', () => {
       // Then
       const [result] = response.result.results;
       expect(response.statusCode).to.equal(200);
-      expect(result.lastName).to.equal(fixAdminUser.lastName);
+      expect(result.lastName).to.equal(fixAdminUser.lastName.toUpperCase());
       expect(result.firstName).to.equal(fixAdminUser.firstName);
       expect(result.email).to.equal(fixAdminUser.email);
       expect(result.createdAt.toString()).to.equal(fixAdminUser.createdAt.toString());
@@ -48,7 +48,7 @@ describe('/users', () => {
       // Then
       const [result] = response.result.results;
       expect(response.statusCode).to.equal(200);
-      expect(result.lastName).to.equal(fixTechUser.lastName);
+      expect(result.lastName).to.equal(fixTechUser.lastName.toUpperCase());
       expect(result.firstName).to.equal(fixTechUser.firstName);
       expect(result.email).to.equal(fixTechUser.email);
       expect(result.createdAt.toString()).to.equal(fixTechUser.createdAt.toString());
@@ -68,7 +68,7 @@ describe('/users', () => {
       // Then
       const [result] = response.result.results;
       expect(response.statusCode).to.equal(200);
-      expect(result.lastName).to.equal(fixTechUser.lastName);
+      expect(result.lastName).to.equal(fixTechUser.lastName.toUpperCase());
       expect(result.firstName).to.equal(fixTechUser.firstName);
       expect(result.email).to.equal(fixTechUser.email);
       expect(result.createdAt.toString()).to.equal(fixTechUser.createdAt.toString());

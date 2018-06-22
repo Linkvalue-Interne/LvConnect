@@ -36,7 +36,7 @@ describe('/users', () => {
 
       // Then
       expect(response.statusCode).to.equal(201);
-      expect(response.result.lastName).to.equal(fixAdminUser.lastName);
+      expect(response.result.lastName).to.equal(fixAdminUser.lastName.toUpperCase());
       expect(response.result.firstName).to.equal(fixAdminUser.firstName);
       expect(response.result.email).to.equal(fixAdminUser.email);
       expect(response.result.createdAt).to.be.a('date');

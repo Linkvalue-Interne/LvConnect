@@ -1,6 +1,7 @@
 const Boom = require('boom');
 const { hasRoleInList, isConnectedUser, hasScopeInList } = require('../middlewares');
 const { payload, params } = require('./user-validation');
+const filter = require('lodash/pickBy');
 const { BOARD, HR } = require('../../roles');
 
 module.exports = {
@@ -35,8 +36,14 @@ module.exports = {
       return res(Boom.forbidden('insufficient_rights'));
     }
 
+
+    const updates = filter({
+      $set: filter(req.payload, value => value !== null),
+      $unset: filter(req.payload, value => value === null),
+    }, update => Object.keys(update).length);
+
     const userPromise = User
-      .findOneAndUpdate({ _id: req.params.user }, { $set: req.payload }, { new: true })
+      .findOneAndUpdate({ _id: req.params.user }, updates, { new: true, runSettersOnQuery: true })
       .exec()
       .then((savedUser) => {
         if (!savedUser) {
