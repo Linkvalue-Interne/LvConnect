@@ -12,7 +12,7 @@ describe('/users/{id}', () => {
     before(async function () {
       server = await testSetup();
       ({ User } = server.plugins.users.models);
-      savedUser = await User.findOne({}).exec();
+      savedUser = await User.findOne({ email: fixUser.email }).exec();
     });
 
     after(() => server.stop());
