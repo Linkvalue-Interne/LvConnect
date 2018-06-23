@@ -43,6 +43,7 @@ module.exports = {
       .limit(limit)
       .skip(page * limit || 0)
       .select('-password -thirdParty -needPasswordChange')
+      .sort('lastName firstName createdAt')
       .exec();
 
     const countPromise = applyFilters(User.count());
