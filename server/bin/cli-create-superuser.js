@@ -10,7 +10,7 @@ const User = require('../src/users/models/user.model');
 
 module.exports = () => {
   const userPart = mongodb.username ? `${mongodb.username}:${mongodb.password}@` : '';
-  mongoose.connect(`mongodb://${userPart}${mongodb.host}:${mongodb.port}/${mongodb.database}`, mongodb.config)
+  mongoose.connect(mongodb.url || `mongodb://${userPart}${mongodb.host}:${mongodb.port}/${mongodb.database}`)
     .then(() => {
       const user = new User({
         firstName: 'admin',

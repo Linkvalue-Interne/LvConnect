@@ -17,7 +17,7 @@ describe('/users/{id}', () => {
 
     after(() => server.stop());
 
-    it('should reject with 403 if no getting user other than self with profile:get', async () => {
+    it('should reject with 403 if getting user other than self with profile:get', async () => {
       // Given
       const request = {
         method: 'GET',
@@ -47,6 +47,28 @@ describe('/users/{id}', () => {
         credentials: {
           scopes: ['users:get'],
           user: new User(fixUser),
+        },
+        payload: {
+          firstName: 'hello',
+          lastName: 'world',
+        },
+      });
+
+      // Then
+      expect(response.statusCode).to.equal(200);
+      expect(response.result.lastName).to.equal(fixUser.lastName.toUpperCase());
+      expect(response.result.firstName).to.equal(fixUser.firstName);
+      expect(response.result.email).to.equal(fixUser.email);
+      expect(response.result.createdAt.toString()).to.equal(fixUser.createdAt.toString());
+    });
+
+    it('should return user by its id, even if an user is not in credentials', async function () {
+      // Given
+      const response = await server.inject({
+        method: 'GET',
+        url: `/users/${savedUser._id}`,
+        credentials: {
+          scopes: ['users:get'],
         },
         payload: {
           firstName: 'hello',

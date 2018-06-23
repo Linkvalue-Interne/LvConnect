@@ -12,8 +12,10 @@ module.exports = {
     },
   },
   handler(req, res) {
-    const { scopes, user: { _id } } = req.auth.credentials;
-    if (scopes.indexOf('users:get') === -1 && req.params.user !== _id) {
+    const { scopes, user: connectedUser } = req.auth.credentials;
+    const requestedUserIsTheConnectedOne = connectedUser && req.params.user === connectedUser._id;
+
+    if (!scopes.includes('users:get') && !requestedUserIsTheConnectedOne) {
       return res(Boom.forbidden('Insufficient rights'));
     }
 
