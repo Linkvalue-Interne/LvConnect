@@ -1,3 +1,27 @@
+<a name="1.8.0"></a>
+# [1.8.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.7.7...v1.8.0) (2018-07-16)
+
+
+### Bug Fixes
+
+* **'users':** Sort users consistently when several returned. ([f2681ed](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/f2681ed))
+* **tests:** Take always the good user from fixtures. ([3066902](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/3066902))
+* **users:** Fix error 500 when no user in credentials (https://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/issues/68). ([1ee8921](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/1ee8921))
+* **users:** Fix users search and normalize user lastName ([b0924af](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/b0924af))
+
+
+### Features
+
+* **dev:** Add docker dev env. ([6ab0a7b](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/6ab0a7b))
+* **user:** Format properly the phone numbers. ([d3fc946](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/d3fc946))
+* **users:** Add custom validation for phone numbers ([ebaa696](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/ebaa696))
+* **users:** Add new fields ([316b3ab](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/316b3ab))
+* **users:** Add tests for new fields. ([b25fdcb](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/b25fdcb))
+* **users:** Add the abilities to set and delete a profile picture url ([ca75166](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/ca75166))
+* **users:** fix tests for Lastname normalization ([9f8f152](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/9f8f152))
+
+
+
 <a name="1.7.7"></a>
 ## [1.7.7](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.7.6...v1.7.7) (2018-06-07)
 
