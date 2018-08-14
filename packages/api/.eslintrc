@@ -1,0 +1,16 @@
+{
+  "extends": ["airbnb-base"],
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "max-len": ["error", 120],
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["**/*.test.js", "**/*.spec.js", "./bin/*.js"] }
+    ],
+    "object-curly-newline": "off"
+  }
+}

@@ -1,14 +1,54 @@
 image: node:carbon
 
 stages:
+  - build
   - test
   - deploy
 
+build_staging:
+  stage: build
+  variables:
+    APP_ENV: staging
+  script:
+    - yarn
+    - yarn build
+  artifacts:
+    name: "build-$CI_COMMIT_REF_NAME"
+    paths:
+      - dist/
+  only:
+    - master
+  except:
+    - tags
+  tags:
+    - node
+
+build_production:
+  stage: build
+  variables:
+    APP_ENV: production
+  script:
+    - yarn
+    - yarn build
+  artifacts:
+    name: "build-$CI_COMMIT_REF_NAME"
+    paths:
+      - dist/
+  only:
+    - tags
+  tags:
+    - node
+
 lint_and_test:
   stage: test
+  services:
+    - mongo:latest
   script:
     - yarn
     - yarn lint
+    - yarn test
+  variables:
+    APP_ENV: test
   tags:
     - node
 
@@ -21,6 +61,8 @@ deploy_staging:
     - master
   except:
     - tags
+  dependencies:
+    - build_staging
   environment:
     name: staging
     url: https://lvconnect-staging.herokuapp.com
@@ -38,6 +80,8 @@ deploy_production:
   environment:
     name: production
     url: https://lvconnect.link-value.fr
+  dependencies:
+    - build_production
   tags:
     - node
 

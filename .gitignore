@@ -1,7 +1,14 @@
+# dependencies
 **/node_modules/
 **/flow-typed/npm/
 
+# log files
 /logs
 *.log
 
-config/local.*
+# local configuration
+**/config/**/local*
+
+# temporary files
+.eslintcache
+dist/

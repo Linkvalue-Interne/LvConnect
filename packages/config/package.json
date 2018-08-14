@@ -1,0 +1,10 @@
+{
+  "name": "@lvconnect/config",
+  "version": "1.0.0",
+  "description": "Configuration package",
+  "private": true,
+  "main": "./shared",
+  "dependencies": {
+    "lodash.merge": "^4.6.1"
+  }
+}

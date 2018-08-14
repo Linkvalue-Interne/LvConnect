@@ -2,8 +2,7 @@
   "name": "lvconnect",
   "private": true,
   "workspaces": [
-    "server",
-    "app"
+    "packages/**"
   ],
   "version": "1.8.0",
   "description": "Authentication platform for LinkValue",
@@ -11,13 +10,16 @@
   "main": "./server/index.js",
   "scripts": {
     "create-superuser": "NODE_ENV=production lvconnect create-superuser",
-    "dev": "NODE_ENV=dev nodemon .",
-    "dev:front": "yarn workspace lvconnect-front dev",
+    "dev": "APP_ENV=dev nodemon .",
+    "dev:front": "webpack-dev-server --hot",
+    "build": "webpack -p",
     "lint": "eslint '**/*.{js,jsx}'",
-    "test": "yarn workspace lvconnect-back run test",
+    "test": "yarn workspace @lvconnect/api run test",
     "heroku-postbuild": "npm rebuild bcrypt",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "version": "npm run changelog && git add CHANGELOG.md"
+    "version": "yarn changelog && git add CHANGELOG.md",
+    "typecheck": "flow",
+    "install:types": "flow-typed install -s -o"
   },
   "repository": {
     "type": "git",
@@ -29,17 +31,36 @@
   },
   "homepage": "https://gitlab.com/LinkValue/Lab/LVConnect/LvConnect#readme",
   "devDependencies": {
-    "babel-eslint": "^8.2.2",
-    "catbox-memory": "^2.0.4",
-    "chai": "^3.5.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
+    "babel-jest": "^23.4.2",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "clean-webpack-plugin": "^0.1.19",
     "conventional-changelog-cli": "^1.3.4",
     "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-flowtype": "^2.46.1",
     "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "file-loader": "^1.1.11",
+    "flow-bin": "^0.69.0",
+    "flow-typed": "^2.4.0",
+    "html-webpack-plugin": "^3.2.0",
     "mocha": "^3.0.2",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.3",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
   },
   "engines": {
-    "node": "^8.11.2"
+    "node": ">8.11.2"
   }
 }

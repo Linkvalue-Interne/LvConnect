@@ -1,0 +1,33 @@
+{
+  "name": "@lvconnect/app",
+  "version": "1.7.1",
+  "description": "Frontend React app for LVConnect",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --hot",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/LinkValue/Lab/LVConnect/LvConnect"
+  },
+  "author": "LinkValue",
+  "license": "MIT",
+  "dependencies": {
+    "@material-ui/core": "^1.5.0",
+    "@material-ui/icons": "^2.0.2",
+    "@lvconnect/config": "^1.0.0",
+    "history": "^4.7.2",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-hot-loader": "^4.0.1",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "redux": "^3.7.2",
+    "redux-form": "^7.4.2",
+    "redux-thunk": "^2.2.0",
+    "sdk-lvconnect": "^1.2.3"
+  }
+}
