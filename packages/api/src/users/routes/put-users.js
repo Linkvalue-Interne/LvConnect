@@ -1,14 +1,19 @@
 const Boom = require('boom');
+const { permissions } = require('@lvconnect/config/server');
+
 const { hasRoleInList, isConnectedUser, hasScopeInList } = require('../middlewares');
 const { payload, params } = require('./user-validation');
 const filter = require('lodash/pickBy');
-const { BOARD, HR } = require('../../roles');
 
 module.exports = {
   method: 'PUT',
   path: '/users/{user}',
   config: {
-    pre: [hasScopeInList('users:modify', 'profile:modify'), isConnectedUser, hasRoleInList([BOARD, HR], true)],
+    pre: [
+      hasScopeInList('users:modify', 'profile:modify'),
+      isConnectedUser,
+      hasRoleInList(permissions.editUser, true),
+    ],
     validate: {
       payload: payload.put,
       params,

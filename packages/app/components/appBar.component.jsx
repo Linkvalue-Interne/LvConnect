@@ -1,9 +1,6 @@
 // @flow
 
 import * as React from 'react';
-import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
 import MuiAppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
@@ -15,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 
-// import { logout } from '../modules/auth/auth.actions';
+import type { ConnectedAppBarProps } from './appBar.connector';
 
 const styles = theme => ({
   appBar: {
@@ -49,14 +46,7 @@ const styles = theme => ({
   },
 });
 
-const mapStateToProps = state => ({
-  user: state.auth.user,
-  shouldCollapseBar: state.display.isDesktop,
-});
-
-// const mapDispatchToProps = dispatch => bindActionCreators({ logout }, dispatch);
-
-type AppBarProp = {
+type AppBarProp = ConnectedAppBarProps & {
   classes: any;
   user?: User;
   logout(): void;
@@ -72,7 +62,7 @@ type AppBarState = {
 class AppBar extends React.Component<AppBarProp, AppBarState> {
   static defaultProps = {
     user: null,
-  }
+  };
 
   constructor(props, context) {
     super(props, context);
@@ -85,16 +75,16 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
 
   handleMenuOpen = (event) => {
     this.setState({ open: true, anchor: event.currentTarget });
-  }
+  };
 
   handleMenuClose = () => {
     this.setState({ open: false });
-  }
+  };
 
   handleLogout = () => {
     this.setState({ open: false });
     this.props.logout();
-  }
+  };
 
   render() {
     const {
@@ -108,7 +98,7 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
       avatar = (
         <div className={classes.userDetails}>
           <Hidden mdDown>
-            {fullName}
+            <Typography color="inherit">{fullName}</Typography>
             <IconButton color="inherit" onClick={this.handleMenuOpen} className={classes.avatar}>
               <Avatar alt={fullName} src={user.profilePictureUrl} />
             </IconButton>
@@ -118,7 +108,6 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
               open={this.state.open}
               onClose={this.handleMenuClose}
             >
-              <MenuItem component={Link} to="/settings" onClick={this.handleMenuClose}>Paramètres</MenuItem>
               <MenuItem onClick={this.handleLogout}>Se déconnecter</MenuItem>
             </Menu>
           </Hidden>
@@ -140,7 +129,7 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
         <Toolbar>
           {menuButton}
           <Typography variant="title" color="inherit" className={classes.flex}>
-            LV Connect
+            LVConnect
           </Typography>
           {avatar}
         </Toolbar>
@@ -149,4 +138,4 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
   }
 }
 
-export default connect(mapStateToProps /* , mapDispatchToProps */)(withStyles(styles)(AppBar));
+export default withStyles(styles)(AppBar);

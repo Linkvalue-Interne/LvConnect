@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
 
-const { mongodb } = require('@lvconnect/config/server');
+const { mongodb, roles } = require('@lvconnect/config/server');
 const mongoose = require('mongoose');
-const roles = require('../src/roles');
 
 mongoose.Promise = global.Promise;
 

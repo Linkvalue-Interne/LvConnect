@@ -26,7 +26,7 @@ const Root = ({ store, history }: RootProps) => (
         <App>
           <Switch>
             <Route exact path="/login" component={Login} />
-            <Route exact path="/dashboard" component={LoginRequired} />
+            <Route component={LoginRequired} />
           </Switch>
         </App>
       </MuiThemeProvider>

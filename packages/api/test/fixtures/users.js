@@ -1,4 +1,4 @@
-const roles = require('../../src/roles');
+const { roles } = require('@lvconnect/config/server');
 
 module.exports = [{
   firstName: 'Foo',

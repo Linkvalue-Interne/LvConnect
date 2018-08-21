@@ -1,13 +1,14 @@
 const Boom = require('boom');
+const { permissions } = require('@lvconnect/config/server');
+
 const { hasRoleInList, hasScopeInList } = require('../middlewares');
 const { payload } = require('./user-validation');
-const { BOARD, HR } = require('../../roles');
 
 module.exports = {
   method: 'POST',
   path: '/users',
   config: {
-    pre: [hasScopeInList('users:create'), hasRoleInList([BOARD, HR])],
+    pre: [hasScopeInList('users:create'), hasRoleInList(permissions.addUser)],
     validate: {
       payload: payload.post,
     },
@@ -21,10 +22,11 @@ module.exports = {
       lastName: req.payload.lastName,
       email: req.payload.email,
       roles: req.payload.roles,
+      city: req.payload.city,
     });
 
     const userPromise = user
-      .hashPassword(req.payload.plainPassword)
+      .hashPassword(req.payload.plainPassword || req.server.methods.uuidHash())
       .then(() => user.save())
       .then((savedUser) => {
         if (user.githubHandle) {

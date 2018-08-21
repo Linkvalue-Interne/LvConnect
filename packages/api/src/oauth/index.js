@@ -2,6 +2,7 @@ const moment = require('moment');
 const handlebars = require('handlebars');
 const Boom = require('boom');
 const models = require('./models');
+const uuidHash = require('./models/uuid-hash');
 const routes = require('./routes');
 const validScopes = require('./scopes');
 const getFormUrl = require('./routes/methods/get-form-url');
@@ -70,6 +71,8 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCode
     const cleanupModels = [AccessToken, RefreshToken, AuthorizationCode, Authorization];
     return Promise.all(cleanupModels.map(model => model.remove({ user }).exec()));
   });
+
+  server.method('uuidHash', uuidHash);
 
   server.expose('cleanupUserTokens', (user) => {
     const cleanupModels = [AccessToken, RefreshToken, AuthorizationCode];

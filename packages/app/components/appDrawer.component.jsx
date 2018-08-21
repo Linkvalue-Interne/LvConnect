@@ -1,8 +1,6 @@
 // @flow
 
 import React from 'react';
-import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
@@ -18,8 +16,10 @@ import Apps from '@material-ui/icons/Apps';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 
+import type { ConnectedAppDrawerProps } from './appDrawer.connector';
+
 import AppDrawerItem from './appDrawerItem.component';
-// import drawerBackground from '../assets/images/drawer-bg.jpg'
+import drawerBackground from '../assets/images/drawer-bg.jpg';
 
 const styles = theme => ({
   drawerPaper: {
@@ -28,6 +28,7 @@ const styles = theme => ({
     width: theme.custom.drawerWidth,
   },
   drawerPaperCollapsed: {
+    width: theme.custom.drawerWidth,
     height: '100%',
   },
   drawerHeader: theme.mixins.toolbar,
@@ -37,7 +38,7 @@ const styles = theme => ({
     },
   },
   drawerProfile: {
-    // background: `url(${drawerBackground}) center no-repeat`,
+    background: `url(${drawerBackground}) center no-repeat`,
     backgroundSize: 'cover',
     height: theme.spacing.unit * 17,
     color: theme.palette.common.white,
@@ -58,25 +59,15 @@ const styles = theme => ({
   },
 });
 
-const mapStateToProps = state => ({
-  user: state.auth.user,
-  shouldCollapseDrawer: state.display.isMobile || state.display.isTablet,
-});
-
-// const mapDispatchToProps = dispatch => bindActionCreators({
-//   logout,
-// }, dispatch)
-
-type AppDrawerProps = {
+type AppDrawerProps = ConnectedAppDrawerProps & {
   open: boolean;
-  shouldCollapseDrawer: boolean;
   onDrawerClose(): void;
-  user: User | null;
   classes: any;
 }
 
 const AppDrawer = ({
   user,
+  logout,
   classes,
   open,
   shouldCollapseDrawer,
@@ -92,7 +83,7 @@ const AppDrawer = ({
       onClose={onDrawerClose}
     >
       {collapsed ? null : <div className={classes.drawerHeader} />}
-      <Hidden mdUp>
+      <Hidden lgUp>
         {user && (
           <div className={classes.drawerProfile}>
             <Avatar src={user.profilePictureUrl} alt={`${user.firstName} ${user.lastName}`} />
@@ -109,10 +100,10 @@ const AppDrawer = ({
         <AppDrawerItem to="/dashboard/partners" icon={<SupervisorAccount />} text="Partners" />
         <AppDrawerItem to="/dashboard/apps" icon={<Apps />} text="Applications" />
       </List>
-      <Hidden mdUp>
+      <Hidden lgUp>
         <List disablePadding>
           <Divider />
-          <ListItem button>
+          <ListItem button onClick={logout}>
             <ListItemIcon>
               <PowerSettingsNew />
             </ListItemIcon>
@@ -124,4 +115,4 @@ const AppDrawer = ({
   );
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(AppDrawer));
+export default withStyles(styles)(AppDrawer);

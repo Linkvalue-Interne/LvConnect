@@ -10,7 +10,7 @@
   "main": "./server/index.js",
   "scripts": {
     "create-superuser": "NODE_ENV=production lvconnect create-superuser",
-    "dev": "APP_ENV=dev nodemon .",
+    "dev": "APP_ENV=dev nodemon . --watch ./packages/api",
     "dev:front": "webpack-dev-server --hot",
     "build": "webpack -p",
     "lint": "eslint '**/*.{js,jsx}'",
@@ -51,11 +51,12 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "file-loader": "^1.1.11",
-    "flow-bin": "^0.69.0",
-    "flow-typed": "^2.4.0",
+    "flow-bin": "^0.79.1",
+    "flow-typed": "^2.5.1",
     "html-webpack-plugin": "^3.2.0",
     "mocha": "^3.0.2",
     "nodemon": "^1.17.3",
+    "url-loader": "^1.1.1",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5"

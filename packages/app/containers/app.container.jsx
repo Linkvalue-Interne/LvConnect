@@ -7,8 +7,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 import type { ContextRouter } from 'react-router';
 
-import AppBar from '../components/appBar.component';
-import AppDrawer from '../components/appDrawer.component';
+import AppBar from '../components/appBar.connector';
+import AppDrawer from '../components/appDrawer.connector';
 
 const styles = theme => ({
   appRoot: {
@@ -23,6 +23,7 @@ const styles = theme => ({
     height: '100%',
   },
   appContent: {
+    position: 'relative',
     backgroundColor: theme.palette.background.default,
     width: '100%',
     padding: theme.spacing.unit * 3,
@@ -70,11 +71,11 @@ class App extends React.Component<AppProps, AppState> {
 
   handleDrawerOpen = () => {
     this.setState({ drawerOpen: true });
-  }
+  };
 
   handleDrawerClose = () => {
     this.setState({ drawerOpen: false });
-  }
+  };
 
   render() {
     const { classes, children } = this.props;

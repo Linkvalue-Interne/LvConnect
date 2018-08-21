@@ -1,4 +1,4 @@
-const { HR, BOARD } = require('../../roles');
+const { roles } = require('@lvconnect/config/server');
 
 module.exports = {
   method: 'GET',
@@ -15,7 +15,7 @@ module.exports = {
         res.view('get-users', {
           pageTitle: 'Partners list',
           users,
-          adminRoles: [HR, BOARD],
+          adminRoles: [roles.HR, roles.BOARD],
         });
       });
   },

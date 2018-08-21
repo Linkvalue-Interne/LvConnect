@@ -17,7 +17,7 @@ module.exports = {
     authorizationCodeTTL: 'PT10M',
   },
   csrf: {
-    skip: req => !/(\/oauth\/authorize|\/dashboard|\/login|\/forgot-password)/.test(req.path),
+    skip: req => !/(\/oauth\/authorize|\/dashboard|\/old\/login|\/forgot-password)/.test(req.path),
     cookieOptions: {
       isSecure: false,
     },
@@ -31,7 +31,7 @@ module.exports = {
     cookie: {
       secret: '12345678901234567890123456789012',
       name: 'lvconnect',
-      redirect: '/login',
+      redirect: '/old/login',
       isSecure: false,
       isSameSite: 'Lax',
     },

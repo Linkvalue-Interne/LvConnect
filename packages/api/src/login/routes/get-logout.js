@@ -6,6 +6,6 @@ module.exports = {
   },
   async handler(req, res) {
     await req.server.plugins.login.logoutUser(req);
-    return res.redirect(req.query.redirect ? decodeURI(req.query.redirect) : '/login');
+    return res.redirect(req.query.redirect ? decodeURI(req.query.redirect) : '/old/login');
   },
 };

@@ -1,3 +1,4 @@
+const Boom = require('boom');
 const Joi = require('joi');
 
 module.exports = {
@@ -7,22 +8,62 @@ module.exports = {
     auth: false,
     validate: {
       payload: Joi.object({
-        email: Joi.string().required(),
-        password: Joi.string().required(),
+        grantType: Joi.string().valid(['password', 'refresh']).required(),
+        username: Joi.any().when('grantType', {
+          is: 'password',
+          then: Joi.string().required(),
+          else: Joi.any().forbidden(),
+        }),
+        password: Joi.any().when('grantType', {
+          is: 'password',
+          then: Joi.string().required(),
+          else: Joi.any().forbidden(),
+        }),
+        refreshToken: Joi.alternatives().when('grantType', { is: 'refresh', then: Joi.string().required() }),
       }),
     },
   },
-  handler(req, res) {
-    const { User } = req.server.plugins.users.models;
+  async handler(req, res) {
+    const { refreshToken, username, password } = req.payload;
 
-    return User.findOneByEmailAndPassword(req.payload.email, req.payload.password)
-      .then(user => req.server.plugins.login.loginUser(req, user))
-      .then(() => res.redirect('/dashboard'))
-      .catch(() => {
-        res.view('get-login', {
-          email: req.payload.email,
-          error: 'Invalid username or password.',
-        }).code(401);
+    let userId;
+    let needPasswordChange = false;
+    if (refreshToken) {
+      const { RefreshToken } = req.server.plugins.oauth.models;
+      const token = await RefreshToken.findOne({
+        token: refreshToken,
+        expireAt: { $gt: Date.now() },
       });
+
+      if (!token) {
+        return Boom.unauthorized('invalid_token');
+      }
+
+      userId = token.user;
+    } else {
+      const { User } = req.server.plugins.users.models;
+      try {
+        const user = await User.findOneByEmailAndPassword(username, password);
+        userId = user._id;
+        ({ needPasswordChange } = user);
+      } catch (e) {
+        return res(Boom.unauthorized('invalid_user'));
+      }
+    }
+
+    const { generateAccessToken, generateRefreshToken } = req.server.methods;
+    const { accessTokenTTL, validScopes } = req.server.plugins.oauth;
+
+    const [accessToken, newRefreshToken] = await Promise.all([
+      generateAccessToken(userId, null, validScopes),
+      generateRefreshToken(userId, null, validScopes),
+    ]);
+
+    return res({
+      accessToken: accessToken.token,
+      expiresIn: accessTokenTTL,
+      refreshToken: newRefreshToken.token,
+      needPasswordChange,
+    });
   },
 };

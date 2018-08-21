@@ -1,8 +1,8 @@
 const { expect } = require('chai');
+const { roles } = require('@lvconnect/config');
 
 const [fixAdminUser, fixTechUser] = require('../fixtures/users');
 const testSetup = require('../setup');
-const { TECH } = require('../../src/roles');
 
 describe('/users', () => {
   describe('POST', () => {
@@ -29,7 +29,7 @@ describe('/users', () => {
           lastName: fixAdminUser.lastName,
           email: fixAdminUser.email,
           plainPassword: 'admin1234',
-          roles: [TECH],
+          roles: [roles.TECH],
           city: 'Lyon',
         },
       });
@@ -40,7 +40,7 @@ describe('/users', () => {
       expect(response.result.firstName).to.equal(fixAdminUser.firstName);
       expect(response.result.email).to.equal(fixAdminUser.email);
       expect(response.result.createdAt).to.be.a('date');
-      expect(response.result.roles).to.deep.equal([TECH]);
+      expect(response.result.roles).to.deep.equal([roles.TECH]);
     });
 
     it('should reject if user has insufficient rights', async () => {
@@ -57,7 +57,7 @@ describe('/users', () => {
           lastName: fixAdminUser.lastName,
           email: fixAdminUser.email,
           plainPassword: 'admin1234',
-          roles: [TECH],
+          roles: [roles.TECH],
           city: 'Lyon',
         },
       });

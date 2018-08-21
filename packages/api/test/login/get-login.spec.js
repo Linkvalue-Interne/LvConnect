@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const testSetup = require('../setup');
 
-describe('/login', () => {
+describe('/old/login', () => {
   describe('GET', () => {
     let server;
     before(async () => {
@@ -14,7 +14,7 @@ describe('/login', () => {
       // When
       const response = await server.inject({
         method: 'GET',
-        url: '/login',
+        url: '/old/login',
       });
 
       // Then
@@ -25,13 +25,13 @@ describe('/login', () => {
       // When
       const response = await server.inject({
         method: 'GET',
-        url: '/login',
+        url: '/old/login',
         credentials: { foo: 'bar' },
       });
 
       // Then
       expect(response.statusCode).to.equal(302);
-      expect(response.headers.location).to.equal('/dashboard');
+      expect(response.headers.location).to.equal('/old/dashboard');
     });
   });
 });

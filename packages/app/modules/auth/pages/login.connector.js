@@ -19,7 +19,7 @@ type ConnectedLoginDispatchProps = {
 
 export type ConnectedLoginProps = ConnectedLoginStateProps & ConnectedLoginDispatchProps;
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps = (state: AppState): ConnectedLoginStateProps => ({
   isConnected: !!state.auth.user,
   error: state.auth.error,
 });

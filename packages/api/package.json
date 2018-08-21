@@ -19,8 +19,8 @@
     "@lvconnect/config": "^1.0.0",
     "bcrypt": "^1.0.1",
     "boom": "^4.0.0",
-    "catbox-redis": "^2.0.2",
     "catbox-memory": "^2.0.4",
+    "catbox-redis": "^2.0.2",
     "commander": "^2.9.0",
     "crumb": "^6.0.3",
     "forever": "^0.15.2",
@@ -51,6 +51,7 @@
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
     "scooter": "^4.0.0",
+    "streams2": "^0.1.1",
     "uuid": "^3.0.1",
     "vision": "^4.1.1"
   },

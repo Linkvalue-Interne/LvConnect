@@ -1,12 +1,13 @@
+const { permissions } = require('@lvconnect/config/server');
+
 const { hasRoleInList, hasScopeInList } = require('../middlewares');
 const { params } = require('./user-validation');
-const { BOARD, HR } = require('../../roles');
 
 module.exports = {
   method: 'DELETE',
   path: '/users/{user}',
   config: {
-    pre: [hasScopeInList('users:delete'), hasRoleInList([BOARD, HR])],
+    pre: [hasScopeInList('users:delete'), hasRoleInList(permissions.deleteUser)],
     validate: {
       params,
     },

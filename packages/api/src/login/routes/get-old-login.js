@@ -1,6 +1,6 @@
 module.exports = {
   method: 'GET',
-  path: '/login',
+  path: '/old/login',
   config: {
     auth: {
       mode: 'optional',
@@ -15,6 +15,6 @@ module.exports = {
       });
     }
 
-    return res.redirect('/dashboard');
+    return res.redirect(req.query.redirect || '/old/dashboard');
   },
 };

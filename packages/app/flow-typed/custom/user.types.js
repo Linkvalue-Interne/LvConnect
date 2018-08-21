@@ -5,4 +5,5 @@ declare type User = {
   lastName: string;
   profilePictureUrl: string;
   email: string;
+  roles: Array<string>;
 }

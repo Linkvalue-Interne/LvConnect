@@ -16,10 +16,10 @@ type TextFieldProps = FieldProps & {
 };
 
 const TextField = ({ className, input, meta, label, helperText, fullWidth, ...inputProps }: TextFieldProps) => (
-  <FormControl className={className} error={!!meta.error} fullWidth={fullWidth}>
+  <FormControl className={className} error={!!meta.error && meta.touched} fullWidth={fullWidth}>
     <InputLabel htmlFor={input.name}>{label}</InputLabel>
     <Input {...input} {...inputProps} />
-    <FormHelperText>{meta.error || helperText}</FormHelperText>
+    <FormHelperText>{(meta.touched && meta.error) || helperText}</FormHelperText>
   </FormControl>
 );
 

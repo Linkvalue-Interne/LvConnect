@@ -8,7 +8,7 @@ module.exports = {
     pre: [hasScopeInList('users:get')],
     validate: {
       query: Joi.object().keys({
-        email: Joi.string().email(),
+        email: Joi.string().max(50),
         ids: Joi.array().items(Joi.string()).single(),
         search: Joi.string().max(50),
         limit: Joi.number().min(1).max(100),

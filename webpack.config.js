@@ -11,7 +11,7 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[hash].js',
-    publicPath: '/',
+    publicPath: 'http://localhost:8080/',
   },
   resolve: {
     extensions: ['.jsx', '.js', '.json'],
@@ -25,7 +25,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ttf|svg|woff)?$/,
+        test: /\.(ttf|woff|woff2)$/,
         use: {
           loader: 'file-loader',
           options: {
@@ -41,15 +41,22 @@ module.exports = {
         },
         exclude: /node_modules/,
       },
+      {
+        test: /\.(svg|png|jpg|jpeg|gif)$/,
+        use: { loader: 'url-loader', options: { limit: 1, name: '[path][name]-[hash].[ext]' } },
+      },
     ],
   },
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   devServer: {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
     historyApiFallback: true,
     overlay: true,
     progress: true,
     proxy: [{
-      context: ['/oauth', '/users'],
+      context: ['/oauth', '/users', '/login'],
       target: 'http://localhost:8000',
     }],
   },

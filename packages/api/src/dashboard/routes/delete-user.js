@@ -1,11 +1,12 @@
+const { roles } = require('@lvconnect/config/server');
+
 const { hasRoleInList } = require('../middlewares');
-const { BOARD, HR } = require('../../roles');
 
 module.exports = {
   method: 'GET',
   path: '/dashboard/users/{id}/delete',
   config: {
-    pre: [hasRoleInList([BOARD, HR])],
+    pre: [hasRoleInList([roles.BOARD, roles.HR])],
     auth: 'session',
   },
   handler(req, res) {

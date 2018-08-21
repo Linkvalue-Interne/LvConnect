@@ -3,11 +3,6 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { formatNumber, parseNumber } = require('libphonenumber-js');
 
-const defaultProfilePictureUrl = () => {
-  const emailHash = crypto.createHash('md5').update(this.email || '').digest('hex');
-  return `https://www.gravatar.com/avatar/${emailHash}?s=200`;
-};
-
 const formatPhoneNumber = phone => formatNumber(parseNumber(phone, 'FR'), 'International');
 
 const toUpperCase = value => value.toUpperCase();
@@ -19,7 +14,6 @@ const userSchema = new mongoose.Schema({
   tags: [String],
   phone: { type: String, set: formatPhoneNumber },
   job: String,
-  profilePictureUrl: { type: String, default: defaultProfilePictureUrl },
   password: String,
   roles: [String],
   githubHandle: String,
@@ -33,6 +27,11 @@ const userSchema = new mongoose.Schema({
   description: String,
   city: String,
   needPasswordChange: { type: Boolean, default: true },
+});
+
+userSchema.virtual('profilePictureUrl').get(function getProfilePictureUrl() {
+  const emailHash = crypto.createHash('md5').update(this.email || '').digest('hex');
+  return `https://www.gravatar.com/avatar/${emailHash}?s=200`;
 });
 
 userSchema.set('toJSON', { getters: true });

@@ -1,8 +1,8 @@
 const { expect } = require('chai');
+const { roles } = require('@lvconnect/config');
 
 const [fixAdminUser, fixTechUser] = require('../fixtures/users');
 const testSetup = require('../setup');
-const { TECH, HR } = require('../../src/roles');
 
 describe('/users/{id}', () => {
   describe('PUT', () => {
@@ -20,7 +20,8 @@ describe('/users/{id}', () => {
     it('should edit an user', async () => {
       // Given
       savedUser = await User.findOne({ email: fixAdminUser.email }).exec();
-      expect(savedUser.profilePictureUrl).to.equal('http://foo.bar');
+      expect(savedUser.profilePictureUrl)
+        .to.equal('https://www.gravatar.com/avatar/f3ada405ce890b6f8204094deb12d8a8?s=200');
 
       const response = await server.inject({
         method: 'PUT',
@@ -32,9 +33,8 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          roles: [TECH, HR],
+          roles: [roles.TECH, roles.HR],
           city: 'Paris',
-          profilePictureUrl: null,
           phone: '0134.212.000',
         },
       });
@@ -45,11 +45,11 @@ describe('/users/{id}', () => {
       expect(response.result.lastName).to.equal('WORLD');
       expect(response.result.email).to.equal('foo@bar.com');
       expect(response.result.createdAt).to.be.a('date');
-      expect(response.result.roles).to.deep.equal([TECH, HR]);
+      expect(response.result.roles).to.deep.equal([roles.TECH, roles.HR]);
       expect(response.result.city).to.equal('Paris');
       expect(response.result.phone).to.equal('+33 1 34 21 20 00');
       expect(response.result.profilePictureUrl)
-        .to.equal('https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=200');
+        .to.equal('https://www.gravatar.com/avatar/f3ada405ce890b6f8204094deb12d8a8?s=200');
     });
 
     it('should reject if not passing validation', async () => {
@@ -87,7 +87,7 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          roles: [TECH, HR],
+          roles: [roles.TECH, roles.HR],
         },
       });
 
@@ -128,7 +128,7 @@ describe('/users/{id}', () => {
         payload: {
           firstName: 'hello',
           lastName: 'world',
-          roles: [TECH],
+          roles: [roles.TECH],
         },
       });
 

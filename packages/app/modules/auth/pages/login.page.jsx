@@ -12,10 +12,10 @@ import { withStyles } from '@material-ui/core/styles';
 import type { FormProps } from 'redux-form';
 import type { ConnectedLoginProps } from './login.connector';
 
-// import { lvConnect } from '../lvconnect'
 import TextField from '../../../components/inputs/textField.component';
 import bgUrl from '../../../assets/images/login-bg.svg';
 import logoUrl from '../../../assets/images/logo-lv.svg';
+import { login } from '../auth.actions';
 
 const styles = theme => ({
   loginPage: {
@@ -43,13 +43,9 @@ type LoginProps = ConnectedLoginProps & {
 };
 
 class Login extends React.Component<LoginProps> {
-  componentDidMount() {
-    // lvConnect.mountLoginButton(this.loginButtonContainer)
-  }
-
   componentWillReceiveProps(props) {
     if (props.isConnected) {
-      this.props.push('/');
+      this.props.push('/dashboard');
     }
   }
 
@@ -81,5 +77,5 @@ class Login extends React.Component<LoginProps> {
 export default reduxForm({
   form: 'loginForm',
   validate: () => ({}),
-  onSubmit: () => Promise.resolve(),
+  onSubmit: ({ email, password }, dispatch) => dispatch(login(email, password)),
 })(withStyles(styles)(Login));
