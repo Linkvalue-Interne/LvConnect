@@ -17,7 +17,7 @@ module.exports = {
     authorizationCodeTTL: 'PT10M',
   },
   csrf: {
-    skip: req => !/(\/oauth\/authorize|\/dashboard|\/old\/login|\/forgot-password)/.test(req.path),
+    skip: req => !/(\/oauth\/authorize|\/dashboard|\/old\/login|\/login|\/forgot-password)/.test(req.path),
     cookieOptions: {
       isSecure: false,
     },

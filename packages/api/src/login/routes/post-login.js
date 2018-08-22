@@ -9,6 +9,11 @@ module.exports = {
   path: '/login',
   config: {
     auth: false,
+    plugins: {
+      crumb: {
+        restful: true,
+      },
+    },
     validate: {
       payload: Joi.object({
         grantType: Joi.string().valid(['password', 'refresh']).required(),
@@ -39,7 +44,7 @@ module.exports = {
       });
 
       if (!token) {
-        return Boom.unauthorized('invalid_token');
+        return res(Boom.unauthorized('invalid_token'));
       }
 
       userId = token.user;

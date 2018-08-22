@@ -21,6 +21,9 @@ export const logout = () => (dispatch: Dispatch<ReduxAction>) => {
     window.Raven.setUserContext();
   }
 
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('refresh_token');
+
   dispatch(push('/login'));
 
   return dispatch({
@@ -45,24 +48,44 @@ type FetchOptions = {
   body?: any,
 }
 
+const fetchTokenWithRefresh = async (refreshToken: string) => {
+  const res = await fetch(`${baseEndpoint}/login`, {
+    method: 'POST',
+    headers: {
+      'X-CSRF-Token': window.CSRF_TOKEN,
+    },
+    body: JSON.stringify({ grantType: 'refresh', refreshToken }),
+  });
+
+  const data = await res.json();
+  if (res.status >= 400) {
+    throw new HttpError(res.status, data.message);
+  }
+
+  return data;
+};
+
 export const fetchWithAuth = (url: string, options: FetchOptions = {}) => async (dispatch: Dispatch<ReduxAction>) => {
   const isJsonBody = options.body && !(options.body instanceof window.FormData);
   const formattedOptions = isJsonBody ? { ...options, body: JSON.stringify(options.body) } : options;
 
   let res;
   try {
-    res = await fetchWithAuthHeader(baseEndpoint + url, formattedOptions);
+    if (localStorage.getItem('access_token')) {
+      res = await fetchWithAuthHeader(baseEndpoint + url, formattedOptions);
+    }
     const refreshToken = localStorage.getItem('refresh_token');
-    if (res.status === 401 && refreshToken) {
-      const tokenRes = await fetch(`${baseEndpoint}/login`, {
-        method: 'POST',
-        body: JSON.stringify({ grantType: 'refresh', refreshToken }),
-      });
-      receiveTokens(await tokenRes.json());
-      res = await fetch(baseEndpoint + url, formattedOptions);
+    if ((!res || res.status === 401) && refreshToken) {
+      const tokensData = await fetchTokenWithRefresh(refreshToken);
+      receiveTokens(tokensData);
+      res = await fetchWithAuthHeader(baseEndpoint + url, formattedOptions);
     }
   } catch (e) {
-    return dispatch(logout());
+    dispatch(logout());
+  }
+
+  if (!res) {
+    throw new Error('Not logged in');
   }
 
   const data = await res.json();
@@ -93,23 +116,30 @@ export const fetchUserData = () => async (dispatch: Dispatch<ReduxAction>) => {
       window.gtag('set', { user_id: userData.id });
     }
     dispatch(receiveUserData(userData));
-    return userData;
   } catch (e) {
     dispatch(receiveUserDataFailed(!(e instanceof TypeError)));
-    throw e;
   }
 };
 
 export const login = (username: string, password: string) => async (dispatch: Dispatch<ReduxAction>) => {
   const res = await fetch(`${baseEndpoint}/login`, {
     method: 'POST',
+    headers: {
+      'X-CSRF-Token': window.CSRF_TOKEN,
+    },
     body: JSON.stringify({
       grantType: 'password',
       username,
       password,
     }),
   });
-  receiveTokens(await res.json());
+
+  const data = await res.json();
+  if (res.status >= 400) {
+    throw new HttpError(res.status, data.message);
+  }
+
+  receiveTokens(data);
 
   return dispatch(fetchUserData());
 };

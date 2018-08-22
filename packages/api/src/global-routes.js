@@ -1,5 +1,8 @@
 const path = require('path');
+const fs = require('fs');
 const request = require('request-promise');
+
+const indexFilePath = path.resolve(process.cwd(), 'dist/index.html');
 
 module.exports = [{
   method: 'GET',
@@ -20,17 +23,24 @@ module.exports = [{
   path: '/{path*}',
   config: { auth: false },
   async handler(req, res) {
-    if (process.env.APP_ENV === 'dev' && !path.extname(req.params.path)) {
-      const html = await request({
-        method: 'GET',
-        uri: 'http://localhost:8080/',
-      });
+    if (!path.extname(req.params.path)) {
+      let html;
+      if (process.env.APP_ENV !== 'dev') {
+        html = await request({
+          method: 'GET',
+          uri: 'http://localhost:8080/',
+        });
+      } else {
+        html = await new Promise((resolve, reject) => fs.readFile(indexFilePath, (err, buffer) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(buffer.toString());
+          }
+        }));
+      }
 
       return res(html.replace('{{CSRF_TOKEN}}', req.server.plugins.crumb.generate(req, res)));
-    }
-
-    if (!path.extname(req.params.path)) {
-      return res.file('dist/index.html');
     }
 
     return res.file(path.join('dist', req.params.path));

@@ -11,7 +11,7 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[hash].js',
-    publicPath: 'http://localhost:8080/',
+    publicPath: process.env.NODE_ENV !== 'dev' ? '/' : 'http://localhost:8080/',
   },
   resolve: {
     extensions: ['.jsx', '.js', '.json'],
