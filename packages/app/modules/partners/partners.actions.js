@@ -1,7 +1,7 @@
 // @flow
 
 import qs from 'qs';
-import pick from 'lodash.pick';
+import omit from 'lodash.omit';
 
 import type { Dispatch } from 'redux';
 
@@ -48,5 +48,8 @@ export const fetchPartnerDetails = (partnerId: string) => async (dispatch: Dispa
 export const editPartner = (partnerId: string, data: User) => (dispatch: Dispatch<ReduxAction>) =>
   dispatch(fetchWithAuth(`/users/${partnerId}`, {
     method: 'PUT',
-    body: pick(data, ['firstName', 'lastName', 'city', 'roles']),
+    body: omit(data, ['id', 'email', 'createdAt', 'profilePictureUrl']),
   }));
+
+export const deletePartner = (partnerId: string) => (dispatch: Dispatch<ReduxAction>) =>
+  dispatch(fetchWithAuth(`/users/${partnerId}`, { method: 'DELETE' }));

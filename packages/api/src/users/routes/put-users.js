@@ -1,7 +1,7 @@
 const Boom = require('boom');
 const { permissions } = require('@lvconnect/config/server');
 
-const { hasRoleInList, isConnectedUser, hasScopeInList } = require('../middlewares');
+const { hasRoleInList, isConnectedUser, hasScopeInList } = require('../../middlewares');
 const { payload, params } = require('./user-validation');
 const filter = require('lodash/pickBy');
 

@@ -43,7 +43,7 @@ describe('/oauth/authorize', () => {
     it('should redirect if already authorized', async () => {
       // Given
       const user = new User(fixUser);
-      const application = await server.plugins.oauth.models.Application.findOne({});
+      const application = await server.plugins.apps.models.Application.findOne({});
       await server.plugins.oauth.models.Authorization.create({
         user,
         application,

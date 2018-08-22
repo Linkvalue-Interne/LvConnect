@@ -15,7 +15,7 @@ module.exports = {
       failAction: (req, res, src, error) => {
         req.server.log('info', src);
         req.server.log('info', error);
-        const { Application } = req.server.plugins.oauth.models;
+        const { Application } = req.server.plugins.apps.models;
 
         Application.findById(req.params.id)
           .then((app) => {
@@ -32,7 +32,7 @@ module.exports = {
     },
   },
   handler(req, res) {
-    const { Application } = req.server.plugins.oauth.models;
+    const { Application } = req.server.plugins.apps.models;
 
     Application.findById(req.params.id)
       .then((app) => {

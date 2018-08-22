@@ -10,7 +10,7 @@ describe('/oauth/token', () => {
     let Application;
     before(async () => {
       server = await testSetup();
-      ({ Application } = server.plugins.oauth.models);
+      ({ Application } = server.plugins.apps.models);
     });
 
     after(() => server.stop());

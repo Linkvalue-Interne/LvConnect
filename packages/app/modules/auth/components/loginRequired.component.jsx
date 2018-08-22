@@ -11,6 +11,9 @@ import Home from '../../home/pages/home.connector';
 import PartnersList from '../../partners/pages/partnersList.connector';
 import NewPartner from '../../partners/pages/newPartner.connector';
 import EditPartner from '../../partners/pages/editPartner.connector';
+import AppsList from '../../apps/pages/appsList.connector';
+import NewApp from '../../apps/pages/newApp.connector';
+import EditApp from '../../apps/pages/editApp.connector';
 import { RolesProvider } from '../../../components/restricted.component';
 
 type LoginRequiredProps = ConnectedLoginRequiredProps & ContextRouter;
@@ -41,6 +44,9 @@ const LoginRequired = ({
         <Route path="/dashboard/partners/new" exact component={NewPartner} />
         <Route path="/dashboard/partners/:partnerId" exact component={EditPartner} />
         <Route path="/dashboard/partners" exact component={PartnersList} />
+        <Route path="/dashboard/apps/new" exact component={NewApp} />
+        <Route path="/dashboard/apps/:appId" exact component={EditApp} />
+        <Route path="/dashboard/apps" exact component={AppsList} />
         <Route path="/dashboard" exact component={Home} />
         <Route path="/" exact component={() => <Redirect to="/dashboard" />} />
       </Switch>

@@ -66,7 +66,7 @@ export const fetchWithAuth = (url: string, options: FetchOptions = {}) => async 
   }
 
   const data = await res.json();
-  if (res.status > 400) {
+  if (res.status >= 400) {
     throw new HttpError(res.status, data.message);
   }
 

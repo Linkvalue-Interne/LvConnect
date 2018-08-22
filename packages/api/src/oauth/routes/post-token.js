@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const Boom = require('boom');
-const validScopes = require('../scopes');
+const { oauth: { scopes: validScopes } } = require('@lvconnect/config');
 
 const grantTypes = [
   'password',

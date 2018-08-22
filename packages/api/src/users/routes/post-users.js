@@ -1,7 +1,8 @@
 const Boom = require('boom');
+const _ = require('lodash');
 const { permissions } = require('@lvconnect/config/server');
 
-const { hasRoleInList, hasScopeInList } = require('../middlewares');
+const { hasRoleInList, hasScopeInList } = require('../../middlewares');
 const { payload } = require('./user-validation');
 
 module.exports = {
@@ -17,13 +18,7 @@ module.exports = {
     const { User } = req.server.plugins.users.models;
     const { githubOrgUserLink, trelloOrgUserLink } = req.server.plugins.tasks;
 
-    const user = new User({
-      firstName: req.payload.firstName,
-      lastName: req.payload.lastName,
-      email: req.payload.email,
-      roles: req.payload.roles,
-      city: req.payload.city,
-    });
+    const user = new User(_.omit(req.payload, ['githubHandle', 'trelloHandle', 'plainPassword']));
 
     const userPromise = user
       .hashPassword(req.payload.plainPassword || req.server.methods.uuidHash())

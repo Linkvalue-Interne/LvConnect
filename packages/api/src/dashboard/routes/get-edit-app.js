@@ -3,7 +3,7 @@ module.exports = {
   path: '/dashboard/apps/edit/{id}',
   config: { auth: 'session' },
   handler(req, res) {
-    const { Application } = req.server.plugins.oauth.models;
+    const { Application } = req.server.plugins.apps.models;
 
     Application.findOne({ _id: req.params.id })
       .then(app => res.view('create-app', {

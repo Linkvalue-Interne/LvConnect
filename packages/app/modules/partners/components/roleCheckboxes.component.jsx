@@ -43,7 +43,7 @@ class RoleCheckboxes extends Component<RoleCheckboxesProps, any> {
 
     return (
       <FormControl component="fieldset" error={meta.error}>
-        <FormLabel component="legend">Roles</FormLabel>
+        <FormLabel component="legend" required>Roles</FormLabel>
         <FormGroup row>
           {options.map(([key, value]) => (
             <FormControlLabel

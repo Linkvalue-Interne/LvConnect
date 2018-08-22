@@ -22,6 +22,11 @@ class EditPartner extends Component<EditPartnerProps> {
 
   handleFormSubmit = (data: User) => this.props.editPartner(this.props.match.params.partnerId, data);
 
+  handleDeletePartner = async () => {
+    await this.props.deletePartner(this.props.match.params.partnerId);
+    this.props.push('/dashboard/partners');
+  };
+
   render() {
     const { partner, isLoading } = this.props;
     return !isLoading && partner && (
@@ -33,12 +38,13 @@ class EditPartner extends Component<EditPartnerProps> {
             </Helmet>
             <CardContent>
               <Typography variant="headline" component="h2" gutterBottom>
-                Nouveau partner
+                {partner.firstName} {partner.lastName}
               </Typography>
               {children}
             </CardContent>
             <CardActions>
               <Button size="small" color="primary" type="submit" disabled={!valid || pristine}>Sauvegarder</Button>
+              <Button size="small" type="button" onClick={this.handleDeletePartner}>Supprimer</Button>
             </CardActions>
           </Card>
         )}

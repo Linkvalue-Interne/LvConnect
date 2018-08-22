@@ -51,6 +51,9 @@ const manifest = {
       },
     },
     {
+      plugin: './apps',
+    },
+    {
       plugin: './users',
     },
     {

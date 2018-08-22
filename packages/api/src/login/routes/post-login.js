@@ -1,5 +1,8 @@
 const Boom = require('boom');
 const Joi = require('joi');
+const { oauth: { scopes: validScopes, privateScopes } } = require('@lvconnect/config');
+
+const fullScopes = validScopes.concat(privateScopes);
 
 module.exports = {
   method: 'POST',
@@ -52,11 +55,11 @@ module.exports = {
     }
 
     const { generateAccessToken, generateRefreshToken } = req.server.methods;
-    const { accessTokenTTL, validScopes } = req.server.plugins.oauth;
+    const { accessTokenTTL } = req.server.plugins.oauth;
 
     const [accessToken, newRefreshToken] = await Promise.all([
-      generateAccessToken(userId, null, validScopes),
-      generateRefreshToken(userId, null, validScopes),
+      generateAccessToken(userId, null, fullScopes),
+      generateRefreshToken(userId, null, fullScopes),
     ]);
 
     return res({

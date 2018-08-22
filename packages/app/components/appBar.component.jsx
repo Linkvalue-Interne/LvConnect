@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import MuiAppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
@@ -108,6 +109,13 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
               open={this.state.open}
               onClose={this.handleMenuClose}
             >
+              <MenuItem
+                onClick={this.handleMenuClose}
+                component={Link}
+                to={`/dashboard/partners/${user ? user.id : ''}`}
+              >
+                Mon compte
+              </MenuItem>
               <MenuItem onClick={this.handleLogout}>Se déconnecter</MenuItem>
             </Menu>
           </Hidden>

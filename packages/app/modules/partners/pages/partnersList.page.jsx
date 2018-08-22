@@ -26,6 +26,7 @@ import type { ConnectedPartnersListProps } from './partnersList.connector';
 import LoadingPage from '../../../components/loadingPage.component';
 import Restricted, { hasRole } from '../../../components/restricted.component';
 import roleLabels from '../roleLabels';
+import jobLabels from '../jobLabels';
 
 const styles = theme => ({
   partnersList: {
@@ -126,6 +127,7 @@ class PartnersList extends Component<PartnersListProps> {
                 <TableCell>Nom</TableCell>
                 <TableCell>Prénom</TableCell>
                 <TableCell>Ville</TableCell>
+                <TableCell>Compétence principale</TableCell>
                 <TableCell>Rôles</TableCell>
               </TableRow>
             </TableHead>
@@ -143,6 +145,7 @@ class PartnersList extends Component<PartnersListProps> {
                   <TableCell>{partner.lastName}</TableCell>
                   <TableCell>{partner.firstName}</TableCell>
                   <TableCell>{partner.city}</TableCell>
+                  <TableCell>{jobLabels[partner.job]}</TableCell>
                   <TableCell className={classes.fullNameCell}>
                     {partner.roles.map(role => roleLabels[roleMap[role]]).join(', ')}
                   </TableCell>

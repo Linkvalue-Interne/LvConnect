@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const Boom = require('boom');
+const { oauth: { scopes: validScopes } } = require('@lvconnect/config');
 
-const validScopes = require('../../scopes');
 const getFormUrl = require('./get-form-url');
 
 const mappings = {
@@ -39,7 +39,8 @@ const mappings = {
 };
 
 module.exports = function displayPermissions(req, res) {
-  const { Authorization, Application } = req.server.plugins.oauth.models;
+  const { Authorization } = req.server.plugins.oauth.models;
+  const { Application } = req.server.plugins.apps.models;
   const {
     redirect_uri: redirectUri,
     app_id: appId,

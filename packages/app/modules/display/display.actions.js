@@ -9,5 +9,6 @@ export const detectDevice = () => ({
     isMobile: window.innerWidth <= theme.breakpoints.values.sm,
     isTablet: window.innerWidth > theme.breakpoints.values.sm && window.innerWidth <= theme.breakpoints.values.md,
     isDesktop: window.innerWidth > theme.breakpoints.values.md,
+    isTouchDevice: 'ontouchstart' in window || (navigator.maxTouchPoints > 0),
   },
 });

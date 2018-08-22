@@ -1,6 +1,6 @@
 const Boom = require('boom');
 const { params } = require('./user-validation');
-const { hasScopeInList } = require('../middlewares');
+const { hasScopeInList } = require('../../middlewares');
 
 module.exports = {
   method: 'GET',

@@ -2,9 +2,8 @@ const moment = require('moment');
 const handlebars = require('handlebars');
 const Boom = require('boom');
 const models = require('./models');
-const uuidHash = require('./models/uuid-hash');
+const uuidHash = require('../uuid-hash');
 const routes = require('./routes');
-const validScopes = require('./scopes');
 const getFormUrl = require('./routes/methods/get-form-url');
 
 const contextBuilder = req => (!req.auth.credentials ? {} : {
@@ -14,7 +13,7 @@ const contextBuilder = req => (!req.auth.credentials ? {} : {
   state: req.query.state,
 });
 
-exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCodeTTL }, next) => {
+exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCodeTTL, scopes: validScopes }, next) => {
   server.expose('models', models);
   server.expose('accessTokenTTL', moment.duration(accessTokenTTL).asSeconds());
   server.expose('validScopes', validScopes);
@@ -24,8 +23,8 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCode
     RefreshToken,
     AuthorizationCode,
     Authorization,
-    Application,
   } = models;
+  const { Application } = server.plugins.apps.models;
 
   server.views({
     engines: { hbs: handlebars },
@@ -114,5 +113,5 @@ exports.register = (server, { accessTokenTTL, refreshTokenTTL, authorizationCode
 exports.register.attributes = {
   name: 'oauth',
   version: '0.0.1',
-  dependencies: ['mongodb', 'users', 'hapi-auth-basic', 'hapi-auth-bearer-token'],
+  dependencies: ['mongodb', 'apps', 'users', 'hapi-auth-basic', 'hapi-auth-bearer-token'],
 };

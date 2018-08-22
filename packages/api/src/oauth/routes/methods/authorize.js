@@ -2,7 +2,8 @@ const Boom = require('boom');
 const _ = require('lodash');
 
 module.exports = function authorize(req, res) {
-  const { models: { Authorization, Application }, validScopes } = req.server.plugins.oauth;
+  const { models: { Authorization }, validScopes } = req.server.plugins.oauth;
+  const { Application } = req.server.plugins.apps.models;
   const { generateAuthorizationCode, generateAccessToken } = req.server.methods;
   const user = req.auth.credentials;
   const {

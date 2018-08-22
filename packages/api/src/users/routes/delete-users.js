@@ -1,6 +1,6 @@
 const { permissions } = require('@lvconnect/config/server');
 
-const { hasRoleInList, hasScopeInList } = require('../middlewares');
+const { hasRoleInList, hasScopeInList } = require('../../middlewares');
 const { params } = require('./user-validation');
 
 module.exports = {

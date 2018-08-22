@@ -25,5 +25,25 @@ module.exports = {
     addUser: [HR, BOARD],
     editUser: [HR, BOARD],
     deleteUser: [HR, BOARD],
+    addApp: [TECH, BOARD],
+    editApp: [TECH, BOARD],
+    deleteApp: [TECH, BOARD],
+  },
+  jobs: ['front', 'back', 'fullStack', 'designer', 'data', 'devOps', 'projectManager', 'mobile'],
+  oauth: {
+    scopes: [
+      'users:get',
+      'users:create',
+      'users:delete',
+      'users:modify',
+      'profile:get',
+      'profile:modify',
+    ],
+    privateScopes: [
+      'apps:get',
+      'apps:create',
+      'apps:delete',
+      'apps:modify',
+    ],
   },
 };

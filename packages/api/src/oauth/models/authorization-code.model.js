@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uuidHash = require('./uuid-hash');
+const uuidHash = require('../../uuid-hash');
 
 const authorizationCodeSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

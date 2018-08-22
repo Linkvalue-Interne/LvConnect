@@ -3,9 +3,10 @@
 import { DETECT_DEVICE, detectDevice } from './display.actions';
 
 export type DisplayState = {
-  isMobile: boolean;
-  isTablet: boolean;
-  isDesktop: boolean;
+  isMobile: boolean,
+  isTablet: boolean,
+  isDesktop: boolean,
+  isTouchDevice: boolean,
 };
 
 const initialState = {

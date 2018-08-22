@@ -3,7 +3,7 @@ module.exports = {
   path: '/dashboard/apps',
   config: { auth: 'session' },
   handler(req, res) {
-    const { Application } = req.server.plugins.oauth.models;
+    const { Application } = req.server.plugins.apps.models;
 
     Application
       .find()

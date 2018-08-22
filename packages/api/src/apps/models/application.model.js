@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const uuid = require('uuid/v4');
-const uuidHash = require('./uuid-hash');
+const uuidHash = require('../../uuid-hash');
 
 const applicationSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
