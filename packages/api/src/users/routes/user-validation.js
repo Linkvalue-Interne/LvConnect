@@ -41,6 +41,11 @@ const commonFields = {
   leftAt: Joi.date().iso(),
   birthDate: Joi.date().iso(),
   registrationNumber: Joi.string(),
+  address: Joi.object().keys({
+    street: Joi.string(),
+    zipCode: Joi.string(),
+    city: Joi.string(),
+  }),
 };
 
 exports.payload = {

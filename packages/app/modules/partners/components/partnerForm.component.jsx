@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react';
-import { reduxForm, Field } from 'redux-form';
+import React, { Fragment } from 'react';
+import { reduxForm, Field, FormSection } from 'redux-form';
 import { push } from 'react-router-redux';
 import Grid from '@material-ui/core/Grid';
 import config from '@lvconnect/config/app';
@@ -15,7 +15,7 @@ import CityRadios from './cityRadios.component';
 import { isEmailDuplicate } from '../partners.actions';
 import SelectField from '../../../components/inputs/selectField.component';
 import jobLabels from '../jobLabels';
-import Restricted from '../../../components/restricted.component';
+import { hasRole, RolesConsumer } from '../../../components/restricted.component';
 
 const jobsMap = new Map(Object.entries(jobLabels));
 
@@ -38,58 +38,93 @@ const PartnerForm = ({
       valid,
       pristine,
       children: (
-        <Grid container spacing={16}>
-          <Grid item md={6} xs={12}>
-            <Field name="firstName" type="text" label="Prénom" component={TextField} required />
-          </Grid>
-          <Grid item md={6} xs={12}>
-            <Field name="lastName" type="text" label="Nom" component={TextField} required />
-          </Grid>
-          <Grid item xs={12}>
-            <Field name="email" type="email" label="Email" component={TextField} disabled={editMode} required />
-          </Grid>
-          <Restricted roles={config.permissions.editUser}>
-            <Grid item xs={12}>
-              <Field name="roles" options={Object.entries(config.roles)} component={RoleCheckboxes} />
-            </Grid>
-          </Restricted>
-          <Grid item xs={12}>
-            <Field name="city" component={CityRadios} />
-          </Grid>
-          <Grid item xs={12}>
-            <Field
-              name="job"
-              label="Compétence principale"
-              component={SelectField}
-              required
-              options={jobsMap}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Field name="address" type="text" label="Adresse" component={TextField} />
-          </Grid>
-          <Grid item xs={4}>
-            <Field name="zipCode" type="text" label="Code postal" component={TextField} />
-          </Grid>
-          <Grid item xs={8}>
-            <Field name="city" type="text" label="Ville" component={TextField} />
-          </Grid>
-          <Grid item md={6} xs={12}>
-            <Field name="hiredAt" type="date" format={formatDate} label="Date d'entrée" component={TextField} />
-          </Grid>
-          <Grid item md={6} xs={12}>
-            <Field name="leftAt" type="date" format={formatDate} label="Date de sortie" component={TextField} />
-          </Grid>
-          <Grid item md={6} xs={12}>
-            <Field name="birthDate" type="date" format={formatDate} label="Date de naissance" component={TextField} />
-          </Grid>
-          <Grid item md={6} xs={12}>
-            <Field name="registrationNumber" type="text" label="Matricule" component={TextField} />
-          </Grid>
-          <Grid item xs={12}>
-            <Field name="description" label="Description" component={TextField} multiline rowsMax="4" />
-          </Grid>
-        </Grid>
+        <RolesConsumer>
+          {(userRoles) => {
+            const canEdit = hasRole(config.permissions.editUser, userRoles);
+            return (
+              <Grid container spacing={16}>
+                <Grid item md={6} xs={12}>
+                  <Field name="firstName" type="text" label="Prénom" component={TextField} required />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <Field name="lastName" type="text" label="Nom" component={TextField} required />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field name="email" type="email" label="Email" component={TextField} disabled={editMode} required />
+                </Grid>
+                {canEdit && (
+                  <Grid item xs={12}>
+                    <Field name="roles" options={Object.entries(config.roles)} component={RoleCheckboxes} />
+                  </Grid>
+                )}
+                <Grid item xs={12}>
+                  <Field name="city" component={CityRadios} />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field
+                    name="job"
+                    label="Compétence principale"
+                    component={SelectField}
+                    required
+                    options={jobsMap}
+                  />
+                </Grid>
+                <FormSection name="address" component={Fragment}>
+                  <Grid item xs={12}>
+                    <Field name="street" type="text" label="Adresse" component={TextField} />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Field name="zipCode" type="text" label="Code postal" component={TextField} />
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Field name="city" type="text" label="Ville" component={TextField} />
+                  </Grid>
+                </FormSection>
+                <Grid item md={6} xs={12}>
+                  <Field
+                    name="hiredAt"
+                    type="date"
+                    format={formatDate}
+                    label="Date d'entrée"
+                    component={TextField}
+                    disabled={!canEdit}
+                  />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <Field
+                    name="leftAt"
+                    type="date"
+                    format={formatDate}
+                    label="Date de sortie"
+                    component={TextField}
+                    disabled={!canEdit}
+                  />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <Field
+                    name="birthDate"
+                    type="date"
+                    format={formatDate}
+                    label="Date de naissance"
+                    component={TextField}
+                  />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <Field
+                    name="registrationNumber"
+                    type="text"
+                    label="Matricule"
+                    component={TextField}
+                    disabled={!canEdit}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field name="description" label="Description" component={TextField} multiline rowsMax="4" />
+                </Grid>
+              </Grid>
+            );
+          }}
+        </RolesConsumer>
       ),
     })}
   </form>

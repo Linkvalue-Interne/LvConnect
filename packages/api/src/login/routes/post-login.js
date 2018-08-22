@@ -52,6 +52,9 @@ module.exports = {
       const { User } = req.server.plugins.users.models;
       try {
         const user = await User.findOneByEmailAndPassword(username, password);
+        if (user.leftAt < new Date()) {
+          return res(Boom.unauthorized('user_disabled'));
+        }
         userId = user._id;
         ({ needPasswordChange } = user);
       } catch (e) {

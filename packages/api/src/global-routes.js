@@ -25,7 +25,7 @@ module.exports = [{
   async handler(req, res) {
     if (!path.extname(req.params.path)) {
       let html;
-      if (process.env.APP_ENV !== 'dev') {
+      if (process.env.APP_ENV === 'dev') {
         html = await request({
           method: 'GET',
           uri: 'http://localhost:8080/',

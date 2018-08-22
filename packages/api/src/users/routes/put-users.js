@@ -37,10 +37,9 @@ module.exports = {
     }
 
     // User can't edit his roles if doesn't have rights.
-    if (isSelf && !hasRights && req.payload.roles) {
+    if (isSelf && !hasRights && (req.payload.roles || req.payload.registrationNumber)) {
       return res(Boom.forbidden('insufficient_rights'));
     }
-
 
     const updates = filter({
       $set: filter(req.payload, value => value !== null),

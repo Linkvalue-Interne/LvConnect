@@ -2,7 +2,7 @@
 
 import React, { Fragment } from 'react';
 
-const { Consumer, Provider: RolesProvider } = React.createContext([]);
+const { Consumer: RolesConsumer, Provider: RolesProvider } = React.createContext([]);
 
 const hasRole = (roles: Array<string>, userRoles: Array<string>) =>
   roles.some(role => userRoles.includes(role));
@@ -13,16 +13,17 @@ type RestrictedProps = {
 }
 
 const Restricted = ({ roles, children }: RestrictedProps) => (
-  <Consumer>
+  <RolesConsumer>
     {userRoles => hasRole(roles, userRoles) && (
       <Fragment>
         {children}
       </Fragment>
     )}
-  </Consumer>
+  </RolesConsumer>
 );
 
 export {
+  RolesConsumer,
   RolesProvider,
   hasRole,
 };

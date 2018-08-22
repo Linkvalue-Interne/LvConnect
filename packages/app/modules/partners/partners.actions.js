@@ -2,10 +2,13 @@
 
 import qs from 'qs';
 import omit from 'lodash.omit';
+import config from '@lvconnect/config/app';
 
 import type { Dispatch } from 'redux';
+import type { AppState } from '../../store/rootReducer';
 
 import { fetchWithAuth } from '../auth/auth.actions';
+import { hasRole } from '../../components/restricted.component';
 
 export const FETCH_PARTNERS_START = 'partners/FETCH_PARTNERS_START';
 export const FETCH_PARTNERS_SUCCESS = 'partners/FETCH_PARTNERS_SUCCESS';
@@ -45,11 +48,16 @@ export const fetchPartnerDetails = (partnerId: string) => async (dispatch: Dispa
   }
 };
 
-export const editPartner = (partnerId: string, data: User) => (dispatch: Dispatch<ReduxAction>) =>
-  dispatch(fetchWithAuth(`/users/${partnerId}`, {
-    method: 'PUT',
-    body: omit(data, ['id', 'email', 'createdAt', 'profilePictureUrl']),
-  }));
+export const editPartner = (partnerId: string, data: User) =>
+  (dispatch: Dispatch<ReduxAction>, getState: () => AppState) => {
+    const state = getState();
+    const { user } = state.auth;
+    const canEdit = hasRole(config.permissions.editUser, user ? user.roles : []);
+    return dispatch(fetchWithAuth(`/users/${partnerId}`, {
+      method: 'PUT',
+      body: omit(data, ['id', 'email', 'createdAt', 'profilePictureUrl', ...(canEdit ? [] : ['registrationNumber'])]),
+    }));
+  };
 
 export const deletePartner = (partnerId: string) => (dispatch: Dispatch<ReduxAction>) =>
   dispatch(fetchWithAuth(`/users/${partnerId}`, { method: 'DELETE' }));

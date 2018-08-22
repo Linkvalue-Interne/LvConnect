@@ -31,6 +31,11 @@ const userSchema = new mongoose.Schema({
   description: String,
   city: String,
   needPasswordChange: { type: Boolean, default: true },
+  address: {
+    street: String,
+    zipCode: String,
+    city: String,
+  },
 });
 
 userSchema.virtual('profilePictureUrl').get(function getProfilePictureUrl() {

@@ -8,6 +8,15 @@ module.exports = function login(req, res) {
   return User.findOneByEmailAndPassword(req.payload.email, req.payload.password)
     .then(user => req.server.plugins.login.loginUser(req, user)
       .then(() => {
+        if (user.leftAt < new Date()) {
+          return res.view('oauth-login', {
+            pageTitle: 'Login',
+            email: req.payload.email,
+            error: 'Account disabled.',
+            url,
+          }).code(401);
+        }
+
         if (user.needPasswordChange) {
           return res.view('oauth-change-password', {
             pageTitle: 'Change password',

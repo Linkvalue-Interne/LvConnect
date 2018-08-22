@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, SubmissionError } from 'redux-form';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -77,5 +77,17 @@ class Login extends React.Component<LoginProps> {
 export default reduxForm({
   form: 'loginForm',
   validate: () => ({}),
-  onSubmit: ({ email, password }, dispatch) => dispatch(login(email, password)),
+  onSubmit: async ({ email, password }, dispatch) => {
+    try {
+      await dispatch(login(email, password));
+    } catch (e) {
+      if (e.message === 'invalid_user') {
+        throw new SubmissionError({ email: ' ', password: 'Email ou mot de passe invalide' });
+      }
+      if (e.message === 'user_disabled') {
+        throw new SubmissionError({ email: ' ', password: 'Ce compte est désactivé' });
+      }
+      throw e;
+    }
+  },
 })(withStyles(styles)(Login));
