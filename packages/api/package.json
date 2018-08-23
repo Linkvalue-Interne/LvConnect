@@ -4,7 +4,7 @@
   "description": "Backend code for LVConnect",
   "main": "./src/index.js",
   "scripts": {
-    "test": "APP_ENV=test mocha --recursive test"
+    "test": "APP_ENV=test mocha --timeout 10000 --recursive test"
   },
   "repository": {
     "type": "git",
