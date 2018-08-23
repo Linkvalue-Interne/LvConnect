@@ -43,6 +43,7 @@ lint_and_test:
   stage: test
   services:
     - mongo:latest
+    - redis:latest
   script:
     - yarn
     - yarn lint

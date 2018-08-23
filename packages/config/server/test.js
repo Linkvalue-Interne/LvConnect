@@ -9,11 +9,7 @@ module.exports = {
     url: 'mongodb://mongo:27017/lvconnect_test',
   },
   kue: {
-    redis: {
-      host: 'localhost',
-      port: 6379,
-      db: 0,
-    },
+    redis: 'redis://redis:6379/1',
     prefix: 'lvc-kue',
     config: {
       shutdownTimeout: 5000,
