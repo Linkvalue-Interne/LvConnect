@@ -15,7 +15,6 @@
     "build": "webpack -p",
     "lint": "eslint '**/*.{js,jsx}'",
     "test": "yarn workspace @lvconnect/api run test",
-    "heroku-postbuild": "npm rebuild bcrypt",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "version": "yarn changelog && git add CHANGELOG.md",
     "typecheck": "flow",
@@ -62,6 +61,6 @@
     "webpack-dev-server": "^3.1.5"
   },
   "engines": {
-    "node": ">8.11.2"
+    "node": ">=9.11.2"
   }
 }

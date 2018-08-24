@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@lvconnect/config": "^1.0.0",
-    "bcrypt": "^1.0.1",
+    "bcrypt": "^3.0.0",
     "boom": "^4.0.0",
     "catbox-memory": "^2.0.4",
     "catbox-redis": "^2.0.2",
