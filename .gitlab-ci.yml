@@ -1,4 +1,4 @@
-image: node:carbon
+image: node:9
 
 stages:
   - build
