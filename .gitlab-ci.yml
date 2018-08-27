@@ -1,8 +1,7 @@
-image: node:9
+image: node:latest
 
 stages:
   - build
-  - test
   - deploy
 
 cache:
@@ -40,20 +39,6 @@ build_production:
       - dist/
   only:
     - tags
-  tags:
-    - node
-
-lint_and_test:
-  stage: test
-  services:
-    - mongo:latest
-    - redis:latest
-  script:
-    - yarn
-    - yarn lint
-    - yarn test
-  variables:
-    APP_ENV: test
   tags:
     - node
 
