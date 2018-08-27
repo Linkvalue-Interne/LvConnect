@@ -46,7 +46,7 @@ deploy_staging:
   image: tmaier/dpl:latest
   stage: deploy
   script:
-    - dpl --provider=heroku --app=lvconnect-staging --api-key=$HEROKU_STAGING_API_KEY
+    - dpl --provider=heroku --app=lvconnect-staging --api-key=$HEROKU_STAGING_API_KEY --skip_cleanup=true
   only:
     - master
   except:
@@ -63,7 +63,7 @@ deploy_production:
   image: tmaier/dpl:latest
   stage: deploy
   script:
-    - dpl --provider=heroku --app=lvconnect --api-key=$HEROKU_STAGING_API_KEY
+    - dpl --provider=heroku --app=lvconnect --api-key=$HEROKU_STAGING_API_KEY --skip_cleanup=true
   only:
     - tags
   when: manual
