@@ -1,3 +1,21 @@
+<a name="2.0.0"></a>
+# [2.0.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.8.0...v2.0.0) (2018-08-28)
+
+
+### Bug Fixes
+
+* **app:** Fix some issues with permissions ([8c7bc68](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/8c7bc68))
+
+
+### Features
+
+* **app:** Add applications managment screens ([44b47ce](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/44b47ce))
+* **app:** Add partners create and edit to new app ([2ba9123](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/2ba9123))
+* **app:** Add React app to replace old dashboard ([7498ca4](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/7498ca4))
+* **app:** Better auto login handling ([d949d18](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/d949d18))
+
+
+
 <a name="1.8.0"></a>
 # [1.8.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.7.7...v1.8.0) (2018-07-16)
 
