@@ -40,6 +40,6 @@ module.exports = {
         return Promise.reject(Boom.wrap(err));
       });
 
-    res.mongodb(userPromise, ['password', 'thirdParty', 'needPasswordChange']).code(201);
+    return res.mongodb(userPromise, ['password', 'thirdParty', 'needPasswordChange']);
   },
 };

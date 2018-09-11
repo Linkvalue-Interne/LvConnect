@@ -8,6 +8,9 @@ exports.payload = Joi.object({
   redirectUris: Joi.array().items(Joi.string().uri()).required(),
 });
 
-exports.params = (value, options, next) => {
-  next(Types.ObjectId.isValid(value.app) ? null : new Error('Invalid App Id'), value);
+exports.params = (value) => {
+  if (!Types.ObjectId.isValid(value.app)) {
+    throw new Error('Invalid App Id');
+  }
+  return value;
 };

@@ -3,11 +3,11 @@ const _ = require('lodash');
 // Role checking middleware
 function hasRoleInList(roles) {
   return {
-    method(request, reply) {
+    method(request, h) {
       const user = request.auth.credentials;
       const hasGivenRole = _.some(roles, role => _.includes(user.roles, role));
 
-      return !hasGivenRole ? reply.view('403').takeover() : reply(null, true);
+      return !hasGivenRole ? h.view('403').takeover() : h.continue;
     },
     assign: 'hasRole',
   };

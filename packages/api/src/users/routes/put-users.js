@@ -28,17 +28,17 @@ module.exports = {
 
     // Check can edit other users
     if (!isSelf && (!hasRights || !hasEditAnyUserScope)) {
-      return res(Boom.forbidden('insufficient_rights'));
+      throw Boom.forbidden('insufficient_rights');
     }
 
     // Check can edit self
     if (isSelf && !hasEditSelfScope && !hasEditAnyUserScope) {
-      return res(Boom.forbidden('insufficient_rights'));
+      throw Boom.forbidden('insufficient_rights');
     }
 
     // User can't edit his roles if doesn't have rights.
     if (isSelf && !hasRights && (req.payload.roles || req.payload.registrationNumber)) {
-      return res(Boom.forbidden('insufficient_rights'));
+      throw Boom.forbidden('insufficient_rights');
     }
 
     const updates = filter({

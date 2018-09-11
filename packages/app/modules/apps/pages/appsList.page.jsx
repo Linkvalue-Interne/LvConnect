@@ -77,8 +77,7 @@ class AppsList extends Component<AppsListProps> {
 
   handleChangePage = (event, page) => this.props.push(`/dashboard/apps?page=${page + 1}`);
 
-  handleGoToAppWorklog = appId => () =>
-    hasRole(config.permissions.editUser, this.props.user.roles) && this.props.push(`/dashboard/apps/${appId}`);
+  handleGoToApp = appId => () => this.props.push(`/dashboard/apps/${appId}`);
 
   handleChangeRowsPerPage = event => this.props.fetchApps({
     page: this.getPageNumber(),
@@ -101,7 +100,7 @@ class AppsList extends Component<AppsListProps> {
       return <LoadingPage />;
     }
 
-    const canEditUser = hasRole(config.permissions.editUser, user.roles);
+    const canEditApp = hasRole(config.permissions.editApp, user.roles);
 
     return (
       <Paper className={classes.appsList}>
@@ -125,9 +124,9 @@ class AppsList extends Component<AppsListProps> {
               {apps.map(app => (
                 <TableRow
                   key={app.id}
-                  className={canEditUser ? classes.tableRow : ''}
-                  hover={canEditUser}
-                  onClick={this.handleGoToAppWorklog(app.id)}
+                  className={canEditApp ? classes.tableRow : ''}
+                  hover={canEditApp}
+                  onClick={canEditApp ? this.handleGoToApp(app.id) : undefined}
                 >
                   <TableCell>{app.name}</TableCell>
                   <TableCell>{app.description}</TableCell>
@@ -151,7 +150,7 @@ class AppsList extends Component<AppsListProps> {
             </TableRow>
           </TableFooter>
         </table>
-        <Restricted roles={config.permissions.addUser}>
+        <Restricted roles={config.permissions.addApp}>
           <Button
             classes={{ root: classes.addAppButton }}
             variant="fab"

@@ -34,7 +34,7 @@ module.exports = {
   handler(req, res) {
     const { Application } = req.server.plugins.apps.models;
 
-    Application.findById(req.params.id)
+    return Application.findById(req.params.id)
       .then((app) => {
         if (!app) {
           return res.redirect('/old/dashboard/apps');

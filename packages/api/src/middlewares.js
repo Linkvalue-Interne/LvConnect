@@ -3,15 +3,18 @@ const Boom = require('boom');
 // Role checking middleware
 function hasRoleInList(roles, ignoreOnFail) {
   return {
-    method(request, reply) {
+    method(request) {
       const { user } = request.auth.credentials;
       const hasGivenRole = roles.some(role => user.roles.some(r => r === role));
 
       if (!hasGivenRole) {
-        return reply(ignoreOnFail ? null : Boom.forbidden('insufficient_rights'), false);
+        if (ignoreOnFail) {
+          return false;
+        }
+        throw Boom.forbidden('insufficient_rights');
       }
 
-      return reply(null, true);
+      return true;
     },
     assign: 'hasRights',
     failAction: ignoreOnFail ? 'ignore' : undefined,
@@ -20,15 +23,9 @@ function hasRoleInList(roles, ignoreOnFail) {
 
 // Check connected user is requested user
 const isConnectedUser = {
-  method(request, reply) {
+  method(request) {
     const { user } = request.auth.credentials;
-    const isSelf = request.params.user === user._id.toString();
-
-    if (!isSelf) {
-      return reply(null, false);
-    }
-
-    return reply(null, true);
+    return request.params.user === user._id.toString();
   },
   assign: 'isConnectedUser',
   failAction: 'ignore',
@@ -36,11 +33,11 @@ const isConnectedUser = {
 
 function hasScopeInList(...wantedScopes) {
   return {
-    method(request, reply) {
+    method(request) {
       const { scopes } = request.auth.credentials;
 
       if (scopes.indexOf('all') !== -1) {
-        return reply(null, true);
+        return true;
       }
 
       const matchedScopes = wantedScopes.reduce((acc, scope) => {
@@ -52,10 +49,10 @@ function hasScopeInList(...wantedScopes) {
       }, []);
 
       if (!matchedScopes.length) {
-        return reply(Boom.forbidden('out_of_scope'));
+        throw Boom.forbidden('out_of_scope');
       }
 
-      return reply(null, matchedScopes);
+      return matchedScopes;
     },
     assign: 'scopes',
   };

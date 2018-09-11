@@ -4,19 +4,14 @@ module.exports = {
   method: 'GET',
   path: '/dashboard/users',
   config: { auth: 'session' },
-  handler(req, res) {
+  async handler(req, res) {
     const { User } = req.server.plugins.users.models;
 
-    User
-      .find()
-      .select('-password')
-      .sort('lastName firstName')
-      .then((users) => {
-        res.view('get-users', {
-          pageTitle: 'Partners list',
-          users,
-          adminRoles: [roles.HR, roles.BOARD],
-        });
-      });
+    const users = await User.find().sort('lastName firstName');
+    return res.view('get-users', {
+      pageTitle: 'Partners list',
+      users,
+      adminRoles: [roles.HR, roles.BOARD],
+    });
   },
 };

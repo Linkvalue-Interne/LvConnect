@@ -13,15 +13,15 @@ module.exports = {
       params,
     },
   },
-  async handler(req, res) {
+  async handler(req) {
     const { Application } = req.server.plugins.apps.models;
 
     const { n: deleted } = await Application.remove({ _id: req.params.app });
 
     if (!deleted) {
-      return res(Boom.notFound());
+      throw Boom.notFound();
     }
 
-    return res({ deleted: true });
+    return { deleted: true };
   },
 };

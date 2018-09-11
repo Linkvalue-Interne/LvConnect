@@ -70,8 +70,7 @@ describe('/users/{id}', () => {
 
       // Then
       expect(response.statusCode).to.equal(400);
-      expect(response.result.message)
-        .to.equal('child "phone" fails because ["phone" needs to be a proper french phone number]');
+      expect(response.result.message).to.equal('Invalid request payload input');
     });
 
     it('should reject if user has insufficient rights', async () => {

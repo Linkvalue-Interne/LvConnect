@@ -57,7 +57,7 @@ function handleRefreshToken(req, application) {
     application,
   }).populate('user').then((refreshToken) => {
     if (refreshToken === null || refreshToken.expireAt < new Date() || refreshToken.user.leftAt < new Date()) {
-      return Boom.unauthorized('invalid_grant');
+      throw Boom.unauthorized('invalid_grant');
     }
 
     const scopes = req.payload.scope || application.allowedScopes;
@@ -78,7 +78,7 @@ function handleAuthorizationCode(req, application) {
     expireAt: { $gt: Date.now() },
   }).populate('user').then((authorizationCode) => {
     if (authorizationCode === null || authorizationCode.user.leftAt < new Date()) {
-      return Boom.unauthorized('invalid_grant');
+      throw Boom.unauthorized('invalid_grant');
     }
 
     const scopes = req.payload.scope || application.allowedScopes;
@@ -129,20 +129,27 @@ module.exports = {
       }),
     },
   },
-  handler(req, rep) {
+  async handler(req, h) {
     const app = req.auth.credentials;
 
+    let tokens;
     switch (req.payload.grant_type) {
       case 'password':
-        return rep(handlePassword(req, app)).code(201);
+        tokens = await handlePassword(req, app);
+        break;
       case 'refresh_token':
-        return rep(handleRefreshToken(req, app)).code(201);
+        tokens = await handleRefreshToken(req, app);
+        break;
       case 'authorization_code':
-        return rep(handleAuthorizationCode(req, app)).code(201);
+        tokens = await handleAuthorizationCode(req, app);
+        break;
       case 'client_credentials':
-        return rep(handleClientCredentials(req, app)).code(201);
+        tokens = await handleClientCredentials(req, app);
+        break;
       default:
-        return rep(Boom.badRequest('unsupported_grant_type'));
+        throw Boom.badRequest('unsupported_grant_type');
     }
+
+    return h.response(tokens).code(201);
   },
 };

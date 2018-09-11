@@ -69,8 +69,11 @@ exports.payload = {
   }),
 };
 
-exports.params = (value, options, next) => {
-  next(Types.ObjectId.isValid(value.user) ? null : new Error('Invalid User Id'), value);
+exports.params = (value) => {
+  if (!Types.ObjectId.isValid(value.user)) {
+    throw new Error('Invalid App Id');
+  }
+  return value;
 };
 
 exports.validRoles = validRoles;

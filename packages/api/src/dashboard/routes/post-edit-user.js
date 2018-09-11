@@ -38,7 +38,7 @@ module.exports = {
     const userId = req.params.user;
     const { githubOrgUserLink, trelloOrgUserLink } = req.server.plugins.tasks;
 
-    User
+    return User
       .findOneAndUpdate({ _id: userId }, { $set: body }, { new: true })
       .exec()
       .then((savedUser) => {
@@ -48,8 +48,7 @@ module.exports = {
         if (savedUser.trelloHandle && savedUser.thirdParty.trello !== 'success') {
           trelloOrgUserLink({ user: savedUser });
         }
-        return res.redirect(`/dashboard/users/${userId}`);
-      })
-      .catch(res);
+        return res.redirect(`/old/dashboard/users/${userId}`);
+      });
   },
 };

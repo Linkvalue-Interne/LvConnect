@@ -3,7 +3,7 @@ module.exports = {
   path: '/forgot-password',
   config: { auth: false },
   handler(req, res) {
-    res.view('get-forgot-password', {
+    return res.view('get-forgot-password', {
       title: 'Forgot password',
     });
   },

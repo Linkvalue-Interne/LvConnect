@@ -25,15 +25,13 @@ module.exports = {
         trelloHandle: Joi.string().allow(''),
         city: Joi.string().valid(validCities).required(),
       }),
-      failAction: (req, res, src, error) => {
-        res.view('create-user', {
-          pageTitle: 'Add new partner',
-          userData: req.payload,
-          validRoles,
-          validCities,
-          error,
-        });
-      },
+      failAction: (req, res, error) => res.view('create-user', {
+        pageTitle: 'Add new partner',
+        userData: req.payload,
+        validRoles,
+        validCities,
+        error,
+      }).takeover(),
     },
   },
   handler(req, res) {
@@ -46,7 +44,7 @@ module.exports = {
       'plainPassword',
     ]));
 
-    user
+    return user
       .hashPassword(body.plainPassword)
       .then(() => user.save())
       .then((savedUser) => {
@@ -57,15 +55,13 @@ module.exports = {
           trelloOrgUserLink({ user: savedUser });
         }
         req.server.plugins.mailjet.sendAccountCreationMail(body);
-        res.redirect('/old/dashboard/users');
+        return res.redirect('/old/dashboard/users');
       })
-      .catch((error) => {
-        res.view('create-user', {
-          pageTitle: 'Add new partner',
-          userData: body,
-          validRoles,
-          error,
-        });
-      });
+      .catch(error => res.view('create-user', {
+        pageTitle: 'Add new partner',
+        userData: body,
+        validRoles,
+        error,
+      }));
   },
 };

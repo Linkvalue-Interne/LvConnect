@@ -29,26 +29,18 @@ function mongodbSerializer(value, omit) {
   return payload;
 }
 
-function mongodbReply(value, omit = []) {
-  if (Promise.resolve(value) === value) {
-    return this.response(value.then(payload => mongodbSerializer(payload, omit)));
-  }
-  return this.response(mongodbSerializer(value, omit));
+async function mongodbReply(value, omit = []) {
+  const payload = await Promise.resolve(value);
+  return this.response(mongodbSerializer(payload, omit));
 }
 
-exports.register = (server, { url }, next) => {
-  server.decorate('reply', 'mongodb', mongodbReply);
-
-  mongoose.connect(url)
-    .then(() => {
-      server.log('info', `Database connected to: ${url}`);
-      server.expose('mongoose', mongoose);
-      next();
-    })
-    .catch(next);
-};
-
-exports.register.attributes = {
+module.exports = {
   name: 'mongodb',
-  version: '0.0.1',
+  async register(server, { url }) {
+    server.decorate('toolkit', 'mongodb', mongodbReply);
+
+    await mongoose.connect(url, { useNewUrlParser: true });
+    server.log('info', `Database connected to: ${url}`);
+    server.expose('mongoose', mongoose);
+  },
 };

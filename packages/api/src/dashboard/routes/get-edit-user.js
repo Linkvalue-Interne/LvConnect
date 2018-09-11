@@ -10,22 +10,17 @@ module.exports = {
     pre: [hasRoleInList([roles.BOARD, roles.HR])],
     auth: 'session',
   },
-  handler(req, res) {
+  async handler(req, res) {
     const { User } = req.server.plugins.users.models;
 
-    User
-      .findOne({ _id: req.params.user })
-      .exec()
-      .then((user) => {
-        if (!user) return res.view('404');
-        return res.view('create-user', {
-          pageTitle: 'Edit partner',
-          userData: user,
-          validRoles,
-          validCities,
-          editMode: true,
-        });
-      })
-      .catch(res);
+    const user = await User.findOne({ _id: req.params.user });
+    if (!user) return res.view('404');
+    return res.view('create-user', {
+      pageTitle: 'Edit partner',
+      userData: user,
+      validRoles,
+      validCities,
+      editMode: true,
+    });
   },
 };

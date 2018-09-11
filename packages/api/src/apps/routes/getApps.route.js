@@ -32,18 +32,18 @@ module.exports = {
       return query;
     }
 
-    const userQuery = applyFilters(Application.find());
+    const appQuery = applyFilters(Application.find());
 
-    const resultPromise = userQuery
+    const resultPromise = appQuery
       .limit(limit)
       .skip(page * limit || 0)
       .select('-appId -appSecret')
       .sort('name')
       .exec();
 
-    const countPromise = applyFilters(Application.count());
+    const countPromise = applyFilters(Application.countDocuments());
 
-    const usersPromise = Promise.all([resultPromise, countPromise])
+    const appsPromise = Promise.all([resultPromise, countPromise])
       .then(([results, count]) => ({
         results,
         pageCount: Math.ceil(count / limit),
@@ -51,6 +51,6 @@ module.exports = {
         limit,
       }));
 
-    res.mongodb(usersPromise);
+    return res.mongodb(appsPromise);
   },
 };

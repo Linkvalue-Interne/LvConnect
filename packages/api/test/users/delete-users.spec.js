@@ -33,7 +33,7 @@ describe('/users/{id}', () => {
           lastName: 'world',
         },
       });
-      const userCount = await User.count({});
+      const userCount = await User.countDocuments({});
 
       // Then
       expect(response.statusCode).to.equal(200);
@@ -56,7 +56,7 @@ describe('/users/{id}', () => {
           lastName: 'world',
         },
       });
-      const userCount = await User.count({});
+      const userCount = await User.countDocuments({});
 
       // Then
       expect(response.statusCode).to.equal(403);

@@ -31,7 +31,7 @@ module.exports = {
       }),
     },
   },
-  async handler(req, res) {
+  async handler(req) {
     const { refreshToken, username, password } = req.payload;
 
     let userId;
@@ -44,7 +44,7 @@ module.exports = {
       });
 
       if (!token) {
-        return res(Boom.unauthorized('invalid_token'));
+        throw Boom.unauthorized('invalid_token');
       }
 
       userId = token.user;
@@ -53,12 +53,12 @@ module.exports = {
       try {
         const user = await User.findOneByEmailAndPassword(username, password);
         if (user.leftAt < new Date()) {
-          return res(Boom.unauthorized('user_disabled'));
+          throw Boom.unauthorized('user_disabled');
         }
         userId = user._id;
         ({ needPasswordChange } = user);
       } catch (e) {
-        return res(Boom.unauthorized('invalid_user'));
+        throw Boom.unauthorized('invalid_user');
       }
     }
 
@@ -70,11 +70,11 @@ module.exports = {
       generateRefreshToken(userId, null, fullScopes),
     ]);
 
-    return res({
+    return {
       accessToken: accessToken.token,
       expiresIn: accessTokenTTL,
       refreshToken: newRefreshToken.token,
       needPasswordChange,
-    });
+    };
   },
 };

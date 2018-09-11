@@ -27,7 +27,7 @@ module.exports = {
     );
 
     if (!app) {
-      return res(Boom.notFound('Application not found'));
+      throw Boom.notFound('Application not found');
     }
 
     return res.mongodb(app, ['appId', 'appSecret']);

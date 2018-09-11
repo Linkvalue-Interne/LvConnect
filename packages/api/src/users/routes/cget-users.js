@@ -46,7 +46,7 @@ module.exports = {
       .sort('lastName firstName createdAt')
       .exec();
 
-    const countPromise = applyFilters(User.count());
+    const countPromise = applyFilters(User.countDocuments());
 
     const usersPromise = Promise.all([resultPromise, countPromise])
       .then(([results, count]) => ({
@@ -56,6 +56,6 @@ module.exports = {
         limit,
       }));
 
-    res.mongodb(usersPromise);
+    return res.mongodb(usersPromise);
   },
 };

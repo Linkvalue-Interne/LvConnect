@@ -40,7 +40,7 @@ module.exports = [{
         }));
       }
 
-      return res(html.replace('{{CSRF_TOKEN}}', req.server.plugins.crumb.generate(req, res)));
+      return html.replace('{{CSRF_TOKEN}}', req.server.plugins.crumb.generate(req, res));
     }
 
     return res.file(path.join('dist', req.params.path));

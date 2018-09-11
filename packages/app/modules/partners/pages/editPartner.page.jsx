@@ -37,6 +37,12 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
     this.props.fetchPartnerDetails(this.props.match.params.partnerId);
   }
 
+  componentDidUpdate(prevProps: EditPartnerProps) {
+    if (this.props.match.params.partnerId !== prevProps.match.params.partnerId) {
+      this.props.fetchPartnerDetails(this.props.match.params.partnerId);
+    }
+  }
+
   handleFormSubmit = (data: User) => this.props.editPartner(this.props.match.params.partnerId, data);
 
   handleDeletePartner = async () => {

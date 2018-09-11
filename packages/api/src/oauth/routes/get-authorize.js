@@ -24,9 +24,9 @@ module.exports = {
       }),
     },
   },
-  handler(req, res) {
+  async handler(req, res) {
     if (!req.query.app_id && !req.query.client_id) {
-      return res(Boom.badRequest('You must specify either app_id or client_id query param.'));
+      throw Boom.badRequest('You must specify either app_id or client_id query param.');
     }
 
     const url = getFormUrl(req);

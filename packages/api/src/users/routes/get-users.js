@@ -16,7 +16,7 @@ module.exports = {
     const requestedUserIsTheConnectedOne = connectedUser && req.params.user === connectedUser._id;
 
     if (!scopes.includes('users:get') && !requestedUserIsTheConnectedOne) {
-      return res(Boom.forbidden('Insufficient rights'));
+      throw Boom.forbidden('Insufficient rights');
     }
 
     const { User } = req.server.plugins.users.models;
@@ -27,7 +27,7 @@ module.exports = {
       .exec()
       .then((user) => {
         if (!user) {
-          return Boom.notFound('User Not Found');
+          throw Boom.notFound('User Not Found');
         }
 
         return user;

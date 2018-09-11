@@ -5,7 +5,7 @@ module.exports = {
   handler(req, res) {
     const { Application } = req.server.plugins.apps.models;
 
-    Application.findOne({ _id: req.params.id })
+    return Application.findOne({ _id: req.params.id })
       .then(app => res.view('create-app', {
         pageTitle: 'Edit app',
         user: req.auth.credentials,

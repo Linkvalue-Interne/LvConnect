@@ -4,8 +4,8 @@ module.exports = {
   method: 'GET',
   path: '/dashboard/users/create',
   config: { auth: 'session' },
-  handler(req, res) {
-    res.view('create-user', {
+  async handler(req, res) {
+    return res.view('create-user', {
       pageTitle: 'Add new partner',
       user: req.auth.credentials,
       newUser: {},

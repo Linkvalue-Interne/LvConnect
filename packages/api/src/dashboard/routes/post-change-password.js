@@ -51,11 +51,11 @@ module.exports = {
           .then(() => (logoutAllDevices ? req.server.plugins.oauth.cleanupUserTokens(user._id) : null))
           .then(() => (logoutAllDevices ? req.server.plugins.login.cleanupUserSessions(user._id.toString()) : null))
           .then(() => req.server.plugins.login.loginUser(req, user))
-          .then(() => res.redirect(req.query.redirect_uri || '/dashboard'));
+          .then(() => res.redirect(req.query.redirect_uri || '/old/dashboard'));
       })
       .catch((err) => {
         req.server.log('error', err);
-        res.view('change-password', {
+        return res.view('change-password', {
           pageTitle: 'Password change',
           error: 'An unknown error occurred',
         }).code(401);

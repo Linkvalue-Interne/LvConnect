@@ -14,9 +14,7 @@ module.exports = {
   },
   async handler(req, res) {
     const { Application } = req.server.plugins.apps.models;
-
-    const app = await Application.create(req.payload);
-
-    res(app);
+    const app = Application.create(req.payload);
+    return res.mongodb(app);
   },
 };

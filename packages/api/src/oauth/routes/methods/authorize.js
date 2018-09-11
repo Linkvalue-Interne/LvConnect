@@ -48,6 +48,5 @@ module.exports = function authorize(req, res) {
 
       return generateAuthorizationCode(user, application, scopes)
         .then(authorizationCode => res.redirect(`${decodedRedirectUri}?code=${authorizationCode.code}${state}`));
-    })
-    .catch(error => res(Boom.wrap(error)));
+    });
 };

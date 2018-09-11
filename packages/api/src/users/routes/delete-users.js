@@ -1,3 +1,4 @@
+const Boom = require('boom');
 const { permissions } = require('@lvconnect/config/server');
 
 const { hasRoleInList, hasScopeInList } = require('../../middlewares');
@@ -12,15 +13,15 @@ module.exports = {
       params,
     },
   },
-  handler(req, res) {
+  async handler(req) {
     const { User } = req.server.plugins.users.models;
+    const { n: deleted } = await User.remove({ _id: req.params.user });
 
-    const userPromise = User
-      .remove({ _id: req.params.user })
-      .exec()
-      .then(() => req.server.methods.cleanupUserAuth(req.params.user))
-      .then(() => ({ deleted: true }));
+    if (!deleted) {
+      throw Boom.notFound();
+    }
 
-    res(userPromise);
+    await req.server.methods.cleanupUserAuth(req.params.user);
+    return { deleted: true };
   },
 };

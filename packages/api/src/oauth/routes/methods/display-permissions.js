@@ -61,13 +61,13 @@ module.exports = function displayPermissions(req, res) {
     .then(application => Authorization.findOne({ user, application }).then(auth => [auth, application]))
     .then(([authorization, application]) => {
       if (!application.redirectUris.find(uri => req.query.redirect_uri === uri)) {
-        return Promise.reject(Boom.badRequest('Invalid redirect URI.'));
+        throw Boom.badRequest('Invalid redirect URI.');
       }
 
       const queryScopes = req.query.scope ? req.query.scope.split(' ') : [];
       const invalidScope = queryScopes.find(scope => validScopes.indexOf(scope) === -1);
       if (invalidScope) {
-        return res(Boom.badRequest(`Scope ${invalidScope} is invalid.`));
+        throw Boom.badRequest(`Scope ${invalidScope} is invalid.`);
       }
 
       let diffPermissions = [];
@@ -104,6 +104,5 @@ module.exports = function displayPermissions(req, res) {
 
       return generateAuthorizationCode(user, application, application.allowedScopes)
         .then(authorizationCode => res.redirect(`${redirectUri}?code=${authorizationCode.code}${state}`));
-    })
-    .catch(error => res(Boom.wrap(error)));
+    });
 };

@@ -32,10 +32,8 @@ module.exports = {
       redirectUris: req.payload.redirectUris.split(/\r?\n/),
     });
 
-    app.save()
-      .then(() => {
-        res.redirect('/old/dashboard/apps');
-      })
+    return app.save()
+      .then(() => res.redirect('/old/dashboard/apps'))
       .catch(() => {
         res.view('create-app', {
           pageTitle: 'Create application',
