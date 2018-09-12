@@ -2,11 +2,26 @@ image: node:10
 
 stages:
   - build
+  - test
   - deploy
 
 cache:
   paths:
   - node_modules/
+
+before_script:
+  - env
+  - node -v
+  - yarn -v
+
+unit_tests:
+  stage: test
+  script:
+    - yarn
+    - yarn lint
+    - yarn typecheck
+  tags:
+    - node
 
 build_staging:
   stage: build
