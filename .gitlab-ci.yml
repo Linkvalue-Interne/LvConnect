@@ -9,11 +9,6 @@ cache:
   paths:
   - node_modules/
 
-before_script:
-  - env
-  - node -v
-  - yarn -v
-
 unit_tests:
   stage: test
   script:
