@@ -1,3 +1,13 @@
+<a name="2.1.0"></a>
+# [2.1.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.0.0...v2.1.0) (2018-09-13)
+
+
+### Bug Fixes
+
+* **api:** Fixed issues with old application ([b84e9b2](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/b84e9b2))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v1.8.0...v2.0.0) (2018-08-28)
 
