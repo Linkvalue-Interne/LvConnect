@@ -1,3 +1,13 @@
+<a name="2.1.1"></a>
+## [2.1.1](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.1.0...v2.1.1) (2018-09-20)
+
+
+### Bug Fixes
+
+* **api:** Fix missing stylesheets for OAuth button ([e1dea9c](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/e1dea9c))
+
+
+
 <a name="2.1.0"></a>
 # [2.1.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.0.0...v2.1.0) (2018-09-13)
 
