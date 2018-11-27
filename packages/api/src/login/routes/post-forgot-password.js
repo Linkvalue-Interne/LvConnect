@@ -1,40 +1,33 @@
 const Joi = require('joi');
+const Boom = require('boom');
 
 module.exports = {
   method: 'POST',
   path: '/forgot-password',
   config: {
     auth: false,
+    plugins: {
+      crumb: {
+        restful: true,
+      },
+    },
     validate: {
       payload: Joi.object({
         email: Joi.string().required(),
       }),
     },
   },
-  handler(req, res) {
+  async handler(req) {
     const { User } = req.server.plugins.users.models;
     const { email } = req.payload;
 
-    return User.findOne({ email })
-      .then((user) => {
-        if (!user) {
-          return res.view('get-forgot-password', {
-            title: 'Forgot password',
-            email,
-            error: 'Email doesn\'t match any account.',
-          });
-        }
+    const user = await User.findOne({ email });
+    if (!user || user.leftAt < Date.now()) {
+      throw Boom.notFound('invalid_email');
+    }
 
-        return req.server.plugins.login.resetPassword(user);
-      })
-      .then(() => res.view('get-forgot-password', {
-        title: 'Forgot password',
-        success: true,
-      }))
-      .catch(() => res.view('get-forgot-password', {
-        title: 'Forgot password',
-        email,
-        error: 'An error occurred during password reset, sorry for the inconvenience.',
-      }));
+    await req.server.plugins.login.resetPassword(user);
+
+    return { ok: true };
   },
 };

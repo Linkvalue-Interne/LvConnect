@@ -7,31 +7,36 @@ mongoose.Promise = global.Promise;
 
 const User = require('../src/users/models/user.model');
 
-module.exports = () => {
+module.exports = async () => {
   const userPart = mongodb.username ? `${mongodb.username}:${mongodb.password}@` : '';
-  mongoose.connect(mongodb.url || `mongodb://${userPart}${mongodb.host}:${mongodb.port}/${mongodb.database}`)
-    .then(() => {
-      const user = new User({
-        firstName: 'admin',
-        lastName: 'admin',
-        email: 'admin@link-value.fr',
-        fallbackEmail: 'admin@link-value.fr',
-        roles: Object.values(roles),
-      });
+  try {
+    await mongoose.connect(mongodb.url || `mongodb://${userPart}${mongodb.host}:${mongodb.port}/${mongodb.database}`);
+  } catch (e) {
+    console.log('Failed to connect to mongodb database');
+    process.exit(1);
+  }
 
-      return user.hashPassword('admin');
-    })
-    .then(user => user.save())
-    .then(() => {
-      console.log('User admin@link-value.fr:admin was created');
-      process.exit(0);
-    })
-    .catch((err) => {
-      if (err.code === 11000) {
-        console.error('Admin user is already created');
-      } else {
-        console.error(err);
-      }
-      process.exit(1);
-    });
+  const user = new User({
+    firstName: 'admin',
+    lastName: 'admin',
+    email: 'admin@link-value.fr',
+    fallbackEmail: 'admin@link-value.fr',
+    roles: Object.values(roles),
+  });
+
+  await user.hashPassword('admin');
+
+  try {
+    await user.save();
+  } catch (err) {
+    if (err.code === 11000) {
+      console.error('Admin user is already created');
+    } else {
+      console.error(err);
+    }
+    process.exit(1);
+  }
+
+  console.log('User admin@link-value.fr:admin was created');
+  process.exit(0);
 };

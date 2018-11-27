@@ -3,8 +3,10 @@ const postOldLogin = require('./post-old-login');
 const postLogin = require('./post-login');
 const getLogout = require('./get-logout');
 const getAssets = require('./get-assets');
-const getForgotPassword = require('./get-forgot-password');
+const getOldForgotPassword = require('./get-old-forgot-password');
+const postOldForgotPassword = require('./post-old-forgot-password');
 const postForgotPassword = require('./post-forgot-password');
+const postResetPassword = require('./post-reset-password');
 
 module.exports = [
   getLogin,
@@ -12,6 +14,8 @@ module.exports = [
   postLogin,
   getLogout,
   getAssets,
-  getForgotPassword,
+  getOldForgotPassword,
+  postOldForgotPassword,
   postForgotPassword,
+  postResetPassword,
 ];

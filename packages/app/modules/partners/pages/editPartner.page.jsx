@@ -18,7 +18,11 @@ import type { ConnectedEditPartnerProps } from './editPartner.connector';
 
 import PartnerForm from '../components/partnerForm.component';
 
-type EditPartnerProps = ContextRouter & ConnectedEditPartnerProps;
+type EditPartnerProps = ContextRouter & ConnectedEditPartnerProps & {
+  partnerId?: String,
+  title?: String,
+  cardTitle?: String,
+};
 
 type EditPartnerState = {
   open: boolean,
@@ -34,16 +38,21 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
   }
 
   componentWillMount() {
-    this.props.fetchPartnerDetails(this.props.match.params.partnerId);
+    const { partnerId, match } = this.props;
+    this.props.fetchPartnerDetails(partnerId || match.params.partnerId);
   }
 
   componentDidUpdate(prevProps: EditPartnerProps) {
-    if (this.props.match.params.partnerId !== prevProps.match.params.partnerId) {
-      this.props.fetchPartnerDetails(this.props.match.params.partnerId);
+    const { match, fetchPartnerDetails } = this.props;
+    if (match.params.partnerId !== prevProps.match.params.partnerId) {
+      fetchPartnerDetails(match.params.partnerId);
     }
   }
 
-  handleFormSubmit = (data: User) => this.props.editPartner(this.props.match.params.partnerId, data);
+  handleFormSubmit = (data: User) => {
+    const { partnerId, match } = this.props;
+    return this.props.editPartner(partnerId || match.params.partnerId, data);
+  };
 
   handleDeletePartner = async () => {
     await this.props.deletePartner(this.props.match.params.partnerId);
@@ -55,17 +64,17 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
   handleClose = () => this.setState({ open: false });
 
   render() {
-    const { partner, isLoading } = this.props;
+    const { title, cardTitle, partner, isLoading } = this.props;
     return !isLoading && partner && (
       <PartnerForm editMode initialValues={partner} onFormSubmit={this.handleFormSubmit}>
         {({ children, valid, pristine }) => (
           <Card>
             <Helmet>
-              <title>{partner.firstName} {partner.lastName} | LVConnect</title>
+              <title>{title || `${partner.firstName} ${partner.lastName}`} | LVConnect</title>
             </Helmet>
             <CardContent>
               <Typography variant="headline" component="h2" gutterBottom>
-                {partner.firstName} {partner.lastName}
+                {cardTitle || `${partner.firstName} ${partner.lastName}`}
               </Typography>
               {children}
             </CardContent>

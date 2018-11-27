@@ -31,7 +31,7 @@ module.exports = {
     cookie: {
       secret: '12345678901234567890123456789012',
       name: 'lvconnect',
-      redirect: '/old/login',
+      redirect: '/login',
       isSecure: false,
       isSameSite: 'Lax',
     },

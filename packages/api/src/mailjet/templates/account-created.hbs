@@ -27,7 +27,7 @@
       <p style="margin-top: 30px;">Account details:</p>
       <ul>
         <li>Email: {{ userData.email }}</li>
-        <li>Password: {{ userData.plainPassword }}</li>
+        {{#if userData.plainPassword}}<li>Password: {{ userData.plainPassword }}</li>{{/if}}
       </ul>
       <p style="margin-top: 30px;">Enjoy !</p>
       <p style="font-size: 0.8rem; margin: 40px 0 0">

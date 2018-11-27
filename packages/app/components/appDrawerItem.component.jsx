@@ -14,8 +14,8 @@ type AppDrawerItemProps = {
   to: string;
 }
 
-const AppDrawerItem = ({ text, icon, to }: AppDrawerItemProps) => (
-  <ListItem button component={Link} to={to}>
+const AppDrawerItem = ({ text, icon, to, ...props }: AppDrawerItemProps) => (
+  <ListItem button component={Link} to={to} {...props}>
     <ListItemIcon>
       {icon}
     </ListItemIcon>

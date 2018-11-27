@@ -143,3 +143,20 @@ export const login = (username: string, password: string) => async (dispatch: Di
 
   return dispatch(fetchUserData());
 };
+
+export const forgotPassword = (email: string) => async () => {
+  const res = await fetch(`${baseEndpoint}/forgot-password`, {
+    method: 'POST',
+    headers: {
+      'X-CSRF-Token': window.CSRF_TOKEN,
+    },
+    body: JSON.stringify({
+      email,
+    }),
+  });
+
+  const data = await res.json();
+  if (res.status >= 400) {
+    throw new HttpError(res.status, data.message);
+  }
+};

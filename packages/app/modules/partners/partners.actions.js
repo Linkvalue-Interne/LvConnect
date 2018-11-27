@@ -7,7 +7,7 @@ import config from '@lvconnect/config/app';
 import type { Dispatch } from 'redux';
 import type { AppState } from '../../store/rootReducer';
 
-import { fetchWithAuth } from '../auth/auth.actions';
+import { fetchWithAuth, logout } from '../auth/auth.actions';
 import { hasRole } from '../../components/restricted.component';
 
 export const FETCH_PARTNERS_START = 'partners/FETCH_PARTNERS_START';
@@ -61,3 +61,35 @@ export const editPartner = (partnerId: string, data: User) =>
 
 export const deletePartner = (partnerId: string) => (dispatch: Dispatch<ReduxAction>) =>
   dispatch(fetchWithAuth(`/users/${partnerId}`, { method: 'DELETE' }));
+
+type PasswordChange = { oldPassword: string, newPassword: string, cleanupSessions: boolean };
+export const changePassword = ({ oldPassword, newPassword, cleanupSessions }: PasswordChange, pkey: string) => (
+  async (dispatch: Dispatch<ReduxAction>) => {
+    if (pkey) {
+      await fetch('/reset-password', {
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${pkey}`,
+        },
+        body: JSON.stringify({
+          oldPassword,
+          newPassword,
+          cleanupSessions,
+        }),
+      });
+    } else {
+      await dispatch(fetchWithAuth('/reset-password', {
+        method: 'POST',
+        body: {
+          oldPassword,
+          newPassword,
+          cleanupSessions,
+        },
+      }));
+    }
+
+    if (cleanupSessions) {
+      dispatch(logout());
+    }
+  }
+);

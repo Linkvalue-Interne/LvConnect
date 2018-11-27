@@ -92,19 +92,6 @@ module.exports = {
       },
     });
 
-    server.auth.strategy('bearer', 'bearer-access-token', {
-      async validate(req, bearer) {
-        const token = await AccessToken.findOne({ token: bearer }).populate('user').exec();
-        if (!token || (!token.user && !token.isClientCredentialsToken)) {
-          throw Boom.unauthorized('invalid_token');
-        }
-        if (token.expireAt < new Date()) {
-          throw Boom.unauthorized('token_expired');
-        }
-        return { isValid: true, credentials: token };
-      },
-    });
-
     server.auth.default('bearer');
 
     server.route(routes);
