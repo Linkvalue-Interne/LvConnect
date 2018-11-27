@@ -10,8 +10,8 @@
   "main": "./server/index.js",
   "scripts": {
     "create-superuser": "NODE_ENV=production lvconnect create-superuser",
-    "dev": "APP_ENV=dev nodemon . --watch ./packages/api",
-    "dev:front": "webpack-dev-server --hot",
+    "dev:back": "APP_ENV=dev nodemon . --watch ./packages/api",
+    "dev:front": "APP_ENV=dev webpack-dev-server --hot",
     "build": "webpack -p",
     "lint": "eslint '**/*.{js,jsx}'",
     "test": "yarn workspace @lvconnect/api run test",

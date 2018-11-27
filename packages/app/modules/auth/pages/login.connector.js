@@ -10,7 +10,6 @@ import Login from './login.page';
 
 type ConnectedLoginStateProps = {
   isConnected: boolean;
-  error: boolean;
 }
 
 type ConnectedLoginDispatchProps = {
@@ -21,7 +20,6 @@ export type ConnectedLoginProps = ConnectedLoginStateProps & ConnectedLoginDispa
 
 const mapStateToProps = (state: AppState): ConnectedLoginStateProps => ({
   isConnected: !!state.auth.user,
-  error: state.auth.error,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): ConnectedLoginDispatchProps => bindActionCreators({

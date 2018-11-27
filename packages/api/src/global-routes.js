@@ -45,13 +45,4 @@ module.exports = [{
 
     return res.file(path.join('dist', req.params.path));
   },
-}, {
-  method: 'GET',
-  path: '/',
-  config: {
-    auth: false,
-  },
-  handler(req, res) {
-    return res.redirect('/old/dashboard');
-  },
 }];

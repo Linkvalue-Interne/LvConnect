@@ -16,6 +16,7 @@ import Apps from '@material-ui/icons/Apps';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import AccountBox from '@material-ui/icons/AccountBox';
+import HistoryIcon from '@material-ui/icons/History';
 
 import type { ConnectedAppDrawerProps } from './appDrawer.connector';
 
@@ -104,7 +105,13 @@ const AppDrawer = ({
       <Hidden lgUp>
         <List disablePadding>
           <Divider />
-          <AppDrawerItem to={`/dashboard/partners/${user ? user.id : ''}`} icon={<AccountBox />} text="Mon compte" />
+          <ListItem button component="a" href="/old/login">
+            <ListItemIcon>
+              <HistoryIcon />
+            </ListItemIcon>
+            <ListItemText primary="Version 1.0" />
+          </ListItem>
+          <AppDrawerItem to="/dashboard/my-account" icon={<AccountBox />} text="Mon compte" />
           <ListItem button onClick={logout}>
             <ListItemIcon>
               <PowerSettingsNew />

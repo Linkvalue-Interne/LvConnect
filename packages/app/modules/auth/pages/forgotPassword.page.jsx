@@ -9,17 +9,18 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { push } from 'react-router-redux';
 
 import type { FormProps } from 'redux-form';
-import type { ConnectedLoginProps } from './login.connector';
+import type { ConnectedForgotPasswordProps } from './forgotPassword.connector';
 
 import TextField from '../../../components/inputs/textField.component';
 import bgUrl from '../../../assets/images/login-bg.svg';
 import logoUrl from '../../../assets/images/logo-lv.svg';
-import { login } from '../auth.actions';
+import { forgotPassword } from '../auth.actions';
 
 const styles = theme => ({
-  loginPage: {
+  forgotPasswordPage: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -30,20 +31,20 @@ const styles = theme => ({
     backgroundSize: 'cover',
     margin: -theme.spacing.unit * 3,
   },
-  loginButtonWrapper: {
-    marginTop: theme.spacing.unit * 2,
-  },
   logoLV: {
     marginBottom: theme.spacing.unit * 10,
   },
+  forgotPasswordCard: {
+    maxWidth: theme.spacing.unit * 60,
+  },
 });
 
-type LoginProps = ConnectedLoginProps & {
+type ForgotPasswordProps = ConnectedForgotPasswordProps & {
   ...FormProps,
   classes: any;
 };
 
-class Login extends React.Component<LoginProps> {
+class ForgotPassword extends React.Component<ForgotPasswordProps> {
   componentWillReceiveProps(props) {
     if (props.isConnected) {
       this.props.push('/dashboard');
@@ -54,19 +55,22 @@ class Login extends React.Component<LoginProps> {
     const { classes, handleSubmit } = this.props;
 
     return (
-      <form className={classes.loginPage} onSubmit={handleSubmit}>
+      <form className={classes.forgotPasswordPage} onSubmit={handleSubmit}>
         <img src={logoUrl} alt="Logo LinkValue" className={classes.logoLV} />
-        <Card>
+        <Card className={classes.forgotPasswordCard}>
           <CardContent>
             <Typography variant="headline" component="h2" gutterBottom>
-              Connexion
+              Mot de passe oublié
+            </Typography>
+            <Typography variant="caption" gutterBottom>
+              Entrez ci-dessous {'l\'adresse'} email affiliée à votre compte, un email vous sera envoyé
+              avec un lien permettant de choisir un nouveau mot de passe.
             </Typography>
             <Field component={TextField} name="email" label="Email" type="email" fullWidth required />
-            <Field component={TextField} name="password" label="Mot de passe" type="password" fullWidth required />
           </CardContent>
           <CardActions>
-            <Button type="submit" color="primary">Se connecter</Button>
-            <Button to="/forgot-password" component={Link}>Mot de passe oublié</Button>
+            <Button type="submit" color="primary">Envoyer</Button>
+            <Button to="/login" component={Link}>Retour</Button>
           </CardActions>
         </Card>
       </form>
@@ -75,19 +79,18 @@ class Login extends React.Component<LoginProps> {
 }
 
 export default reduxForm({
-  form: 'loginForm',
-  validate: () => ({}),
-  onSubmit: async ({ email, password }, dispatch) => {
+  form: 'forgotPasswordForm',
+  validate: ({ email }) => ({ email: !email && 'Email obligatoire' }),
+  onSubmit: async ({ email }, dispatch) => {
     try {
-      await dispatch(login(email, password));
+      await dispatch(forgotPassword(email));
+      dispatch(push('/login'));
     } catch (e) {
-      if (e.message === 'invalid_user') {
-        throw new SubmissionError({ email: ' ', password: 'Email ou mot de passe invalide' });
+      if (e.message === 'invalid_email') {
+        throw new SubmissionError({ email: 'Email invalide' });
+      } else {
+        throw new SubmissionError({ email: 'Une erreur inconnue s\'est produite' });
       }
-      if (e.message === 'user_disabled') {
-        throw new SubmissionError({ email: ' ', password: 'Ce compte est désactivé' });
-      }
-      throw e;
     }
   },
-})(withStyles(styles)(Login));
+})(withStyles(styles)(ForgotPassword));

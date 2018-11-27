@@ -56,7 +56,7 @@ module.exports = {
     overlay: true,
     progress: true,
     proxy: [{
-      context: ['/oauth', '/users', '/login'],
+      context: ['/oauth', '/users', '/login', '/forgot-password', '/reset-password', '/old', '/mdl'],
       target: 'http://localhost:8000',
     }],
   },

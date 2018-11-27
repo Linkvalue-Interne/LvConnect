@@ -1,9 +1,5 @@
 #!/usr/bin/env node
 
-const path = require('path');
-
-process.env.NODE_CONFIG_DIR = path.resolve(__dirname, '../config');
-
 const program = require('commander');
 
 const createSuperUser = require('./cli-create-superuser');
