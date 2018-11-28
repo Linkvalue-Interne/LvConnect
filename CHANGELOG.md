@@ -1,3 +1,13 @@
+<a name="2.2.0"></a>
+# [2.2.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.1.1...v2.2.0) (2018-11-28)
+
+
+### Features
+
+* **app:** Add a link to point to new interface ([8ca50c0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/8ca50c0))
+
+
+
 <a name="2.1.1"></a>
 ## [2.1.1](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.1.0...v2.1.1) (2018-09-20)
 
