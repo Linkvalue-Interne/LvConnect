@@ -65,7 +65,6 @@ const PartnerForm = ({
                     name="job"
                     label="Compétence principale"
                     component={SelectField}
-                    required
                     options={jobsMap}
                   />
                 </Grid>
@@ -130,7 +129,7 @@ const PartnerForm = ({
   </form>
 );
 
-const mandatoryFields = ['firstName', 'lastName', 'email', 'job'];
+const mandatoryFields = ['firstName', 'lastName', 'email'];
 
 const validate = values => ({
   ...mandatoryFields.reduce((acc, key) => ({ ...acc, [key]: values[key] ? false : 'Requis' }), {}),
