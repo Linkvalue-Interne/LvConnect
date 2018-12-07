@@ -1,3 +1,8 @@
+<a name="2.2.2"></a>
+## [2.2.2](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.2.1...v2.2.2) (2018-12-07)
+
+
+
 <a name="2.2.1"></a>
 ## [2.2.1](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.2.0...v2.2.1) (2018-12-07)
 
