@@ -1,3 +1,14 @@
+<a name="2.2.1"></a>
+## [2.2.1](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.2.0...v2.2.1) (2018-12-07)
+
+
+### Bug Fixes
+
+* **api:** Fix type in projectManager role ([6b220b0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/6b220b0))
+* **app:** Remove mandatory field job in partner form ([71b0cd7](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/71b0cd7))
+
+
+
 <a name="2.2.0"></a>
 # [2.2.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.1.1...v2.2.0) (2018-11-28)
 
