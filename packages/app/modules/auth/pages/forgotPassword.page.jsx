@@ -59,7 +59,7 @@ class ForgotPassword extends React.Component<ForgotPasswordProps> {
         <img src={logoUrl} alt="Logo LinkValue" className={classes.logoLV} />
         <Card className={classes.forgotPasswordCard}>
           <CardContent>
-            <Typography variant="headline" component="h2" gutterBottom>
+            <Typography variant="h5" component="h2" gutterBottom>
               Mot de passe oublié
             </Typography>
             <Typography variant="caption" gutterBottom>

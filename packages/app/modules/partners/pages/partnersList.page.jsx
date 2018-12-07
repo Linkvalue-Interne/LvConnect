@@ -115,7 +115,7 @@ class PartnersList extends Component<PartnersListProps> {
           <title>Partners | LVConnect</title>
         </Helmet>
         <Toolbar>
-          <Typography variant="headline" component="h2" gutterBottom>
+          <Typography variant="h5" component="h2" gutterBottom>
             Partners
           </Typography>
         </Toolbar>

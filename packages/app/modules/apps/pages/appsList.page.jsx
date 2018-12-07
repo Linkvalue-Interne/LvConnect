@@ -108,7 +108,7 @@ class AppsList extends Component<AppsListProps> {
           <title>Apps | LVConnect</title>
         </Helmet>
         <Toolbar>
-          <Typography variant="headline" component="h2" gutterBottom>
+          <Typography variant="h5" component="h2" gutterBottom>
             Apps
           </Typography>
         </Toolbar>

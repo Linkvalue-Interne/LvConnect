@@ -26,7 +26,7 @@ const PasswordChangeCard = ({ className, handleSubmit, askOldPassword }: Passwor
   <form onSubmit={handleSubmit}>
     <Card className={className}>
       <CardContent>
-        <Typography variant="headline" component="h2" gutterBottom>
+        <Typography variant="h5" component="h2" gutterBottom>
           Changer de mot de passe
         </Typography>
         <Grid container spacing={16}>

@@ -89,7 +89,7 @@ const AppDrawer = ({
         {user && (
           <div className={classes.drawerProfile}>
             <Avatar src={user.profilePictureUrl} alt={`${user.firstName} ${user.lastName}`} />
-            <Typography color="inherit" variant="subheading" className={classes.fullName}>
+            <Typography color="inherit" variant="subtitle1" className={classes.fullName}>
               {`${user.firstName} ${user.lastName}`}
             </Typography>
             <Typography color="inherit">{user.email}</Typography>

@@ -73,7 +73,7 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
               <title>{title || `${partner.firstName} ${partner.lastName}`} | LVConnect</title>
             </Helmet>
             <CardContent>
-              <Typography variant="headline" component="h2" gutterBottom>
+              <Typography variant="h5" component="h2" gutterBottom>
                 {cardTitle || `${partner.firstName} ${partner.lastName}`}
               </Typography>
               {children}

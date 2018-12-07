@@ -3,7 +3,7 @@ const jobLabels = {
   back: 'Backend',
   fullStack: 'Full Stack',
   data: 'Data scientist',
-  projectManger: 'Chef de projet',
+  projectManager: 'Chef de projet',
   mobile: 'Mobile',
   designer: 'Designer',
   devOps: 'Dev Ops',

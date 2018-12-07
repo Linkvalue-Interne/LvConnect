@@ -7,7 +7,7 @@ import type { ConnectedHomeProps } from './home.connector';
 
 const Home = ({ user }: ConnectedHomeProps) => user && (
   <Fragment>
-    <Typography variant="display2" gutterBottom>Dashboard</Typography>
+    <Typography variant="h3" gutterBottom>Dashboard</Typography>
     <Typography>Hello {user.firstName}! :)</Typography>
   </Fragment>
 );

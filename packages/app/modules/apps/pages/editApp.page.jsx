@@ -44,7 +44,7 @@ class EditApp extends Component<EditAppProps> {
         </Helmet>
         <Card className={classes.topCard}>
           <CardContent>
-            <Typography variant="headline" component="h2" gutterBottom>
+            <Typography variant="h5" component="h2" gutterBottom>
               {app.name}
             </Typography>
             <TextField
@@ -67,7 +67,7 @@ class EditApp extends Component<EditAppProps> {
           {({ children, valid, pristine }) => (
             <Card>
               <CardContent>
-                <Typography variant="headline" component="h2" gutterBottom>
+                <Typography variant="h5" component="h2" gutterBottom>
                   Editer {app.name}
                 </Typography>
                 {children}

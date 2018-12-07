@@ -2,11 +2,12 @@ const path = require('path');
 const { DefinePlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: './index.jsx',
   context: path.resolve(__dirname, './packages/app/'),
-  devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-eval-source-map',
+  devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-source-map',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name]-[hash].js',
@@ -17,13 +18,19 @@ module.exports = {
     extensions: ['.jsx', '.js', '.json'],
   },
   optimization: {
+    minimizer: [new TerserPlugin({
+      cache: true,
+      parallel: true,
+    })],
     splitChunks: {
       name: 'vendors',
       chunks: 'all',
     },
   },
   module: {
+    strictExportPresence: true,
     rules: [
+      { parser: { requireEnsure: false } },
       {
         test: /\.(ttf|woff|woff2)$/,
         use: {

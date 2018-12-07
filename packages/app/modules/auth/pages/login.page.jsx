@@ -58,7 +58,7 @@ class Login extends React.Component<LoginProps> {
         <img src={logoUrl} alt="Logo LinkValue" className={classes.logoLV} />
         <Card>
           <CardContent>
-            <Typography variant="headline" component="h2" gutterBottom>
+            <Typography variant="h5" component="h2" gutterBottom>
               Connexion
             </Typography>
             <Field component={TextField} name="email" label="Email" type="email" fullWidth required />
