@@ -1,3 +1,13 @@
+<a name="2.3.0"></a>
+# [2.3.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.2.2...v2.3.0) (2019-01-03)
+
+
+### Features
+
+* **api:** Add new marketing job ([31d79d5](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/31d79d5))
+
+
+
 <a name="2.2.2"></a>
 ## [2.2.2](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.2.1...v2.2.2) (2018-12-07)
 
