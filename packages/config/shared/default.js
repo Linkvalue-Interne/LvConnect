@@ -29,7 +29,7 @@ module.exports = {
     editApp: [TECH, BOARD],
     deleteApp: [TECH, BOARD],
   },
-  jobs: ['front', 'back', 'fullStack', 'designer', 'data', 'devOps', 'projectManager', 'mobile'],
+  jobs: ['front', 'back', 'fullStack', 'designer', 'data', 'devOps', 'projectManager', 'mobile', 'marketing'],
   oauth: {
     scopes: [
       'users:get',

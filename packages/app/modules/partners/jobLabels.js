@@ -7,6 +7,7 @@ const jobLabels = {
   mobile: 'Mobile',
   designer: 'Designer',
   devOps: 'Dev Ops',
+  marketing: 'Marketing',
 };
 
 export default jobLabels;
