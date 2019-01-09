@@ -103,26 +103,20 @@ module.exports = {
   method: 'POST',
   path: '/oauth/token',
   config: {
-    auth: 'application',
+    auth: {
+      strategy: 'application',
+      mode: 'optional',
+    },
     validate: {
       payload: Joi.object({
         grant_type: Joi.string().valid(grantTypes).required(),
-        username: Joi.any().when('grant_type', {
-          is: 'password',
-          then: Joi.string().required(),
-          else: Joi.any().forbidden(),
-        }),
-        password: Joi.any().when('grant_type', {
-          is: 'password',
-          then: Joi.string().required(),
-          else: Joi.any().forbidden(),
-        }),
+        client_id: Joi.string(),
+        client_secret: Joi.string(),
+        username: Joi.any().when('grant_type', { is: 'password', then: Joi.string().required() }),
+        password: Joi.any().when('grant_type', { is: 'password', then: Joi.string().required() }),
         refresh_token: Joi.alternatives().when('grant_type', { is: 'refresh_token', then: Joi.string().required() }),
-        code: Joi.alternatives().when('grant_type', { is: 'authorization_code', then: Joi.string().required() }),
-        redirect_uri: Joi.alternatives().when('grant_type', {
-          is: 'authorization_code',
-          then: Joi.string().required(),
-        }),
+        code: Joi.any().when('grant_type', { is: 'authorization_code', then: Joi.string().required() }),
+        redirect_uri: Joi.any().when('grant_type', { is: 'authorization_code', then: Joi.string().required() }),
         scope: Joi.array().items(Joi.string().valid(validScopes))
           .when('grant_type', { is: 'refresh_token', then: Joi.optional() })
           .when('grant_type', { is: 'password', then: Joi.optional() }),
@@ -130,7 +124,17 @@ module.exports = {
     },
   },
   async handler(req, h) {
-    const app = req.auth.credentials;
+    let app = req.auth.credentials;
+    if (!app) {
+      const { client_id: appId, client_secret: appSecret } = req.payload;
+      if (!appId || !appSecret) {
+        throw Boom.badRequest('missing_credentials');
+      }
+      app = await req.server.plugins.apps.models.Application.findOne({ appId, appSecret });
+      if (!app) {
+        throw Boom.unauthorized('invalid_credentials');
+      }
+    }
 
     let tokens;
     switch (req.payload.grant_type) {
