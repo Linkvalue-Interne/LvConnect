@@ -1,3 +1,14 @@
+<a name="2.4.0"></a>
+# [2.4.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.2.2...v2.4.0) (2019-01-25)
+
+
+### Features
+
+* **api:** Add new marketing job ([31d79d5](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/31d79d5))
+* **api:** Authenticate token endpoint via payload optionally ([aee7c4a](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/aee7c4a))
+
+
+
 <a name="2.3.0"></a>
 # [2.3.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.2.2...v2.3.0) (2019-01-03)
 
