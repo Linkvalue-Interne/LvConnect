@@ -11,7 +11,8 @@ Generates authentication tokens according to `grant_type`. The following grants 
 - authorization_code
 
 This endpoint requires client authentication (to be sure that the application is authorized to request tokens).
-You must provide client credentials (client id and client secret) in the `Authorization` header as `Basic` credentials.
+You must provide client credentials (client id and client secret) in the `Authorization` header as `Basic` credentials
+or in payload via `client_id` and `client_secret` fields.
 
 The token can be generated to allow only specific scopes. These scopes must be present in your application allowed
 scope list or it will trigger an `invalid_scope` error. By default the scope of the token will be all the allowed scopes

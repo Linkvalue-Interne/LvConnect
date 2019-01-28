@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import MuiAppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
-import Hidden from '@material-ui/core/Hidden';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -94,31 +93,29 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
     const collapsed = shouldCollapseBar && user;
 
     let avatar;
-    if (user) {
+    if (shouldCollapseBar && user) {
       const fullName = `${user.firstName} ${user.lastName}`;
       avatar = (
         <div className={classes.userDetails}>
-          <Hidden mdDown>
-            <Typography color="inherit">{fullName}</Typography>
-            <IconButton color="inherit" onClick={this.handleMenuOpen} className={classes.avatar}>
-              <Avatar alt={fullName} src={user.profilePictureUrl} />
-            </IconButton>
-            <Menu
-              id="account-menu"
-              anchorEl={this.state.anchor}
-              open={this.state.open}
-              onClose={this.handleMenuClose}
+          <Typography color="inherit">{fullName}</Typography>
+          <IconButton color="inherit" onClick={this.handleMenuOpen} className={classes.avatar}>
+            <Avatar alt={fullName} src={user.profilePictureUrl} />
+          </IconButton>
+          <Menu
+            id="account-menu"
+            anchorEl={this.state.anchor}
+            open={this.state.open}
+            onClose={this.handleMenuClose}
+          >
+            <MenuItem
+              onClick={this.handleMenuClose}
+              component={Link}
+              to="/dashboard/my-account"
             >
-              <MenuItem
-                onClick={this.handleMenuClose}
-                component={Link}
-                to="/dashboard/my-account"
-              >
-                Mon compte
-              </MenuItem>
-              <MenuItem onClick={this.handleLogout}>Se déconnecter</MenuItem>
-            </Menu>
-          </Hidden>
+              Mon compte
+            </MenuItem>
+            <MenuItem onClick={this.handleLogout}>Se déconnecter</MenuItem>
+          </Menu>
         </div>
       );
     }

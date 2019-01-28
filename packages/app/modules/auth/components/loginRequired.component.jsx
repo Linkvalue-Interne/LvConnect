@@ -16,6 +16,7 @@ import AppsList from '../../apps/pages/appsList.connector';
 import NewApp from '../../apps/pages/newApp.connector';
 import EditApp from '../../apps/pages/editApp.connector';
 import { RolesProvider } from '../../../components/restricted.component';
+import NotFound from '../../../components/notFound.component';
 
 type LoginRequiredProps = ConnectedLoginRequiredProps & ContextRouter;
 
@@ -52,6 +53,7 @@ const LoginRequired = ({
         <Route path="/dashboard/apps/:appId" exact component={EditApp} />
         <Route path="/dashboard/apps" exact component={AppsList} />
         <Route path="/dashboard" exact component={Home} />
+        <Route component={NotFound} />
       </Switch>
     </RolesProvider>
   );

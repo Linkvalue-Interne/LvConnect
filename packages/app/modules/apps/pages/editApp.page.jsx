@@ -50,20 +50,23 @@ class EditApp extends Component<EditAppProps> {
             <TextField
               label="Application ID"
               defaultValue={app.appId}
-              InputProps={{ readOnly: true }}
+              InputProps={{ readOnly: true, onFocus: e => e.target.select() }}
               fullWidth
               helperText=" "
             />
             <TextField
               label="Application Secret"
               defaultValue={app.appSecret}
-              InputProps={{ readOnly: true }}
+              InputProps={{ readOnly: true, onFocus: e => e.target.select() }}
               fullWidth
               helperText=" "
             />
           </CardContent>
         </Card>
-        <AppForm initialValues={app} onFormSubmit={this.handleFormSubmit}>
+        <AppForm
+          initialValues={{ ...app, redirectUris: app.redirectUris.join('\n') }}
+          onFormSubmit={this.handleFormSubmit}
+        >
           {({ children, valid, pristine }) => (
             <Card>
               <CardContent>

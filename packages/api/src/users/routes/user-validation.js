@@ -55,7 +55,6 @@ exports.payload = {
     lastName: Joi.string().min(2).required(),
     roles: Joi.array().items(Joi.string().valid(validRoles)).min(1).required(),
     city: Joi.string().valid(cities).required(),
-    plainPassword: Joi.string().min(6),
     email: Joi.string().email().required(),
     githubHandle: Joi.string(),
     trelloHandle: Joi.string(),

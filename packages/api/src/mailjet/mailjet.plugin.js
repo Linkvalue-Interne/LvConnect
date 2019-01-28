@@ -32,18 +32,18 @@ module.exports = {
         .catch(err => server.log('error', err));
     }
 
-    server.expose('sendAccountCreationMail', userData => sendLVConnectEmail({
+    server.expose('sendAccountCreationMail', (userData, token) => sendLVConnectEmail({
       FromEmail: 'no-reply@link-value.fr',
       FromName: 'LVConnect',
-      Subject: 'Your LVConnect account is ready',
-      'Html-part': server.plugins.mailjet.accountCreatedTemplate({ userData }),
+      Subject: 'Ton compte LVConnect est prêt !',
+      'Html-part': server.plugins.mailjet.accountCreatedTemplate({ userData, token, baseUrl }),
       Recipients: [{ Email: userData.email }],
     }));
 
     server.expose('sendPasswordResetMail', (userData, token) => sendLVConnectEmail({
       FromEmail: 'no-reply@link-value.fr',
       FromName: 'LVConnect',
-      Subject: 'Reset LVConnect account password',
+      Subject: 'Réinitialisation de ton mot de passe LVConnect',
       'Html-part': server.plugins.mailjet.passwordResetTemplate({ userData, token, baseUrl }),
       Recipients: [{ Email: userData.email }],
     }));

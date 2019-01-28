@@ -1,4 +1,3 @@
-const handlebars = require('handlebars');
 const Boom = require('boom');
 const crypto = require('crypto');
 const uuidV4 = require('uuid/v4');
@@ -9,14 +8,6 @@ module.exports = {
   name: 'login',
   dependencies: ['users', 'vision', 'inert', 'hapi-auth-cookie'],
   async register(server, { cache, cookie }) {
-    server.views({
-      engines: { hbs: handlebars },
-      relativeTo: __dirname,
-      path: 'views',
-      layout: 'default',
-      layoutPath: 'layouts',
-    });
-
     server.app.cache = server.cache({ // eslint-disable-line no-param-reassign
       cache: 'redisCache',
       segment: 'session',
@@ -49,6 +40,18 @@ module.exports = {
     const dropSessionList = uid => new Promise((resolve, reject) =>
       server.app.sessionsListcache.drop(uid, err => (err ? reject(err) : resolve())));
 
+    const hashPasswordResetToken = rawToken => crypto.createHmac('sha512', 'hello').update(rawToken).digest('hex');
+
+    const storePasswordResetToken =
+      (hashedToken, userId) => server.app.passwordResetCache.set(hashedToken, userId, cache.passwordResetTTL);
+
+    const createPasswordResetToken = async (userId) => {
+      const rawToken = Array.from({ length: 5 }).map(() => Buffer.from(uuidV4()).toString('base64')).join('');
+      const hashedToken = hashPasswordResetToken(rawToken);
+      await storePasswordResetToken(hashedToken, userId);
+      return rawToken;
+    };
+
     server.expose('loginUser', async (req, user) => {
       const sid = uuidV4();
       const uid = user._id.toString();
@@ -66,11 +69,11 @@ module.exports = {
     });
 
     server.expose('resetPassword', async (user) => {
-      const rawToken = Array.from({ length: 5 }).map(() => Buffer.from(uuidV4()).toString('base64')).join('');
-      const hashedToken = crypto.createHmac('sha512', 'hello').update(rawToken).digest('hex');
-      await server.app.passwordResetCache.set(hashedToken, user._id, cache.passwordResetTTL);
+      const rawToken = await createPasswordResetToken(user._id);
       server.plugins.mailjet.sendPasswordResetMail(user, rawToken);
     });
+
+    server.expose({ createPasswordResetToken, hashPasswordResetToken });
 
     server.expose('cleanupUserSessions', uid => fetchUserSessionsFromCache(uid)
       .then(sessions => dropAllSessions(Object.keys(sessions || {})))

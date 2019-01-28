@@ -15,25 +15,26 @@
       </a>
     </div>
     <h1 style="text-align: center; border-top: 1px solid rgba(0,0,0,.1); padding: 30px 16px;">
-      Welcome to LVConnect
+      Bienvenue sur LVConnect
     </h1>
     <div style="padding: 0 16px 30px; font-size: 1.2rem; color: rgba(0,0,0,.54);">
-      <p>Hi {{ userData.firstName }},</p>
+      <p>Hello {{ userData.firstName }},</p>
       <p>
-        Your account to access the LinkValue application universe is ready! The last step to use your brand new account
-        is to connect to the <a href="https://lvconnect.link-value.fr">LVConnect website</a> and change your temporary
-        password.
+        Bienvenue chez LinkValue ! :)<br />
+        Ton compte pour accéder à l'écosystème applicatif LinkValue est prêt. La dernière étape pour valider la
+        création de ton compte est de te connecter via le lien ci-dessous. Ce compte te permet d'accéder à tous les
+        services en ligne tels que Arborescence, le Dashboard, Facilit.io, et bien d'autres.
       </p>
-      <p style="margin-top: 30px;">Account details:</p>
-      <ul>
-        <li>Email: {{ userData.email }}</li>
-        {{#if userData.plainPassword}}<li>Password: {{ userData.plainPassword }}</li>{{/if}}
-      </ul>
-      <p style="margin-top: 30px;">Enjoy !</p>
+      <p style="margin-top: 30px;">
+        <a style="padding: 10px 15px; background-color: rgb(64, 196, 255); color: white;"
+           href="{{baseUrl}}/reset-password?pkey={{token}}">
+          Finaliser la création de mon compte
+        </a>
+      </p>
+      <p style="margin-top: 30px;">Have fun !</p>
       <p style="font-size: 0.8rem; margin: 40px 0 0">
-        Please do not answer this email, if you have any problem, please open an issue on the
-        <a href="https://gitlab.com/LinkValue/Lab/LvConnect">LVConnect repository</a>, or ask on the #lab channel on
-        Slack
+        Merci de ne pas répondre à cet email, si vous rencontrez un soucis, merci de consulter le cannal #mylv_support
+        sur Slack ou d'ouvrir une issue sur <a href="https://gitlab.com/LinkValue/Lab/LvConnect">GitLab</a>.
       </p>
     </div>
   </div>

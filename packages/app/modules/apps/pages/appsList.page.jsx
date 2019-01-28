@@ -12,7 +12,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import qs from 'qs';
@@ -151,15 +151,14 @@ class AppsList extends Component<AppsListProps> {
           </TableFooter>
         </table>
         <Restricted roles={config.permissions.addApp}>
-          <Button
+          <Fab
             classes={{ root: classes.addAppButton }}
-            variant="fab"
             color="primary"
             aria-label="Add"
             onClick={this.handleNewAppClick}
           >
             <AddIcon />
-          </Button>
+          </Fab>
         </Restricted>
       </Paper>
     );

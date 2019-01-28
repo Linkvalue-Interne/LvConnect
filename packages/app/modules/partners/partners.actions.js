@@ -69,6 +69,7 @@ export const changePassword = ({ oldPassword, newPassword, cleanupSessions }: Pa
       await fetch('/reset-password', {
         method: 'POST',
         headers: {
+          'X-CSRF-Token': window.CSRF_TOKEN,
           authorization: `Bearer ${pkey}`,
         },
         body: JSON.stringify({

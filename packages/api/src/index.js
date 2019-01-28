@@ -50,7 +50,6 @@ const manifest = {
       { plugin: './monitoring/monitoring.plugin', options: config.monitoring },
       { plugin: './login/login.plugin', options: config.login },
       { plugin: './oauth/oauth.plugin', options: config.oauth },
-      { plugin: './dashboard/dashboard.plugin', routes: { prefix: '/old' } },
       { plugin: './tasks/tasks.plugin', options: config.kue },
     ],
   },

@@ -3,6 +3,7 @@ const { DefinePlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const WebappWebpackPlugin = require('webapp-webpack-plugin');
 
 module.exports = {
   entry: './index.jsx',
@@ -75,5 +76,6 @@ module.exports = {
     new DefinePlugin({
       'process.env.APP_ENV': `"${process.env.APP_ENV || 'dev'}"`,
     }),
+    new WebappWebpackPlugin('./assets/images/icon.png'),
   ],
 };

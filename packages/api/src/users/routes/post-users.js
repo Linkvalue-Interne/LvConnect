@@ -14,32 +14,34 @@ module.exports = {
       payload: payload.post,
     },
   },
-  handler(req, res) {
+  async handler(req, res) {
     const { User } = req.server.plugins.users.models;
     const { githubOrgUserLink, trelloOrgUserLink } = req.server.plugins.tasks;
 
     const user = new User(_.omit(req.payload, ['githubHandle', 'trelloHandle', 'plainPassword']));
 
-    const userPromise = user
-      .hashPassword(req.payload.plainPassword || req.server.methods.uuidHash())
-      .then(() => user.save())
-      .then((savedUser) => {
-        if (user.githubHandle) {
-          githubOrgUserLink({ user: savedUser });
-        }
-        if (user.trelloHandle) {
-          trelloOrgUserLink({ user: savedUser });
-        }
-        req.server.plugins.mailjet.sendAccountCreationMail(req.payload);
-        return savedUser;
-      })
-      .catch((err) => {
-        if (err.message.startsWith('E11000')) {
-          return Promise.reject(Boom.badRequest('email_already_used'));
-        }
-        return Promise.reject(Boom.wrap(err));
-      });
+    await user.hashPassword(req.server.methods.uuidHash());
 
-    return res.mongodb(userPromise, ['password', 'thirdParty', 'needPasswordChange']);
+    let savedUser;
+    try {
+      savedUser = await user.save();
+    } catch (err) {
+      if (err.message.startsWith('E11000')) {
+        return Promise.reject(Boom.badRequest('email_already_used'));
+      }
+      return Promise.reject(Boom.wrap(err));
+    }
+
+    if (user.githubHandle) {
+      githubOrgUserLink({ user: savedUser });
+    }
+    if (user.trelloHandle) {
+      trelloOrgUserLink({ user: savedUser });
+    }
+
+    const token = await req.server.plugins.login.createPasswordResetToken(savedUser._id.toString());
+    req.server.plugins.mailjet.sendAccountCreationMail(req.payload, token);
+
+    return res.mongodb(savedUser, ['password', 'thirdParty', 'needPasswordChange']);
   },
 };

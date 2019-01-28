@@ -6,4 +6,7 @@ export default createMuiTheme({
   custom: {
     drawerWidth: '300px',
   },
+  typography: {
+    useNextVariants: true,
+  },
 });

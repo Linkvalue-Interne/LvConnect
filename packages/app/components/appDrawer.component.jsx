@@ -4,7 +4,6 @@ import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
-import Hidden from '@material-ui/core/Hidden';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
@@ -16,7 +15,6 @@ import Apps from '@material-ui/icons/Apps';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import AccountBox from '@material-ui/icons/AccountBox';
-import HistoryIcon from '@material-ui/icons/History';
 
 import type { ConnectedAppDrawerProps } from './appDrawer.connector';
 
@@ -85,32 +83,24 @@ const AppDrawer = ({
       onClose={onDrawerClose}
     >
       {collapsed ? null : <div className={classes.drawerHeader} />}
-      <Hidden lgUp>
-        {user && (
-          <div className={classes.drawerProfile}>
-            <Avatar src={user.profilePictureUrl} alt={`${user.firstName} ${user.lastName}`} />
-            <Typography color="inherit" variant="subtitle1" className={classes.fullName}>
-              {`${user.firstName} ${user.lastName}`}
-            </Typography>
-            <Typography color="inherit">{user.email}</Typography>
-          </div>)
-        }
-      </Hidden>
+      {user && shouldCollapseDrawer && (
+        <div className={classes.drawerProfile}>
+          <Avatar src={user.profilePictureUrl} alt={`${user.firstName} ${user.lastName}`} />
+          <Typography color="inherit" variant="subtitle1" className={classes.fullName}>
+            {`${user.firstName} ${user.lastName}`}
+          </Typography>
+          <Typography color="inherit">{user.email}</Typography>
+        </div>)
+      }
       <Divider />
       <List className={classes.linkList}>
         <AppDrawerItem to="/dashboard" icon={<Home />} text="Acceuil" />
         <AppDrawerItem to="/dashboard/partners" icon={<SupervisorAccount />} text="Partners" />
         <AppDrawerItem to="/dashboard/apps" icon={<Apps />} text="Applications" />
       </List>
-      <Hidden lgUp>
+      {shouldCollapseDrawer && (
         <List disablePadding>
           <Divider />
-          <ListItem button component="a" href="/old/login">
-            <ListItemIcon>
-              <HistoryIcon />
-            </ListItemIcon>
-            <ListItemText primary="Version 1.0" />
-          </ListItem>
           <AppDrawerItem to="/dashboard/my-account" icon={<AccountBox />} text="Mon compte" />
           <ListItem button onClick={logout}>
             <ListItemIcon>
@@ -119,7 +109,7 @@ const AppDrawer = ({
             <ListItemText primary="Se déconnecter" />
           </ListItem>
         </List>
-      </Hidden>
+      )}
     </Drawer>
   );
 };

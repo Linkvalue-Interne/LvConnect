@@ -6,6 +6,11 @@ module.exports = {
   path: '/reset-password',
   config: {
     auth: { strategies: ['pkey-token', 'query-token', 'bearer'] },
+    plugins: {
+      crumb: {
+        restful: true,
+      },
+    },
     validate: {
       payload: Joi.object().keys({
         oldPassword: Joi.string().max(255),

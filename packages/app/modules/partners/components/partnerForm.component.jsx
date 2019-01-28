@@ -1,7 +1,7 @@
 // @flow
 
-import React, { Fragment } from 'react';
-import { reduxForm, Field, FormSection } from 'redux-form';
+import React from 'react';
+import { reduxForm, Field } from 'redux-form';
 import { push } from 'react-router-redux';
 import Grid from '@material-ui/core/Grid';
 import config from '@lvconnect/config/app';
@@ -50,7 +50,14 @@ const PartnerForm = ({
                   <Field name="lastName" type="text" label="Nom" component={TextField} required />
                 </Grid>
                 <Grid item xs={12}>
-                  <Field name="email" type="email" label="Email" component={TextField} disabled={editMode} required />
+                  <Field
+                    name="email"
+                    type="email"
+                    label="Email"
+                    component={TextField}
+                    disabled={editMode}
+                    required
+                  />
                 </Grid>
                 {canEdit && (
                   <Grid item xs={12}>
@@ -68,17 +75,15 @@ const PartnerForm = ({
                     options={jobsMap}
                   />
                 </Grid>
-                <FormSection name="address" component={Fragment}>
-                  <Grid item xs={12}>
-                    <Field name="street" type="text" label="Adresse" component={TextField} />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Field name="zipCode" type="text" label="Code postal" component={TextField} />
-                  </Grid>
-                  <Grid item xs={8}>
-                    <Field name="city" type="text" label="Ville" component={TextField} />
-                  </Grid>
-                </FormSection>
+                <Grid item xs={12}>
+                  <Field name="address.street" type="text" label="Adresse" component={TextField} />
+                </Grid>
+                <Grid item xs={4}>
+                  <Field name="address.zipCode" type="text" label="Code postal" component={TextField} />
+                </Grid>
+                <Grid item xs={8}>
+                  <Field name="address.city" type="text" label="Ville" component={TextField} />
+                </Grid>
                 <Grid item md={6} xs={12}>
                   <Field
                     name="hiredAt"

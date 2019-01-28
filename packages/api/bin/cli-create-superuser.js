@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-const { mongodb, roles } = require('@lvconnect/config/server');
+const { mongodb = {}, roles } = require('@lvconnect/config/server');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -10,7 +10,9 @@ const User = require('../src/users/models/user.model');
 module.exports = async () => {
   const userPart = mongodb.username ? `${mongodb.username}:${mongodb.password}@` : '';
   try {
-    await mongoose.connect(mongodb.url || `mongodb://${userPart}${mongodb.host}:${mongodb.port}/${mongodb.database}`);
+    await mongoose.connect(mongodb.url || `mongodb://${userPart}${mongodb.host}:${mongodb.port}/${mongodb.database}`, {
+      useNewUrlParser: true,
+    });
   } catch (e) {
     console.log('Failed to connect to mongodb database');
     process.exit(1);
