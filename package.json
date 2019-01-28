@@ -4,7 +4,7 @@
   "workspaces": [
     "packages/**"
   ],
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Authentication platform for LinkValue",
   "license": "Proprietary",
   "main": "./server/index.js",

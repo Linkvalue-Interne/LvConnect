@@ -1,3 +1,13 @@
+<a name="2.4.1"></a>
+## [2.4.1](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.4.0...v2.4.1) (2019-01-28)
+
+
+### Bug Fixes
+
+* **api:** Fix issues with POST /oauth/tokens ([c855df7](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/c855df7))
+
+
+
 <a name="2.4.0"></a>
 # [2.4.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.2.2...v2.4.0) (2019-01-25)
 
