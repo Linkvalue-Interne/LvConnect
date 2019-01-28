@@ -112,7 +112,7 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
               <MenuItem
                 onClick={this.handleMenuClose}
                 component={Link}
-                to={`/dashboard/partners/${user ? user.id : ''}`}
+                to="/dashboard/my-account"
               >
                 Mon compte
               </MenuItem>

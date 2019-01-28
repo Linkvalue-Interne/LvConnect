@@ -108,19 +108,18 @@ module.exports = {
       mode: 'optional',
     },
     validate: {
-      payload: Joi.object({
+      payload: Joi.object().keys({
         grant_type: Joi.string().valid(grantTypes).required(),
         client_id: Joi.string(),
         client_secret: Joi.string(),
         username: Joi.any().when('grant_type', { is: 'password', then: Joi.string().required() }),
         password: Joi.any().when('grant_type', { is: 'password', then: Joi.string().required() }),
-        refresh_token: Joi.alternatives().when('grant_type', { is: 'refresh_token', then: Joi.string().required() }),
+        refresh_token: Joi.any().when('grant_type', { is: 'refresh_token', then: Joi.string().required() }),
         code: Joi.any().when('grant_type', { is: 'authorization_code', then: Joi.string().required() }),
-        redirect_uri: Joi.any().when('grant_type', { is: 'authorization_code', then: Joi.string().required() }),
         scope: Joi.array().items(Joi.string().valid(validScopes))
           .when('grant_type', { is: 'refresh_token', then: Joi.optional() })
           .when('grant_type', { is: 'password', then: Joi.optional() }),
-      }),
+      }).unknown(),
     },
   },
   async handler(req, h) {

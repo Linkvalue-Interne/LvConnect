@@ -9,6 +9,12 @@ const manifest = {
     port: config.host.port,
     cache: config.server.cache,
     routes: {
+      validate: {
+        failAction: (req, h, err) => {
+          req.server.log('error', err);
+          throw err;
+        },
+      },
       cors: {
         origin: ['*'],
       },

@@ -16,10 +16,6 @@ import scopesLabels from '../scopesLabels';
 
 const scopes = config.oauth.scopes.map(scope => [scope, scopesLabels[scope] || scope]);
 
-const formatRedirectUris = (redirectUris?: Array<string>): string => (redirectUris || []).join('\n');
-
-const normalizeRedirectUris = (redirectUris: string): Array<string> => redirectUris.split('\n').filter(uri => !!uri);
-
 type AppFormProps = FormProps & {
   children: (params: { children: any, valid: boolean }) => any,
 };
@@ -51,8 +47,6 @@ const AppForm = ({
               rowsMax="4"
               required
               helperText="Chaque url doit être séparée par un retour à la ligne"
-              format={formatRedirectUris}
-              normalize={normalizeRedirectUris}
             />
           </Grid>
           <Grid item xs={12}>
@@ -107,8 +101,11 @@ export default reduxForm({
   },
   validate,
   asyncValidate,
-  onSubmit: async (formData: User, dispatch: Dispatch<ReduxAction>, { onFormSubmit }) => {
-    await onFormSubmit(formData);
+  onSubmit: async (formData: any, dispatch: Dispatch<ReduxAction>, { onFormSubmit }) => {
+    await onFormSubmit({
+      ...formData,
+      redirectUris: formData.redirectUris.split('\n').filter(uri => !!uri),
+    });
     dispatch(push('/dashboard/apps'));
   },
 })(AppForm);
