@@ -1,3 +1,13 @@
+<a name="2.5.0"></a>
+# [2.5.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.4.1...v2.5.0) (2019-01-28)
+
+
+### Features
+
+* **global:** Remove entirely old interface ([c57d503](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/c57d503))
+
+
+
 <a name="2.4.1"></a>
 ## [2.4.1](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.4.0...v2.4.1) (2019-01-28)
 
