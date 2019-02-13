@@ -38,22 +38,29 @@ class CheckboxesField extends Component<CheckboxesFieldProps, any> {
   };
 
   render() {
-    const { options, meta, label, row } = this.props;
+    const { options, meta, label, row, input } = this.props;
     const { values } = this.state;
 
     return (
-      <FormControl component="fieldset" error={meta.error}>
+      <FormControl component="fieldset" error={meta.touched && !!meta.error}>
         <FormLabel component="legend" required>{label}</FormLabel>
         <FormGroup row={row}>
           {options.map(([value, optionLabel]) => (
             <FormControlLabel
               key={value}
-              control={<Checkbox checked={values.includes(value)} onChange={this.handleChange(value)} />}
+              control={(
+                <Checkbox
+                  checked={values.includes(value)}
+                  onChange={this.handleChange(value)}
+                  onBlur={() => input.onBlur()}
+                  onFocus={() => input.onFocus()}
+                />
+              )}
               label={optionLabel}
             />
           ))}
         </FormGroup>
-        <FormHelperText>{meta.error}</FormHelperText>
+        <FormHelperText>{meta.touched && meta.error}</FormHelperText>
       </FormControl>
     );
   }

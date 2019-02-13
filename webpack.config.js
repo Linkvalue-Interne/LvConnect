@@ -1,5 +1,5 @@
 const path = require('path');
-const { DefinePlugin } = require('webpack');
+const { DefinePlugin, ContextReplacementPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -64,11 +64,12 @@ module.exports = {
     overlay: true,
     progress: true,
     proxy: [{
-      context: ['/oauth', '/users', '/login', '/forgot-password', '/reset-password', '/old', '/mdl', '/apps'],
+      context: ['/oauth', '/users', '/login', '/forgot-password', '/reset-password', '/old', '/mdl', '/apps', '/hooks'],
       target: 'http://localhost:8000',
     }],
   },
   plugins: [
+    new ContextReplacementPlugin(/moment[/\\]locale$/, /fr/),
     new CleanWebpackPlugin(['./dist']),
     new HtmlWebpackPlugin({
       template: './index.html',

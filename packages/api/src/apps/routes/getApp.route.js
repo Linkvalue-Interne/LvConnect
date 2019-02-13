@@ -18,7 +18,7 @@ module.exports = {
     const app = await Application.findOne({ _id: req.params.app });
 
     if (!app) {
-      throw Boom.notFound('User Not Found');
+      throw Boom.notFound('App Not Found');
     }
 
     return res.mongodb(app);

@@ -1,15 +1,10 @@
 // @flow
 
-import React, { Fragment } from 'react';
-import Typography from '@material-ui/core/Typography';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 
-import type { ConnectedHomeProps } from './home.connector';
-
-const Home = ({ user }: ConnectedHomeProps) => user && (
-  <Fragment>
-    <Typography variant="h3" gutterBottom>Dashboard</Typography>
-    <Typography>Hello {user.firstName}! :)</Typography>
-  </Fragment>
+const Home = () => (
+  <Redirect to="/dashboard/partners" />
 );
 
 export default Home;

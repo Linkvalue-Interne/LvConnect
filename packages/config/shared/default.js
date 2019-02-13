@@ -28,6 +28,9 @@ module.exports = {
     addApp: [TECH, BOARD],
     editApp: [TECH, BOARD],
     deleteApp: [TECH, BOARD],
+    addHook: [TECH, BOARD],
+    editHook: [TECH, BOARD],
+    deleteHook: [TECH, BOARD],
   },
   jobs: ['front', 'back', 'fullStack', 'designer', 'data', 'devOps', 'projectManager', 'mobile', 'marketing'],
   oauth: {
@@ -44,6 +47,21 @@ module.exports = {
       'apps:create',
       'apps:delete',
       'apps:modify',
+      'hooks:get',
+      'hooks:create',
+      'hooks:delete',
+      'hooks:modify',
     ],
+  },
+  hooks: {
+    events: {
+      userCreated: 'user:created',
+      userModified: 'user:modified',
+      userDeleted: 'user:deleted',
+    },
+    statuses: {
+      success: 'success',
+      failure: 'failure',
+    },
   },
 };

@@ -10,7 +10,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
-import Home from '@material-ui/icons/Home';
 import Apps from '@material-ui/icons/Apps';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
@@ -94,7 +93,6 @@ const AppDrawer = ({
       }
       <Divider />
       <List className={classes.linkList}>
-        <AppDrawerItem to="/dashboard" icon={<Home />} text="Acceuil" />
         <AppDrawerItem to="/dashboard/partners" icon={<SupervisorAccount />} text="Partners" />
         <AppDrawerItem to="/dashboard/apps" icon={<Apps />} text="Applications" />
       </List>

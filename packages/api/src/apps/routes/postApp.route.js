@@ -7,14 +7,14 @@ module.exports = {
   method: 'POST',
   path: '/apps',
   config: {
-    pre: [hasScopeInList('users:create'), hasRoleInList(permissions.addApp)],
+    pre: [hasScopeInList('apps:create'), hasRoleInList(permissions.addApp)],
     validate: {
       payload,
     },
   },
   async handler(req, res) {
     const { Application } = req.server.plugins.apps.models;
-    const app = Application.create(req.payload);
+    const app = Application.create({ ...req.payload, user: req.auth.credentials.user._id });
     return res.mongodb(app);
   },
 };

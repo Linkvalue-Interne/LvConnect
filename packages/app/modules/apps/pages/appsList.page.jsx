@@ -118,6 +118,7 @@ class AppsList extends Component<AppsListProps> {
               <TableRow>
                 <TableCell>Nom</TableCell>
                 <TableCell>Description</TableCell>
+                <TableCell>Auteur</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -130,6 +131,7 @@ class AppsList extends Component<AppsListProps> {
                 >
                   <TableCell>{app.name}</TableCell>
                   <TableCell>{app.description}</TableCell>
+                  <TableCell>{app.user && `${app.user.lastName} ${app.user.firstName}`}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

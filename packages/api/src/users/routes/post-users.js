@@ -1,6 +1,6 @@
 const Boom = require('boom');
 const _ = require('lodash');
-const { permissions } = require('@lvconnect/config/server');
+const { permissions, hooks } = require('@lvconnect/config/server');
 
 const { hasRoleInList, hasScopeInList } = require('../../middlewares');
 const { payload } = require('./user-validation');
@@ -41,6 +41,11 @@ module.exports = {
 
     const token = await req.server.plugins.login.createPasswordResetToken(savedUser._id.toString());
     req.server.plugins.mailjet.sendAccountCreationMail(req.payload, token);
+
+    req.server.plugins.hooks.trigger(hooks.events.userCreated, {
+      user: _.omit(savedUser.toJSON(), ['password', 'thirdParty', 'needPasswordChange']),
+      sender: _.omit(req.auth.credentials.user.toJSON(), ['password', 'thirdParty', 'needPasswordChange']),
+    });
 
     return res.mongodb(savedUser, ['password', 'thirdParty', 'needPasswordChange']);
   },

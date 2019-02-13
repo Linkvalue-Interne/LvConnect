@@ -39,6 +39,7 @@ module.exports = {
       .skip(page * limit || 0)
       .select('-appId -appSecret')
       .sort('name')
+      .populate({ path: 'user', select: ['firstName', 'lastName'] })
       .exec();
 
     const countPromise = applyFilters(Application.countDocuments());

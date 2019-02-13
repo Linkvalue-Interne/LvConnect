@@ -7,11 +7,17 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
 import { withStyles } from '@material-ui/core/styles';
 import { Helmet } from 'react-helmet';
 
 import type { ContextRouter } from 'react-router-redux';
 import type { ConnectedEditAppProps } from './editApp.connector';
+import AppHooks from '../components/appHooks.connector';
 
 import AppForm from '../components/appForm.component';
 
@@ -22,8 +28,13 @@ const styles = theme => ({
 });
 
 type EditAppProps = ContextRouter & ConnectedEditAppProps;
+type EditAppState = { deleteModalOpened: boolean; }
 
-class EditApp extends Component<EditAppProps> {
+class EditApp extends Component<EditAppProps, EditAppState> {
+  state = {
+    deleteModalOpened: false,
+  };
+
   componentWillMount() {
     this.props.fetchAppDetails(this.props.match.params.appId);
   }
@@ -35,8 +46,11 @@ class EditApp extends Component<EditAppProps> {
     this.props.push('/dashboard/apps');
   };
 
+  handleDeleteModalToggle = value => () => this.setState({ deleteModalOpened: value });
+
   render() {
     const { app, isLoading, classes } = this.props;
+    const { deleteModalOpened } = this.state;
     return !isLoading && app && (
       <Fragment>
         <Helmet>
@@ -64,6 +78,7 @@ class EditApp extends Component<EditAppProps> {
           </CardContent>
         </Card>
         <AppForm
+          appId={app.id}
           initialValues={{ ...app, redirectUris: app.redirectUris.join('\n') }}
           onFormSubmit={this.handleFormSubmit}
         >
@@ -77,11 +92,26 @@ class EditApp extends Component<EditAppProps> {
               </CardContent>
               <CardActions>
                 <Button size="small" color="primary" type="submit" disabled={!valid || pristine}>Sauvegarder</Button>
-                <Button size="small" type="button" onClick={this.handleDeleteApp}>Supprimer</Button>
+                <Button size="small" type="button" onClick={this.handleDeleteModalToggle(true)}>Supprimer</Button>
+                <Dialog open={deleteModalOpened} onClose={this.handleDeleteModalToggle(false)}>
+                  <DialogTitle>Suppression de {app.name}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Vous êtes sur le point de supprimer définitivement une application. Cette action est irréversible
+                      et entraîne la suppression de toutes les autorisations, hooks et sessions liés à cette
+                      application.
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button color="primary" onClick={this.handleDeleteApp}>Confirmer la suppression</Button>
+                    <Button autoFocus onClick={this.handleDeleteModalToggle(false)}>Annuler</Button>
+                  </DialogActions>
+                </Dialog>
               </CardActions>
             </Card>
           )}
         </AppForm>
+        <AppHooks appId={app.id} />
       </Fragment>
     );
   }

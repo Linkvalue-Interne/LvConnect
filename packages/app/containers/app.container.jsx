@@ -36,6 +36,9 @@ const styles = theme => ({
       marginTop: 64,
     },
   },
+  appContentWrapper: {
+    paddingBottom: theme.spacing.unit * 5,
+  },
   '@global': {
     'html, body, #root': {
       width: '100%',
@@ -87,7 +90,9 @@ class App extends React.Component<AppProps, AppState> {
           <AppBar onDrawerOpen={this.handleDrawerOpen} />
           <AppDrawer open={this.state.drawerOpen} onDrawerClose={this.handleDrawerClose} />
           <div className={classes.appContent}>
-            {children}
+            <div className={classes.appContentWrapper}>
+              {children}
+            </div>
           </div>
         </div>
       </div>

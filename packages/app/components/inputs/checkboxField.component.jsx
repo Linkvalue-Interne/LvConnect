@@ -6,10 +6,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import type { FieldProps } from 'redux-form/lib/FieldProps.types.js.flow';
 
-type TextFieldProps = FieldProps & {
+type CheckboxFieldProps = FieldProps & {
   className: String,
   label: String,
   title?: String,
@@ -20,7 +21,7 @@ type TextFieldProps = FieldProps & {
   required: Boolean,
 };
 
-const TextField = ({
+const CheckboxField = ({
   className,
   input,
   meta,
@@ -30,16 +31,17 @@ const TextField = ({
   forceShrink,
   required,
   ...inputProps
-}: TextFieldProps) => (
+}: CheckboxFieldProps) => (
   <FormControl className={className} error={!!meta.error && meta.touched} fullWidth>
     {title && <FormLabel htmlFor={input.name} required={required}>{title}</FormLabel>}
     <FormGroup>
       <FormControlLabel
-        control={<Checkbox required={required} {...input} {...inputProps} />}
+        control={<Checkbox required={required} {...input} {...inputProps} value="" />}
         label={label}
       />
+      <FormHelperText>{(meta.touched && meta.error) || helperText}</FormHelperText>
     </FormGroup>
   </FormControl>
 );
 
-export default TextField;
+export default CheckboxField;

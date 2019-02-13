@@ -10,6 +10,7 @@ const applicationSchema = new mongoose.Schema({
   redirectUris: [String],
   allowedScopes: [String],
   allowedGrantTypes: [String],
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
 module.exports = mongoose.model('Application', applicationSchema);
