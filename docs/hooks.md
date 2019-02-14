@@ -25,7 +25,7 @@ will contain:
 
 ```json
 {
-  "user": {}, // Created suer informations
+  "user": {}, // Created user informations
   "sender": {} // User that triggered the creation
 }
 ```
@@ -64,8 +64,10 @@ example integrations bellow:
 
 ### NodeJS
 
-In NodeJS you'll no any extra library to perform the validation since HMAC SHA1 can be performed from the
-`crypto` module of the NodeJS API. Example using Express:
+In NodeJS you'll need no any extra library to perform the validation since HMAC SHA1 can be performed from the
+`crypto` module of the NodeJS API. 
+
+Example using Express:
 
 ```js
 import express from 'express';
