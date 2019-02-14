@@ -1,5 +1,6 @@
 const Boom = require('boom');
-const { permissions } = require('@lvconnect/config/server');
+const _ = require('lodash');
+const { permissions, hooks } = require('@lvconnect/config/server');
 
 const { hasRoleInList, isConnectedUser, hasScopeInList } = require('../../middlewares');
 const { payload, params } = require('./user-validation');
@@ -19,7 +20,7 @@ module.exports = {
       params,
     },
   },
-  handler(req, res) {
+  async handler(req, res) {
     const { User } = req.server.plugins.users.models;
     const { isConnectedUser: isSelf, hasRights, scopes } = req.pre;
     const hasEditAnyUserScope = scopes.indexOf('users:modify') !== -1;
@@ -46,24 +47,25 @@ module.exports = {
       $unset: filter(req.payload, value => value === null),
     }, update => Object.keys(update).length);
 
-    const userPromise = User
-      .findOneAndUpdate({ _id: req.params.user }, updates, { new: true, runSettersOnQuery: true })
-      .exec()
-      .then((savedUser) => {
-        if (!savedUser) {
-          return Promise.reject(Boom.notFound('User Not Found'));
-        }
+    const savedUser = await User
+      .findOneAndUpdate({ _id: req.params.user }, updates, { new: true, runSettersOnQuery: true });
 
-        if (savedUser.githubHandle && savedUser.thirdParty.github !== 'success') {
-          githubOrgUserLink({ user: savedUser });
-        }
-        if (savedUser.trelloHandle && savedUser.thirdParty.trello !== 'success') {
-          trelloOrgUserLink({ user: savedUser });
-        }
+    if (!savedUser) {
+      throw Boom.notFound('User Not Found');
+    }
 
-        return Promise.resolve(savedUser);
-      });
+    if (savedUser.githubHandle && savedUser.thirdParty.github !== 'success') {
+      githubOrgUserLink({ user: savedUser });
+    }
+    if (savedUser.trelloHandle && savedUser.thirdParty.trello !== 'success') {
+      trelloOrgUserLink({ user: savedUser });
+    }
 
-    return res.mongodb(userPromise, ['password', 'thirdParty', 'needPasswordChange']);
+    req.server.plugins.hooks.trigger(hooks.events.userCreated, {
+      user: _.omit(savedUser.toJSON(), ['password', 'thirdParty', 'needPasswordChange']),
+      sender: _.omit(req.auth.credentials.user.toJSON(), ['password', 'thirdParty', 'needPasswordChange']),
+    });
+
+    return res.mongodb(savedUser, ['password', 'thirdParty', 'needPasswordChange']);
   },
 };

@@ -1,5 +1,6 @@
 const Boom = require('boom');
-const { permissions } = require('@lvconnect/config/server');
+const _ = require('lodash');
+const { permissions, hooks } = require('@lvconnect/config/server');
 
 const { hasRoleInList, hasScopeInList } = require('../../middlewares');
 const { params } = require('./user-validation');
@@ -22,6 +23,12 @@ module.exports = {
     }
 
     await req.server.methods.cleanupUserAuth(req.params.user);
+
+    req.server.plugins.hooks.trigger(hooks.events.userCreated, {
+      userId: req.params.user,
+      sender: _.omit(req.auth.credentials.user.toJSON(), ['password', 'thirdParty', 'needPasswordChange']),
+    });
+
     return { deleted: true };
   },
 };
