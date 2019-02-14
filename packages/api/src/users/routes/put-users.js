@@ -61,7 +61,7 @@ module.exports = {
       trelloOrgUserLink({ user: savedUser });
     }
 
-    req.server.plugins.hooks.trigger(hooks.events.userCreated, {
+    req.server.plugins.hooks.trigger(hooks.events.userModified, {
       user: _.omit(savedUser.toJSON(), ['password', 'thirdParty', 'needPasswordChange']),
       sender: _.omit(req.auth.credentials.user.toJSON(), ['password', 'thirdParty', 'needPasswordChange']),
     });

@@ -106,12 +106,28 @@ class RunsList extends Component<RunsListProps, RunsListState> {
   render() {
     const { runs, classes } = this.props;
     const { tab, expanded } = this.state;
+
+    if (runs.length === 0) {
+      return (
+        <Card className={classes.runsList}>
+          <CardContent>
+            <Typography variant="h5" component="h2" gutterBottom>
+              Derniers déclenchements
+            </Typography>
+            <Typography>
+              Aucun déclenchement effectué pour le moment.
+            </Typography>
+          </CardContent>
+        </Card>
+      );
+    }
+
     return (
       <Fragment>
         <Card className={classes.runsList}>
           <CardContent>
             <Typography variant="h5" component="h2" gutterBottom>
-              Derniers lancements
+              Derniers déclenchements
             </Typography>
           </CardContent>
         </Card>
@@ -145,8 +161,8 @@ class RunsList extends Component<RunsListProps, RunsListState> {
                           className={`
                             ${classes.responseBadge}
                             ${run.status === config.hooks.statuses.failure
-                              ? classes.responseBadgeError
-                              : classes.responseBadgeSuccess
+                            ? classes.responseBadgeError
+                            : classes.responseBadgeSuccess
                             }`}
                         >
                           {run.response.statusCode}

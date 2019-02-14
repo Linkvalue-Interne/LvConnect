@@ -24,7 +24,7 @@ module.exports = {
 
     await req.server.methods.cleanupUserAuth(req.params.user);
 
-    req.server.plugins.hooks.trigger(hooks.events.userCreated, {
+    req.server.plugins.hooks.trigger(hooks.events.userDeleted, {
       userId: req.params.user,
       sender: _.omit(req.auth.credentials.user.toJSON(), ['password', 'thirdParty', 'needPasswordChange']),
     });

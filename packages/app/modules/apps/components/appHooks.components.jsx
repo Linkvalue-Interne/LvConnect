@@ -70,7 +70,8 @@ class AppHooks extends Component<AppHooksProps> {
               <ListItem key={hook.id} button onClick={() => push(`/dashboard/apps/${appId}/hooks/${hook.id}`)}>
                 <ListItemIcon>
                   <Icon
-                    color={hook.runs && hook.runs[0].status === config.hooks.statuses.failure ? 'error' : 'primary'}
+                    color={hook.runs && hook.runs.length > 0 && hook.runs[0].status === config.hooks.statuses.failure
+                      ? 'error' : 'primary'}
                   >
                     {(hook.runs && hook.runs.length > 0 && hook.runs[0].status === config.hooks.statuses.failure)
                       ? <ErrorIcon />

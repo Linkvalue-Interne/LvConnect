@@ -22,24 +22,31 @@ module.exports = {
     server.plugins.tasks.registerWorker({
       name: 'execHook',
       initWorker: () => async ({ data: { event } }) => {
-        server.log(['worker', 'info'], `Triggering hooks for ${event.name} with ${JSON.stringify(event.data)}`);
+        const body = JSON.stringify(event.data);
+        server.log(['worker', 'info'], `Triggering hooks for ${event.name} with ${body}`);
 
         const hooks = await models.Hook.find({ listeningTo: { $in: [event.name] }, active: true });
 
         await Promise.all(hooks.map(async (hook) => {
-          const hash = crypto.createHmac('sha1', 'hook.secret').update(hook.secret).digest('hex');
+          const hash = crypto.createHmac('sha1', hook.secret).update(body).digest('hex');
           const identifier = uuid();
           const headers = {
             'X-LVConnect-Signature': `sha1=${hash}`,
             'X-LVConnect-Event': event.name,
             'X-LVConnect-Delivery': identifier,
+            'Content-Type': 'application/json',
           };
-          const body = event.data;
           const dateStart = new Date();
 
           let res;
           try {
-            res = await request({ body, headers, uri: hook.uri, json: true, resolveWithFullResponse: true });
+            res = await request({
+              method: 'POST',
+              body,
+              headers,
+              uri: hook.uri,
+              resolveWithFullResponse: true,
+            });
           } catch (e) {
             res = e.response;
           }
@@ -56,7 +63,6 @@ module.exports = {
                 ...headers,
                 'Request URL': hook.uri,
                 'Request method': 'POST',
-                'Content-Type': 'application/json',
               }),
             },
             response: res && {
