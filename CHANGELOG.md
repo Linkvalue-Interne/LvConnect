@@ -1,3 +1,14 @@
+<a name="2.6.0"></a>
+# [2.6.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.5.0...v2.6.0) (2019-02-14)
+
+
+### Features
+
+* **global:** Wire up update and delete user hooks ([d800f5e](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/d800f5e))
+* **hooks:** Add hooks feature ([443f8e8](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/443f8e8))
+
+
+
 <a name="2.5.0"></a>
 # [2.5.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.4.1...v2.5.0) (2019-01-28)
 
