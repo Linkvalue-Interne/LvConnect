@@ -33,19 +33,19 @@ const commonFields = {
   lastName: Joi.string().min(2).required(),
   roles: Joi.array().items(Joi.string().valid(validRoles)).min(1).required(),
   city: Joi.string().valid(cities).required(),
-  description: Joi.string().max(255).empty(''),
-  phone: customJoi.string().phone(),
-  job: Joi.string(),
+  description: Joi.string().max(255).empty('').allow(null),
+  phone: customJoi.string().phone().allow(null),
+  job: Joi.string().allow(null),
   tags: Joi.array().items(Joi.string()),
-  hiredAt: Joi.date().iso(),
-  leftAt: Joi.date().iso(),
-  birthDate: Joi.date().iso(),
-  registrationNumber: Joi.string(),
+  hiredAt: Joi.date().iso().allow(null),
+  leftAt: Joi.date().iso().allow(null),
+  birthDate: Joi.date().iso().allow(null),
+  registrationNumber: Joi.string().allow(null),
   address: Joi.object().keys({
     street: Joi.string(),
     zipCode: Joi.string(),
     city: Joi.string(),
-  }),
+  }).allow(null),
 };
 
 exports.payload = {

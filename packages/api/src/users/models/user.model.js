@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   tags: [String],
   phone: { type: String, set: formatPhoneNumber },
   job: String,
-  password: String,
+  password: { type: String, select: false },
   roles: [String],
   githubHandle: String,
   trelloHandle: String,
@@ -57,7 +57,7 @@ userSchema.methods.comparePassword = function comparePassword(password) {
 };
 
 userSchema.statics.findOneByEmailAndPassword = function findOneByEmailAndPassword(email, password) {
-  return this.findOne({ email })
+  return this.findOne({ email }).select('+password')
     .then((user) => {
       if (user === null) throw Error('user_not_found');
       return user.comparePassword(password)

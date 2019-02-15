@@ -4,14 +4,13 @@ const { permissions, hooks } = require('@lvconnect/config/server');
 
 const { hasRoleInList, isConnectedUser, hasScopeInList } = require('../../middlewares');
 const { payload, params } = require('./user-validation');
-const filter = require('lodash/pickBy');
 
 module.exports = {
   method: 'PUT',
   path: '/users/{user}',
   config: {
     pre: [
-      hasScopeInList('users:modify', 'profile:modify'),
+      hasScopeInList(['users:modify', 'profile:modify']),
       isConnectedUser,
       hasRoleInList(permissions.editUser, true),
     ],
@@ -23,8 +22,8 @@ module.exports = {
   async handler(req, res) {
     const { User } = req.server.plugins.users.models;
     const { isConnectedUser: isSelf, hasRights, scopes } = req.pre;
-    const hasEditAnyUserScope = scopes.indexOf('users:modify') !== -1;
-    const hasEditSelfScope = scopes.indexOf('profile:modify') !== -1;
+    const hasEditAnyUserScope = scopes.indexOf('users:modify') >= 0;
+    const hasEditSelfScope = scopes.indexOf('profile:modify') >= 0;
     const { githubOrgUserLink, trelloOrgUserLink } = req.server.plugins.tasks;
 
     // Check can edit other users
@@ -42,30 +41,35 @@ module.exports = {
       throw Boom.forbidden('insufficient_rights');
     }
 
-    const updates = filter({
-      $set: filter(req.payload, value => value !== null),
-      $unset: filter(req.payload, value => value === null),
-    }, update => Object.keys(update).length);
+    const user = await User.findById(req.params.user);
 
-    const savedUser = await User
-      .findOneAndUpdate({ _id: req.params.user }, updates, { new: true, runSettersOnQuery: true });
-
-    if (!savedUser) {
+    if (!user) {
       throw Boom.notFound('User Not Found');
     }
 
-    if (savedUser.githubHandle && savedUser.thirdParty.github !== 'success') {
-      githubOrgUserLink({ user: savedUser });
+    const oldUser = user.toJSON();
+    Object.assign(user, req.payload);
+    Object.entries(req.payload).forEach(([key, value]) => {
+      if (value === null) {
+        user[key] = undefined;
+      }
+    });
+
+    await user.save();
+
+    if (user.githubHandle && user.thirdParty.github !== 'success') {
+      githubOrgUserLink({ user });
     }
-    if (savedUser.trelloHandle && savedUser.thirdParty.trello !== 'success') {
-      trelloOrgUserLink({ user: savedUser });
+    if (user.trelloHandle && user.thirdParty.trello !== 'success') {
+      trelloOrgUserLink({ user });
     }
 
     req.server.plugins.hooks.trigger(hooks.events.userModified, {
-      user: _.omit(savedUser.toJSON(), ['password', 'thirdParty', 'needPasswordChange']),
-      sender: _.omit(req.auth.credentials.user.toJSON(), ['password', 'thirdParty', 'needPasswordChange']),
+      oldUser: _.omit(oldUser, ['thirdParty', 'needPasswordChange']),
+      user: _.omit(user.toJSON(), ['thirdParty', 'needPasswordChange']),
+      sender: _.omit(req.auth.credentials.user.toJSON(), ['thirdParty', 'needPasswordChange']),
     });
 
-    return res.mongodb(savedUser, ['password', 'thirdParty', 'needPasswordChange']);
+    return res.mongodb(user, ['thirdParty', 'needPasswordChange']);
   },
 };

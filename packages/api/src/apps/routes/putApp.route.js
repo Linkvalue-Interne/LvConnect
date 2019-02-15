@@ -9,7 +9,7 @@ module.exports = {
   path: '/apps/{app}',
   config: {
     pre: [
-      hasScopeInList('apps:modify'),
+      hasScopeInList(['apps:modify']),
       hasRoleInList(permissions.editApp),
     ],
     validate: {

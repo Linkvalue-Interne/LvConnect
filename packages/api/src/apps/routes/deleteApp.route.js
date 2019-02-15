@@ -8,7 +8,7 @@ module.exports = {
   method: 'DELETE',
   path: '/apps/{app}',
   config: {
-    pre: [hasScopeInList('apps:delete'), hasRoleInList(permissions.deleteApp)],
+    pre: [hasScopeInList(['apps:delete']), hasRoleInList(permissions.deleteApp)],
     validate: {
       params,
     },

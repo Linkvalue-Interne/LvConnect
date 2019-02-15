@@ -9,24 +9,25 @@ module.exports = {
   method: 'DELETE',
   path: '/users/{user}',
   config: {
-    pre: [hasScopeInList('users:delete'), hasRoleInList(permissions.deleteUser)],
+    pre: [hasScopeInList(['users:delete']), hasRoleInList(permissions.deleteUser)],
     validate: {
       params,
     },
   },
   async handler(req) {
     const { User } = req.server.plugins.users.models;
-    const { n: deleted } = await User.remove({ _id: req.params.user });
 
-    if (!deleted) {
+    const user = await User.findById(req.params.user);
+    if (!user) {
       throw Boom.notFound();
     }
 
+    await User.remove({ _id: req.params.user });
     await req.server.methods.cleanupUserAuth(req.params.user);
 
     req.server.plugins.hooks.trigger(hooks.events.userDeleted, {
-      userId: req.params.user,
-      sender: _.omit(req.auth.credentials.user.toJSON(), ['password', 'thirdParty', 'needPasswordChange']),
+      user: _.omit(user.toJSON(), ['thirdParty', 'needPasswordChange']),
+      sender: _.omit(req.auth.credentials.user.toJSON(), ['thirdParty', 'needPasswordChange']),
     });
 
     return { deleted: true };

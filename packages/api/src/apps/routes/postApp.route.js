@@ -7,7 +7,7 @@ module.exports = {
   method: 'POST',
   path: '/apps',
   config: {
-    pre: [hasScopeInList('apps:create'), hasRoleInList(permissions.addApp)],
+    pre: [hasScopeInList(['apps:create']), hasRoleInList(permissions.addApp)],
     validate: {
       payload,
     },

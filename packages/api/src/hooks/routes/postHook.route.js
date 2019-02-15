@@ -8,7 +8,7 @@ module.exports = {
   path: '/hooks',
   method: 'POST',
   config: {
-    pre: [hasScopeInList('hooks:create'), hasRoleInList(permissions.addHook)],
+    pre: [hasScopeInList(['hooks:create']), hasRoleInList(permissions.addHook)],
     validate: {
       payload: { ...payload, appId: Joi.string().required() },
     },

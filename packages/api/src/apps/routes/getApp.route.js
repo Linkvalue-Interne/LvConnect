@@ -7,7 +7,7 @@ module.exports = {
   method: 'GET',
   path: '/apps/{app}',
   config: {
-    pre: [hasScopeInList('apps:get')],
+    pre: [hasScopeInList(['apps:get'])],
     validate: {
       params,
     },

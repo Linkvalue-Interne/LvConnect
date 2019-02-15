@@ -31,7 +31,7 @@ const isConnectedUser = {
   failAction: 'ignore',
 };
 
-function hasScopeInList(...wantedScopes) {
+function hasScopeInList(wantedScopes) {
   return {
     method(request) {
       const { scopes } = request.auth.credentials;

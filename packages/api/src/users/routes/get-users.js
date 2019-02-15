@@ -6,7 +6,7 @@ module.exports = {
   method: 'GET',
   path: '/users/{user}',
   config: {
-    pre: [hasScopeInList('users:get', 'profile:get')],
+    pre: [hasScopeInList(['users:get', 'profile:get'])],
     validate: {
       params,
     },

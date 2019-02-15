@@ -5,7 +5,7 @@ module.exports = {
   method: 'GET',
   path: '/apps',
   config: {
-    pre: [hasScopeInList('apps:get')],
+    pre: [hasScopeInList(['apps:get'])],
     validate: {
       query: Joi.object().keys({
         name: Joi.string().max(50),

@@ -9,7 +9,7 @@ module.exports = {
   method: 'POST',
   path: '/users',
   config: {
-    pre: [hasScopeInList('users:create'), hasRoleInList(permissions.addUser)],
+    pre: [hasScopeInList(['users:create']), hasRoleInList(permissions.addUser)],
     validate: {
       payload: payload.post,
     },

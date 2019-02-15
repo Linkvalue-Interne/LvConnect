@@ -9,7 +9,7 @@ module.exports = {
   path: '/hooks/{hook}',
   config: {
     pre: [
-      hasScopeInList('hooks:modify'),
+      hasScopeInList(['hooks:modify']),
       hasRoleInList(permissions.editHook),
     ],
     validate: {

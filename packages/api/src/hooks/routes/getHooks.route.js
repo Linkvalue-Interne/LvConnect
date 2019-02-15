@@ -5,7 +5,7 @@ module.exports = {
   method: 'GET',
   path: '/hooks',
   config: {
-    pre: [hasScopeInList('hooks:get')],
+    pre: [hasScopeInList(['hooks:get'])],
     validate: {
       query: Joi.object().keys({
         appId: Joi.string().required(),

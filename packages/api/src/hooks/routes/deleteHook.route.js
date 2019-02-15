@@ -8,7 +8,7 @@ module.exports = {
   method: 'DELETE',
   path: '/hooks/{hook}',
   config: {
-    pre: [hasScopeInList('hooks:delete'), hasRoleInList(permissions.deleteHook)],
+    pre: [hasScopeInList(['hooks:delete']), hasRoleInList(permissions.deleteHook)],
     validate: {
       params,
     },
