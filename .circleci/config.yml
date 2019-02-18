@@ -1,0 +1,185 @@
+build_common: &build_common
+  executor:
+    name: node/node
+    tag: '10'
+  working_directory: ~/lvconnect
+  environment:
+    NODE_ENV: production
+  steps:
+  - attach_workspace:
+      at: ~/
+  - run: yarn build
+  - store_artifacts:
+      path: ~/lvconnect/dist
+  - persist_to_workspace:
+      root: ~/
+      paths:
+      - lvconnect
+
+deploy_common: &deploy_common
+  docker:
+  - image: buildpack-deps:trusty
+  working_directory: ~/lvconnect
+  steps:
+  - attach_workspace:
+      at: ~/
+  - run: git checkout -b release
+  - run: git add -f dist/
+  - run: git config user.email "deploy@circleci.com"
+  - run: git config user.name "CircleCI Deployer"
+  - run: git commit -m "CircleCI deploy"
+  - deploy:
+      command: git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git release:master
+
+tag_filters: &tag_filters
+  tags:
+    only: /^v\d+\.\d+\.\d+/
+
+version: 2.1
+
+orbs:
+  node: circleci/node@0.0.2
+
+jobs:
+  install:
+    executor:
+      name: node/node
+      tag: '10'
+    working_directory: ~/lvconnect
+    steps:
+    - checkout
+    - node/with-cache:
+        steps:
+          - run: yarn install --frozen-lockfile
+        cache-key: yarn.lock
+    - persist_to_workspace:
+        root: ~/
+        paths:
+          - lvconnect
+          - .cache/Cypress
+
+  build_dev:
+    <<: *build_common
+    environment:
+      APP_ENV: dev
+      NODE_ENV: production
+
+  build_staging:
+    <<: *build_common
+    environment:
+      APP_ENV: staging
+      NODE_ENV: production
+
+  build_production:
+    <<: *build_common
+    environment:
+      APP_ENV: production
+      NODE_ENV: production
+
+  test:
+    executor:
+      name: node/node
+      tag: '10'
+    working_directory: ~/lvconnect
+    steps:
+    - attach_workspace:
+        at: ~/
+    - run: yarn lint
+    - run: yarn test -w 8
+
+#  test_e2e:
+#    docker:
+#    - image: cypress/base:10
+#    - image: mongo:4.0
+#    working_directory: ~/lvconnect
+#    environment:
+#      APP_ENV: test
+#    steps:
+#    - attach_workspace:
+#        at: ~/
+#    - run:
+#        command: yarn start
+#        background: true
+#    - run:
+#        command: yarn e2e:record
+#        no_output_timeout: 1m
+
+  hold_deployment:
+    docker:
+    - image: buildpack-deps:trusty
+    steps:
+    - run: echo "Waiting for approval before deployement"
+
+  deploy_staging:
+    <<: *deploy_common
+    environment:
+      HEROKU_APP: cracra-staging
+
+  deploy_production:
+    <<: *deploy_common
+    environment:
+      HEROKU_APP: cracra
+
+workflows:
+  version: 2
+  general_workflow:
+    jobs:
+    - install:
+        filters:
+          branches:
+            ignore: master
+          tags:
+            ignore: /.*/
+    - build_dev:
+        requires:
+          - install
+    - test:
+        requires:
+        - build_dev
+#    - test_e2e:
+#        requires:
+#        - build_dev
+
+  master_workflow:
+    jobs:
+    - install:
+        filters:
+          branches:
+            only: master
+          tags:
+            ignore: /.*/
+    - build_staging:
+        requires:
+          - install
+    - test:
+        requires:
+        - build_staging
+#    - test_e2e:
+#        requires:
+#        - build_staging
+    - deploy_staging:
+        requires:
+        - test
+#        - test_e2e
+
+  release_workflow:
+    jobs:
+    - install:
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^v\d+\.\d+\.\d+/
+    - build_production:
+        requires:
+          - install
+        filters: *tag_filters
+    - hold_deployment:
+        type: approval
+        requires:
+        - build_production
+        filters: *tag_filters
+    - deploy_production:
+        requires:
+        - hold_deployment
+        filters: *tag_filters
