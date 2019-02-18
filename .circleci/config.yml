@@ -18,18 +18,13 @@ build_common: &build_common
 
 deploy_common: &deploy_common
   docker:
-  - image: buildpack-deps:trusty
+  - image: tmaier/dpl:latest
   working_directory: ~/lvconnect
   steps:
   - attach_workspace:
       at: ~/
-  - run: git checkout -b release
-  - run: git add -f dist/
-  - run: git config user.email "deploy@circleci.com"
-  - run: git config user.name "CircleCI Deployer"
-  - run: git commit -m "CircleCI deploy"
   - deploy:
-      command: git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git release:master
+      command: dpl --provider=heroku --app=$HEROKU_APP --api-key=$HEROKU_API_KEY --skip_cleanup=true
 
 tag_filters: &tag_filters
   tags:
@@ -85,24 +80,7 @@ jobs:
     - attach_workspace:
         at: ~/
     - run: yarn lint
-    - run: yarn test -w 8
-
-#  test_e2e:
-#    docker:
-#    - image: cypress/base:10
-#    - image: mongo:4.0
-#    working_directory: ~/lvconnect
-#    environment:
-#      APP_ENV: test
-#    steps:
-#    - attach_workspace:
-#        at: ~/
-#    - run:
-#        command: yarn start
-#        background: true
-#    - run:
-#        command: yarn e2e:record
-#        no_output_timeout: 1m
+    - run: yarn typecheck
 
   hold_deployment:
     docker:
@@ -113,12 +91,12 @@ jobs:
   deploy_staging:
     <<: *deploy_common
     environment:
-      HEROKU_APP: cracra-staging
+      HEROKU_APP: lvconnect-staging
 
   deploy_production:
     <<: *deploy_common
     environment:
-      HEROKU_APP: cracra
+      HEROKU_APP: lvconnect
 
 workflows:
   version: 2

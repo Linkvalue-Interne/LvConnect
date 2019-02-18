@@ -18,7 +18,8 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "version": "yarn changelog && git add CHANGELOG.md",
     "typecheck": "flow",
-    "install:types": "flow-typed install -s -o"
+    "install:types": "flow-typed install -s -o",
+    "heroku-postbuild": "echo Skip build on Heroku CI..."
   },
   "repository": {
     "type": "git",
