@@ -19,15 +19,25 @@ This token must be passed in the `Authorization` header as `Bearer`.
 
 - [/users](docs/endpoint-users.md) (Users endpoint)
 
-#### SDKs
+#### Hooks
 
-- PHP: [MajoraLvConnectSdk](https://gitlab.com/LinkValue/Lab/MajoraLvConnectSdk)
+Hooks allow you to connect your to LvConnect events, to assure that your user database is up to date with LvConnect one.
+
+- [See the documentation](docs/hooks.md)
+
+#### Utilisation in your project
+Some adapters are available for: 
+
+- [Nodejs Passport](https://github.com/mathieutu/lvconnect-passport)
+- [PHP Laravel](https://github.com/mathieutu/lvconnect-socialite)
 
 ## Installation
 
 You will need to have on your machine:
 - [Redis](http://redis.io/) (>3.x)
 - [MongoDB](https://www.mongodb.com/) (>3.x.x)
+
+If you have docker, you can launch directly theses services with `docker-compose up`.
 
 Then run in your cloned folder:
 ```shell
@@ -75,24 +85,10 @@ This config file should be saved in `config` folder under the name `local.js` or
 
 ## Deployment
 
-Deployment is made with GitLabCI using the `.gitlab-ci.yml` configuration file. It uses a Specific Docker Runner to run
-the deployment jobs. This Runner is hosted on the production machine for the moment.
+LvConnect uses automatic deploy through CircleCI deploys. Staging environment is auto-deployed on each commit made upon master branch. 
+Production environment release is auto-built upon tags on master branch, the build will have to be deployed manually by going into the CircleCI workflow of the build and triggering the deploy job.
 
-#### Staging
-
-Deployment to staging environment (Heroku) is automatic. Each commit to `master` branch will trigger a deployment if tests are passing.
-
-#### Production
-
-To deploy LVConnect in production, you need to create a new version tag with the following command:
-
-```shell
-npm version [patch|minor|major]
-```
-
-This tag will trigger a deployment job in GitLabCI for production environment.
-You'll have to manually start the job to prevent unwanted deployments.
-To accept the job got to the [Job](https://gitlab.com/LinkValue/Lab/LvConnect/builds) interface of GitLab.
+To tag a release for production, use the npm version command which will bump version in package.json and generate the CHANGELOG.md file automatically.
 
 ## CLI
 
