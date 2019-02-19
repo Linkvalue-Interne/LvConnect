@@ -25,7 +25,7 @@ will contain:
 
 ```json
 {
-  "user": {}, // Created user informations
+  "user": {}, // Created user information
   "sender": {} // User that triggered the creation
 }
 ```
@@ -37,7 +37,8 @@ It will contain the following payload:
 
 ```json
 {
-  "user": {}, // Updated user
+  "oldUser": {}, // The old user information
+  "user": {}, // The new updated user
   "sender": {} // User that triggered the update
 }
 ```
@@ -50,7 +51,7 @@ for the `leftAt` property to disable account.
 
 ```json
 {
-  "userId": {}, // Deleted user id
+  "user": {}, // The old user information
   "sender": {} // User that triggered the deletion
 }
 ```
@@ -67,6 +68,16 @@ example integrations bellow:
 In NodeJS you'll need no any extra library to perform the validation since HMAC SHA1 can be performed from the
 `crypto` module of the NodeJS API. 
 
+```js
+const checkSignature = (secret, payload, actualHash) => {
+  const body = typeof payload === 'string' ? payload : JSON.stringify(payload);
+  const expectedHash = `sha1=${crypto.createHmac('sha1', secret).update(body).digest('hex')}`;
+  
+  return expectedHash.length === actualHash.length && timingSafeEqual(new Buffer(expectedHash), new Buffer(actualHash))
+};
+```
+
+
 Example using Express:
 
 ```js
@@ -76,13 +87,9 @@ import crypto from 'crypto';
 const secret = 'TopSecretHookPassword@SuperStrong#123456';
 const app = express();
 
-app.use((req, res, next) => {
-  // If using body parser be sure to calculate from stringified version
-  // const body = JSON.stringify(req.body);
-  
-  const hash = crypto.createHmac('sha1', secret).update(req.body).digest('hex');
 
-  if (`sha1=${hash}` !== req.headers['x-lvconnect-signature']) {
+app.use(({ body, headers }, res, next) => {
+  if (checkSignature(secret, body, headers['x-lvconnect-signature'])) {
     next(new Error('Invalid payload signature'));
   }
 
@@ -106,11 +113,8 @@ server.auth.scheme('signature', (_, options) => ({
     credentials: { event: req.headers['x-lvconnect-event'], identifier: req.headers['x-lvconnect-delivery'] },
     artifacts: { signature: req.headers['x-lvconnect-signature'] },
   }),
-  payload: async (req, h) => {
-    const body = JSON.stringify(req.payload);
-    const hash = crypto.createHmac('sha1', options.secret).update(body).digest('hex');
-
-    if (`sha1=${hash}` !== req.headers['x-lvconnect-signature']) {
+  payload: async ({ payload, headers }, h) => {
+    if (checkSignature(options.secret, payload, headers['x-lvconnect-signature'])) {
       throw Boom.forbidden('Invalid payload signature');
     }
 
@@ -134,4 +138,25 @@ server.route({
 });
 
 server.start();
+```
+
+### Php
+
+```php
+<?php
+
+use Symfony\Component\HttpFoundation\Request;
+
+class CheckHookSignature
+{
+    public function __invoke(string $secret, Request $request)
+    {
+        $payload = $request->getContent();
+        $actualHash = $request->headers->get('x-lvconnect-signature');
+
+        $expectedHash = 'sha1=' . hash_hmac('sha1', $payload, $secret);
+
+        return hash_equals($expectedHash, $actualHash);
+    }
+}
 ```
