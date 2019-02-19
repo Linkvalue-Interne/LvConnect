@@ -21,7 +21,7 @@ This token must be passed in the `Authorization` header as `Bearer`.
 
 #### Hooks
 
-Hooks allow you to connect your to LvConnect events, to assure that your user database is up to date with LvConnect one.
+Hooks allows your app to subscribe to LVConnect events, making sure that your user database is up to date with LVConnect.
 
 - [See the documentation](docs/hooks.md)
 
@@ -88,7 +88,7 @@ This config file should be saved in `config` folder under the name `local.js` or
 LvConnect uses automatic deploy through CircleCI deploys. Staging environment is auto-deployed on each commit made upon master branch. 
 Production environment release is auto-built upon tags on master branch, the build will have to be deployed manually by going into the CircleCI workflow of the build and triggering the deploy job.
 
-To tag a release for production, use the npm version command which will bump version in package.json and generate the CHANGELOG.md file automatically.
+To tag a release for production, use the `npm version` command which will bump version in package.json and generate the CHANGELOG.md file automatically.
 
 ## CLI
 
