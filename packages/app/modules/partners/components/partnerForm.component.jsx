@@ -17,7 +17,7 @@ import SelectField from '../../../components/inputs/selectField.component';
 import jobLabels from '../jobLabels';
 import { hasRole, RolesConsumer } from '../../../components/restricted.component';
 
-const jobsMap = new Map(Object.entries(jobLabels));
+const jobsMap = new Map([['', '']].concat(Object.entries(jobLabels)));
 
 const formatDate = value => (value || '').slice(0, 10);
 
@@ -174,7 +174,7 @@ export default reduxForm({
   validate,
   asyncValidate,
   onSubmit: async (formData: User, dispatch: Dispatch<ReduxAction>, { onFormSubmit }) => {
-    await onFormSubmit(formData);
+    await onFormSubmit({ ...formData, job: formData.job || null });
     dispatch(push('/dashboard/partners'));
   },
 })(PartnerForm);
