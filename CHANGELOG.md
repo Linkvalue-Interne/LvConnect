@@ -1,3 +1,22 @@
+<a name="2.6.1"></a>
+## [2.6.1](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.6.0...v2.6.1) (2019-02-21)
+
+
+### Bug Fixes
+
+* **docs:** Update readme following to review. ([4a8682c](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/4a8682c))
+* **hooks:** Fix mutliple issues with hooks configuration ([5d58297](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/5d58297))
+
+
+### Features
+
+* **app:** Allow to unset any field ([cb2143c](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/cb2143c))
+* **app:** Allow to unset user job in case of mistake ([ece6c05](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/ece6c05))
+* **hooks:** Avoid timing attacks in hooks usage JS examples, and add the php ones ([452931b](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/452931b))
+* **hooks:** Better hook triggers informations ([a120374](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/a120374))
+
+
+
 <a name="2.6.0"></a>
 # [2.6.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.5.0...v2.6.0) (2019-02-14)
 
