@@ -3,6 +3,7 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { push } from 'react-router-redux';
+import mapValues from 'lodash/mapValues';
 import Grid from '@material-ui/core/Grid';
 import config from '@lvconnect/config/app';
 
@@ -174,7 +175,7 @@ export default reduxForm({
   validate,
   asyncValidate,
   onSubmit: async (formData: User, dispatch: Dispatch<ReduxAction>, { onFormSubmit }) => {
-    await onFormSubmit({ ...formData, job: formData.job || null });
+    await onFormSubmit(mapValues(formData, value => (value === '' ? null : value)));
     dispatch(push('/dashboard/partners'));
   },
 })(PartnerForm);

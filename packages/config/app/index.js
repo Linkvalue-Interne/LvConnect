@@ -1,6 +1,6 @@
 /* eslint-disable global-require, import/no-dynamic-require */
 
-const deepMerge = require('lodash.merge');
+const deepMerge = require('lodash/merge');
 
 const sharedConfig = require('../shared');
 const defaultConfig = require('./default');

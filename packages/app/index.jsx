@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import debounce from 'lodash.debounce';
+import debounce from 'lodash/debounce';
 import moment from 'moment';
 
 import { configureStore, browserHistory } from './store/configureStore';

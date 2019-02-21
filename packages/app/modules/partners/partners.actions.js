@@ -1,7 +1,7 @@
 // @flow
 
 import qs from 'qs';
-import omit from 'lodash.omit';
+import omit from 'lodash/omit';
 import config from '@lvconnect/config/app';
 
 import type { Dispatch } from 'redux';
