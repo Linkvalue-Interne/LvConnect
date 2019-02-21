@@ -15,6 +15,11 @@ module.exports = {
   mongodb: {
     url: 'mongodb://localhost:27017/lvconnect',
   },
+  login: {
+    cookie: {
+      secret: '12345678901234567890123456789012',
+    },
+  },
   kue: {
     redis: {
       host: 'localhost',

@@ -34,7 +34,6 @@ module.exports = {
   },
   login: {
     cookie: {
-      secret: '&é"(§è!çà)-azertyuiop1234567890%',
       name: 'lvconnect',
       isSecure: true,
     },

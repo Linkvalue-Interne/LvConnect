@@ -29,7 +29,7 @@ module.exports = {
       passwordResetTTL: 60 * 60 * 1000,
     },
     cookie: {
-      secret: '12345678901234567890123456789012',
+      secret: process.env.COOKIE_SECRET,
       name: 'lvconnect',
       redirect: '/login',
       isSecure: false,

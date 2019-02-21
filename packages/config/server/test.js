@@ -5,6 +5,11 @@ module.exports = {
       engine: 'catbox-memory',
     },
   },
+  login: {
+    cookie: {
+      secret: '12345678901234567890123456789012',
+    },
+  },
   mongodb: {
     url: 'mongodb://mongo:27017/lvconnect_test',
   },
