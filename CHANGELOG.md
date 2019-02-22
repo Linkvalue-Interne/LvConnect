@@ -1,3 +1,14 @@
+<a name="2.6.2"></a>
+## [2.6.2](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.6.1...v2.6.2) (2019-02-22)
+
+
+### Features
+
+* **config:** Add new talent role ([7f1ce44](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/7f1ce44))
+* **config:** Remove cookie secret for production environment ([404707a](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/404707a))
+
+
+
 <a name="2.6.1"></a>
 ## [2.6.1](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.6.0...v2.6.1) (2019-02-21)
 
