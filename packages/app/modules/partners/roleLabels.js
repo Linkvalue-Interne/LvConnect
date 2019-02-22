@@ -6,6 +6,7 @@ const roleLabels = {
   COMMUNICATION: 'Communication',
   FINANCE: 'Finance',
   PROJECT_MANAGER: 'Chef de projet',
+  TALENT: 'Talent Acquisition/Management',
 };
 
 export default roleLabels;

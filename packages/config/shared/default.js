@@ -5,6 +5,7 @@ const BUSINESS = 'business';
 const COMMUNICATION = 'com';
 const FINANCE = 'finance';
 const PROJECT_MANAGER = 'projectManager';
+const TALENT = 'talent';
 
 module.exports = {
   roles: {
@@ -15,6 +16,7 @@ module.exports = {
     COMMUNICATION,
     FINANCE,
     PROJECT_MANAGER,
+    TALENT,
   },
   cities: [
     'Lyon',
@@ -22,9 +24,9 @@ module.exports = {
     'Paris',
   ],
   permissions: {
-    addUser: [HR, BOARD],
-    editUser: [HR, BOARD],
-    deleteUser: [HR, BOARD],
+    addUser: [HR, TALENT, BOARD],
+    editUser: [HR, TALENT, BOARD],
+    deleteUser: [HR, TALENT, BOARD],
     addApp: [TECH, BOARD],
     editApp: [TECH, BOARD],
     deleteApp: [TECH, BOARD],
