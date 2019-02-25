@@ -92,7 +92,7 @@ export default reduxForm({
   form: 'passwordChange',
   validate: ({ newPassword = '', confirmNewPassword }) => ({
     newPassword: (newPassword.length < 5 || newPassword.length > 30) && 'Doit contenir entre 5 et 30 caractères',
-    confirmNewPassword: confirmNewPassword !== newPassword,
+    confirmNewPassword: confirmNewPassword !== newPassword && ' ',
   }),
   onSubmit: async (formData, dispatch, { pkey, onPasswordChanged }) => {
     await dispatch(changePassword(formData, pkey));

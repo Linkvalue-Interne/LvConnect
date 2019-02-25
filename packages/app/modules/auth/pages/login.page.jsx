@@ -62,8 +62,24 @@ class Login extends React.Component<LoginProps> {
             <Typography variant="h5" component="h2" gutterBottom>
               Connexion
             </Typography>
-            <Field component={TextField} name="email" label="Email" type="email" fullWidth required />
-            <Field component={TextField} name="password" label="Mot de passe" type="password" fullWidth required />
+            <Field
+              component={TextField}
+              name="email"
+              label="Email"
+              type="email"
+              fullWidth
+              required
+              margin="normal"
+            />
+            <Field
+              component={TextField}
+              name="password"
+              label="Mot de passe"
+              type="password"
+              fullWidth
+              required
+              margin="normal"
+            />
           </CardContent>
           <CardActions>
             <Button type="submit" color="primary">Se connecter</Button>

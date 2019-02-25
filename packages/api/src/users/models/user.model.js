@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
   registrationNumber: String,
   description: String,
   city: String,
-  needPasswordChange: { type: Boolean, default: true },
+  needPasswordChange: { type: Boolean, default: false },
   address: {
     street: String,
     zipCode: String,

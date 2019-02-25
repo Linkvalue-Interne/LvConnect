@@ -1,5 +1,8 @@
 const Joi = require('joi');
 const { hasScopeInList } = require('../../middlewares');
+const diacritics = require('diacritics');
+
+const replacementMap = new Map(diacritics.replacementList.map(({ base, chars }) => [base, chars]));
 
 module.exports = {
   method: 'GET',
@@ -26,7 +29,16 @@ module.exports = {
         query.where({ name: { $eq: name } });
       }
       if (search) {
-        const searchRegexp = new RegExp(search, 'ig');
+        const searchRegexp = new RegExp(
+          diacritics.remove(search)
+            .trim()
+            .replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&')
+            .replace(/\w/g, match => `[${match}${replacementMap.get(match)}]`)
+            .split(/\s/g)
+            .filter(s => s)
+            .join('|'),
+          'ig',
+        );
         query.where({ name: { $regex: searchRegexp } });
       }
       return query;

@@ -26,6 +26,9 @@ export const fetchPartners = (params: { page?: number, limit?: number } = { page
     }
   };
 
+export const CHANGE_ROWS_PER_PAGE = 'partners/CHANGE_ROWS_PER_PAGE';
+export const changeRowsPerPage = (limit: number) => ({ type: CHANGE_ROWS_PER_PAGE, payload: { limit } });
+
 export const isEmailDuplicate = (email: string) => async (dispatch: Dispatch<ReduxAction>) => {
   const { results } = await dispatch(fetchWithAuth(`/users?email=${email}`));
   return !!results && results.length > 0;
