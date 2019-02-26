@@ -1,39 +1,49 @@
 // @flow
 
 import React from 'react';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
+import MuiTextField from '@material-ui/core/TextField';
 
 import type { FieldProps } from 'redux-form/lib/FieldProps.types.js.flow';
 
-type TextFieldProps = FieldProps & {
+export type TextFieldProps = {
+  ...FieldProps,
   className: String,
   label: String,
   helperText?: String,
-  fullWidth: Boolean,
   forceShrink: Boolean,
   type: String,
   required: Boolean,
+  placeholder: String,
+  multiline: Boolean,
+  margin?: String,
 };
 
 const TextField = ({
   className,
   input,
   meta,
-  label,
-  helperText,
-  forceShrink,
+  margin,
   type,
-  required,
-  ...inputProps
+  helperText,
+  ...props
 }: TextFieldProps) => (
-  <FormControl className={className} error={!!meta.error && meta.touched} fullWidth>
-    <InputLabel htmlFor={input.name} shrink={type === 'date' || undefined} required={required}>{label}</InputLabel>
-    <Input type={type} required={required} {...input} {...inputProps} />
-    <FormHelperText>{(meta.touched && meta.error) || helperText}</FormHelperText>
-  </FormControl>
+  <MuiTextField
+    className={className}
+    fullWidth
+    error={meta && !!meta.error && meta.touched}
+    helperText={(meta && meta.touched && meta.error) || helperText || ''}
+    variant="outlined"
+    type={type}
+    margin={margin}
+    InputLabelProps={{ shrink: type === 'date' ? true : undefined }}
+    {...props}
+    {...input}
+  />
 );
+
+TextField.defaultProps = {
+  helperText: '',
+  margin: 'dense',
+};
 
 export default TextField;

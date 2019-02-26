@@ -12,9 +12,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Fab from '@material-ui/core/Fab';
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
+import SearchIcon from '@material-ui/icons/Search';
+import debounce from 'lodash/debounce';
 import qs from 'qs';
 import config from '@lvconnect/config/app';
 
@@ -24,6 +28,7 @@ import type { ConnectedAppsListProps } from './appsList.connector';
 
 import LoadingPage from '../../../components/loadingPage.component';
 import Restricted, { hasRole } from '../../../components/restricted.component';
+import Highlight from '../../../components/highlight.component';
 
 const styles = theme => ({
   appsList: {
@@ -50,11 +55,32 @@ const styles = theme => ({
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
   },
+  spacer: {
+    flex: 1,
+  },
+  loaderCell: {
+    padding: theme.spacing.unit * 4,
+  },
 });
 
 type AppsListProps = WithStyles & ContextRouter & ConnectedAppsListProps;
+type AppsListState = { search: string };
 
-class AppsList extends Component<AppsListProps> {
+class AppsList extends Component<AppsListProps, AppsListState> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      search: '',
+    };
+
+    this.debouncedHandleSearchChange = debounce(search => this.props.fetchApps({
+      page: this.getPageNumber(),
+      limit: this.props.limit,
+      search: search || undefined,
+    }), 300);
+  }
+
   componentWillMount() {
     this.props.fetchApps({
       page: this.getPageNumber(),
@@ -75,6 +101,8 @@ class AppsList extends Component<AppsListProps> {
 
   getRowDisplay = () => `${this.getPageNumber()} of ${this.props.pageCount}`;
 
+  debouncedHandleSearchChange: (search: string) => void;
+
   handleChangePage = (event, page) => this.props.push(`/dashboard/apps?page=${page + 1}`);
 
   handleGoToApp = appId => () => this.props.push(`/dashboard/apps/${appId}`);
@@ -86,6 +114,11 @@ class AppsList extends Component<AppsListProps> {
 
   handleNewAppClick = () => this.props.push('/dashboard/apps/new');
 
+  handleSearchChange = (e) => {
+    this.setState({ search: e.target.value });
+    this.debouncedHandleSearchChange(e.target.value);
+  };
+
   render() {
     const {
       apps,
@@ -95,10 +128,6 @@ class AppsList extends Component<AppsListProps> {
       limit,
       user,
     } = this.props;
-
-    if (isLoading) {
-      return <LoadingPage />;
-    }
 
     const canEditApp = hasRole(config.permissions.editApp, user.roles);
 
@@ -111,6 +140,20 @@ class AppsList extends Component<AppsListProps> {
           <Typography variant="h5" component="h2" gutterBottom>
             Apps
           </Typography>
+          <div className={classes.spacer} />
+          <Input
+            id="adornment-password"
+            type="text"
+            value={this.state.search}
+            onChange={this.handleSearchChange}
+            placeholder="Rechercher..."
+            autoFocus
+            startAdornment={
+              <InputAdornment position="end">
+                <SearchIcon />
+              </InputAdornment>
+            }
+          />
         </Toolbar>
         <div className={classes.tableWrapper}>
           <Table className={classes.appsTable}>
@@ -122,14 +165,20 @@ class AppsList extends Component<AppsListProps> {
               </TableRow>
             </TableHead>
             <TableBody>
-              {apps.map(app => (
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={6} className={classes.loaderCell}>
+                    <LoadingPage />
+                  </TableCell>
+                </TableRow>
+              ) : apps.map(app => (
                 <TableRow
                   key={app.id}
                   className={canEditApp ? classes.tableRow : ''}
                   hover={canEditApp}
                   onClick={canEditApp ? this.handleGoToApp(app.id) : undefined}
                 >
-                  <TableCell>{app.name}</TableCell>
+                  <TableCell><Highlight search={this.state.search} text={app.name} /></TableCell>
                   <TableCell>{app.description}</TableCell>
                   <TableCell>{app.user && `${app.user.lastName} ${app.user.firstName}`}</TableCell>
                 </TableRow>

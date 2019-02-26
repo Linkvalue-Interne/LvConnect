@@ -1,6 +1,7 @@
 // @flow
 
 import {
+  CHANGE_ROWS_PER_PAGE,
   FETCH_PARTNER_START,
   FETCH_PARTNER_SUCCESS,
   FETCH_PARTNERS_START,
@@ -74,6 +75,14 @@ export default (state: PartnersState = initialState, { type, payload }: ReduxAct
         editPartner: {
           partner: payload,
           isLoading: false,
+        },
+      };
+    case CHANGE_ROWS_PER_PAGE:
+      return {
+        ...state,
+        partnersList: {
+          ...state.partnersList,
+          limit: payload.limit,
         },
       };
     default:

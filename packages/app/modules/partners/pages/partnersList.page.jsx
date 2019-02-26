@@ -12,12 +12,16 @@ import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Fab from '@material-ui/core/Fab';
 import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
+import SearchIcon from '@material-ui/icons/Search';
 import qs from 'qs';
 import config from '@lvconnect/config/app';
+import debounce from 'lodash/debounce';
 
 import type { WithStyles } from '@material-ui/core/styles';
 import type { ContextRouter } from 'react-router';
@@ -27,6 +31,7 @@ import LoadingPage from '../../../components/loadingPage.component';
 import Restricted, { hasRole } from '../../../components/restricted.component';
 import roleLabels from '../roleLabels';
 import jobLabels from '../jobLabels';
+import Highlight from '../../../components/highlight.component';
 
 const styles = theme => ({
   partnersList: {
@@ -53,14 +58,37 @@ const styles = theme => ({
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
   },
+  spacer: {
+    flex: 1,
+  },
+  loaderCell: {
+    padding: theme.spacing.unit * 4,
+  },
 });
 
 const roleMap = Object.entries(config.roles)
   .reduce((acc, [key, value]) => ({ ...acc, [typeof value === 'string' ? value : '']: key }), {});
 
 type PartnersListProps = WithStyles & ContextRouter & ConnectedPartnersListProps;
+type PartnersListState = {
+  search: string;
+};
 
-class PartnersList extends Component<PartnersListProps> {
+class PartnersList extends Component<PartnersListProps, PartnersListState> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      search: '',
+    };
+
+    this.debouncedHandleSearchChange = debounce(search => this.props.fetchPartners({
+      page: this.getPageNumber(),
+      limit: this.props.limit,
+      search: search || undefined,
+    }), 300);
+  }
+
   componentWillMount() {
     this.props.fetchPartners({
       page: this.getPageNumber(),
@@ -81,15 +109,22 @@ class PartnersList extends Component<PartnersListProps> {
 
   getRowDisplay = () => `${this.getPageNumber()} of ${this.props.pageCount}`;
 
+  debouncedHandleSearchChange: (search: string) => void;
+
   handleChangePage = (event, page) => this.props.push(`/dashboard/partners?page=${page + 1}`);
 
   handleGoToPartnerWorklog = partnerId => () =>
     hasRole(config.permissions.editUser, this.props.user.roles) && this.props.push(`/dashboard/partners/${partnerId}`);
 
-  handleChangeRowsPerPage = event => this.props.fetchPartners({
-    page: this.getPageNumber(),
-    limit: event.target.value,
-  });
+  handleChangeRowsPerPage = (event) => {
+    this.props.changeRowsPerPage(event.target.value);
+    this.props.push('/dashboard/partners');
+  };
+
+  handleSearchChange = (e) => {
+    this.setState({ search: e.target.value });
+    this.debouncedHandleSearchChange(e.target.value);
+  };
 
   handleNewPartnerClick = () => this.props.push('/dashboard/partners/new');
 
@@ -103,10 +138,6 @@ class PartnersList extends Component<PartnersListProps> {
       user,
     } = this.props;
 
-    if (isLoading) {
-      return <LoadingPage />;
-    }
-
     const canEditUser = hasRole(config.permissions.editUser, user.roles);
 
     return (
@@ -118,6 +149,20 @@ class PartnersList extends Component<PartnersListProps> {
           <Typography variant="h5" component="h2" gutterBottom>
             Partners
           </Typography>
+          <div className={classes.spacer} />
+          <Input
+            id="adornment-password"
+            type="text"
+            value={this.state.search}
+            onChange={this.handleSearchChange}
+            placeholder="Rechercher..."
+            autoFocus
+            startAdornment={
+              <InputAdornment position="end">
+                <SearchIcon />
+              </InputAdornment>
+            }
+          />
         </Toolbar>
         <div className={classes.tableWrapper}>
           <Table className={classes.partnersTable}>
@@ -132,7 +177,13 @@ class PartnersList extends Component<PartnersListProps> {
               </TableRow>
             </TableHead>
             <TableBody>
-              {partners.map(partner => (
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={6} className={classes.loaderCell}>
+                    <LoadingPage />
+                  </TableCell>
+                </TableRow>
+              ) : partners.map(partner => (
                 <TableRow
                   key={partner.id}
                   className={canEditUser ? classes.tableRow : ''}
@@ -142,8 +193,8 @@ class PartnersList extends Component<PartnersListProps> {
                   <TableCell padding="dense">
                     <Avatar alt={`${partner.firstName} ${partner.lastName}`} src={partner.profilePictureUrl} />
                   </TableCell>
-                  <TableCell>{partner.lastName}</TableCell>
-                  <TableCell>{partner.firstName}</TableCell>
+                  <TableCell><Highlight search={this.state.search} text={partner.lastName} /></TableCell>
+                  <TableCell><Highlight search={this.state.search} text={partner.firstName} /></TableCell>
                   <TableCell>{partner.city}</TableCell>
                   <TableCell>{jobLabels[partner.job]}</TableCell>
                   <TableCell className={classes.fullNameCell}>
