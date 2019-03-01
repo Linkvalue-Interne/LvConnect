@@ -1,3 +1,13 @@
+<a name="2.6.3"></a>
+## [2.6.3](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.6.2...v2.6.3) (2019-03-01)
+
+
+### Features
+
+* **app:** Add search on apps and partners lists ([e399390](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/e399390))
+
+
+
 <a name="2.6.2"></a>
 ## [2.6.2](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.6.1...v2.6.2) (2019-02-22)
 
