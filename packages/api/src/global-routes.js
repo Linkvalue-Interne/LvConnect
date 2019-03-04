@@ -6,20 +6,6 @@ const indexFilePath = path.resolve(process.cwd(), 'dist/index.html');
 
 module.exports = [{
   method: 'GET',
-  path: '/mdl/{param*}',
-  config: {
-    auth: false,
-  },
-  handler: {
-    directory: {
-      path: [
-        path.resolve(__dirname, '../../../node_modules/material-design-lite/dist'),
-        path.resolve(__dirname, '../../../node_modules/material-design-icons/iconfont'),
-      ],
-    },
-  },
-}, {
-  method: 'GET',
   path: '/{path*}',
   config: { auth: false },
   async handler(req, res) {

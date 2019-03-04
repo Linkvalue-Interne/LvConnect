@@ -11,14 +11,14 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import type { FieldProps } from 'redux-form/lib/FieldProps.types.js.flow';
 
 type CheckboxFieldProps = FieldProps & {
-  className: String,
-  label: String,
-  title?: String,
-  helperText?: String,
-  fullWidth: Boolean,
-  forceShrink: Boolean,
-  type: String,
-  required: Boolean,
+  className: string,
+  label: string,
+  title?: string,
+  helperText?: string,
+  fullWidth: boolean,
+  forceShrink: boolean,
+  type: string,
+  required: boolean,
 };
 
 const CheckboxField = ({

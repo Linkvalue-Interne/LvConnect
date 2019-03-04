@@ -64,6 +64,10 @@ const styles = theme => ({
   loaderCell: {
     padding: theme.spacing.unit * 4,
   },
+  disabledPartner: {
+    opacity: 0.5,
+    filter: 'grayscale(1)',
+  },
 });
 
 const roleMap = Object.entries(config.roles)
@@ -82,17 +86,21 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
       search: '',
     };
 
-    this.debouncedHandleSearchChange = debounce(search => this.props.fetchPartners({
-      page: this.getPageNumber(),
-      limit: this.props.limit,
-      search: search || undefined,
-    }), 300);
+    this.debouncedHandleSearchChange = debounce(() => {
+      this.props.replace('/dashboard/partners');
+      return this.props.fetchPartners({
+        page: 1,
+        limit: this.props.limit,
+        search: this.state.search || undefined,
+      });
+    }, 300);
   }
 
   componentWillMount() {
     this.props.fetchPartners({
       page: this.getPageNumber(),
       limit: this.props.limit,
+      search: this.state.search || undefined,
     });
   }
 
@@ -101,6 +109,7 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
       this.props.fetchPartners({
         page: this.getPageNumber(nextProps),
         limit: nextProps.limit,
+        search: this.state.search || undefined,
       });
     }
   }
@@ -111,14 +120,14 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
 
   debouncedHandleSearchChange: (search: string) => void;
 
-  handleChangePage = (event, page) => this.props.push(`/dashboard/partners?page=${page + 1}`);
+  handleChangePage = (event, page) => this.props.replace(`/dashboard/partners?page=${page + 1}`);
 
   handleGoToPartnerWorklog = partnerId => () =>
     hasRole(config.permissions.editUser, this.props.user.roles) && this.props.push(`/dashboard/partners/${partnerId}`);
 
   handleChangeRowsPerPage = (event) => {
+    this.props.replace('/dashboard/partners');
     this.props.changeRowsPerPage(event.target.value);
-    this.props.push('/dashboard/partners');
   };
 
   handleSearchChange = (e) => {
@@ -186,7 +195,10 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
               ) : partners.map(partner => (
                 <TableRow
                   key={partner.id}
-                  className={canEditUser ? classes.tableRow : ''}
+                  className={
+                    `${canEditUser ? classes.tableRow : ''}
+                    ${partner.leftAt < new Date().toISOString() ? classes.disabledPartner : ''}`
+                  }
                   hover={canEditUser}
                   onClick={this.handleGoToPartnerWorklog(partner.id)}
                 >

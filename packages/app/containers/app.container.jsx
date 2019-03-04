@@ -51,6 +51,7 @@ type AppProps = {
   ...ContextRouter,
   classes: any;
   children: any;
+  simple?: boolean;
 }
 
 type AppState = {
@@ -58,6 +59,10 @@ type AppState = {
 };
 
 class App extends React.Component<AppProps, AppState> {
+  static defaultProps = {
+    simple: false,
+  };
+
   constructor(props: AppProps) {
     super(props);
 
@@ -81,14 +86,14 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   render() {
-    const { classes, children } = this.props;
+    const { classes, children, simple } = this.props;
 
     return (
       <div className={classes.appRoot}>
         <CssBaseline />
         <div className={classes.appFrame}>
-          <AppBar onDrawerOpen={this.handleDrawerOpen} />
-          <AppDrawer open={this.state.drawerOpen} onDrawerClose={this.handleDrawerClose} />
+          <AppBar simple={simple} onDrawerOpen={this.handleDrawerOpen} />
+          {!simple && <AppDrawer open={this.state.drawerOpen} onDrawerClose={this.handleDrawerClose} />}
           <div className={classes.appContent}>
             <div className={classes.appContentWrapper}>
               {children}

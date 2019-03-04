@@ -1,31 +1,31 @@
 // @flow
 
 import * as React from 'react';
-import { Redirect, Switch, Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
 
 import type { ContextRouter } from 'react-router';
 import type { ConnectedLoginRequiredProps } from './loginRequired.connector';
 
+import Login from '../pages/login.connector';
 import LoadingPage from '../../../components/loadingPage.component';
-import Home from '../../home/pages/home.page';
-import MyAccount from '../../account/pages/myAccount.connector';
-import PartnersList from '../../partners/pages/partnersList.connector';
-import NewPartner from '../../partners/pages/newPartner.connector';
-import EditPartner from '../../partners/pages/editPartner.connector';
-import AppsList from '../../apps/pages/appsList.connector';
-import NewApp from '../../apps/pages/newApp.connector';
-import EditApp from '../../apps/pages/editApp.connector';
 import { RolesProvider } from '../../../components/restricted.component';
-import NotFound from '../../../components/notFound.component';
-import NewHook from '../../hooks/pages/newHook.connector';
-import EditHook from '../../hooks/pages/editHook.connector';
+import PasswordChangeCard from '../../account/components/passwordChangeCard.component';
 
-type LoginRequiredProps = ConnectedLoginRequiredProps & ContextRouter;
+type LoginRequiredProps = ConnectedLoginRequiredProps & ContextRouter & {
+  route: any;
+  children: any;
+  redirect?: boolean;
+};
 
 const LoginRequired = ({
   awaitingLogin,
   location,
   user,
+  route,
+  redirect,
+  children,
+  receiveUserData,
 }: LoginRequiredProps) => {
   localStorage.setItem('use_new_interface', 'true');
 
@@ -34,31 +34,28 @@ const LoginRequired = ({
   }
 
   if (!user) {
-    return (
+    return redirect ? (
       <Redirect
         to={{
           pathname: '/login',
           state: { from: location },
         }}
       />
+    ) : <Login />;
+  }
+
+  if (user.needPasswordChange) {
+    return (
+      <PasswordChangeCard
+        forced
+        onPasswordChanged={editedUser => receiveUserData(editedUser)}
+      />
     );
   }
 
   return (
     <RolesProvider value={user.roles}>
-      <Switch>
-        <Route path="/dashboard/my-account" exact component={MyAccount} />
-        <Route path="/dashboard/partners/new" exact component={NewPartner} />
-        <Route path="/dashboard/partners/:partnerId" exact component={EditPartner} />
-        <Route path="/dashboard/partners" exact component={PartnersList} />
-        <Route path="/dashboard/apps/new" exact component={NewApp} />
-        <Route path="/dashboard/apps/:appId/hooks/new" exact component={NewHook} />
-        <Route path="/dashboard/apps/:appId/hooks/:hookId" exact component={EditHook} />
-        <Route path="/dashboard/apps/:appId" exact component={EditApp} />
-        <Route path="/dashboard/apps" exact component={AppsList} />
-        <Route path="/dashboard" exact component={Home} />
-        <Route component={NotFound} />
-      </Switch>
+      {children || renderRoutes(route.routes)}
     </RolesProvider>
   );
 };

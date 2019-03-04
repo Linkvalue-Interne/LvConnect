@@ -20,15 +20,29 @@ const styles = theme => ({
 
 type NotFoundProps = {
   classes: any,
+  text?: string,
+  subText?: string,
+  code?: number,
 }
 
-const NotFound = ({ classes }: NotFoundProps) => (
+const NotFound = ({ code, classes, text, subText }: NotFoundProps) => (
   <div className={classes.notFoundPage}>
-    <Typography className={classes.notFoundTitle} variant="h1" component="h1" gutterBottom>404 :(</Typography>
-    <Typography className={classes.notFoundBody} variant="h4">
-      Oups ! Il semblerait que cette page n{'\''}existe pas/plus
+    <Typography className={classes.notFoundTitle} variant="h1" component="h1" gutterBottom>{code} :(</Typography>
+    <Typography className={classes.notFoundBody} variant="h4" gutterBottom>
+      {text}
     </Typography>
+    {subText && (
+      <Typography className={classes.notFoundBody}>
+        {subText}
+      </Typography>
+    )}
   </div>
 );
+
+NotFound.defaultProps = {
+  code: 404,
+  text: 'Oups ! Il semblerait que cette page n\'existe pas/plus',
+  subText: '',
+};
 
 export default withStyles(styles)(NotFound);

@@ -8,12 +8,14 @@ import type { DisplayState } from '../modules/display/display.reducer';
 import type { PartnersState } from '../modules/partners/partners.reducer';
 import type { AppsState } from '../modules/apps/apps.reducer';
 import type { HooksState } from '../modules/hooks/hooks.reducer';
+import type { OAuthState } from '../modules/oauth/oauth.reducer';
 
 import auth from '../modules/auth/auth.reducer';
 import display from '../modules/display/display.reducer';
 import partners from '../modules/partners/partners.reducer';
 import apps from '../modules/apps/apps.reducer';
 import hooks from '../modules/hooks/hooks.reducer';
+import oauth from '../modules/oauth/oauth.reducer';
 
 export type AppState = {
   auth: AuthState,
@@ -21,6 +23,7 @@ export type AppState = {
   partners: PartnersState,
   apps: AppsState,
   hooks: HooksState,
+  oauth: OAuthState,
 }
 
 export default combineReducers({
@@ -29,5 +32,6 @@ export default combineReducers({
   partners,
   apps,
   hooks,
+  oauth,
   form,
 });

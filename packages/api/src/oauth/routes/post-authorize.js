@@ -1,48 +1,21 @@
 const Joi = require('joi');
 const Boom = require('boom');
-
-const login = require('./methods/login');
-const authorize = require('./methods/authorize');
-const changePassword = require('./methods/change-password');
-const getFormUrl = require('./methods/get-form-url');
+const _ = require('lodash');
+const { oauth: { scopes: validScopes } } = require('@lvconnect/config');
 
 module.exports = {
   method: 'POST',
   path: '/oauth/authorize',
   config: {
-    auth: {
-      mode: 'optional',
-      strategies: ['session'],
+    auth: 'bearer',
+    plugins: {
+      crumb: {
+        restful: true,
+      },
     },
-    plugins: { 'hapi-auth-cookie': { redirectTo: false } },
     validate: {
       payload: Joi.object({
-        step: Joi.string().valid('login', 'permissions', 'change-password').required(),
-        email: Joi.alternatives().when('step', {
-          is: 'login',
-          then: Joi.string().required(),
-          otherwise: Joi.any().forbidden(),
-        }),
-        password: Joi.alternatives().when('step', {
-          is: 'login',
-          then: Joi.string().required(),
-          otherwise: Joi.any().forbidden(),
-        }),
-        scopes: Joi.alternatives().when('step', {
-          is: 'permissions',
-          then: Joi.string().required(),
-          otherwise: Joi.any().forbidden(),
-        }),
-        plainPassword: Joi.alternatives().when('step', {
-          is: 'change-password',
-          then: Joi.string().required().min(6),
-          otherwise: Joi.any().forbidden(),
-        }),
-        plainPasswordCheck: Joi.alternatives().when('step', {
-          is: 'change-password',
-          then: Joi.string().required().min(6),
-          otherwise: Joi.any().forbidden(),
-        }),
+        scopes: Joi.array().items(Joi.string().valid(validScopes)).required(),
       }),
       query: Joi.object().keys({
         app_id: Joi.string(),
@@ -54,26 +27,54 @@ module.exports = {
       }),
     },
   },
-  handler(req, res) {
+  async handler(req) {
     if (!req.query.app_id && !req.query.client_id) {
       throw Boom.badRequest('You must specify either app_id or client_id query param.');
     }
 
-    if (req.payload.step === 'login') {
-      return login(req, res);
+    const { models: { Authorization } } = req.server.plugins.oauth;
+    const { Application } = req.server.plugins.apps.models;
+    const { generateAuthorizationCode, generateAccessToken } = req.server.methods;
+    const user = req.auth.credentials;
+    const {
+      redirect_uri: redirectUri,
+      app_id: appId,
+      client_id: clientId,
+      response_type: responseType,
+    } = req.query;
+
+    const application = await Application.findOne({ appId: clientId || appId });
+    let authorization = await Authorization.findOne({ user, application });
+    if (!application.redirectUris.find(uri => redirectUri === uri)) {
+      throw Boom.badRequest('invalid_redirect_uri');
     }
 
-    if (req.payload.step === 'change-password') {
-      return changePassword(req, res);
+    const { scopes } = req.payload;
+    const invalidScopes = _.difference(scopes, _.intersection(validScopes, application.allowedScopes));
+    if (invalidScopes.length > 0) {
+      throw Boom.badRequest('invalid_scopes');
     }
 
-    if (!req.auth.isAuthenticated) {
-      return res.view('oauth-login', {
-        pageTitle: 'Login',
-        url: getFormUrl(req),
+    if (authorization === null) {
+      authorization = await Authorization.create({
+        user,
+        application,
+        allowedScopes: scopes,
       });
     }
 
-    return authorize(req, res);
+    await Authorization.findByIdAndUpdate(authorization._id, {
+      $set: { allowedScopes: [...authorization.allowedScopes, ...scopes] },
+    });
+
+    const state = req.query.state ? `&state=${req.query.state}` : '';
+    const decodedRedirectUri = decodeURIComponent(redirectUri);
+    if (responseType === 'token') {
+      const accessToken = await generateAccessToken(user, application, scopes);
+      return { redirectTo: `${decodedRedirectUri}?token=${accessToken.token}${state}` };
+    }
+
+    const authorizationCode = await generateAuthorizationCode(user, application, scopes);
+    return { redirectTo: `${decodedRedirectUri}?code=${authorizationCode.code}${state}` };
   },
 };

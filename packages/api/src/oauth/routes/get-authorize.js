@@ -1,8 +1,10 @@
 const Boom = require('boom');
 const Joi = require('joi');
+const path = require('path');
+const fs = require('fs');
+const request = require('request-promise');
 
-const displayPermissions = require('./methods/display-permissions');
-const getFormUrl = require('./methods/get-form-url');
+const oauthFilePath = path.resolve(process.cwd(), 'dist/oauth.html');
 
 module.exports = {
   method: 'GET',
@@ -29,22 +31,22 @@ module.exports = {
       throw Boom.badRequest('You must specify either app_id or client_id query param.');
     }
 
-    const url = getFormUrl(req);
-
-    if (!req.auth.isAuthenticated) {
-      return res.view('oauth-login', {
-        pageTitle: 'Login',
-        url,
+    let html;
+    if (process.env.APP_ENV === 'dev') {
+      html = await request({
+        method: 'GET',
+        uri: 'http://localhost:8080/oauth.html',
       });
+    } else {
+      html = await new Promise((resolve, reject) => fs.readFile(oauthFilePath, (err, buffer) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(buffer.toString());
+        }
+      }));
     }
 
-    if (req.auth.credentials.needPasswordChange) {
-      return res.view('oauth-change-password', {
-        pageTitle: 'Change password',
-        url,
-      });
-    }
-
-    return displayPermissions(req, res);
+    return html.replace('{{CSRF_TOKEN}}', req.server.plugins.crumb.generate(req, res));
   },
 };

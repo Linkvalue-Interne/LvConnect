@@ -1,17 +1,8 @@
 const moment = require('moment');
-const handlebars = require('handlebars');
 const Boom = require('boom');
 const models = require('./models');
 const uuidHash = require('../uuid-hash');
 const routes = require('./routes');
-const getFormUrl = require('./routes/methods/get-form-url');
-
-const contextBuilder = req => (!req.auth.credentials ? {} : {
-  user: req.auth.credentials,
-  logoutUrl: `/logout?redirect=${encodeURIComponent(getFormUrl(req))}`,
-  redirectUri: req.query.redirect_uri,
-  state: req.query.state,
-});
 
 module.exports = {
   name: 'oauth',
@@ -29,15 +20,6 @@ module.exports = {
       Authorization,
     } = models;
     const { Application } = server.plugins.apps.models;
-
-    server.views({
-      engines: { hbs: handlebars },
-      relativeTo: __dirname,
-      layout: 'default',
-      layoutPath: 'layouts',
-      path: 'views',
-      context: contextBuilder,
-    });
 
     server.method('generateAccessToken', (user, application, scopes) => {
       const token = new AccessToken({

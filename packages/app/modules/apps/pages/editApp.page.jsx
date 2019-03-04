@@ -76,6 +76,15 @@ class EditApp extends Component<EditAppProps, EditAppState> {
               helperText=" "
             />
           </CardContent>
+          <CardActions>
+            <Button
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`/oauth/authorize?client_id=${app.appId}&redirect_uri=${encodeURI(app.redirectUris[0])}`}
+            >
+              {'Test d\'autorisation'}
+            </Button>
+          </CardActions>
         </Card>
         <AppForm
           appId={app.id}

@@ -14,7 +14,7 @@ type ConnectedAppBarStateProps = {
 }
 
 type ConnectedAppBarDispatchProps = {
-  logout(): void;
+  logout(redirect: boolean): void;
 }
 
 export type ConnectedAppBarProps = ConnectedAppBarStateProps & ConnectedAppBarDispatchProps;

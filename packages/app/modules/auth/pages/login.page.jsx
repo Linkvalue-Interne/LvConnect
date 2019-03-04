@@ -45,6 +45,11 @@ type LoginProps = ConnectedLoginProps & {
 };
 
 class Login extends React.Component<LoginProps> {
+  componentDidMount(): void {
+    // This is to prevent labels over autofilled inputs
+    setTimeout(() => this.props.refresh());
+  }
+
   componentWillReceiveProps(props) {
     if (props.isConnected) {
       this.props.push('/dashboard');

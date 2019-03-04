@@ -51,6 +51,7 @@ type AppBarProp = ConnectedAppBarProps & {
   user?: User;
   logout(): void;
   shouldCollapseBar: boolean;
+  simple?: boolean;
   onDrawerOpen(): void;
 }
 
@@ -83,17 +84,21 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
 
   handleLogout = () => {
     this.setState({ open: false });
-    this.props.logout();
+    this.props.logout(false);
   };
 
   render() {
     const {
-      user, classes, shouldCollapseBar, onDrawerOpen,
+      user,
+      classes,
+      shouldCollapseBar,
+      onDrawerOpen,
+      simple,
     } = this.props;
     const collapsed = shouldCollapseBar && user;
 
     let avatar;
-    if (shouldCollapseBar && user) {
+    if ((shouldCollapseBar || simple) && user) {
       const fullName = `${user.firstName} ${user.lastName}`;
       avatar = (
         <div className={classes.userDetails}>
@@ -107,13 +112,15 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
             open={this.state.open}
             onClose={this.handleMenuClose}
           >
-            <MenuItem
-              onClick={this.handleMenuClose}
-              component={Link}
-              to="/dashboard/my-account"
-            >
-              Mon compte
-            </MenuItem>
+            {!simple && (
+              <MenuItem
+                onClick={this.handleMenuClose}
+                component={Link}
+                to="/dashboard/my-account"
+              >
+                Mon compte
+              </MenuItem>
+            )}
             <MenuItem onClick={this.handleLogout}>Se déconnecter</MenuItem>
           </Menu>
         </div>
@@ -121,7 +128,7 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
     }
 
     let menuButton;
-    if (!shouldCollapseBar && user) {
+    if (!shouldCollapseBar && user && !simple) {
       menuButton = (
         <IconButton color="inherit" className={classes.menuButton} onClick={onDrawerOpen}>
           <MenuIcon />

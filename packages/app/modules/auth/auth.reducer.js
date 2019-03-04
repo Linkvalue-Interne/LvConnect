@@ -19,7 +19,10 @@ const initialState: AuthState = {
 export default (state: AuthState = initialState, { type, payload }: ReduxAction) => {
   switch (type) {
     case LOGOUT:
-      return initialState;
+      return {
+        ...initialState,
+        awaitingLogin: false,
+      };
     case RECEIVE_USER_DATA:
       return {
         ...state,

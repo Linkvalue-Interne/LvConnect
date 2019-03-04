@@ -58,7 +58,7 @@ module.exports = {
             dateStart,
             dateEnd: new Date(),
             request: {
-              body: JSON.stringify(body),
+              body,
               headers: JSON.stringify({
                 ...headers,
                 'Request URL': hook.uri,

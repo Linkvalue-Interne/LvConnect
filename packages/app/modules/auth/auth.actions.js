@@ -16,7 +16,7 @@ class HttpError extends Error {
 }
 
 export const LOGOUT = 'auth/LOGOUT';
-export const logout = () => (dispatch: Dispatch<ReduxAction>) => {
+export const logout = (redirect: boolean = true) => (dispatch: Dispatch<ReduxAction>) => {
   if (window.Raven) {
     window.Raven.setUserContext();
   }
@@ -24,29 +24,32 @@ export const logout = () => (dispatch: Dispatch<ReduxAction>) => {
   localStorage.removeItem('access_token');
   localStorage.removeItem('refresh_token');
 
-  dispatch(push('/login'));
+  if (redirect) {
+    dispatch(push('/login'));
+  }
 
   return dispatch({
     type: LOGOUT,
   });
 };
 
-const fetchWithAuthHeader = (url: string, options: RequestOptions) => fetch(url, {
+type FetchOptions = {
+  ...RequestOptions,
+  body?: any,
+}
+
+const fetchWithAuthHeader = (url: string, options: FetchOptions) => fetch(url, {
   ...options,
-  headers: {
+  headers: ({
+    ...options.headers,
     authorization: `Bearer ${localStorage.getItem('access_token') || ''}`,
-  },
+  }: any),
 });
 
 const receiveTokens = ({ accessToken, refreshToken }) => {
   localStorage.setItem('access_token', accessToken);
   localStorage.setItem('refresh_token', refreshToken);
 };
-
-type FetchOptions = {
-  ...RequestOptions,
-  body?: any,
-}
 
 const fetchTokenWithRefresh = async (refreshToken: string) => {
   const res = await fetch(`${baseEndpoint}/login`, {

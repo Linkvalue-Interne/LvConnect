@@ -12,8 +12,8 @@ import type { FormProps } from 'redux-form';
 
 type CheckboxesFieldProps = FormProps & {
   options: Array<Array<string>>,
-  label: String,
-  row: Boolean,
+  label: string,
+  row: boolean,
 }
 
 class CheckboxesField extends Component<CheckboxesFieldProps, any> {

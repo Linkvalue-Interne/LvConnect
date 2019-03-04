@@ -6,8 +6,12 @@ module.exports = {
   logs: {
     reporters: {
       consoleReporter: [{
+        module: 'good-squeeze',
+        name: 'Squeeze',
+        args: [{ log: '*', response: '*', error: '*', worker: '*' }],
+      }, {
         module: 'good-console',
-        args: [{ log: '*', response: '*', worker: '*' }],
+        args: [{ colors: true }],
       }, 'stdout'],
     },
   },

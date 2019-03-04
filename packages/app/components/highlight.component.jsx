@@ -24,6 +24,8 @@ const Highlight = ({ search, text }: HighlightProps) => {
       .join('|'),
     'ig',
   );
+
+  // eslint-disable-next-line react/no-danger
   return <span dangerouslySetInnerHTML={{ __html: text.replace(searchRegexp, match => `<b>${match}</b>`) }} />;
 };
 
