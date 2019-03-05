@@ -1,3 +1,13 @@
+<a name="2.7.0"></a>
+# [2.7.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.6.3...v2.7.0) (2019-03-05)
+
+
+### Features
+
+* **oauth:** Replace server side OAuth with React app ([#6](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/issues/6)) ([24fd0f5](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/24fd0f5))
+
+
+
 <a name="2.6.3"></a>
 ## [2.6.3](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.6.2...v2.6.3) (2019-03-01)
 
