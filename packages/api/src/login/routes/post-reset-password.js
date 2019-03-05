@@ -33,12 +33,12 @@ module.exports = {
         throw Boom.forbidden('invalid_password');
       }
     }
-    // if (user.needPasswordChange) {
-    //   const isSamePassword = await user.comparePassword(newPassword);
-    //   if (isSamePassword) {
-    //     throw Boom.badRequest('same_password');
-    //   }
-    // }
+    if (user.needPasswordChange) {
+      const isSamePassword = await user.comparePassword(newPassword);
+      if (isSamePassword) {
+        throw Boom.badRequest('same_password');
+      }
+    }
     await user.hashPassword(newPassword);
     user.needPasswordChange = false;
     await user.save();
