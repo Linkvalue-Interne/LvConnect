@@ -1,33 +1,32 @@
 // @flow
 
-import * as React from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { hot } from 'react-hot-loader';
-import { renderRoutes } from 'react-router-config';
 
-import type { Store } from 'redux';
-
+import LoginRequired from '../modules/auth/components/loginRequired.connector';
+import Permissions from '../modules/oauth/components/permissions.connector';
 import App from './app.container';
 import theme from '../modules/display/theme';
-import routes from '../config/routes';
 
-type RootProps = {
-  store: Store<any, any>;
-  history: any;
-};
+type OAuthProps = {
+  store: any,
+  history: any,
+}
 
-const Root = ({ store, history }: RootProps) => (
+const Oauth = ({ store, history }: OAuthProps) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <MuiThemeProvider theme={theme}>
-        <App>
-          {renderRoutes(routes)}
+        <App simple>
+          <LoginRequired>
+            <Permissions />
+          </LoginRequired>
         </App>
       </MuiThemeProvider>
     </ConnectedRouter>
   </Provider>
 );
 
-export default hot(module)(Root);
+export default Oauth;

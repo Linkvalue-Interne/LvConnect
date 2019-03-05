@@ -1,7 +1,7 @@
 // @flow
 
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { push, replace } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 
 import type { AppState } from '../../../store/rootReducer';
@@ -17,6 +17,7 @@ type ConnectedAppsListStateProps = AppsListState & {
 type ConnectedAppsListDispatchProps = {
   fetchApps: (options: { page?: number, limit?: number }) => void,
   push: (path: string) => void,
+  replace: (path: string) => void,
 };
 
 export type ConnectedAppsListProps = AppsListState & ConnectedAppsListDispatchProps;
@@ -26,6 +27,6 @@ const mapStateToProps = (state: AppState): ConnectedAppsListStateProps => ({
   user: state.auth.user,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ fetchApps, push }, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ fetchApps, push, replace }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppsList);

@@ -74,11 +74,14 @@ class AppsList extends Component<AppsListProps, AppsListState> {
       search: '',
     };
 
-    this.debouncedHandleSearchChange = debounce(search => this.props.fetchApps({
-      page: this.getPageNumber(),
-      limit: this.props.limit,
-      search: search || undefined,
-    }), 300);
+    this.debouncedHandleSearchChange = debounce(() => {
+      this.props.replace('/dashboard/apps');
+      return this.props.fetchPartners({
+        page: 1,
+        limit: this.props.limit,
+        search: this.state.search || undefined,
+      });
+    }, 300);
   }
 
   componentWillMount() {
@@ -103,7 +106,7 @@ class AppsList extends Component<AppsListProps, AppsListState> {
 
   debouncedHandleSearchChange: (search: string) => void;
 
-  handleChangePage = (event, page) => this.props.push(`/dashboard/apps?page=${page + 1}`);
+  handleChangePage = (event, page) => this.props.replace(`/dashboard/apps?page=${page + 1}`);
 
   handleGoToApp = appId => () => this.props.push(`/dashboard/apps/${appId}`);
 

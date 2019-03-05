@@ -14,6 +14,7 @@ type ConnectedLoginStateProps = {
 
 type ConnectedLoginDispatchProps = {
   push(path: string): void;
+  refresh(): void;
 }
 
 export type ConnectedLoginProps = ConnectedLoginStateProps & ConnectedLoginDispatchProps;
@@ -24,6 +25,7 @@ const mapStateToProps = (state: AppState): ConnectedLoginStateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): ConnectedLoginDispatchProps => bindActionCreators({
   push,
+  refresh: () => ({ type: '@@REFRESH_FORM' }),
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

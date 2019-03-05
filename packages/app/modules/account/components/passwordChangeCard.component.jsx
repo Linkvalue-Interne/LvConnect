@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, SubmissionError } from 'redux-form';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -22,7 +22,20 @@ type PasswordChangeCardProps = FormProps & {
   onPasswordChanged: () => void,
 };
 
-const PasswordChangeCard = ({ className, handleSubmit, askOldPassword }: PasswordChangeCardProps) => (
+const PasswordChangeCard = ({
+  className,
+  handleSubmit,
+  askOldPassword,
+  forced,
+  invalid,
+  submitSucceeded,
+}: PasswordChangeCardProps) => (submitSucceeded ? (
+  <Card className={className}>
+    <CardContent>
+      <Typography>Votre mot de passe a bien été changé</Typography>
+    </CardContent>
+  </Card>
+) : (
   <form onSubmit={handleSubmit}>
     <Card className={className}>
       <CardContent>
@@ -30,6 +43,13 @@ const PasswordChangeCard = ({ className, handleSubmit, askOldPassword }: Passwor
           Changer de mot de passe
         </Typography>
         <Grid container spacing={16}>
+          {forced && (
+            <Grid item xs={12}>
+              <Typography>
+                Votre mot de passe a expiré et doit être changé, merci de saisir un nouveau mot de passe.
+              </Typography>
+            </Grid>
+          )}
           {askOldPassword && (
             <Grid item xs={12}>
               <Field
@@ -82,11 +102,11 @@ const PasswordChangeCard = ({ className, handleSubmit, askOldPassword }: Passwor
         </Grid>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary" type="submit">Sauvegarder</Button>
+        <Button size="small" color="primary" type="submit" disabled={invalid}>Sauvegarder</Button>
       </CardActions>
     </Card>
   </form>
-);
+));
 
 export default reduxForm({
   form: 'passwordChange',
@@ -95,9 +115,22 @@ export default reduxForm({
     confirmNewPassword: confirmNewPassword !== newPassword && ' ',
   }),
   onSubmit: async (formData, dispatch, { pkey, onPasswordChanged }) => {
-    await dispatch(changePassword(formData, pkey));
-    if (onPasswordChanged) {
-      onPasswordChanged();
+    try {
+      const editedUser = await dispatch(changePassword(formData, pkey));
+      if (onPasswordChanged) {
+        onPasswordChanged(editedUser);
+      }
+    } catch (e) {
+      if (e.message === 'same_password') {
+        throw new SubmissionError({
+          newPassword: 'Mot de passe identique à l\'ancien',
+        });
+      }
+      if (e.message === 'invalid_password') {
+        throw new SubmissionError({
+          oldPassword: 'Mot de passe invalide',
+        });
+      }
     }
   },
 })(PasswordChangeCard);

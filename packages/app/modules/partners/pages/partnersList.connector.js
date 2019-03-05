@@ -1,7 +1,7 @@
 // @flow
 
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { push, replace } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 
 import type { AppState } from '../../../store/rootReducer';
@@ -17,6 +17,7 @@ type ConnectedPartnersListStateProps = PartnersListState & {
 type ConnectedPartnersListDispatchProps = {
   fetchPartners: (options: { page?: number, limit?: number }) => void,
   push: (path: string) => void,
+  replace: (path: string) => void,
   changeRowsPerPage: () => void,
 };
 
@@ -31,6 +32,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
   fetchPartners,
   changeRowsPerPage,
   push,
+  replace,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PartnersList);

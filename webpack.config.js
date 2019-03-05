@@ -6,14 +6,17 @@ const TerserPlugin = require('terser-webpack-plugin');
 const WebappWebpackPlugin = require('webapp-webpack-plugin');
 
 module.exports = {
-  entry: './index.jsx',
+  entry: {
+    main: './index.jsx',
+    oauth: './oauth.jsx',
+  },
   context: path.resolve(__dirname, './packages/app/'),
   devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-source-map',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[hash].js',
-    publicPath: process.env.NODE_ENV !== 'dev' ? '/' : 'http://localhost:8080/',
+    publicPath: process.env.APP_ENV !== 'dev' ? '/' : 'http://localhost:8080/',
   },
   resolve: {
     extensions: ['.jsx', '.js', '.json'],
@@ -73,6 +76,12 @@ module.exports = {
     new CleanWebpackPlugin(['./dist']),
     new HtmlWebpackPlugin({
       template: './index.html',
+      chunks: ['main', 'vendors'],
+    }),
+    new HtmlWebpackPlugin({
+      template: './oauth.html',
+      filename: 'oauth.html',
+      chunks: ['oauth', 'vendors'],
     }),
     new DefinePlugin({
       'process.env.APP_ENV': `"${process.env.APP_ENV || 'dev'}"`,

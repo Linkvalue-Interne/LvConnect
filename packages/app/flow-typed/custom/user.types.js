@@ -8,4 +8,5 @@ declare type User = {
   email: string;
   job: string;
   roles: Array<string>;
+  needPasswordChange: boolean,
 }

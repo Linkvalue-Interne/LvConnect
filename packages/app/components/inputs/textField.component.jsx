@@ -7,15 +7,15 @@ import type { FieldProps } from 'redux-form/lib/FieldProps.types.js.flow';
 
 export type TextFieldProps = {
   ...FieldProps,
-  className: String,
-  label: String,
-  helperText?: String,
-  forceShrink: Boolean,
-  type: String,
-  required: Boolean,
-  placeholder: String,
-  multiline: Boolean,
-  margin?: String,
+  className: string,
+  label: string,
+  helperText?: string,
+  forceShrink: boolean,
+  type: string,
+  required: boolean,
+  placeholder: string,
+  multiline: boolean,
+  margin?: string,
 };
 
 const TextField = ({

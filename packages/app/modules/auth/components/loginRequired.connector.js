@@ -1,21 +1,31 @@
 // @flow
 
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import type { AppState } from '../../../store/rootReducer';
 
 import LoginRequired from './loginRequired.component';
+import { receiveUserData } from '../auth.actions';
 
 type ConnectedLoginRequiredStateProps = {
   user: User | null,
   awaitingLogin: boolean,
 }
 
-export type ConnectedLoginRequiredProps = ConnectedLoginRequiredStateProps;
+type ConnectedLoginRequiredDispatchProps = {
+  receiveUserData: (userData: User) => void,
+}
 
-const mapStateToProps = (state: AppState): ConnectedLoginRequiredProps => ({
+export type ConnectedLoginRequiredProps = ConnectedLoginRequiredStateProps & ConnectedLoginRequiredDispatchProps;
+
+const mapStateToProps = (state: AppState): ConnectedLoginRequiredStateProps => ({
   user: state.auth.user,
   awaitingLogin: state.auth.awaitingLogin,
 });
 
-export default connect(mapStateToProps)(LoginRequired);
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+  receiveUserData,
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginRequired);

@@ -1,7 +1,7 @@
 // @flow
 
 declare type App = {
-  name: string;
+  name: string,
   clientId?: string,
   clientSecret?: string,
   description: string,

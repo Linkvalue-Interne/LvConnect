@@ -40,7 +40,6 @@ const manifest = {
       'hapi-auth-basic',
       'hapi-auth-bearer-token',
       { plugin: 'crumb', options: config.csrf },
-      'vision',
       'scooter',
       'inert',
       { plugin: './mongodb/mongodb.plugin', options: config.mongodb },

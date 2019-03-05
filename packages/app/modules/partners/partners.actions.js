@@ -65,11 +65,12 @@ export const editPartner = (partnerId: string, data: User) =>
 export const deletePartner = (partnerId: string) => (dispatch: Dispatch<ReduxAction>) =>
   dispatch(fetchWithAuth(`/users/${partnerId}`, { method: 'DELETE' }));
 
-type PasswordChange = { oldPassword: string, newPassword: string, cleanupSessions: boolean };
-export const changePassword = ({ oldPassword, newPassword, cleanupSessions }: PasswordChange, pkey: string) => (
+type PasswordChange = { oldPassword?: string, newPassword: string, cleanupSessions?: boolean };
+export const changePassword = ({ oldPassword, newPassword, cleanupSessions }: PasswordChange, pkey?: string) => (
   async (dispatch: Dispatch<ReduxAction>) => {
+    let user;
     if (pkey) {
-      await fetch('/reset-password', {
+      const response = await fetch('/reset-password', {
         method: 'POST',
         headers: {
           'X-CSRF-Token': window.CSRF_TOKEN,
@@ -81,9 +82,13 @@ export const changePassword = ({ oldPassword, newPassword, cleanupSessions }: Pa
           cleanupSessions,
         }),
       });
+      user = await response.json();
     } else {
-      await dispatch(fetchWithAuth('/reset-password', {
+      user = await dispatch(fetchWithAuth('/reset-password', {
         method: 'POST',
+        headers: {
+          'X-CSRF-Token': window.CSRF_TOKEN,
+        },
         body: {
           oldPassword,
           newPassword,
@@ -95,5 +100,7 @@ export const changePassword = ({ oldPassword, newPassword, cleanupSessions }: Pa
     if (cleanupSessions) {
       dispatch(logout());
     }
+
+    return user;
   }
 );

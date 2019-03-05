@@ -6,7 +6,7 @@ const routes = require('./routes');
 
 module.exports = {
   name: 'login',
-  dependencies: ['users', 'vision', 'inert', 'hapi-auth-cookie'],
+  dependencies: ['users', 'inert', 'hapi-auth-cookie'],
   async register(server, { cache, cookie }) {
     server.app.cache = server.cache({ // eslint-disable-line no-param-reassign
       cache: 'redisCache',
@@ -109,7 +109,7 @@ module.exports = {
         if (token.expireAt < new Date()) {
           throw Boom.unauthorized('token_expired');
         }
-        return { isValid: true, credentials: token.user };
+        return { isValid: true, credentials: token };
       },
     });
 
@@ -127,7 +127,7 @@ module.exports = {
         const { User } = req.server.plugins.users.models;
 
         const user = await User.findById(cached);
-        return { isValid: !!user, credentials: user, artifacts: { pkey } };
+        return { isValid: !!user, credentials: { user }, artifacts: { pkey } };
       },
     });
 
