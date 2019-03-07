@@ -35,7 +35,7 @@ module.exports = {
     const { models: { Authorization } } = req.server.plugins.oauth;
     const { Application } = req.server.plugins.apps.models;
     const { generateAuthorizationCode, generateAccessToken } = req.server.methods;
-    const user = req.auth.credentials;
+    const { user } = req.auth.credentials;
     const {
       redirect_uri: redirectUri,
       app_id: appId,
@@ -64,7 +64,7 @@ module.exports = {
     }
 
     await Authorization.findByIdAndUpdate(authorization._id, {
-      $set: { allowedScopes: [...authorization.allowedScopes, ...scopes] },
+      $set: { allowedScopes: _.uniq([...authorization.allowedScopes, ...scopes]) },
     });
 
     const state = req.query.state ? `&state=${req.query.state}` : '';

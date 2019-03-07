@@ -1,6 +1,7 @@
 const HR = 'hr';
 const BOARD = 'board';
 const TECH = 'tech';
+const LEAD = 'lead';
 const BUSINESS = 'business';
 const COMMUNICATION = 'com';
 const FINANCE = 'finance';
@@ -12,6 +13,7 @@ module.exports = {
     BOARD,
     HR,
     TECH,
+    LEAD,
     BUSINESS,
     COMMUNICATION,
     FINANCE,

@@ -70,9 +70,6 @@ const styles = theme => ({
   },
 });
 
-const roleMap = Object.entries(config.roles)
-  .reduce((acc, [key, value]) => ({ ...acc, [typeof value === 'string' ? value : '']: key }), {});
-
 type PartnersListProps = WithStyles & ContextRouter & ConnectedPartnersListProps;
 type PartnersListState = {
   search: string;
@@ -210,7 +207,7 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
                   <TableCell>{partner.city}</TableCell>
                   <TableCell>{jobLabels[partner.job]}</TableCell>
                   <TableCell className={classes.fullNameCell}>
-                    {partner.roles.map(role => roleLabels[roleMap[role]]).join(', ')}
+                    {partner.roles.map(role => roleLabels[role]).join(', ')}
                   </TableCell>
                 </TableRow>
               ))}

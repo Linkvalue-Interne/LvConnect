@@ -54,7 +54,7 @@ Or if you want the production mode:
 node .
 ```
 
-The server listens to `localhost:5000` in dev, `lvconnect.herokuapp.com` in staging and`lvconnect.link-value.fr` in production.
+The server listens to `localhost:8000` in dev, `lvconnect.herokuapp.com` in staging and`lvconnect.link-value.fr` in production.
 
 ## Configuration
 
@@ -95,7 +95,7 @@ To tag a release for production, use the `npm version` command which will bump v
 LVConnect has a command line interface to help you do quick tasks. To run the cli, use the following command:
 
 ```shell
-./bin/cli.js [command] [...options]
+./packages/api/bin/cli.js [command] [...options]
 ```
 
 Here's the command help (you can also access it by using the `--help` option):
