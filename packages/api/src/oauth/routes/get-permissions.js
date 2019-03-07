@@ -38,7 +38,7 @@ module.exports = {
       response_type: responseType,
     } = req.query;
     const { generateAuthorizationCode, generateAccessToken } = req.server.methods;
-    const user = req.auth.credentials;
+    const { user } = req.auth.credentials;
 
     const application = await Application.findOne({ appId: appId || clientId });
     if (!application) {

@@ -2,6 +2,7 @@ const roleLabels = {
   HR: 'Ressources humaines',
   BOARD: 'Executif',
   TECH: 'Tech',
+  LEAD: 'Lead',
   BUSINESS: 'Business',
   COMMUNICATION: 'Communication',
   FINANCE: 'Finance',

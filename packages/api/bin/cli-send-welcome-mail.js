@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-const { mongodb, mailjet } = require('@lvconnect/config/server');
+const { mongodb = {}, mailjet } = require('@lvconnect/config/server');
 const Mailjet = require('node-mailjet');
 const mongoose = require('mongoose');
 const handlebars = require('handlebars');
@@ -24,8 +24,7 @@ module.exports = (email) => {
   const mailjetAPI = Mailjet.connect(mailjet.apiKey, mailjet.apiToken);
   const sendEmail = mailjetAPI.post('send');
 
-  const userPart = mongodb.username ? `${mongodb.username}:${mongodb.password}@` : '';
-  mongoose.connect(`mongodb://${userPart}${mongodb.host}:${mongodb.port}/${mongodb.database}`, mongodb.config)
+  mongoose.connect(mongodb.url, { useNewUrlParser: true })
     .then(() => User.find(email ? { email } : {}))
     .then(users => Promise.all(users.map((userData) => {
       const emailData = {
