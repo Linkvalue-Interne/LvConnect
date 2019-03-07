@@ -49,7 +49,7 @@ class RoleCheckboxes extends Component<RoleCheckboxesProps, any> {
             <FormControlLabel
               key={key}
               control={<Checkbox checked={values.includes(value)} onChange={this.handleChange(value)} />}
-              label={roleLabels[key] || value}
+              label={roleLabels[value] || value}
             />
           ))}
         </FormGroup>
