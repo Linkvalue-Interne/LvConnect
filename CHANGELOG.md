@@ -1,3 +1,18 @@
+<a name="2.8.0"></a>
+# [2.8.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.7.0...v2.8.0) (2019-03-08)
+
+
+### Bug Fixes
+
+* **api:** auth was partially broken ([b77a120](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/b77a120))
+
+
+### Features
+
+* **config:** add Lead role ([a04ff23](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/a04ff23))
+
+
+
 <a name="2.7.0"></a>
 # [2.7.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.6.3...v2.7.0) (2019-03-05)
 
