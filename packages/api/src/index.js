@@ -15,9 +15,7 @@ const manifest = {
           throw err;
         },
       },
-      cors: {
-        origin: ['http://localhost:8001'],
-      },
+      cors: config.server.cors,
     },
   },
   register: {

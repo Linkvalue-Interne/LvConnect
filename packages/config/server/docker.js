@@ -12,6 +12,9 @@ module.exports = {
       database: 0,
       partition: 'lvc-cache',
     },
+    cors: {
+      origin: ['http://localhost:8000', 'http://localhost:8080'],
+    },
   },
   mongodb: {
     url: 'mongodb://db:27017/lvconnect',

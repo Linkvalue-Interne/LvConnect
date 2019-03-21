@@ -4,6 +4,9 @@ module.exports = {
       name: 'redisCache',
       engine: 'catbox-memory',
     },
+    cors: {
+      origin: ['http://localhost:8000', 'http://localhost:8080'],
+    },
   },
   mongodb: {
     url: 'mongodb://mongo:27017/lvconnect_test',

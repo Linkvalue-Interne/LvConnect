@@ -21,6 +21,9 @@ module.exports = {
       database: 0,
       partition: 'lvc-cache',
     },
+    cors: {
+      origin: ['https://lvconnect-staging.herokuapp.com'],
+    },
   },
   host: {
     port: process.env.PORT || 8000,
