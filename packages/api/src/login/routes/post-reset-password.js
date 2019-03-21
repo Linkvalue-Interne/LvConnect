@@ -6,11 +6,6 @@ module.exports = {
   path: '/reset-password',
   config: {
     auth: { strategies: ['bearer', 'pkey-token', 'query-token'] },
-    plugins: {
-      crumb: {
-        restful: true,
-      },
-    },
     validate: {
       payload: Joi.object().keys({
         oldPassword: Joi.string().max(255),
@@ -44,7 +39,6 @@ module.exports = {
     await user.save();
     if (cleanupSessions) {
       await req.server.plugins.oauth.cleanupUserTokens(user._id);
-      await req.server.plugins.login.cleanupUserSessions(user._id.toString());
     }
     return res.mongodb(user);
   },

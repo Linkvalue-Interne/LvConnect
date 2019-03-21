@@ -21,23 +21,19 @@ module.exports = {
     authorizationCodeTTL: 'PT10M',
   },
   csrf: {
-    skip: req => !/(\/oauth\/authorize|\/dashboard|\/old\/login|\/login|\/forgot-password)/.test(req.path),
+    skip: req => !/(\/oauth\/authorize|\/login|\/forgot-password|\/reset-password)/.test(req.path),
+    restful: true,
     cookieOptions: {
-      isSecure: false,
+      isSecure: true,
+      clearInvalid: true,
+      ignoreErrors: true,
+      encoding: 'iron',
+      password: process.env.COOKIE_SECRET,
     },
   },
   login: {
     cache: {
-      listsTTL: 30 * 24 * 60 * 60 * 1000,
-      sessionsTTL: 3 * 24 * 60 * 60 * 1000,
       passwordResetTTL: 60 * 60 * 1000,
-    },
-    cookie: {
-      secret: process.env.COOKIE_SECRET,
-      name: 'lvconnect',
-      redirect: '/login',
-      isSecure: false,
-      isSameSite: 'Lax',
     },
   },
   trello: {},

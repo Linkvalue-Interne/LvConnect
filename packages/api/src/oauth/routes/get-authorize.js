@@ -10,11 +10,6 @@ module.exports = {
   method: 'GET',
   path: '/oauth/authorize',
   config: {
-    auth: {
-      mode: 'optional',
-      strategies: ['session'],
-    },
-    plugins: { 'hapi-auth-cookie': { redirectTo: false } },
     validate: {
       query: Joi.object().keys({
         app_id: Joi.string(),

@@ -22,6 +22,7 @@ type EditPartnerProps = ContextRouter & ConnectedEditPartnerProps & {
   partnerId?: String,
   title?: String,
   cardTitle?: String,
+  autoFocus?: boolean,
 };
 
 type EditPartnerState = {
@@ -64,9 +65,9 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
   handleClose = () => this.setState({ open: false });
 
   render() {
-    const { title, cardTitle, partner, isLoading } = this.props;
+    const { title, cardTitle, partner, isLoading, autoFocus } = this.props;
     return !isLoading && partner && (
-      <PartnerForm editMode initialValues={partner} onFormSubmit={this.handleFormSubmit}>
+      <PartnerForm editMode initialValues={partner} onFormSubmit={this.handleFormSubmit} autoFocus={autoFocus}>
         {({ children, valid, pristine }) => (
           <Card>
             <Helmet>

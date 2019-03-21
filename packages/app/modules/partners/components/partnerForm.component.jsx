@@ -24,6 +24,7 @@ const formatDate = value => (value || '').slice(0, 10);
 
 type PartnerFormProps = FormProps & {
   editMode?: boolean,
+  autoFocus?: boolean,
   children: (params: { children: any, valid: boolean }) => any,
 };
 
@@ -32,6 +33,7 @@ const PartnerForm = ({
   valid,
   pristine,
   editMode,
+  autoFocus = true,
   children: render,
 }: PartnerFormProps) => (
   <form onSubmit={handleSubmit}>
@@ -45,7 +47,14 @@ const PartnerForm = ({
             return (
               <Grid container spacing={16}>
                 <Grid item md={6} xs={12}>
-                  <Field name="firstName" type="text" label="Prénom" component={TextField} required />
+                  <Field
+                    name="firstName"
+                    type="text"
+                    label="Prénom"
+                    component={TextField}
+                    required
+                    autoFocus={autoFocus}
+                  />
                 </Grid>
                 <Grid item md={6} xs={12}>
                   <Field name="lastName" type="text" label="Nom" component={TextField} required />

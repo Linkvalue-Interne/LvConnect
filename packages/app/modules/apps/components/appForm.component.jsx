@@ -33,7 +33,7 @@ const AppForm = ({
       children: (
         <Grid container spacing={16}>
           <Grid item xs={12}>
-            <Field name="name" type="text" label="Nom" component={TextField} required />
+            <Field name="name" type="text" label="Nom" component={TextField} required autoFocus />
           </Grid>
           <Grid item xs={12}>
             <Field name="description" label="Description" component={TextField} multiline rowsMax="4" required />
