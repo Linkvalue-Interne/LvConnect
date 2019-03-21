@@ -58,6 +58,7 @@ const PasswordChangeCard = ({
                 label="Ancien mot de passe"
                 component={TextField}
                 required
+                autoFocus
               />
             </Grid>
           )}

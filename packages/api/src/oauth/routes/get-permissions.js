@@ -8,11 +8,6 @@ module.exports = {
   path: '/oauth/permissions',
   config: {
     auth: 'bearer',
-    plugins: {
-      crumb: {
-        restful: true,
-      },
-    },
     validate: {
       query: Joi.object().keys({
         app_id: Joi.string(),

@@ -9,11 +9,6 @@ module.exports = {
   path: '/login',
   config: {
     auth: false,
-    plugins: {
-      crumb: {
-        restful: true,
-      },
-    },
     validate: {
       payload: Joi.object({
         grantType: Joi.string().valid(['password', 'refresh']).required(),

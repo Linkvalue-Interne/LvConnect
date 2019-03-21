@@ -29,6 +29,7 @@ const MyAccount = ({ me, match, classes }: MyAccountProps) => (
       match={match}
       title="Mon compte"
       cardTitle="Editer mes informations"
+      autoFocus={false}
     />
   </Fragment>
 );

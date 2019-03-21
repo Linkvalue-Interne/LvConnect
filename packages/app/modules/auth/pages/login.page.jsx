@@ -24,7 +24,7 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    marginBottom: -theme.spacing.unit * 5,
+    marginBottom: -theme.spacing.unit * 8,
     height: `calc(100vh - ${theme.spacing.unit * 8}px)`,
     boxSizing: 'border-box',
     background: `url(${bgUrl}) no-repeat`,
@@ -47,7 +47,7 @@ type LoginProps = ConnectedLoginProps & {
 class Login extends React.Component<LoginProps> {
   componentDidMount(): void {
     // This is to prevent labels over autofilled inputs
-    setTimeout(() => this.props.refresh());
+    setTimeout(() => this.props.refresh(), 10);
   }
 
   componentWillReceiveProps(props) {
@@ -75,6 +75,7 @@ class Login extends React.Component<LoginProps> {
               fullWidth
               required
               margin="normal"
+              autoFocus
             />
             <Field
               component={TextField}
@@ -99,6 +100,7 @@ class Login extends React.Component<LoginProps> {
 export default reduxForm({
   form: 'loginForm',
   validate: () => ({}),
+  initialValues: { email: '', password: '' },
   onSubmit: async ({ email, password }, dispatch) => {
     try {
       await dispatch(login(email, password));

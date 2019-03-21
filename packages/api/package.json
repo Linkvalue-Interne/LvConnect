@@ -34,7 +34,6 @@
     "hapi": "^17.5.4",
     "hapi-auth-basic": "^5.0.0",
     "hapi-auth-bearer-token": "^6.1.0",
-    "hapi-auth-cookie": "9.0.0",
     "inert": "^5.1.0",
     "joi": "^13.6.0",
     "kue": "^0.11.1",

@@ -25,7 +25,8 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    height: `calc(100% + ${theme.spacing.unit * 6}px)`,
+    marginBottom: -theme.spacing.unit * 8,
+    height: `calc(100vh - ${theme.spacing.unit * 8}px)`,
     boxSizing: 'border-box',
     background: `url(${bgUrl}) no-repeat`,
     backgroundSize: 'cover',
@@ -66,7 +67,7 @@ class ForgotPassword extends React.Component<ForgotPasswordProps> {
               Entrez ci-dessous {'l\'adresse'} email affiliée à votre compte, un email vous sera envoyé
               avec un lien permettant de choisir un nouveau mot de passe.
             </Typography>
-            <Field component={TextField} name="email" label="Email" type="email" fullWidth required />
+            <Field component={TextField} name="email" label="Email" type="email" fullWidth required autoFocus />
           </CardContent>
           <CardActions>
             <Button type="submit" color="primary">Envoyer</Button>

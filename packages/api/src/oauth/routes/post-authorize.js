@@ -8,11 +8,6 @@ module.exports = {
   path: '/oauth/authorize',
   config: {
     auth: 'bearer',
-    plugins: {
-      crumb: {
-        restful: true,
-      },
-    },
     validate: {
       payload: Joi.object({
         scopes: Joi.array().items(Joi.string().valid(validScopes)).required(),

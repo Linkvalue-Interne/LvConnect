@@ -32,12 +32,6 @@ module.exports = {
     redis: `${process.env.REDIS_URL}/1`,
     prefix: 'lvc-kue',
   },
-  login: {
-    cookie: {
-      name: 'lvconnect',
-      isSecure: true,
-    },
-  },
   logs: {
     reporters: {
       accessReporting: reportingFactory('./logs/hapi/hapi-out.log', { log: '*', response: '*' }),

@@ -16,7 +16,7 @@ const manifest = {
         },
       },
       cors: {
-        origin: ['*'],
+        origin: ['http://localhost:8001'],
       },
     },
   },
@@ -36,7 +36,6 @@ const manifest = {
           },
         },
       }] : []),
-      'hapi-auth-cookie',
       'hapi-auth-basic',
       'hapi-auth-bearer-token',
       { plugin: 'crumb', options: config.csrf },

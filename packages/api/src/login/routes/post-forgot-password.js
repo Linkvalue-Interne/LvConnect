@@ -6,11 +6,6 @@ module.exports = {
   path: '/forgot-password',
   config: {
     auth: false,
-    plugins: {
-      crumb: {
-        restful: true,
-      },
-    },
     validate: {
       payload: Joi.object({
         email: Joi.string().required(),
