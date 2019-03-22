@@ -44,7 +44,4 @@ module.exports = {
     apiToken: process.env.MAILJET_API_TOKEN,
     baseUrl: 'http://localhost:8000',
   },
-  monitoring: {
-    metricsPath: '/metrics',
-  },
 };

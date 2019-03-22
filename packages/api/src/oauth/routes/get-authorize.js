@@ -10,6 +10,7 @@ module.exports = {
   method: 'GET',
   path: '/oauth/authorize',
   config: {
+    auth: false,
     validate: {
       query: Joi.object().keys({
         app_id: Joi.string(),

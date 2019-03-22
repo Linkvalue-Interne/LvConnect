@@ -83,8 +83,9 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
   };
 
   handleLogout = () => {
+    const { logout } = this.props;
     this.setState({ open: false });
-    this.props.logout(false);
+    logout(false);
   };
 
   render() {
@@ -95,6 +96,7 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
       onDrawerOpen,
       simple,
     } = this.props;
+    const { open, anchor } = this.state;
     const collapsed = shouldCollapseBar && user;
 
     let avatar;
@@ -108,8 +110,8 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
           </IconButton>
           <Menu
             id="account-menu"
-            anchorEl={this.state.anchor}
-            open={this.state.open}
+            anchorEl={anchor}
+            open={open}
             onClose={this.handleMenuClose}
           >
             {!simple && (

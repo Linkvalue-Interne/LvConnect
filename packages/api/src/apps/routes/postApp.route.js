@@ -1,6 +1,6 @@
-const { payload } = require('../appValidations');
 const { permissions } = require('@lvconnect/config/server');
 
+const { payload } = require('../appValidations');
 const { hasRoleInList, hasScopeInList } = require('../../middlewares');
 
 module.exports = {

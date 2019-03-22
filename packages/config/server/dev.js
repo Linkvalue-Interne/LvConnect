@@ -1,3 +1,5 @@
+const catboxRedis = require('catbox-redis');
+
 module.exports = {
   host: {
     hostname: 'localhost',
@@ -5,11 +7,15 @@ module.exports = {
   server: {
     cache: {
       name: 'redisCache',
-      engine: 'catbox-redis',
-      host: 'localhost',
-      port: 6379,
-      database: 0,
-      partition: 'lvc-cache',
+      provider: {
+        constructor: catboxRedis,
+        options: {
+          host: 'localhost',
+          port: 6379,
+          database: 0,
+          partition: 'lvc-cache',
+        },
+      },
     },
     cors: {
       origin: ['http://localhost:8000', 'http://localhost:8080'],

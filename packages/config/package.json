@@ -5,6 +5,8 @@
   "private": true,
   "main": "./shared",
   "dependencies": {
+    "catbox-memory": "^4.0.1",
+    "catbox-redis": "^4.2.1",
     "lodash": "^4.17.11"
   }
 }

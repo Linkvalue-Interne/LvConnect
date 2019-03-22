@@ -26,15 +26,18 @@ class RoleCheckboxes extends Component<RoleCheckboxesProps, any> {
   }
 
   componentWillReceiveProps(nextProps: RoleCheckboxesProps) {
-    if (nextProps.input.value !== this.props.input.value) {
+    const { input } = this.props;
+    if (nextProps.input.value !== input.value) {
       this.setState({ values: nextProps.input.value });
     }
   }
 
   handleChange = (value: string) => (e: any) => {
-    this.props.input.onChange(e.target.checked ?
-      Array.from(new Set([...this.state.values, value]).values()) :
-      this.state.values.filter(val => val !== value));
+    const { input } = this.props;
+    const { values } = this.state;
+    input.onChange(e.target.checked
+      ? Array.from(new Set([...values, value]).values())
+      : values.filter(val => val !== value));
   };
 
   render() {
@@ -42,7 +45,7 @@ class RoleCheckboxes extends Component<RoleCheckboxesProps, any> {
     const { values } = this.state;
 
     return (
-      <FormControl component="fieldset" error={meta.error}>
+      <FormControl component="fieldset" error={!!meta.error}>
         <FormLabel component="legend" required>Roles</FormLabel>
         <FormGroup row>
           {options.map(([key, value]) => (

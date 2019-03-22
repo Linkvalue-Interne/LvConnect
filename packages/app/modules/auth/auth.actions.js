@@ -1,6 +1,6 @@
 // @flow
 
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 
 import type { Dispatch } from 'redux';
 

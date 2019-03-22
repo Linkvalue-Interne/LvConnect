@@ -15,7 +15,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import { withStyles } from '@material-ui/core/styles';
 import { Helmet } from 'react-helmet';
 
-import type { ContextRouter } from 'react-router-redux';
+import type { ContextRouter } from 'connected-react-router';
 import type { ConnectedEditAppProps } from './editApp.connector';
 import AppHooks from '../components/appHooks.connector';
 
@@ -36,14 +36,19 @@ class EditApp extends Component<EditAppProps, EditAppState> {
   };
 
   componentWillMount() {
-    this.props.fetchAppDetails(this.props.match.params.appId);
+    const { fetchAppDetails, match } = this.props;
+    fetchAppDetails(match.params.appId);
   }
 
-  handleFormSubmit = (data: User) => this.props.editApp(this.props.match.params.appId, data);
+  handleFormSubmit = (data: User) => {
+    const { editApp, match } = this.props;
+    return editApp(match.params.appId, data);
+  };
 
   handleDeleteApp = async () => {
-    await this.props.deleteApp(this.props.match.params.appId);
-    this.props.push('/dashboard/apps');
+    const { deleteApp, match, push } = this.props;
+    await deleteApp(match.params.appId);
+    push('/dashboard/apps');
   };
 
   handleDeleteModalToggle = value => () => this.setState({ deleteModalOpened: value });

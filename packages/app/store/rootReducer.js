@@ -2,6 +2,7 @@
 
 import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
+import { connectRouter } from 'connected-react-router';
 
 import type { AuthState } from '../modules/auth/auth.reducer';
 import type { DisplayState } from '../modules/display/display.reducer';
@@ -26,7 +27,7 @@ export type AppState = {
   oauth: OAuthState,
 }
 
-export default combineReducers({
+export default (history: History) => combineReducers({
   auth,
   display,
   partners,
@@ -34,4 +35,5 @@ export default combineReducers({
   hooks,
   oauth,
   form,
+  router: connectRouter(history),
 });

@@ -16,8 +16,9 @@ module.exports = {
 
     const hashPasswordResetToken = rawToken => crypto.createHmac('sha512', 'hello').update(rawToken).digest('hex');
 
-    const storePasswordResetToken =
-      (hashedToken, userId) => server.app.passwordResetCache.set(hashedToken, userId, cache.passwordResetTTL);
+    const storePasswordResetToken = (hashedToken, userId) => (
+      server.app.passwordResetCache.set(hashedToken, userId, cache.passwordResetTTL)
+    );
 
     const createPasswordResetToken = async (userId) => {
       const rawToken = Array.from({ length: 5 }).map(() => Buffer.from(uuidV4()).toString('base64')).join('');

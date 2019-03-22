@@ -84,47 +84,60 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
     };
 
     this.debouncedHandleSearchChange = debounce(() => {
-      this.props.replace('/dashboard/partners');
-      return this.props.fetchPartners({
+      const { replace, fetchPartners, limit } = this.props;
+      const { search } = this.state;
+      replace('/dashboard/partners');
+      return fetchPartners({
         page: 1,
-        limit: this.props.limit,
-        search: this.state.search || undefined,
+        limit,
+        search: search || undefined,
       });
     }, 300);
   }
 
   componentWillMount() {
-    this.props.fetchPartners({
+    const { fetchPartners, limit } = this.props;
+    const { search } = this.state;
+    fetchPartners({
       page: this.getPageNumber(),
-      limit: this.props.limit,
-      search: this.state.search || undefined,
+      limit,
+      search: search || undefined,
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.location.search !== nextProps.location.search) {
-      this.props.fetchPartners({
+    const { fetchPartners, location } = this.props;
+    const { search } = this.state;
+    if (location.search !== nextProps.location.search) {
+      fetchPartners({
         page: this.getPageNumber(nextProps),
         limit: nextProps.limit,
-        search: this.state.search || undefined,
+        search: search || undefined,
       });
     }
   }
 
   getPageNumber = (props = this.props) => Number(qs.parse(props.location.search.slice(1)).page || 1);
 
-  getRowDisplay = () => `${this.getPageNumber()} of ${this.props.pageCount}`;
+  getRowDisplay = () => {
+    const { pageCount } = this.props;
+    return `${this.getPageNumber()} of ${pageCount}`;
+  };
 
-  debouncedHandleSearchChange: (search: string) => void;
+  handleChangePage = (event, page) => {
+    const { replace } = this.props;
+    return replace(`/dashboard/partners?page=${page + 1}`);
+  };
 
-  handleChangePage = (event, page) => this.props.replace(`/dashboard/partners?page=${page + 1}`);
-
-  handleGoToPartnerWorklog = partnerId => () =>
-    hasRole(config.permissions.editUser, this.props.user.roles) && this.props.push(`/dashboard/partners/${partnerId}`);
+  handleGoToPartnerWorklog = partnerId => () => {
+    const { user, push } = this.props;
+    return hasRole(config.permissions.editUser, user.roles) && push(`/dashboard/partners/${partnerId}`);
+  };
 
   handleChangeRowsPerPage = (event) => {
-    this.props.replace('/dashboard/partners');
-    this.props.changeRowsPerPage(event.target.value);
+    const { replace, changeRowsPerPage } = this.props;
+    replace('/dashboard/partners');
+    changeRowsPerPage(event.target.value);
   };
 
   handleSearchChange = (e) => {
@@ -132,7 +145,12 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
     this.debouncedHandleSearchChange(e.target.value);
   };
 
-  handleNewPartnerClick = () => this.props.push('/dashboard/partners/new');
+  handleNewPartnerClick = () => {
+    const { push } = this.props;
+    return push('/dashboard/partners/new');
+  };
+
+  debouncedHandleSearchChange: (search: string) => void;
 
   render() {
     const {
@@ -143,6 +161,7 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
       limit,
       user,
     } = this.props;
+    const { search } = this.state;
 
     const canEditUser = hasRole(config.permissions.editUser, user.roles);
 
@@ -159,15 +178,15 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
           <Input
             id="adornment-password"
             type="text"
-            value={this.state.search}
+            value={search}
             onChange={this.handleSearchChange}
             placeholder="Rechercher..."
             autoFocus
-            startAdornment={
+            startAdornment={(
               <InputAdornment position="end">
                 <SearchIcon />
               </InputAdornment>
-            }
+            )}
           />
         </Toolbar>
         <div className={classes.tableWrapper}>
@@ -202,8 +221,8 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
                   <TableCell padding="dense">
                     <Avatar alt={`${partner.firstName} ${partner.lastName}`} src={partner.profilePictureUrl} />
                   </TableCell>
-                  <TableCell><Highlight search={this.state.search} text={partner.lastName} /></TableCell>
-                  <TableCell><Highlight search={this.state.search} text={partner.firstName} /></TableCell>
+                  <TableCell><Highlight search={search} text={partner.lastName} /></TableCell>
+                  <TableCell><Highlight search={search} text={partner.firstName} /></TableCell>
                   <TableCell>{partner.city}</TableCell>
                   <TableCell>{jobLabels[partner.job]}</TableCell>
                   <TableCell className={classes.fullNameCell}>

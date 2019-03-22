@@ -1,6 +1,7 @@
 const Joi = require('joi');
-const { hasScopeInList } = require('../../middlewares');
 const diacritics = require('diacritics');
+
+const { hasScopeInList } = require('../../middlewares');
 
 const replacementMap = new Map(diacritics.replacementList.map(({ base, chars }) => [base, chars]));
 

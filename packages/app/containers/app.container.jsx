@@ -72,7 +72,8 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   componentWillReceiveProps(nextProps: AppProps) {
-    if (this.props.location !== nextProps.location) {
+    const { location } = this.props;
+    if (location !== nextProps.location) {
       this.setState({ drawerOpen: false });
     }
   }
@@ -87,13 +88,14 @@ class App extends React.Component<AppProps, AppState> {
 
   render() {
     const { classes, children, simple } = this.props;
+    const { drawerOpen } = this.state;
 
     return (
       <div className={classes.appRoot}>
         <CssBaseline />
         <div className={classes.appFrame}>
           <AppBar simple={simple} onDrawerOpen={this.handleDrawerOpen} />
-          {!simple && <AppDrawer open={this.state.drawerOpen} onDrawerClose={this.handleDrawerClose} />}
+          {!simple && <AppDrawer open={drawerOpen} onDrawerClose={this.handleDrawerClose} />}
           <div className={classes.appContent}>
             <div className={classes.appContentWrapper}>
               {children}

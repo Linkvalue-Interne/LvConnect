@@ -52,8 +52,8 @@ module.exports = {
     }
 
     let diffPermissions = [];
-    const requestedScopes = queryScopes.length > 0 ?
-      _.intersection(application.allowedScopes, queryScopes) : application.allowedScopes;
+    const requestedScopes = queryScopes.length > 0
+      ? _.intersection(application.allowedScopes, queryScopes) : application.allowedScopes;
     if (authorization === null) {
       diffPermissions = requestedScopes;
     } else {
