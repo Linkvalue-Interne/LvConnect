@@ -89,8 +89,8 @@ const AppDrawer = ({
             {`${user.firstName} ${user.lastName}`}
           </Typography>
           <Typography color="inherit">{user.email}</Typography>
-        </div>)
-      }
+        </div>
+      )}
       <Divider />
       <List className={classes.linkList}>
         <AppDrawerItem to="/dashboard/partners" icon={<SupervisorAccount />} text="Partners" />

@@ -2,10 +2,9 @@
 
 import React, { Fragment } from 'react';
 
-const { Consumer: RolesConsumer, Provider: RolesProvider } = React.createContext([]);
+const { Consumer: RolesConsumer, Provider: RolesProvider } = React.createContext<string[]>([]);
 
-const hasRole = (roles: Array<string>, userRoles: Array<string>) =>
-  roles.some(role => userRoles.includes(role));
+const hasRole = (roles: string[], userRoles: string[]) => roles.some(role => userRoles.includes(role));
 
 type RestrictedProps = {
   roles: Array<string>,

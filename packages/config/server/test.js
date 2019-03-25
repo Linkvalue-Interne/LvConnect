@@ -1,8 +1,15 @@
+const catboxMemory = require('catbox-memory');
+
 module.exports = {
   server: {
     cache: {
       name: 'redisCache',
-      engine: 'catbox-memory',
+      provider: {
+        constructor: catboxMemory,
+        options: {
+          partition: 'lvc-cache',
+        },
+      },
     },
     cors: {
       origin: ['http://localhost:8000', 'http://localhost:8080'],

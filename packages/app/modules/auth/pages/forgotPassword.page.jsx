@@ -9,7 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 
 import type { FormProps } from 'redux-form';
 import type { ConnectedForgotPasswordProps } from './forgotPassword.connector';
@@ -21,19 +21,30 @@ import { forgotPassword } from '../auth.actions';
 
 const styles = theme => ({
   forgotPasswordPage: {
+    position: 'fixed',
+    top: theme.spacing.unit * 6,
+    left: 0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    marginBottom: -theme.spacing.unit * 8,
-    height: `calc(100vh - ${theme.spacing.unit * 8}px)`,
+    width: '100%',
+    height: `calc(100vh - ${theme.spacing.unit * 6}px)`,
     boxSizing: 'border-box',
     background: `url(${bgUrl}) no-repeat`,
     backgroundSize: 'cover',
-    margin: -theme.spacing.unit * 3,
+    [theme.breakpoints.up('sm')]: {
+      top: theme.spacing.unit * 8,
+      height: `calc(100vh - ${theme.spacing.unit * 8}px)`,
+    },
   },
   logoLV: {
-    marginBottom: theme.spacing.unit * 10,
+    maxHeight: theme.spacing.unit * 10,
+    marginBottom: theme.spacing.unit * 3,
+    [theme.breakpoints.up('sm')]: {
+      maxHeight: 'none',
+      marginBottom: theme.spacing.unit * 10,
+    },
   },
   forgotPasswordCard: {
     maxWidth: theme.spacing.unit * 60,
@@ -48,7 +59,7 @@ type ForgotPasswordProps = ConnectedForgotPasswordProps & {
 class ForgotPassword extends React.Component<ForgotPasswordProps> {
   componentWillReceiveProps(props) {
     if (props.isConnected) {
-      this.props.push('/dashboard');
+      props.push('/dashboard');
     }
   }
 

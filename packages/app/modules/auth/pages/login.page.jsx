@@ -20,22 +20,33 @@ import { login } from '../auth.actions';
 
 const styles = theme => ({
   loginPage: {
+    position: 'fixed',
+    top: theme.spacing.unit * 6,
+    left: 0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    marginBottom: -theme.spacing.unit * 8,
-    height: `calc(100vh - ${theme.spacing.unit * 8}px)`,
+    width: '100%',
+    height: `calc(100vh - ${theme.spacing.unit * 6}px)`,
     boxSizing: 'border-box',
     background: `url(${bgUrl}) no-repeat`,
     backgroundSize: 'cover',
-    margin: -theme.spacing.unit * 3,
+    [theme.breakpoints.up('sm')]: {
+      top: theme.spacing.unit * 8,
+      height: `calc(100vh - ${theme.spacing.unit * 8}px)`,
+    },
   },
   loginButtonWrapper: {
     marginTop: theme.spacing.unit * 2,
   },
   logoLV: {
-    marginBottom: theme.spacing.unit * 10,
+    maxHeight: theme.spacing.unit * 10,
+    marginBottom: theme.spacing.unit * 3,
+    [theme.breakpoints.up('sm')]: {
+      maxHeight: 'none',
+      marginBottom: theme.spacing.unit * 10,
+    },
   },
 });
 
@@ -45,14 +56,9 @@ type LoginProps = ConnectedLoginProps & {
 };
 
 class Login extends React.Component<LoginProps> {
-  componentDidMount(): void {
-    // This is to prevent labels over autofilled inputs
-    setTimeout(() => this.props.refresh(), 10);
-  }
-
   componentWillReceiveProps(props) {
     if (props.isConnected) {
-      this.props.push('/dashboard');
+      props.push('/dashboard');
     }
   }
 
@@ -89,7 +95,9 @@ class Login extends React.Component<LoginProps> {
           </CardContent>
           <CardActions>
             <Button type="submit" color="primary">Se connecter</Button>
-            <Button to="/forgot-password" component={Link}>Mot de passe oublié</Button>
+            {window.opener
+              ? <Button href="/forgot-password" target="_blank" rel="noopener noreferrer">Mot de passe oublié</Button>
+              : <Button to="/forgot-password" component={Link}>Mot de passe oublié</Button>}
           </CardActions>
         </Card>
       </form>

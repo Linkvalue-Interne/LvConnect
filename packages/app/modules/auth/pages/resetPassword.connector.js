@@ -1,7 +1,7 @@
 // @flow
 
 import { bindActionCreators } from 'redux';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
 import ResetPassword from './resetPassword.page';

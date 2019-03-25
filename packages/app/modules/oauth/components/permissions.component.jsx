@@ -100,9 +100,9 @@ class Permissions extends Component<PermissionsProps> {
             {result.application.name}
           </Typography>
           <Typography gutterBottom>
-            {`L'application "${result.application.name}"`} souhaite accéder aux permissions suivantes sur
+            {`L'application "${result.application.name}" souhaite accéder aux permissions suivantes sur`}
             votre compte LVConnect. Les permissions tiendront cependant compte des droits attribués
-            à {'l\'utilisateur'}.
+            {'à l\'utilisateur.'}
           </Typography>
         </CardContent>
         <List>
@@ -134,4 +134,4 @@ class Permissions extends Component<PermissionsProps> {
   }
 }
 
-export default withRouter(Permissions);
+export default withRouter<any>(Permissions);

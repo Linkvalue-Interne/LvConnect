@@ -16,8 +16,8 @@ const emailTemplate = handlebars.compile(fs.readFileSync(templatePath).toString(
 
 module.exports = (email) => {
   if (!mailjet.apiKey || !mailjet.apiToken) {
-    console.error('Mailjet API credentials not found, be sure to register them in your local configuration file' +
-      '(./config/local.{js,json,yml})');
+    console.error('Mailjet API credentials not found, be sure to register them in your local configuration file'
+      + '(./config/local.{js,json,yml})');
     process.exit(1);
   }
 

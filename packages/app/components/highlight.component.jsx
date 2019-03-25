@@ -12,7 +12,7 @@ type HighlightProps = {
 
 const Highlight = ({ search, text }: HighlightProps) => {
   if (!search || !text) {
-    return text;
+    return <span>{text}</span>;
   }
   const searchRegexp = new RegExp(
     diacritics.remove(search)

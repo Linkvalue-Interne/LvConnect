@@ -75,25 +75,29 @@ class AppsList extends Component<AppsListProps, AppsListState> {
     };
 
     this.debouncedHandleSearchChange = debounce(() => {
-      this.props.replace('/dashboard/apps');
-      return this.props.fetchPartners({
+      const { replace, fetchPartners, limit } = this.props;
+      const { search } = this.state;
+      replace('/dashboard/apps');
+      return fetchPartners({
         page: 1,
-        limit: this.props.limit,
-        search: this.state.search || undefined,
+        limit,
+        search: search || undefined,
       });
     }, 300);
   }
 
   componentWillMount() {
-    this.props.fetchApps({
+    const { fetchApps, limit } = this.props;
+    fetchApps({
       page: this.getPageNumber(),
-      limit: this.props.limit,
+      limit,
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.location.search !== nextProps.location.search) {
-      this.props.fetchApps({
+    const { location } = this.props;
+    if (location.search !== nextProps.location.search) {
+      nextProps.fetchApps({
         page: this.getPageNumber(nextProps),
         limit: nextProps.limit,
       });
@@ -102,25 +106,40 @@ class AppsList extends Component<AppsListProps, AppsListState> {
 
   getPageNumber = (props = this.props) => Number(qs.parse(props.location.search.slice(1)).page || 1);
 
-  getRowDisplay = () => `${this.getPageNumber()} of ${this.props.pageCount}`;
+  getRowDisplay = () => {
+    const { pageCount } = this.props;
+    return `${this.getPageNumber()} of ${pageCount}`;
+  };
 
-  debouncedHandleSearchChange: (search: string) => void;
+  handleChangePage = (event, page) => {
+    const { replace } = this.props;
+    return replace(`/dashboard/apps?page=${page + 1}`);
+  };
 
-  handleChangePage = (event, page) => this.props.replace(`/dashboard/apps?page=${page + 1}`);
+  handleGoToApp = appId => () => {
+    const { push } = this.props;
+    return push(`/dashboard/apps/${appId}`);
+  };
 
-  handleGoToApp = appId => () => this.props.push(`/dashboard/apps/${appId}`);
+  handleChangeRowsPerPage = (event) => {
+    const { fetchApps } = this.props;
+    return fetchApps({
+      page: this.getPageNumber(),
+      limit: event.target.value,
+    });
+  };
 
-  handleChangeRowsPerPage = event => this.props.fetchApps({
-    page: this.getPageNumber(),
-    limit: event.target.value,
-  });
-
-  handleNewAppClick = () => this.props.push('/dashboard/apps/new');
+  handleNewAppClick = () => {
+    const { push } = this.props;
+    return push('/dashboard/apps/new');
+  };
 
   handleSearchChange = (e) => {
     this.setState({ search: e.target.value });
     this.debouncedHandleSearchChange(e.target.value);
   };
+
+  debouncedHandleSearchChange: (search: string) => void;
 
   render() {
     const {
@@ -131,7 +150,7 @@ class AppsList extends Component<AppsListProps, AppsListState> {
       limit,
       user,
     } = this.props;
-
+    const { search } = this.state;
     const canEditApp = hasRole(config.permissions.editApp, user.roles);
 
     return (
@@ -147,15 +166,15 @@ class AppsList extends Component<AppsListProps, AppsListState> {
           <Input
             id="adornment-password"
             type="text"
-            value={this.state.search}
+            value={search}
             onChange={this.handleSearchChange}
             placeholder="Rechercher..."
             autoFocus
-            startAdornment={
+            startAdornment={(
               <InputAdornment position="end">
                 <SearchIcon />
               </InputAdornment>
-            }
+            )}
           />
         </Toolbar>
         <div className={classes.tableWrapper}>
@@ -181,7 +200,7 @@ class AppsList extends Component<AppsListProps, AppsListState> {
                   hover={canEditApp}
                   onClick={canEditApp ? this.handleGoToApp(app.id) : undefined}
                 >
-                  <TableCell><Highlight search={this.state.search} text={app.name} /></TableCell>
+                  <TableCell><Highlight search={search} text={app.name} /></TableCell>
                   <TableCell>{app.description}</TableCell>
                   <TableCell>{app.user && `${app.user.lastName} ${app.user.firstName}`}</TableCell>
                 </TableRow>

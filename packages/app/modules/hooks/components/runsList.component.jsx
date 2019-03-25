@@ -209,8 +209,7 @@ class RunsList extends Component<RunsListProps, RunsListState> {
                   </Fragment>
                 ) : (
                   <Typography>
-                    La requête n{'\''}a pas aboutie.
-                    L{'\''}hôte n{'\''}a pas pû être contacté ou une erreur est survenue.
+                    {'La requête n\'a pas aboutie. L\'hôte n\'a pas pû être contacté ou une erreur est survenue.'}
                   </Typography>
                 )}
               </ExpansionPanelDetails>

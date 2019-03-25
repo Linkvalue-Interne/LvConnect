@@ -26,15 +26,18 @@ class CheckboxesField extends Component<CheckboxesFieldProps, any> {
   }
 
   componentWillReceiveProps(nextProps: CheckboxesFieldProps) {
-    if (nextProps.input.value !== this.props.input.value) {
+    const { input } = this.props;
+    if (nextProps.input.value !== input.value) {
       this.setState({ values: nextProps.input.value });
     }
   }
 
   handleChange = (value: string) => (e: any) => {
-    this.props.input.onChange(e.target.checked ?
-      Array.from(new Set([...this.state.values, value]).values()) :
-      this.state.values.filter(val => val !== value));
+    const { input } = this.props;
+    const { values } = this.state;
+    input.onChange(e.target.checked
+      ? Array.from(new Set([...values, value]).values())
+      : values.filter(val => val !== value));
   };
 
   render() {

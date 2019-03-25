@@ -19,6 +19,9 @@ module.exports = {
     publicPath: process.env.APP_ENV !== 'dev' ? '/' : 'http://localhost:8080/',
   },
   resolve: {
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
+    },
     extensions: ['.jsx', '.js', '.json'],
   },
   optimization: {
@@ -73,7 +76,7 @@ module.exports = {
   },
   plugins: [
     new ContextReplacementPlugin(/moment[/\\]locale$/, /fr/),
-    new CleanWebpackPlugin(['./dist']),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './index.html',
       chunks: ['main', 'vendors'],

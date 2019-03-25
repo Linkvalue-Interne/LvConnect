@@ -13,7 +13,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import { Helmet } from 'react-helmet';
 
-import type { ContextRouter } from 'react-router-redux';
+import type { ContextRouter } from 'connected-react-router';
 import type { ConnectedEditPartnerProps } from './editPartner.connector';
 
 import PartnerForm from '../components/partnerForm.component';
@@ -39,8 +39,8 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
   }
 
   componentWillMount() {
-    const { partnerId, match } = this.props;
-    this.props.fetchPartnerDetails(partnerId || match.params.partnerId);
+    const { partnerId, match, fetchPartnerDetails } = this.props;
+    fetchPartnerDetails(partnerId || match.params.partnerId);
   }
 
   componentDidUpdate(prevProps: EditPartnerProps) {
@@ -51,13 +51,14 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
   }
 
   handleFormSubmit = (data: User) => {
-    const { partnerId, match } = this.props;
-    return this.props.editPartner(partnerId || match.params.partnerId, data);
+    const { partnerId, match, editPartner } = this.props;
+    return editPartner(partnerId || match.params.partnerId, data);
   };
 
   handleDeletePartner = async () => {
-    await this.props.deletePartner(this.props.match.params.partnerId);
-    this.props.push('/dashboard/partners');
+    const { deletePartner, match, push } = this.props;
+    await deletePartner(match.params.partnerId);
+    push('/dashboard/partners');
   };
 
   handleOpen = () => this.setState({ open: true });
@@ -66,6 +67,7 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
 
   render() {
     const { title, cardTitle, partner, isLoading, autoFocus } = this.props;
+    const { open } = this.state;
     return !isLoading && partner && (
       <PartnerForm editMode initialValues={partner} onFormSubmit={this.handleFormSubmit} autoFocus={autoFocus}>
         {({ children, valid, pristine }) => (
@@ -80,7 +82,7 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
               {children}
             </CardContent>
             <Dialog
-              open={this.state.open}
+              open={open}
               onClose={this.handleClose}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
@@ -88,7 +90,7 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
               <DialogTitle id="alert-dialog-title">Confirmer la suppresion</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                  La suppression {'d\'un'} partner est irréverssible et ne permet plus {'d\'utiliser'} ses données sur
+                  {'La suppression d\'un partner est irréverssible et ne permet plus d\'utiliser ses données sur'}
                   les application auquelles il était connecté. Si vous souhaitez désactiver ce compte, renseignez une
                   date de sortie pour désactiver le compte.
                 </DialogContentText>

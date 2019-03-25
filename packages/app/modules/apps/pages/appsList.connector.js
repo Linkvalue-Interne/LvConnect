@@ -1,7 +1,7 @@
 // @flow
 
 import { connect } from 'react-redux';
-import { push, replace } from 'react-router-redux';
+import { push, replace } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 
 import type { AppState } from '../../../store/rootReducer';

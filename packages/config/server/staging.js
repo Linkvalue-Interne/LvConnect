@@ -1,3 +1,5 @@
+const catboxRedis = require('catbox-redis');
+
 function reportingFactory(path, options) {
   return [{
     module: 'good-squeeze',
@@ -16,10 +18,14 @@ module.exports = {
   server: {
     cache: {
       name: 'redisCache',
-      engine: 'catbox-redis',
-      socket: process.env.REDIS_URL,
-      database: 0,
-      partition: 'lvc-cache',
+      provider: {
+        constructor: catboxRedis,
+        options: {
+          socket: process.env.REDIS_URL,
+          database: 0,
+          partition: 'lvc-cache',
+        },
+      },
     },
     cors: {
       origin: ['https://lvconnect-staging.herokuapp.com'],

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import Grid from '@material-ui/core/Grid';
 import config from '@lvconnect/config/app';
 
