@@ -42,6 +42,7 @@ const fetchWithAuthHeader = (url: string, options: FetchOptions) => fetch(url, {
   ...options,
   headers: ({
     ...options.headers,
+    'Content-Type': 'application/json',
     authorization: `Bearer ${localStorage.getItem('access_token') || ''}`,
   }: any),
 });
@@ -55,6 +56,7 @@ const fetchTokenWithRefresh = async (refreshToken: string) => {
   const res = await fetch(`${baseEndpoint}/login`, {
     method: 'POST',
     headers: {
+      'Content-Type': 'application/json',
       'X-CSRF-Token': window.CSRF_TOKEN,
     },
     body: JSON.stringify({ grantType: 'refresh', refreshToken }),
@@ -128,6 +130,7 @@ export const login = (username: string, password: string) => async (dispatch: Di
   const res = await fetch(`${baseEndpoint}/login`, {
     method: 'POST',
     headers: {
+      'Content-Type': 'application/json',
       'X-CSRF-Token': window.CSRF_TOKEN,
     },
     body: JSON.stringify({
@@ -151,6 +154,7 @@ export const forgotPassword = (email: string) => async () => {
   const res = await fetch(`${baseEndpoint}/forgot-password`, {
     method: 'POST',
     headers: {
+      'Content-Type': 'application/json',
       'X-CSRF-Token': window.CSRF_TOKEN,
     },
     body: JSON.stringify({
