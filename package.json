@@ -9,6 +9,7 @@
   "license": "Proprietary",
   "main": "./server/index.js",
   "scripts": {
+    "start": "NODE_ENV=production node .",
     "create-superuser": "NODE_ENV=production lvconnect create-superuser",
     "dev": "run-p dev:front dev:back",
     "dev:back": "APP_ENV=dev nodemon . --watch ./packages/api --watch ./packages/config",

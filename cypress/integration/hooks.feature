@@ -86,6 +86,7 @@ Feature: Hooks for applications
     And I should read ""lastName": "EDITED"," in "hook run request payload"
 
     When I click the "hook run response tab"
+    Then I should read "content-type: application/json" in "hook run response headers"
     Then I should read ""status": "Ok"" in "hook run response payload"
 
   Scenario: Active hooks triggered with error
@@ -114,3 +115,28 @@ Feature: Hooks for applications
 
     When I click the "hook run response tab"
     Then I should read ""message": "invalid_event"" in "hook run response payload"
+
+  Scenario: Active hooks triggered with not responding uri
+    Given I'm using fresh database
+    And I'm logged as "benjamin.delamarre@link-value.fr"
+
+    When I visit the "hook edit" page
+    And I type "{selectall}http://localhost:6060/hooks" in "hook uri input"
+    And I click the "hook active checkbox"
+    And I click the "hook edit submit"
+
+    Given I'm logged as "vanessa.roy@link-value.fr"
+    When I visit the "partner edit" page
+    And I type "{selectall}Edited" in "partner last name input"
+    And I click the "partner edit submit"
+    And I wait "0.2" seconds
+    And I visit the "hook edit" page
+    Then page should contain "1" "hook runs list row"
+
+    When I click the "hook runs list row" number "1"
+    And I scroll to "bottom"
+    Then I should not see "hook run status"
+
+    When I click the "hook run response tab"
+    Then I should not see "hook run response headers"
+    And I should not see "hook run response payload"

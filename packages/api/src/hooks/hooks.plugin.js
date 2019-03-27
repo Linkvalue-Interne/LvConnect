@@ -1,4 +1,4 @@
-const request = require('request-promise');
+const fetch = require('node-fetch');
 const crypto = require('crypto');
 const uuid = require('uuid/v4');
 const config = require('@lvconnect/config');
@@ -38,23 +38,21 @@ module.exports = {
           };
           const dateStart = new Date();
 
-          let res;
+          let res = null;
           try {
-            res = await request({
+            res = await fetch(hook.uri, {
               method: 'POST',
               body,
               headers,
-              uri: hook.uri,
-              resolveWithFullResponse: true,
             });
           } catch (e) {
-            res = e.response;
+            res = null;
           }
 
           const { failure, success } = config.hooks.statuses;
           hook.runs.unshift({
             identifier,
-            status: !res || res.statusCode >= 300 ? failure : success,
+            status: !res || res.status >= 400 ? failure : success,
             dateStart,
             dateEnd: new Date(),
             request: {
@@ -66,9 +64,11 @@ module.exports = {
               }),
             },
             response: res && {
-              statusCode: res.statusCode,
-              headers: JSON.stringify(res.headers),
-              body: typeof res.body === 'string' ? res.body : JSON.stringify(res.body),
+              statusCode: res.status,
+              headers: JSON.stringify(
+                Array.from(res.headers.entries()).reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}),
+              ),
+              body: await res.text(),
             },
           });
           hook.runs.splice(10);

@@ -107,7 +107,6 @@ Usage: cli [options] [command]
   Commands:
 
     create-superuser           Creates admin user with admin@link-value.fr/admin
-    send-welcome-mail [email]  Send welcome email to given email address
 
   Options:
 
