@@ -49,6 +49,7 @@
     "babel-plugin-jsx-remove-data-test-id": "^2.0.0",
     "clean-webpack-plugin": "^2.0.1",
     "conventional-changelog-cli": "^2.0.12",
+    "core-js": "^3.0.0",
     "cypress": "^3.2.0",
     "cypress-cucumber-preprocessor": "^1.5.0",
     "eslint": "^5.15.3",
