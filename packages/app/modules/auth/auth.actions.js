@@ -6,10 +6,10 @@ import type { Dispatch } from 'redux';
 
 const baseEndpoint = `${window.location.protocol}//${window.location.host}`;
 
-class HttpError extends Error {
+export class HttpError extends Error {
   status: number = 200;
 
-  constructor(status, message) {
+  constructor(status: number, message: string) {
     super(message);
     this.status = status;
   }

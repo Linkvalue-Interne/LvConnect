@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebappWebpackPlugin = require('webapp-webpack-plugin');
+const config = require('@lvconnect/config/server');
 
 module.exports = {
   entry: {
@@ -16,7 +17,7 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[hash].js',
-    publicPath: process.env.APP_ENV !== 'dev' ? '/' : 'http://localhost:8080/',
+    publicPath: config.proxyWebpackDevServer ? 'http://localhost:8080/' : '/',
   },
   resolve: {
     alias: {

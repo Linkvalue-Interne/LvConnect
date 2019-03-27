@@ -45,15 +45,18 @@ module.exports = {
       userId = token.user;
     } else {
       const { User } = req.server.plugins.users.models;
+
+      let user = null;
       try {
-        const user = await User.findOneByEmailAndPassword(username, password);
-        if (user.leftAt < new Date()) {
-          throw Boom.unauthorized('user_disabled');
-        }
+        user = await User.findOneByEmailAndPassword(username, password);
         userId = user._id;
         ({ needPasswordChange } = user);
       } catch (e) {
         throw Boom.unauthorized('invalid_user');
+      }
+
+      if (user.leftAt < new Date() || user.hiredAt > new Date()) {
+        throw Boom.unauthorized('user_disabled');
       }
     }
 

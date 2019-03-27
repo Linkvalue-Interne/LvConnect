@@ -44,6 +44,7 @@ const HookForm = ({ classes, handleSubmit, valid, pristine, children: render }: 
               autoComplete="off"
               component={TextField}
               required
+              data-test-id="hookNameInput"
             />
           </Grid>
           <Grid item xs={12}>
@@ -54,6 +55,7 @@ const HookForm = ({ classes, handleSubmit, valid, pristine, children: render }: 
               autoComplete="off"
               component={TextField}
               required
+              data-test-id="hookUriInput"
             />
           </Grid>
           <Grid item xs={12}>
@@ -78,6 +80,7 @@ const HookForm = ({ classes, handleSubmit, valid, pristine, children: render }: 
                     Mot de passe qui va servir à sécuriser votre pôint de notification.
                     Il doit contenir au minimum 30 caractères.
                   "
+              data-test-id="hookSecretInput"
             />
           </Grid>
           <Grid item xs={12}>
@@ -87,6 +90,7 @@ const HookForm = ({ classes, handleSubmit, valid, pristine, children: render }: 
               type="checkbox"
               component={CheckboxField}
               helperText="Les évènements ne seront envoyés que si votre hook est actif"
+              data-test-id="hookActiveCheckbox"
             />
           </Grid>
         </Grid>
@@ -102,7 +106,7 @@ export default reduxForm({
     name: !name && 'Obligatoire',
     uri: (!uri || !/^https?:\/\/.+$/.test(uri)) && 'Url valide obligatoire',
     secret: (!secret || secret.length < 30) && 'Doit contenir au minimum 30 caractères',
-    listeningTo: listeningTo.length === 0 && 'Vous devez sélectionner au moins un évènement',
+    listeningTo: (!listeningTo || listeningTo.length === 0) && 'Vous devez sélectionner au moins un évènement',
   }),
   onSubmit: async (formData: any, dispatch: Dispatch<ReduxAction>, { onFormSubmit, appId }: HooksFormProps) => {
     await onFormSubmit({ ...formData, appId });

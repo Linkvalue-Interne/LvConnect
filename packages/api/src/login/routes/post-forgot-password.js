@@ -17,7 +17,7 @@ module.exports = {
     const { email } = req.payload;
 
     const user = await User.findOne({ email });
-    if (!user || user.leftAt < Date.now()) {
+    if (!user || user.leftAt < new Date() || user.hiredAt > new Date()) {
       throw Boom.notFound('invalid_email');
     }
 

@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const request = require('request-promise');
+const config = require('@lvconnect/config/server');
 
 const indexFilePath = path.resolve(process.cwd(), 'dist/index.html');
 
@@ -11,7 +12,7 @@ module.exports = [{
   async handler(req, res) {
     if (!path.extname(req.params.path)) {
       let html;
-      if (process.env.APP_ENV === 'dev') {
+      if (config.proxyWebpackDevServer) {
         html = await request({
           method: 'GET',
           uri: 'http://localhost:8080/',

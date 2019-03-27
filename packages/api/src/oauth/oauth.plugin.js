@@ -21,36 +21,27 @@ module.exports = {
     } = models;
     const { Application } = server.plugins.apps.models;
 
-    server.method('generateAccessToken', (user, application, scopes) => {
-      const token = new AccessToken({
-        user,
-        isClientCredentialsToken: !user,
-        application,
-        expireAt: moment().add(moment.duration(accessTokenTTL)).toDate(),
-        scopes,
-      });
-      return token.save();
-    });
+    server.method('generateAccessToken', (user, application, scopes) => AccessToken.create({
+      user,
+      isClientCredentialsToken: !user,
+      application,
+      expireAt: moment().add(moment.duration(accessTokenTTL)).toDate(),
+      scopes,
+    }));
 
-    server.method('generateRefreshToken', (user, application, scopes) => {
-      const token = new RefreshToken({
-        user,
-        application,
-        expireAt: moment().add(moment.duration(refreshTokenTTL)).toDate(),
-        scopes,
-      });
-      return token.save();
-    });
+    server.method('generateRefreshToken', (user, application, scopes) => RefreshToken.create({
+      user,
+      application,
+      expireAt: moment().add(moment.duration(refreshTokenTTL)).toDate(),
+      scopes,
+    }));
 
-    server.method('generateAuthorizationCode', (user, application, scopes) => {
-      const token = new AuthorizationCode({
-        user,
-        application,
-        expireAt: moment().add(moment.duration(authorizationCodeTTL)).toDate(),
-        scopes,
-      });
-      return token.save();
-    });
+    server.method('generateAuthorizationCode', (user, application, scopes) => AuthorizationCode.create({
+      user,
+      application,
+      expireAt: moment().add(moment.duration(authorizationCodeTTL)).toDate(),
+      scopes,
+    }));
 
     server.method('cleanupUserAuth', (user) => {
       const cleanupModels = [AccessToken, RefreshToken, AuthorizationCode, Authorization];

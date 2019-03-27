@@ -60,6 +60,7 @@ class CheckboxesField extends Component<CheckboxesFieldProps, any> {
                 />
               )}
               label={optionLabel}
+              data-test-id="checkboxListItem"
             />
           ))}
         </FormGroup>

@@ -1,0 +1,16 @@
+{
+  "extends": ["airbnb-base"],
+  "env": {
+    "node": true
+  },
+  "globals": {
+    "cy": true,
+    "Given": true,
+    "When": true,
+    "Then": true
+  },
+  "rules": {
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "max-len": ["error", 120]
+  }
+}

@@ -94,7 +94,7 @@ class Permissions extends Component<PermissionsProps> {
     }
 
     return (
-      <Card>
+      <Card data-test-id="oauthPermissionsList">
         <CardContent>
           <Typography variant="h5" component="h2" gutterBottom>
             {result.application.name}
@@ -107,7 +107,7 @@ class Permissions extends Component<PermissionsProps> {
         </CardContent>
         <List>
           {result.permissionsToAllow.map(permission => (
-            <ListItem key={permission}>
+            <ListItem key={permission} data-test-id="oauthPermissionsListItem">
               <ListItemIcon>
                 {permissionLabels[permission].icon}
               </ListItemIcon>
@@ -124,10 +124,11 @@ class Permissions extends Component<PermissionsProps> {
             autoFocus
             type="submit"
             onClick={this.handleAccept}
+            data-test-id="oauthPermissionsAccept"
           >
             Accepter
           </Button>
-          <Button type="button" onClick={this.handleDeny}>Refuser</Button>
+          <Button type="button" onClick={this.handleDeny} data-test-id="oauthPermissionsDeny">Refuser</Button>
         </CardActions>
       </Card>
     );

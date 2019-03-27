@@ -57,19 +57,19 @@ jobs:
     <<: *build_common
     environment:
       APP_ENV: dev
-      NODE_ENV: production
+      BABEL_ENV: dev
 
   build_staging:
     <<: *build_common
     environment:
       APP_ENV: staging
-      NODE_ENV: production
+      BABEL_ENV: production
 
   build_production:
     <<: *build_common
     environment:
       APP_ENV: production
-      NODE_ENV: production
+      BABEL_ENV: production
 
   test:
     executor:
@@ -81,6 +81,29 @@ jobs:
         at: ~/
     - run: yarn lint
     - run: yarn typecheck
+
+  test_e2e:
+    docker:
+      - image: cypress/base:10
+      - image: mongo:4.0
+        command: --syncdelay 0 --nojournal
+      - image: redis:5.0
+    working_directory: ~/lvconnect
+    environment:
+      APP_ENV: test
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: npm rebuild bcrypt --build-from-source
+      - run: APP_ENV=test BABEL_ENV=dev yarn build
+      - run:
+          command: yarn start
+          background: true
+      - run:
+          command: yarn e2e
+          no_output_timeout: 5m
+      - store_test_results:
+          path: reports/
 
   hold_deployment:
     docker:
@@ -113,10 +136,10 @@ workflows:
           - install
     - test:
         requires:
-        - build_dev
-#    - test_e2e:
-#        requires:
-#        - build_dev
+          - install
+    - test_e2e:
+        requires:
+          - install
 
   master_workflow:
     jobs:
@@ -131,14 +154,14 @@ workflows:
           - install
     - test:
         requires:
-        - build_staging
-#    - test_e2e:
-#        requires:
-#        - build_staging
+          - install
+    - test_e2e:
+        requires:
+          - install
     - deploy_staging:
         requires:
-        - test
-#        - test_e2e
+          - test
+          - test_e2e
 
   release_workflow:
     jobs:

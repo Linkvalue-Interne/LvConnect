@@ -3,6 +3,7 @@ const Joi = require('joi');
 const path = require('path');
 const fs = require('fs');
 const request = require('request-promise');
+const config = require('@lvconnect/config/server');
 
 const oauthFilePath = path.resolve(process.cwd(), 'dist/oauth.html');
 
@@ -28,7 +29,7 @@ module.exports = {
     }
 
     let html;
-    if (process.env.APP_ENV === 'dev') {
+    if (config.proxyWebpackDevServer) {
       html = await request({
         method: 'GET',
         uri: 'http://localhost:8080/oauth.html',

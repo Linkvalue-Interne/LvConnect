@@ -78,10 +78,19 @@ class ForgotPassword extends React.Component<ForgotPasswordProps> {
               Entrez ci-dessous {'l\'adresse'} email affiliée à votre compte, un email vous sera envoyé
               avec un lien permettant de choisir un nouveau mot de passe.
             </Typography>
-            <Field component={TextField} name="email" label="Email" type="email" fullWidth required autoFocus />
+            <Field
+              component={TextField}
+              name="email"
+              label="Email"
+              type="email"
+              fullWidth
+              required
+              autoFocus
+              data-test-id="forgotPasswordEmailInput"
+            />
           </CardContent>
           <CardActions>
-            <Button type="submit" color="primary">Envoyer</Button>
+            <Button type="submit" color="primary" data-test-id="forgotPasswordSubmit">Envoyer</Button>
             <Button to="/login" component={Link}>Retour</Button>
           </CardActions>
         </Card>

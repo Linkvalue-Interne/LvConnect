@@ -41,13 +41,6 @@ module.exports = {
     redis: `${process.env.REDIS_URL}/1`,
     prefix: 'lvc-kue',
   },
-  logs: {
-    reporters: {
-      accessReporting: reportingFactory('./logs/hapi/hapi-out.log', { log: '*', response: '*' }),
-      errorReporting: reportingFactory('./logs/hapi/hapi-error.log', { error: '*' }),
-      workerReporting: reportingFactory('./logs/hapi/hapi-worker.log', { worker: '*' }),
-    },
-  },
   mailjet: {
     baseUrl: 'https://lvconnect.link-value.fr',
   },

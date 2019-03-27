@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = (!process.env.CYPRESS_ENV && require('bcrypt'));
 const crypto = require('crypto');
 const { formatNumber, parseNumber } = require('libphonenumber-js');
 

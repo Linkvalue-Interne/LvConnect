@@ -6,19 +6,17 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Helmet } from 'react-helmet';
 
 import type { ConnectedNewAppProps } from './newApp.connector';
 
 import AppForm from '../components/appForm.component';
+import Meta from '../../../components/meta.component';
 
 const NewApp = ({ createNewApp }: ConnectedNewAppProps) => (
   <AppForm onFormSubmit={data => createNewApp(data)}>
     {({ children, valid }) => (
       <Card>
-        <Helmet>
-          <title>Nouvelle application | LVConnect</title>
-        </Helmet>
+        <Meta title="Nouvelle application" />
         <CardContent>
           <Typography variant="h5" component="h2" gutterBottom>
             Nouvelle application
@@ -26,7 +24,15 @@ const NewApp = ({ createNewApp }: ConnectedNewAppProps) => (
           {children}
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary" type="submit" disabled={!valid}>Créer</Button>
+          <Button
+            size="small"
+            color="primary"
+            type="submit"
+            disabled={!valid}
+            data-test-id="appAddSubmit"
+          >
+            Créer
+          </Button>
         </CardActions>
       </Card>
     )}

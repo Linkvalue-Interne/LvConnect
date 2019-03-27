@@ -33,10 +33,26 @@ const AppForm = ({
       children: (
         <Grid container spacing={16}>
           <Grid item xs={12}>
-            <Field name="name" type="text" label="Nom" component={TextField} required autoFocus />
+            <Field
+              name="name"
+              type="text"
+              label="Nom"
+              component={TextField}
+              required
+              autoFocus
+              data-test-id="appNameInput"
+            />
           </Grid>
           <Grid item xs={12}>
-            <Field name="description" label="Description" component={TextField} multiline rowsMax="4" required />
+            <Field
+              name="description"
+              label="Description"
+              component={TextField}
+              multiline
+              rowsMax="4"
+              required
+              data-test-id="appDescriptionInput"
+            />
           </Grid>
           <Grid item xs={12}>
             <Field
@@ -47,6 +63,7 @@ const AppForm = ({
               rowsMax="4"
               required
               helperText="Chaque url doit être séparée par un retour à la ligne"
+              data-test-id="appRedirectUrisInput"
             />
           </Grid>
           <Grid item xs={12}>
@@ -101,7 +118,7 @@ export default reduxForm({
   },
   validate,
   asyncValidate,
-  onSubmit: async (formData: any, dispatch: Dispatch<ReduxAction>, { onFormSubmit }) => {
+  onSubmit: async ({ user, ...formData }: any, dispatch: Dispatch<ReduxAction>, { onFormSubmit }) => {
     await onFormSubmit({
       ...formData,
       redirectUris: formData.redirectUris.split('\n').filter(uri => !!uri),

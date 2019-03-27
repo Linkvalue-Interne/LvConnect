@@ -27,8 +27,6 @@ const LoginRequired = ({
   children,
   receiveUserData,
 }: LoginRequiredProps) => {
-  localStorage.setItem('use_new_interface', 'true');
-
   if (awaitingLogin) {
     return <LoadingPage />;
   }

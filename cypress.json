@@ -1,0 +1,11 @@
+{
+  "baseUrl": "http://localhost:8000",
+  "video": false,
+  "reporter": "mocha-multi-reporters",
+  "reporterOptions": {
+    "reporterEnabled": "spec, mocha-junit-reporter",
+    "mochaJunitReporterReporterOptions": {
+      "mochaFile": "reports/cypress/e2e-test-results-[hash].xml"
+    }
+  }
+}

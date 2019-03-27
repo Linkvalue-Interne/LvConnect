@@ -14,7 +14,15 @@ const CityRadios = ({ input, meta }: FormProps) => (
   <FormControl component="fieldset" error={!!meta.error}>
     <FormLabel component="legend" required>Ville</FormLabel>
     <RadioGroup row aria-label="Ville" name="city" value={input.value} onChange={input.onChange}>
-      {config.cities.map(city => <FormControlLabel key={city} value={city} control={<Radio />} label={city} />)}
+      {config.cities.map(city => (
+        <FormControlLabel
+          key={city}
+          value={city}
+          control={<Radio />}
+          label={city}
+          data-test-id="partnerCityRadio"
+        />
+      ))}
     </RadioGroup>
   </FormControl>
 );

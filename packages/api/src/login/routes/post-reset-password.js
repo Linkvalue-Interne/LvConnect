@@ -5,7 +5,7 @@ module.exports = {
   method: 'POST',
   path: '/reset-password',
   config: {
-    auth: { strategies: ['bearer', 'pkey-token', 'query-token'] },
+    auth: { strategies: ['bearer', 'pkey-token'] },
     validate: {
       payload: Joi.object().keys({
         oldPassword: Joi.string().max(255),
@@ -16,6 +16,10 @@ module.exports = {
   },
   async handler(req, res) {
     const { oldPassword, newPassword, cleanupSessions } = req.payload;
+
+    if (req.auth.strategy === 'bearer' && !oldPassword) {
+      throw Boom.badRequest('missing_old_password');
+    }
 
     const { User } = req.server.plugins.users.models;
     const user = await User.findById(req.auth.credentials.user._id).select('+password');
@@ -39,6 +43,9 @@ module.exports = {
     await user.save();
     if (cleanupSessions) {
       await req.server.plugins.oauth.cleanupUserTokens(user._id);
+    }
+    if (req.auth.strategy === 'pkey-token') {
+      await req.server.plugins.login.cleanPasswordResetToken(req.auth.artifacts.pkey);
     }
     return res.mongodb(user);
   },

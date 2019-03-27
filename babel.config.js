@@ -17,6 +17,11 @@ module.exports = {
     'module:fast-async',
   ],
   env: {
+    production: {
+      plugins: [
+        'babel-plugin-jsx-remove-data-test-id',
+      ],
+    },
     test: {
       presets: [
         '@babel/preset-react',

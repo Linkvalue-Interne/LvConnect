@@ -1,0 +1,63 @@
+{
+  "User": [
+    {
+      "_id": "ObjectId(5c9a72e8066cd3341852cf2a)",
+      "firstName": "Benjamin",
+      "lastName": "Delamarre",
+      "email": "benjamin.delamarre@link-value.fr",
+      "password": "$2b$10$SaZihnN/Dl2UrlxtnezGKeecTHyMjMZBLfgmTiu8cgQF1D0W6G6ee",
+      "roles": ["tech"],
+      "city": "Lyon"
+    },
+    {
+      "_id": "ObjectId(5c9a72e8066cd3341852cf2b)",
+      "firstName": "Vanessa",
+      "lastName": "Roy",
+      "email": "vanessa.roy@link-value.fr",
+      "password": "$2b$10$SaZihnN/Dl2UrlxtnezGKeecTHyMjMZBLfgmTiu8cgQF1D0W6G6ee",
+      "roles": ["hr"],
+      "city": "Paris"
+    },
+    {
+      "_id": "ObjectId(5c9a72e8066cd3341852cf2c)",
+      "firstName": "Quentin",
+      "lastName": "Cerny",
+      "email": "quentin.cerny@link-value.fr",
+      "password": "$2b$10$SaZihnN/Dl2UrlxtnezGKeecTHyMjMZBLfgmTiu8cgQF1D0W6G6ee",
+      "roles": ["tech"],
+      "city": "Lyon",
+      "leftAt": "Date(2017-03-01)"
+    }
+  ],
+  "Application": [
+    {
+      "_id": "ObjectId(5c9a72e8066cd3341852cf2e)",
+      "name": "Test app",
+      "description": "Lorem ipsum dolor sit amet",
+      "allowedScopes": ["profile:get", "profile:modify"],
+      "appId": "5c9a72e8066cd3341852cf2e",
+      "appSecret": "5c9a72e8066cd3341852cf2e5c9a72e8066cd3341852cf2e",
+      "redirectUris": ["http://localhost:8000/testing/oauth/callback/valid"],
+      "user": "ObjectId(5c9a72e8066cd3341852cf2a)"
+    }
+  ],
+  "Authorization": [
+    {
+      "application": "ObjectId(5c9a72e8066cd3341852cf2e)",
+      "user": "ObjectId(5c9a72e8066cd3341852cf2b)",
+      "allowedScopes": ["profile:get"]
+    }
+  ],
+  "Hook": [
+    {
+      "_id": "ObjectId(5c9a72e8066cd3341852df2c)",
+      "name": "Sample hook",
+      "appId": "ObjectId(5c9a72e8066cd3341852cf2e)",
+      "listeningTo": ["user:modified"],
+      "uri": "http://localhost:8000/testing/hooks/5c9a72e8066cd3341852df2c",
+      "secret": "ezjkjerzknjtrznfekznrjkjkrnzknrjkznrnzkjrnkznjrknzrkjnzkjrjnkz",
+      "active": false,
+      "runs": []
+    }
+  ]
+}

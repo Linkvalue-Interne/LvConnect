@@ -1,6 +1,7 @@
 const catboxRedis = require('catbox-redis');
 
 module.exports = {
+  proxyWebpackDevServer: true,
   host: {
     hostname: 'localhost',
   },
@@ -19,6 +20,11 @@ module.exports = {
     },
     cors: {
       origin: ['http://localhost:8000', 'http://localhost:8080'],
+    },
+  },
+  login: {
+    cache: {
+      passwordResetSecret: 'hello',
     },
   },
   csrf: {
@@ -40,5 +46,9 @@ module.exports = {
     config: {
       shutdownTimeout: 5000,
     },
+  },
+  mailjet: {
+    send: false,
+    preview: true,
   },
 };
