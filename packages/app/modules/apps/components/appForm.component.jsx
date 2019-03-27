@@ -118,6 +118,7 @@ export default reduxForm({
   },
   validate,
   asyncValidate,
+  asyncBlurFields: ['name'],
   onSubmit: async ({ user, ...formData }: any, dispatch: Dispatch<ReduxAction>, { onFormSubmit }) => {
     await onFormSubmit({
       ...formData,
