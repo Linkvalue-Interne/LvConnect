@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const request = require('request-promise');
+const fetch = require('node-fetch');
 const config = require('@lvconnect/config/server');
 
 const indexFilePath = path.resolve(process.cwd(), 'dist/index.html');
@@ -13,10 +13,8 @@ module.exports = [{
     if (!path.extname(req.params.path)) {
       let html;
       if (config.proxyWebpackDevServer) {
-        html = await request({
-          method: 'GET',
-          uri: 'http://localhost:8080/',
-        });
+        const response = await fetch('http://localhost:8080/');
+        html = await response.text();
       } else {
         html = await new Promise((resolve, reject) => fs.readFile(indexFilePath, (err, buffer) => {
           if (err) {

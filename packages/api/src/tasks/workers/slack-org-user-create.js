@@ -1,5 +1,5 @@
 const config = require('@lvconnect/config/server');
-const request = require('request-promise');
+const fetch = require('node-fetch');
 
 exports.name = 'slackOrgUserCreate';
 
@@ -21,15 +21,13 @@ exports.initWorker = server => (job, done) => {
   server.log('worker', `Task ${exports.name}: Slack user add create`);
 
   return User.update({ _id: user._id }, { $set: { 'thirdParty.slack': 'pending' } })
-    .then(() => request({
-      baseUrl: 'https://api.slack.com/scim/v1/',
-      uri: '/Users',
+    .then(() => fetch('https://api.slack.com/scim/v1/Users', {
       method: 'POST',
-      json: true,
-      auth: {
-        bearer: config.slack.apiToken,
+      headers: {
+        authorization: `Bearer ${config.slack.apiToken}`,
+        'content-type': 'application/json',
       },
-      body: {
+      body: JSON.stringify({
         userName: slackHandle || (firstName.substr(0, 1) + lastName).toLowerCase(),
         name: {
           givenName: firstName,
@@ -43,7 +41,7 @@ exports.initWorker = server => (job, done) => {
           value: email,
           primary: true,
         }],
-      },
+      }),
     }))
     .then(() => {
       server.log('worker', `Task ${exports.name}: Slack user created`);

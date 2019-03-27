@@ -24,7 +24,6 @@
     "glue": "^6.0.0",
     "good": "^8.1.1",
     "good-console": "^8.0.0",
-    "good-file": "^6.0.1",
     "good-squeeze": "^5.1.0",
     "handlebars": "^4.0.5",
     "hapi": "^18.1.0",
@@ -44,8 +43,6 @@
     "node-fetch": "^2.3.0",
     "node-trello": "^1.1.2",
     "preview-email": "^0.0.10",
-    "request": "^2.79.0",
-    "request-promise": "^4.1.1",
     "scooter": "^5.0.0",
     "uuid": "^3.0.1"
   },

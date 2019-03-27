@@ -24,10 +24,10 @@ module.exports = {
     },
   },
   mongodb: {
-    url: 'mongodb://mongo:27017/lvconnect_test',
+    url: 'mongodb://localhost:27017/lvconnect_test',
   },
   kue: {
-    redis: 'redis://redis:6379/1',
+    redis: 'redis://localhost:6379/1',
     prefix: 'lvc-kue-test',
     config: {
       shutdownTimeout: 5000,
