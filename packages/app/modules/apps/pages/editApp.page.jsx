@@ -13,19 +13,21 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import { withStyles } from '@material-ui/core/styles';
-import { Helmet } from 'react-helmet';
 
 import type { ContextRouter } from 'connected-react-router';
 import type { ConnectedEditAppProps } from './editApp.connector';
 import AppHooks from '../components/appHooks.connector';
 
 import AppForm from '../components/appForm.component';
+import Meta from '../../../components/meta.component';
 
 const styles = theme => ({
   topCard: {
     marginBottom: theme.spacing.unit * 2,
   },
 });
+
+const selfSelect = e => e.target.select();
 
 type EditAppProps = ContextRouter & ConnectedEditAppProps;
 type EditAppState = { deleteModalOpened: boolean; }
@@ -58,9 +60,7 @@ class EditApp extends Component<EditAppProps, EditAppState> {
     const { deleteModalOpened } = this.state;
     return !isLoading && app && (
       <Fragment>
-        <Helmet>
-          <title>{app.name} | LVConnect</title>
-        </Helmet>
+        <Meta title={app.name} />
         <Card className={classes.topCard}>
           <CardContent>
             <Typography variant="h5" component="h2" gutterBottom>
@@ -69,14 +69,22 @@ class EditApp extends Component<EditAppProps, EditAppState> {
             <TextField
               label="Application ID"
               defaultValue={app.appId}
-              InputProps={{ readOnly: true, onFocus: e => e.target.select() }}
+              InputProps={{
+                readOnly: true,
+                onFocus: selfSelect,
+                inputProps: { 'data-test-id': 'appClientIdInput' },
+              }}
               fullWidth
               helperText=" "
             />
             <TextField
               label="Application Secret"
               defaultValue={app.appSecret}
-              InputProps={{ readOnly: true, onFocus: e => e.target.select() }}
+              InputProps={{
+                readOnly: true,
+                onFocus: selfSelect,
+                inputProps: { 'data-test-id': 'appClientSecretInput' },
+              }}
               fullWidth
               helperText=" "
             />
@@ -105,9 +113,28 @@ class EditApp extends Component<EditAppProps, EditAppState> {
                 {children}
               </CardContent>
               <CardActions>
-                <Button size="small" color="primary" type="submit" disabled={!valid || pristine}>Sauvegarder</Button>
-                <Button size="small" type="button" onClick={this.handleDeleteModalToggle(true)}>Supprimer</Button>
-                <Dialog open={deleteModalOpened} onClose={this.handleDeleteModalToggle(false)}>
+                <Button
+                  size="small"
+                  color="primary"
+                  type="submit"
+                  disabled={!valid || pristine}
+                  data-test-id="appEditSubmit"
+                >
+                  Sauvegarder
+                </Button>
+                <Button
+                  size="small"
+                  type="button"
+                  onClick={this.handleDeleteModalToggle(true)}
+                  data-test-id="appDeleteButton"
+                >
+                  Supprimer
+                </Button>
+                <Dialog
+                  open={deleteModalOpened}
+                  onClose={this.handleDeleteModalToggle(false)}
+                  data-test-id="appDeleteDialog"
+                >
                   <DialogTitle>Suppression de {app.name}</DialogTitle>
                   <DialogContent>
                     <DialogContentText>
@@ -117,7 +144,13 @@ class EditApp extends Component<EditAppProps, EditAppState> {
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>
-                    <Button color="primary" onClick={this.handleDeleteApp}>Confirmer la suppression</Button>
+                    <Button
+                      color="primary"
+                      onClick={this.handleDeleteApp}
+                      data-test-id="appDeleteSubmit"
+                    >
+                      Confirmer la suppression
+                    </Button>
                     <Button autoFocus onClick={this.handleDeleteModalToggle(false)}>Annuler</Button>
                   </DialogActions>
                 </Dialog>

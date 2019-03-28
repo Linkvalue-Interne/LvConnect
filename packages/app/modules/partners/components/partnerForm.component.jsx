@@ -54,10 +54,18 @@ const PartnerForm = ({
                     component={TextField}
                     required
                     autoFocus={autoFocus}
+                    data-test-id="partnerFirstNameInput"
                   />
                 </Grid>
                 <Grid item md={6} xs={12}>
-                  <Field name="lastName" type="text" label="Nom" component={TextField} required />
+                  <Field
+                    name="lastName"
+                    type="text"
+                    label="Nom"
+                    component={TextField}
+                    required
+                    data-test-id="partnerLastNameInput"
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <Field
@@ -67,6 +75,7 @@ const PartnerForm = ({
                     component={TextField}
                     disabled={editMode}
                     required
+                    data-test-id="partnerEmailInput"
                   />
                 </Grid>
                 {canEdit && (
@@ -83,16 +92,35 @@ const PartnerForm = ({
                     label="Compétence principale"
                     component={SelectField}
                     options={jobsMap}
+                    data-test-id="partnerJobSelect"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Field name="address.street" type="text" label="Adresse" component={TextField} />
+                  <Field
+                    name="address.street"
+                    type="text"
+                    label="Adresse"
+                    component={TextField}
+                    data-test-id="partnerAddressInput"
+                  />
                 </Grid>
                 <Grid item xs={4}>
-                  <Field name="address.zipCode" type="text" label="Code postal" component={TextField} />
+                  <Field
+                    name="address.zipCode"
+                    type="text"
+                    label="Code postal"
+                    component={TextField}
+                    data-test-id="partnerZipCopeInput"
+                  />
                 </Grid>
                 <Grid item xs={8}>
-                  <Field name="address.city" type="text" label="Ville" component={TextField} />
+                  <Field
+                    name="address.city"
+                    type="text"
+                    label="Ville"
+                    component={TextField}
+                    data-test-id="partnerCityInput"
+                  />
                 </Grid>
                 <Grid item md={6} xs={12}>
                   <Field
@@ -102,6 +130,7 @@ const PartnerForm = ({
                     label="Date d'entrée"
                     component={TextField}
                     disabled={!canEdit}
+                    data-test-id="partnerHiredAtInput"
                   />
                 </Grid>
                 <Grid item md={6} xs={12}>
@@ -112,6 +141,7 @@ const PartnerForm = ({
                     label="Date de sortie"
                     component={TextField}
                     disabled={!canEdit}
+                    data-test-id="partnerLeftAtInput"
                   />
                 </Grid>
                 <Grid item md={6} xs={12}>
@@ -121,6 +151,7 @@ const PartnerForm = ({
                     format={formatDate}
                     label="Date de naissance"
                     component={TextField}
+                    data-test-id="partnerBirthDateInput"
                   />
                 </Grid>
                 <Grid item md={6} xs={12}>
@@ -130,10 +161,18 @@ const PartnerForm = ({
                     label="Matricule"
                     component={TextField}
                     disabled={!canEdit}
+                    data-test-id="partnerRegistrationNumberInput"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Field name="description" label="Description" component={TextField} multiline rowsMax="4" />
+                  <Field
+                    name="description"
+                    label="Description"
+                    component={TextField}
+                    multiline
+                    rowsMax="4"
+                    data-test-id="partnerDescriptionInput"
+                  />
                 </Grid>
               </Grid>
             );
@@ -183,6 +222,7 @@ export default reduxForm({
   },
   validate,
   asyncValidate,
+  asyncBlurFields: ['email'],
   onSubmit: async (formData: User, dispatch: Dispatch<ReduxAction>, { onFormSubmit }) => {
     await onFormSubmit(mapValues(formData, value => (value === '' ? null : value)));
     dispatch(push('/dashboard/partners'));

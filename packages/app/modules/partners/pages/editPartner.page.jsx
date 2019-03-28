@@ -11,12 +11,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
-import { Helmet } from 'react-helmet';
 
 import type { ContextRouter } from 'connected-react-router';
 import type { ConnectedEditPartnerProps } from './editPartner.connector';
 
 import PartnerForm from '../components/partnerForm.component';
+import Meta from '../../../components/meta.component';
 
 type EditPartnerProps = ContextRouter & ConnectedEditPartnerProps & {
   partnerId?: String,
@@ -72,9 +72,7 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
       <PartnerForm editMode initialValues={partner} onFormSubmit={this.handleFormSubmit} autoFocus={autoFocus}>
         {({ children, valid, pristine }) => (
           <Card>
-            <Helmet>
-              <title>{title || `${partner.firstName} ${partner.lastName}`} | LVConnect</title>
-            </Helmet>
+            <Meta title={`${title || `${partner.firstName} ${partner.lastName}`}`} />
             <CardContent>
               <Typography variant="h5" component="h2" gutterBottom>
                 {cardTitle || `${partner.firstName} ${partner.lastName}`}
@@ -86,6 +84,7 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
               onClose={this.handleClose}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
+              data-test-id="partnerDeleteDialog"
             >
               <DialogTitle id="alert-dialog-title">Confirmer la suppresion</DialogTitle>
               <DialogContent>
@@ -99,14 +98,29 @@ class EditPartner extends Component<EditPartnerProps, EditPartnerState> {
                 <Button onClick={this.handleClose} color="primary" autoFocus>
                   Renseigner une date de sortie
                 </Button>
-                <Button onClick={this.handleDeletePartner}>
+                <Button onClick={this.handleDeletePartner} data-test-id="partnerDeleteSubmit">
                   Supprimer
                 </Button>
               </DialogActions>
             </Dialog>
             <CardActions>
-              <Button size="small" color="primary" type="submit" disabled={!valid || pristine}>Sauvegarder</Button>
-              <Button size="small" type="button" onClick={this.handleOpen}>Supprimer</Button>
+              <Button
+                size="small"
+                color="primary"
+                type="submit"
+                disabled={!valid || pristine}
+                data-test-id="partnerEditSubmit"
+              >
+                Sauvegarder
+              </Button>
+              <Button
+                size="small"
+                type="button"
+                onClick={this.handleOpen}
+                data-test-id="partnerDeleteButton"
+              >
+                Supprimer
+              </Button>
             </CardActions>
           </Card>
         )}

@@ -1,7 +1,6 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Helmet } from 'react-helmet';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -29,6 +28,7 @@ import type { ConnectedAppsListProps } from './appsList.connector';
 import LoadingPage from '../../../components/loadingPage.component';
 import Restricted, { hasRole } from '../../../components/restricted.component';
 import Highlight from '../../../components/highlight.component';
+import Meta from '../../../components/meta.component';
 
 const styles = theme => ({
   appsList: {
@@ -155,9 +155,7 @@ class AppsList extends Component<AppsListProps, AppsListState> {
 
     return (
       <Paper className={classes.appsList}>
-        <Helmet>
-          <title>Apps | LVConnect</title>
-        </Helmet>
+        <Meta title="Applications" />
         <Toolbar>
           <Typography variant="h5" component="h2" gutterBottom>
             Apps
@@ -199,6 +197,7 @@ class AppsList extends Component<AppsListProps, AppsListState> {
                   className={canEditApp ? classes.tableRow : ''}
                   hover={canEditApp}
                   onClick={canEditApp ? this.handleGoToApp(app.id) : undefined}
+                  data-test-id="applicationListRow"
                 >
                   <TableCell><Highlight search={search} text={app.name} /></TableCell>
                   <TableCell>{app.description}</TableCell>
@@ -229,6 +228,7 @@ class AppsList extends Component<AppsListProps, AppsListState> {
             color="primary"
             aria-label="Add"
             onClick={this.handleNewAppClick}
+            data-test-id="applicationAddButton"
           >
             <AddIcon />
           </Fab>

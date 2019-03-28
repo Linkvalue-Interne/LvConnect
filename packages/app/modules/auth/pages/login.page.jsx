@@ -82,6 +82,7 @@ class Login extends React.Component<LoginProps> {
               required
               margin="normal"
               autoFocus
+              data-test-id="loginEmailInput"
             />
             <Field
               component={TextField}
@@ -91,13 +92,22 @@ class Login extends React.Component<LoginProps> {
               fullWidth
               required
               margin="normal"
+              data-test-id="loginPasswordInput"
             />
           </CardContent>
           <CardActions>
-            <Button type="submit" color="primary">Se connecter</Button>
+            <Button type="submit" color="primary" data-test-id="loginSubmit">Se connecter</Button>
             {window.opener
               ? <Button href="/forgot-password" target="_blank" rel="noopener noreferrer">Mot de passe oublié</Button>
-              : <Button to="/forgot-password" component={Link}>Mot de passe oublié</Button>}
+              : (
+                <Button
+                  to="/forgot-password"
+                  component={Link}
+                  data-test-id="forgotPasswordButton"
+                >
+                  Mot de passe oublié
+                </Button>
+              )}
           </CardActions>
         </Card>
       </form>

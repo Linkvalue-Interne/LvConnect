@@ -6,13 +6,13 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Helmet } from 'react-helmet';
 
 import type { ContextRouter } from 'react-router';
 import type { ConnectedEditHookProps } from './editHook.connector';
 
 import HookForm from '../components/hookForm.component';
 import RunsList from '../components/runsList.component';
+import Meta from '../../../components/meta.component';
 
 type EditHookProps = ConnectedEditHookProps & ContextRouter & {
   classes: any;
@@ -31,7 +31,7 @@ class EditHook extends Component<EditHookProps, EditHookState> {
     }
   }
 
-  handleDeleteApp = async () => {
+  handleDeleteHook = async () => {
     const { push, deleteHook, match: { params: { hookId, appId } } } = this.props;
     if (hookId) {
       await deleteHook(hookId);
@@ -46,9 +46,7 @@ class EditHook extends Component<EditHookProps, EditHookState> {
         <HookForm appId={appId} onFormSubmit={editHook} initialValues={hook}>
           {({ children, valid, pristine }) => (
             <Card>
-              <Helmet>
-                <title>{hook.name} | Hooks | LVConnect</title>
-              </Helmet>
+              <Meta title={`${hook.name} | Hooks`} />
               <CardContent>
                 <Typography variant="h5" component="h2" gutterBottom>
                   {hook.name}
@@ -56,8 +54,23 @@ class EditHook extends Component<EditHookProps, EditHookState> {
                 {children}
               </CardContent>
               <CardActions>
-                <Button size="small" color="primary" type="submit" disabled={!valid || pristine}>Sauvegarder</Button>
-                <Button size="small" type="button" onClick={this.handleDeleteApp}>Supprimer</Button>
+                <Button
+                  size="small"
+                  color="primary"
+                  type="submit"
+                  disabled={!valid || pristine}
+                  data-test-id="hookEditSubmit"
+                >
+                  Sauvegarder
+                </Button>
+                <Button
+                  size="small"
+                  type="button"
+                  onClick={this.handleDeleteHook}
+                  data-test-id="hookDeleteButton"
+                >
+                  Supprimer
+                </Button>
               </CardActions>
             </Card>
           )}

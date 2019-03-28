@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+// eslint-disable-next-line global-require
+const bcrypt = (!process.env.CYPRESS_ENV && require('bcrypt'));
 const crypto = require('crypto');
 const { formatNumber, parseNumber } = require('libphonenumber-js');
 

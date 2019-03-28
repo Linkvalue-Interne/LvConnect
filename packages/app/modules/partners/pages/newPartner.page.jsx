@@ -6,19 +6,17 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Helmet } from 'react-helmet';
 
 import type { ConnectedNewPartnerProps } from './newPartner.connector';
 
 import PartnerForm from '../components/partnerForm.component';
+import Meta from '../../../components/meta.component';
 
 const NewPartner = ({ createNewPartner }: ConnectedNewPartnerProps) => (
   <PartnerForm onFormSubmit={data => createNewPartner(data)}>
     {({ children, valid }) => (
       <Card>
-        <Helmet>
-          <title>Nouveau partner | LVConnect</title>
-        </Helmet>
+        <Meta title="Nouveau partner" />
         <CardContent>
           <Typography variant="h5" component="h2" gutterBottom>
             Nouveau partner
@@ -26,7 +24,15 @@ const NewPartner = ({ createNewPartner }: ConnectedNewPartnerProps) => (
           {children}
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary" type="submit" disabled={!valid}>Créer</Button>
+          <Button
+            size="small"
+            color="primary"
+            type="submit"
+            disabled={!valid}
+            data-test-id="partnerAddSubmit"
+          >
+            Créer
+          </Button>
         </CardActions>
       </Card>
     )}

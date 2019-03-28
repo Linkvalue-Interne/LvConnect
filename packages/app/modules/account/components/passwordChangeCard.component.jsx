@@ -59,6 +59,7 @@ const PasswordChangeCard = ({
                 component={TextField}
                 required
                 autoFocus
+                data-test-id="passwordChangeOldPasswordInput"
               />
             </Grid>
           )}
@@ -71,6 +72,7 @@ const PasswordChangeCard = ({
               required
               min={5}
               max={30}
+              data-test-id="passwordChangeInput"
             />
           </Grid>
           <Grid item md={6} xs={12}>
@@ -82,6 +84,7 @@ const PasswordChangeCard = ({
               required
               min={5}
               max={30}
+              data-test-id="passwordChangeConfirmInput"
             />
           </Grid>
           <Grid item xs={12}>
@@ -103,7 +106,15 @@ const PasswordChangeCard = ({
         </Grid>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary" type="submit" disabled={invalid}>Sauvegarder</Button>
+        <Button
+          size="small"
+          color="primary"
+          type="submit"
+          disabled={invalid}
+          data-test-id="passwordChangeSubmit"
+        >
+          Sauvegarder
+        </Button>
       </CardActions>
     </Card>
   </form>
@@ -132,6 +143,7 @@ export default reduxForm({
           oldPassword: 'Mot de passe invalide',
         });
       }
+      throw e;
     }
   },
 })(PasswordChangeCard);

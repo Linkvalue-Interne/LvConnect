@@ -16,6 +16,8 @@ export type TextFieldProps = {
   placeholder: string,
   multiline: boolean,
   margin?: string,
+  select?: boolean,
+  'data-test-id'?: string,
 };
 
 const TextField = ({
@@ -25,6 +27,8 @@ const TextField = ({
   margin,
   type,
   helperText,
+  select,
+  'data-test-id': dataTestId,
   ...props
 }: TextFieldProps) => (
   <MuiTextField
@@ -36,6 +40,10 @@ const TextField = ({
     type={type}
     margin={margin}
     InputLabelProps={{ shrink: type === 'date' ? true : undefined }}
+    InputProps={select ? null : { inputProps: { 'data-test-id': dataTestId } }}
+    FormHelperTextProps={typeof dataTestId === 'string' ? { 'data-test-id': `${dataTestId}HelperText` } : null}
+    select={select}
+    data-test-id={select ? dataTestId : null}
     {...props}
     {...input}
   />
@@ -44,6 +52,8 @@ const TextField = ({
 TextField.defaultProps = {
   helperText: '',
   margin: 'dense',
+  'data-test-id': null,
+  select: false,
 };
 
 export default TextField;

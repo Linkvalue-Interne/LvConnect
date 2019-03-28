@@ -136,6 +136,7 @@ class RunsList extends Component<RunsListProps, RunsListState> {
             key={run.identifier}
             expanded={expanded === `panel${i}`}
             onChange={this.handleChange(`panel${i}`)}
+            data-test-id="hookRunsListRow"
           >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Icon color={run.status === config.hooks.statuses.failure ? 'error' : 'primary'}>
@@ -152,12 +153,14 @@ class RunsList extends Component<RunsListProps, RunsListState> {
             >
               <Tab label="Request" />
               <Tab
+                data-test-id="hookRunResponseTab"
                 label={
                   run.response
                     ? (
                       <Fragment>
                         Réponse
                         <span
+                          data-test-id="hookRunStatus"
                           className={`
                             ${classes.responseBadge}
                             ${run.status === config.hooks.statuses.failure
@@ -177,7 +180,7 @@ class RunsList extends Component<RunsListProps, RunsListState> {
             {tab === 0 && (
               <ExpansionPanelDetails className={classes.panelBody}>
                 <Typography variant="subtitle1">Headers</Typography>
-                <div className={classes.codeBlock}>
+                <div className={classes.codeBlock} data-test-id="hookRunRequestHeaders">
                   {Object.entries(JSON.parse(run.request.headers)).map(([key, value]) => (
                     <Typography key={key}>
                       <b>{key}</b>: {value}
@@ -185,7 +188,7 @@ class RunsList extends Component<RunsListProps, RunsListState> {
                   ))}
                 </div>
                 <Typography variant="subtitle1">Payload</Typography>
-                <div className={`${classes.codeBlock} ${classes.jsonBlock}`}>
+                <div className={`${classes.codeBlock} ${classes.jsonBlock}`} data-test-id="hookRunRequestPayload">
                   {JSON.stringify(JSON.parse(run.request.body), null, 2)}
                 </div>
               </ExpansionPanelDetails>
@@ -195,7 +198,7 @@ class RunsList extends Component<RunsListProps, RunsListState> {
                 {run.response !== undefined ? (
                   <Fragment>
                     <Typography variant="subtitle1">Headers</Typography>
-                    <div className={classes.codeBlock}>
+                    <div className={classes.codeBlock} data-test-id="hookRunResponseHeaders">
                       {Object.entries(JSON.parse(run.response.headers)).map(([key, value]) => (
                         <Typography key={key}>
                           <b>{key}</b>: {value}
@@ -203,7 +206,7 @@ class RunsList extends Component<RunsListProps, RunsListState> {
                       ))}
                     </div>
                     <Typography variant="subtitle1">Payload</Typography>
-                    <div className={`${classes.codeBlock} ${classes.jsonBlock}`}>
+                    <div className={`${classes.codeBlock} ${classes.jsonBlock}`} data-test-id="hookRunResponsePayload">
                       {RunsList.getParsedBody(run.response.body)}
                     </div>
                   </Fragment>

@@ -25,6 +25,11 @@ module.exports = {
   mongodb: {
     url: 'mongodb://db:27017/lvconnect',
   },
+  login: {
+    cache: {
+      passwordResetSecret: 'hello',
+    },
+  },
   kue: {
     redis: {
       host: 'cache',

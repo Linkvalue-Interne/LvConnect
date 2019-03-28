@@ -30,4 +30,4 @@ try {
   // Don't care
 }
 
-module.exports = deepMerge(sharedConfig, defaultConfig, envConfig, localConfig, localEnvConfig);
+module.exports = deepMerge({}, sharedConfig, defaultConfig, envConfig, localConfig, localEnvConfig);

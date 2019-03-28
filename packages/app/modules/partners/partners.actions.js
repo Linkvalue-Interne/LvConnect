@@ -7,7 +7,7 @@ import config from '@lvconnect/config/app';
 import type { Dispatch } from 'redux';
 import type { AppState } from '../../store/rootReducer';
 
-import { fetchWithAuth, logout } from '../auth/auth.actions';
+import { fetchWithAuth, HttpError, logout } from '../auth/auth.actions';
 import { hasRole } from '../../components/restricted.component';
 
 export const FETCH_PARTNERS_START = 'partners/FETCH_PARTNERS_START';
@@ -73,13 +73,12 @@ export const deletePartner = (partnerId: string) => (dispatch: Dispatch<ReduxAct
 type PasswordChange = { oldPassword?: string, newPassword: string, cleanupSessions?: boolean };
 export const changePassword = ({ oldPassword, newPassword, cleanupSessions }: PasswordChange, pkey?: string) => (
   async (dispatch: Dispatch<ReduxAction>) => {
-    let user;
+    let data;
     if (pkey) {
-      const response = await fetch('/reset-password', {
+      const response = await fetch(`/reset-password?pkey=${pkey}`, {
         method: 'POST',
         headers: {
           'X-CSRF-Token': window.CSRF_TOKEN,
-          authorization: `Bearer ${pkey}`,
         },
         body: JSON.stringify({
           oldPassword,
@@ -87,9 +86,12 @@ export const changePassword = ({ oldPassword, newPassword, cleanupSessions }: Pa
           cleanupSessions,
         }),
       });
-      user = await response.json();
+      data = await response.json();
+      if (response.status >= 400) {
+        throw new HttpError(response.status, data.message);
+      }
     } else {
-      user = await dispatch(fetchWithAuth('/reset-password', {
+      data = await dispatch(fetchWithAuth('/reset-password', {
         method: 'POST',
         headers: {
           'X-CSRF-Token': window.CSRF_TOKEN,
@@ -106,6 +108,6 @@ export const changePassword = ({ oldPassword, newPassword, cleanupSessions }: Pa
       dispatch(logout());
     }
 
-    return user;
+    return data;
   }
 );

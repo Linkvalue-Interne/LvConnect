@@ -96,7 +96,7 @@ class App extends React.Component<AppProps, AppState> {
         <div className={classes.appFrame}>
           <AppBar simple={simple} onDrawerOpen={this.handleDrawerOpen} />
           {!simple && <AppDrawer open={drawerOpen} onDrawerClose={this.handleDrawerClose} />}
-          <div className={classes.appContent}>
+          <div className={classes.appContent} data-test-id="appContainer">
             <div className={classes.appContentWrapper}>
               {children}
             </div>

@@ -26,9 +26,17 @@ type NotFoundProps = {
 }
 
 const NotFound = ({ code, classes, text, subText }: NotFoundProps) => (
-  <div className={classes.notFoundPage}>
-    <Typography className={classes.notFoundTitle} variant="h1" component="h1" gutterBottom>{code} :(</Typography>
-    <Typography className={classes.notFoundBody} variant="h4" gutterBottom>
+  <div className={classes.notFoundPage} data-test-id="notFound">
+    <Typography
+      className={classes.notFoundTitle}
+      variant="h1"
+      component="h1"
+      gutterBottom
+      data-test-id="notFoundCode"
+    >
+      {code} :(
+    </Typography>
+    <Typography className={classes.notFoundBody} variant="h4" gutterBottom data-test-id="notFoundMessage">
       {text}
     </Typography>
     {subText && (

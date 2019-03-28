@@ -20,20 +20,20 @@ const manifest = {
   },
   register: {
     plugins: [
-      ...(process.env.APP_ENV !== 'test' ? [{
+      {
         plugin: 'good',
         options: {
           reporters: {
             consoleReporter: [{
               module: 'good-squeeze',
               name: 'Squeeze',
-              args: [{ log: '*', response: '*' }],
+              args: [{ log: '*', response: '*', error: '*' }],
             }, {
               module: 'good-console',
             }, 'stdout'],
           },
         },
-      }] : []),
+      },
       'hapi-auth-basic',
       'hapi-auth-bearer-token',
       { plugin: 'crumb', options: config.csrf },

@@ -67,7 +67,12 @@ class AppHooks extends Component<AppHooksProps> {
         {!loading && (
           <List dense>
             {hooks.map(hook => (
-              <ListItem key={hook.id} button onClick={() => push(`/dashboard/apps/${appId}/hooks/${hook.id}`)}>
+              <ListItem
+                key={hook.id}
+                button
+                onClick={() => push(`/dashboard/apps/${appId}/hooks/${hook.id}`)}
+                data-test-id="hookListRow"
+              >
                 <ListItemIcon>
                   <Icon
                     color={hook.runs && hook.runs.length > 0 && hook.runs[0].status === config.hooks.statuses.failure
@@ -81,7 +86,11 @@ class AppHooks extends Component<AppHooksProps> {
                 <ListItemText primary={hook.name} secondary={hook.uri} />
               </ListItem>
             ))}
-            <ListItem button onClick={() => push(`/dashboard/apps/${appId}/hooks/new`)}>
+            <ListItem
+              button
+              onClick={() => push(`/dashboard/apps/${appId}/hooks/new`)}
+              data-test-id="hookAddButton"
+            >
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>

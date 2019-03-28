@@ -41,7 +41,7 @@ function handlePassword(req, application) {
   return User.findOneByEmailAndPassword(req.payload.username, req.payload.password)
     .catch(() => Promise.reject(Boom.unauthorized('invalid_grant')))
     .then((user) => {
-      if (user.leftAt < new Date()) {
+      if (user.leftAt < new Date() || user.leftAt > new Date()) {
         throw Boom.unauthorized('invalid_grant');
       }
       return generateTokens(req, user, application, scopes);
@@ -56,7 +56,10 @@ function handleRefreshToken(req, application) {
     expireAt: { $gt: Date.now() },
     application,
   }).populate('user').then((refreshToken) => {
-    if (refreshToken === null || refreshToken.expireAt < new Date() || refreshToken.user.leftAt < new Date()) {
+    if (refreshToken === null
+      || refreshToken.expireAt < new Date()
+      || refreshToken.user.leftAt < new Date()
+      || refreshToken.user.hiredAt > new Date()) {
       throw Boom.unauthorized('invalid_grant');
     }
 

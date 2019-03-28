@@ -2,7 +2,8 @@ const Boom = require('boom');
 const Joi = require('joi');
 const path = require('path');
 const fs = require('fs');
-const request = require('request-promise');
+const fetch = require('node-fetch');
+const config = require('@lvconnect/config/server');
 
 const oauthFilePath = path.resolve(process.cwd(), 'dist/oauth.html');
 
@@ -28,11 +29,9 @@ module.exports = {
     }
 
     let html;
-    if (process.env.APP_ENV === 'dev') {
-      html = await request({
-        method: 'GET',
-        uri: 'http://localhost:8080/oauth.html',
-      });
+    if (config.proxyWebpackDevServer) {
+      const response = await fetch('http://localhost:8080/oauth.html');
+      html = await response.text();
     } else {
       html = await new Promise((resolve, reject) => fs.readFile(oauthFilePath, (err, buffer) => {
         if (err) {

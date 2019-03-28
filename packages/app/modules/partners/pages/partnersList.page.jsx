@@ -1,7 +1,6 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Helmet } from 'react-helmet';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -32,6 +31,7 @@ import Restricted, { hasRole } from '../../../components/restricted.component';
 import roleLabels from '../roleLabels';
 import jobLabels from '../jobLabels';
 import Highlight from '../../../components/highlight.component';
+import Meta from '../../../components/meta.component';
 
 const styles = theme => ({
   partnersList: {
@@ -167,9 +167,7 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
 
     return (
       <Paper className={classes.partnersList}>
-        <Helmet>
-          <title>Partners | LVConnect</title>
-        </Helmet>
+        <Meta title="Partners" />
         <Toolbar>
           <Typography variant="h5" component="h2" gutterBottom>
             Partners
@@ -182,6 +180,7 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
             onChange={this.handleSearchChange}
             placeholder="Rechercher..."
             autoFocus
+            inputProps={{ 'data-test-id': 'partnerListSearch' }}
             startAdornment={(
               <InputAdornment position="end">
                 <SearchIcon />
@@ -213,10 +212,14 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
                   key={partner.id}
                   className={
                     `${canEditUser ? classes.tableRow : ''}
-                    ${partner.leftAt < new Date().toISOString() ? classes.disabledPartner : ''}`
+                    ${partner.leftAt < new Date().toISOString() || partner.hiredAt > new Date().toISOString()
+                      ? classes.disabledPartner
+                      : ''
+                    }`
                   }
                   hover={canEditUser}
                   onClick={this.handleGoToPartnerWorklog(partner.id)}
+                  data-test-id="partnerListRow"
                 >
                   <TableCell padding="dense">
                     <Avatar alt={`${partner.firstName} ${partner.lastName}`} src={partner.profilePictureUrl} />
@@ -254,6 +257,7 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
             color="primary"
             aria-label="Add"
             onClick={this.handleNewPartnerClick}
+            data-test-id="partnerAddButton"
           >
             <AddIcon />
           </Fab>

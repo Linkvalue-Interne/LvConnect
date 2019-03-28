@@ -14,7 +14,9 @@ module.exports = {
       expiresIn: cache.passwordResetTTL,
     });
 
-    const hashPasswordResetToken = rawToken => crypto.createHmac('sha512', 'hello').update(rawToken).digest('hex');
+    const hashPasswordResetToken = rawToken => crypto.createHmac('sha512', cache.passwordResetSecret)
+      .update(rawToken)
+      .digest('hex');
 
     const storePasswordResetToken = (hashedToken, userId) => (
       server.app.passwordResetCache.set(hashedToken, userId, cache.passwordResetTTL)
@@ -27,29 +29,14 @@ module.exports = {
       return rawToken;
     };
 
-    server.expose('resetPassword', async (user) => {
-      const rawToken = await createPasswordResetToken(user._id);
-      server.plugins.mailjet.sendPasswordResetMail(user, rawToken);
-    });
-
-    server.expose({ createPasswordResetToken, hashPasswordResetToken });
-
-    // Auth strategy for fast reconnect from third party app
-    server.auth.strategy('query-token', 'bearer-access-token', {
-      allowQueryToken: true,
-      async validate(req, bearer) {
-        const token = await server.plugins.oauth.models.AccessToken.findOne({ token: bearer })
-          .populate('user')
-          .exec();
-
-        if (!token || !token.user) {
-          throw Boom.unauthorized('invalid_token');
-        }
-        if (token.expireAt < new Date()) {
-          throw Boom.unauthorized('token_expired');
-        }
-        return { isValid: true, credentials: token };
+    server.expose({
+      createPasswordResetToken,
+      hashPasswordResetToken,
+      resetPassword: async (user) => {
+        const rawToken = await createPasswordResetToken(user._id);
+        server.plugins.mailjet.sendPasswordResetMail(user, rawToken);
       },
+      cleanPasswordResetToken: token => server.app.passwordResetCache.drop(hashPasswordResetToken(token)),
     });
 
     // Auth strategy for fast reconnect from password reset email
@@ -57,7 +44,7 @@ module.exports = {
       accessTokenName: 'pkey',
       allowQueryToken: true,
       async validate(req, pkey) {
-        const hashedToken = crypto.createHmac('sha512', 'hello').update(pkey).digest('hex');
+        const hashedToken = hashPasswordResetToken(pkey);
         const cached = await req.server.app.passwordResetCache.get(hashedToken);
         if (!cached) {
           return { isValid: false, credentials: null };
@@ -75,6 +62,12 @@ module.exports = {
         const token = await server.plugins.oauth.models.AccessToken.findOne({ token: bearer }).populate('user').exec();
         if (!token || (!token.user && !token.isClientCredentialsToken)) {
           throw Boom.unauthorized('invalid_token');
+        }
+        if (token.user) {
+          const { leftAt, hiredAt } = token.user;
+          if ((leftAt && leftAt.getTime() < new Date()) || (hiredAt && hiredAt.getTime() > new Date())) {
+            throw Boom.unauthorized('user_disabled');
+          }
         }
         if (token.expireAt < new Date()) {
           throw Boom.unauthorized('token_expired');

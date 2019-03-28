@@ -1,7 +1,6 @@
 const Joi = require('joi');
 const Boom = require('boom');
 const _ = require('lodash');
-const { oauth: { scopes: validScopes } } = require('@lvconnect/config');
 
 module.exports = {
   method: 'GET',
@@ -46,7 +45,7 @@ module.exports = {
     }
 
     const queryScopes = req.query.scope ? req.query.scope.split(' ') : [];
-    const invalidScope = queryScopes.find(scope => validScopes.indexOf(scope) === -1);
+    const invalidScope = queryScopes.find(scope => application.allowedScopes.indexOf(scope) === -1);
     if (invalidScope) {
       throw Boom.badRequest('invalid_scopes');
     }

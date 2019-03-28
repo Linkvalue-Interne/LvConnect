@@ -39,7 +39,7 @@ module.exports = {
   async register(server, { url }) {
     server.decorate('toolkit', 'mongodb', mongodbReply);
 
-    await mongoose.connect(url, { useNewUrlParser: true });
+    await mongoose.connect(url, { useNewUrlParser: true, useCreateIndex: true });
     server.log('info', `Database connected to: ${url}`);
     server.expose('mongoose', mongoose);
   },

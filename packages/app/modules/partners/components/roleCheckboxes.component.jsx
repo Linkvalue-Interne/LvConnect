@@ -53,6 +53,7 @@ class RoleCheckboxes extends Component<RoleCheckboxesProps, any> {
               key={key}
               control={<Checkbox checked={values.includes(value)} onChange={this.handleChange(value)} />}
               label={roleLabels[value] || value}
+              data-test-id="partnerRoleCheckbox"
             />
           ))}
         </FormGroup>

@@ -3,18 +3,6 @@ module.exports = {
   host: {
     port: 8000,
   },
-  logs: {
-    reporters: {
-      consoleReporter: [{
-        module: 'good-squeeze',
-        name: 'Squeeze',
-        args: [{ log: '*', response: '*', error: '*', worker: '*' }],
-      }, {
-        module: 'good-console',
-        args: [{ colors: true }],
-      }, 'stdout'],
-    },
-  },
   oauth: {
     accessTokenTTL: 'P2D',
     refreshTokenTTL: 'P1M',
@@ -33,6 +21,7 @@ module.exports = {
   },
   login: {
     cache: {
+      passwordResetSecret: process.env.COOKIE_SECRET,
       passwordResetTTL: 60 * 60 * 1000,
     },
   },
@@ -40,6 +29,8 @@ module.exports = {
   github: {},
   slack: {},
   mailjet: {
+    send: true,
+    preview: false,
     apiKey: process.env.MAILJET_API_KEY,
     apiToken: process.env.MAILJET_API_TOKEN,
     baseUrl: 'http://localhost:8000',
