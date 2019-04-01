@@ -51,6 +51,12 @@ When(/^I reload current tab$/, () => {
   cy.reload();
 });
 
+When(/I logout/, () => {
+  cy.window().then((win) => {
+    win.localStorage.clear();
+  });
+});
+
 When(/^I reload page data$/, () => {
   cy.window().then((win) => {
     win.dispatchEvent(new Event('reload'));

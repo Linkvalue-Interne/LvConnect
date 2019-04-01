@@ -21,10 +21,12 @@
     "hook edit": "/dashboard/apps/5c9a72e8066cd3341852cf2e/hooks/5c9a72e8066cd3341852df2c"
   },
   "emails": {
-    "password reset": "passwordReset"
+    "password reset": "passwordReset",
+    "account created": "accountCreated"
   },
   "selectors": {
     "app container": "[data-test-id=\"appContainer\"]",
+    "app bar full name": "[data-test-id=\"appBarFullName\"]",
 
     "login email input": "[data-test-id=\"loginEmailInput\"]",
     "login password input": "[data-test-id=\"loginPasswordInput\"]",
@@ -61,6 +63,8 @@
     "partner delete button": "[data-test-id=\"partnerDeleteButton\"]",
     "partner delete dialog": "[data-test-id=\"partnerDeleteDialog\"]",
     "partner delete submit": "[data-test-id=\"partnerDeleteSubmit\"]",
+
+    "account created email button": "[data-test-id=\"accountCreatedEmailButton\"]",
 
     "oauth permissions list": "[data-test-id=\"oauthPermissionsList\"]",
     "oauth permissions list item": "[data-test-id=\"oauthPermissionsListItem\"]",

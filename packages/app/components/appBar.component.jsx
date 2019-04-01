@@ -104,7 +104,7 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
       const fullName = `${user.firstName} ${user.lastName}`;
       avatar = (
         <div className={classes.userDetails}>
-          <Typography color="inherit">{fullName}</Typography>
+          <Typography color="inherit" data-test-id="appBarFullName">{fullName}</Typography>
           <IconButton color="inherit" onClick={this.handleMenuOpen} className={classes.avatar}>
             <Avatar alt={fullName} src={user.profilePictureUrl} />
           </IconButton>
