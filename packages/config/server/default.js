@@ -33,6 +33,8 @@ module.exports = {
     preview: false,
     apiKey: process.env.MAILJET_API_KEY,
     apiToken: process.env.MAILJET_API_TOKEN,
+    fromName: 'LVConnect',
+    fromEmail: 'no-reply@link-value.fr',
     baseUrl: 'http://localhost:8000',
   },
 };

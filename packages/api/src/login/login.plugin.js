@@ -34,7 +34,7 @@ module.exports = {
       hashPasswordResetToken,
       resetPassword: async (user) => {
         const rawToken = await createPasswordResetToken(user._id);
-        server.plugins.mailjet.sendPasswordResetMail(user, rawToken);
+        await server.plugins.mailjet.sendPasswordResetMail(user, rawToken);
       },
       cleanPasswordResetToken: token => server.app.passwordResetCache.drop(hashPasswordResetToken(token)),
     });
