@@ -1,3 +1,7 @@
+## [2.9.1](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.9.0...v2.9.1) (2019-04-01)
+
+
+
 # [2.9.0](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.8.0...v2.9.0) (2019-03-25)
 
 
