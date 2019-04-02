@@ -1,3 +1,17 @@
+## [2.9.2](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.9.1...v2.9.2) (2019-04-02)
+
+
+### Bug Fixes
+
+* **emails:** Fix bug with email configuration ([0670950](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/0670950))
+
+
+### Features
+
+* **oauth:** allow wildcard redirect URIs ([#14](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/issues/14)) ([0c93d26](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/0c93d26))
+
+
+
 ## [2.9.1](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.9.0...v2.9.1) (2019-04-01)
 
 
