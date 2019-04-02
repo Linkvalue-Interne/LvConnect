@@ -31,6 +31,22 @@ Feature: Partner listing
     Then I should be on "partner list" page
     And page should contain "4" "partner list row"
     And I should read "TUDISCOMathieu" in "partner list row" number "4"
+    And "1" emails should have been sent
+    And "mathieu.tudisco@link-value.fr" should receive an "account created" email
+
+    When I logout
+    And I consult asserted email
+    And I click "account created email button"
+    And I type "test1234" in "password change input"
+    And I type "test1234" in "password change confirm input"
+    And I click the "password change submit"
+    Then I should be on "login" page
+
+    When I type "mathieu.tudisco@link-value.fr" in "login email input"
+    And I type "test1234" in "login password input"
+    And I click the "login submit"
+    Then I should be on "partner list" page
+    And I should read "Mathieu TUDISCO" in "app bar full name"
 
   Scenario: Add partner full informations
     Given I'm using fresh database
