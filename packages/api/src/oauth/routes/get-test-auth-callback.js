@@ -13,7 +13,7 @@ const generateHTML = content => `
 
 module.exports = {
   method: 'GET',
-  path: '/testing/oauth/callback/{identifier}',
+  path: '/testing/oauth/callback/{appId}/{param*}',
   config: {
     auth: false,
     validate: {
@@ -26,6 +26,8 @@ module.exports = {
   },
   async handler(req) {
     const { code, error, state } = req.query;
+    const { appId } = req.params;
+    const { isRedirectUriAllowedForApplication } = req.server.methods;
     const { Application } = req.server.plugins.apps.models;
 
     if (error) {
@@ -36,11 +38,12 @@ module.exports = {
       return Boom.badRequest('missing_code');
     }
 
-    const application = await Application.findOne({
-      redirectUris: { $elemMatch: { $regex: new RegExp(`${req.path}$`) } },
-    });
-
+    const application = await Application.findOne({ appId });
     if (!application) {
+      return Boom.notFound();
+    }
+
+    if (!isRedirectUriAllowedForApplication(`http://localhost:8000${req.path}`, application)) {
       return Boom.notFound();
     }
 

@@ -22,6 +22,21 @@ Feature: OAuth authentication
     And I should read "Benjamin DELAMARRE" in "oauth callback profile status"
     And I should read "No state given" in "oauth callback state"
 
+  Scenario: OAuth authorize with wildcard redirect uri
+    Given I'm using fresh database
+
+    When I visit the "authorize app with wildcard redirect uri" page
+    And I type "benjamin.delamarre@link-value.fr" in "login email input"
+    And I type "test1234" in "login password input"
+    And I click the "login submit"
+    Then I should see "oauth permissions list"
+    And page should contain "2" "oauth permissions list item"
+
+    When I click the "oauth permissions submit"
+    Then I should be on "oauth callback with wildcard redirect uri" page
+    And I should read "Successfully" in "oauth callback auth code status"
+    And I should read "Successfully" in "oauth callback refresh token status"
+
   Scenario: OAuth authorize with partial permissions
     Given I'm using fresh database
 
