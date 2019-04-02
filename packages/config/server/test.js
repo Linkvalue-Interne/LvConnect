@@ -45,7 +45,7 @@ module.exports = {
     preview: true,
     emailStore: {
       url: 'redis://localhost:6379',
-      database: 1,
+      database: 2,
       partition: 'lvconnect',
       segment: 'emails',
     },
