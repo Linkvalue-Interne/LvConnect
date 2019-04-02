@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: node:8
+    image: node:11
     working_dir: /usr/src/app
     command: sh -c "yarn && yarn dev"
     environment:
