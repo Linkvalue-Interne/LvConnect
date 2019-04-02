@@ -1,5 +1,6 @@
 const moment = require('moment');
 const Boom = require('boom');
+const escapeRegExp = require('lodash/escapeRegExp');
 const models = require('./models');
 const uuidHash = require('../uuid-hash');
 const routes = require('./routes');
@@ -53,6 +54,19 @@ module.exports = {
     server.expose('cleanupUserTokens', (user) => {
       const cleanupModels = [AccessToken, RefreshToken, AuthorizationCode];
       return Promise.all(cleanupModels.map(model => model.remove({ user }).exec()));
+    });
+
+    server.method('isRedirectUriAllowedForApplication', (redirectUri, application) => {
+      const matchedApplicationRedirectUri = application.redirectUris.find((uri) => {
+        if (uri.includes('*')) {
+          const regexpUri = escapeRegExp(uri).replace('\\*', '\\S+');
+          return redirectUri.match(new RegExp(regexpUri));
+        }
+
+        return redirectUri === uri;
+      });
+
+      return !!matchedApplicationRedirectUri;
     });
 
     server.auth.strategy('application', 'basic', {

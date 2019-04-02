@@ -29,7 +29,7 @@ module.exports = {
 
     const { models: { Authorization } } = req.server.plugins.oauth;
     const { Application } = req.server.plugins.apps.models;
-    const { generateAuthorizationCode, generateAccessToken } = req.server.methods;
+    const { generateAuthorizationCode, generateAccessToken, isRedirectUriAllowedForApplication } = req.server.methods;
     const { user } = req.auth.credentials;
     const {
       redirect_uri: redirectUri,
@@ -40,7 +40,7 @@ module.exports = {
 
     const application = await Application.findOne({ appId: clientId || appId });
     let authorization = await Authorization.findOne({ user, application });
-    if (!application.redirectUris.find(uri => redirectUri === uri)) {
+    if (!isRedirectUriAllowedForApplication(redirectUri, application)) {
       throw Boom.badRequest('invalid_redirect_uri');
     }
 

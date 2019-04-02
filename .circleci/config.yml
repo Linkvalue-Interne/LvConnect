@@ -1,7 +1,7 @@
 build_common: &build_common
   executor:
     name: node/node
-    tag: '10'
+    tag: '11'
   working_directory: ~/lvconnect
   environment:
     NODE_ENV: production
@@ -39,7 +39,7 @@ jobs:
   install:
     executor:
       name: node/node
-      tag: '10'
+      tag: '11'
     working_directory: ~/lvconnect
     steps:
     - checkout
@@ -74,7 +74,7 @@ jobs:
   test:
     executor:
       name: node/node
-      tag: '10'
+      tag: '11'
     working_directory: ~/lvconnect
     steps:
     - attach_workspace:

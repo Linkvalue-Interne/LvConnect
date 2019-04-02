@@ -37,7 +37,10 @@
       "allowedScopes": ["profile:get", "profile:modify"],
       "appId": "5c9a72e8066cd3341852cf2e",
       "appSecret": "5c9a72e8066cd3341852cf2e5c9a72e8066cd3341852cf2e",
-      "redirectUris": ["http://localhost:8000/testing/oauth/callback/valid"],
+      "redirectUris": [
+        "http://localhost:8000/testing/oauth/callback/valid",
+        "https://allowed.*.host:8000/testing/oauth/callback/valid"
+      ],
       "user": "ObjectId(5c9a72e8066cd3341852cf2a)"
     }
   ],

@@ -70,6 +70,16 @@ Feature: OAuth authentication
     And I click the "oauth permissions submit"
     And I should read "State is: foo" in "oauth callback state"
 
+  Scenario: Authorize with wildcard redirect uri
+    Given I'm using fresh database
+
+    When I visit the "authorize app with wildcard redirect uri" page
+    And I type "benjamin.delamarre@link-value.fr" in "login email input"
+    And I type "test1234" in "login password input"
+    And I click the "login submit"
+    Then I should see "oauth permissions list"
+    And page should contain "2" "oauth permissions list item"
+
   Scenario: Invalid app
     Given I'm using fresh database
     And I'm logged as "benjamin.delamarre@link-value.fr"
@@ -84,6 +94,15 @@ Feature: OAuth authentication
     And I'm logged as "benjamin.delamarre@link-value.fr"
 
     When I visit the "authorize invalid redirect" page
+    Then I should see "not found page"
+    And I should read "403" in "not found code"
+    And I should read "URL de redirection invalide" in "not found message"
+
+  Scenario: Invalid wildcard redirect uri
+    Given I'm using fresh database
+    And I'm logged as "benjamin.delamarre@link-value.fr"
+
+    When I visit the "authorize invalid wildcard redirect" page
     Then I should see "not found page"
     And I should read "403" in "not found code"
     And I should read "URL de redirection invalide" in "not found message"
