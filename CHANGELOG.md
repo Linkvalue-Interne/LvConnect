@@ -1,3 +1,7 @@
+## [2.9.4](https://github.com/Linkvalue-Interne/LvConnect/compare/v2.9.3...v2.9.4) (2019-05-09)
+
+
+
 <a name="2.9.3"></a>
 ## [2.9.3](https://github.com/Linkvalue-Interne/LvConnect/compare/v2.9.2...v2.9.3) (2019-05-09)
 
