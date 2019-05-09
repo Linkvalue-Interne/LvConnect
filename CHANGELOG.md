@@ -1,3 +1,20 @@
+## [2.9.3](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.8.0...v2.9.3) (2019-05-09)
+
+
+### Bug Fixes
+
+* **api:** Fix security problem with non encrypted CSRF token ([#8](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/issues/8)) ([3498b79](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/3498b79))
+* **app:** Support Safari browser ([#10](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/issues/10)) ([9f1f975](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/9f1f975))
+* **config:** Fix CORS config ([70d996c](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/70d996c))
+* **emails:** Fix bug with email configuration ([0670950](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/0670950))
+
+
+### Features
+
+* **oauth:** allow wildcard redirect URIs ([#14](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/issues/14)) ([0c93d26](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/commit/0c93d26))
+
+
+
 ## [2.9.2](http://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/compare/v2.9.1...v2.9.2) (2019-04-02)
 
 
