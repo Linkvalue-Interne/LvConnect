@@ -56,7 +56,7 @@ class AppHooks extends Component<AppHooksProps> {
             information, merci de se reporter à la
             &nbsp;
             <a
-              href="https://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/blob/master/docs/hooks.md"
+              href="https://github.com/Linkvalue-Interne/LvConnect/blob/master/docs/hooks.md"
               target="_blank"
               rel="noopener noreferrer"
             >

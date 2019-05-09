@@ -29,13 +29,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/LinkValue/Lab/LVConnect/LvConnect.git"
+    "url": "https://github.com/Linkvalue-Interne/LvConnect.git"
   },
   "author": "LinkValue",
   "bugs": {
-    "url": "https://gitlab.com/LinkValue/Lab/LVConnect/LvConnect/issues"
+    "url": "https://github.com/Linkvalue-Interne/LvConnect/issues"
   },
-  "homepage": "https://gitlab.com/LinkValue/Lab/LVConnect/LvConnect#readme",
+  "homepage": "https://github.com/Linkvalue-Interne/LvConnect",
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
@@ -76,6 +76,6 @@
     "webpack-dev-server": "^3.1.5"
   },
   "engines": {
-    "node": ">=11.12.0"
+    "node": "^11.12.0"
   }
 }
