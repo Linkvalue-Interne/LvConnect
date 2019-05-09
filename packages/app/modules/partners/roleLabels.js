@@ -10,6 +10,7 @@ const roleLabels = {
   [roles.FINANCE]: 'Finance',
   [roles.PROJECT_MANAGER]: 'Chef de projet',
   [roles.TALENT]: 'Talent Acquisition/Management',
+  [roles.FEEDBACK_MANAGER]: 'Facilitateur de feedback',
 };
 
 export default roleLabels;

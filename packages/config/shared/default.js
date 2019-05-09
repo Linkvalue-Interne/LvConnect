@@ -7,6 +7,7 @@ const COMMUNICATION = 'com';
 const FINANCE = 'finance';
 const PROJECT_MANAGER = 'projectManager';
 const TALENT = 'talent';
+const FEEDBACK_MANAGER = 'feedbackManager';
 
 module.exports = {
   roles: {
@@ -19,6 +20,7 @@ module.exports = {
     FINANCE,
     PROJECT_MANAGER,
     TALENT,
+    FEEDBACK_MANAGER,
   },
   cities: [
     'Lyon',
