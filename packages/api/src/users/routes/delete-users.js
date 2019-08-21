@@ -1,4 +1,4 @@
-const Boom = require('boom');
+const Boom = require('@hapi/boom');
 const _ = require('lodash');
 const { permissions, hooks } = require('@lvconnect/config/server');
 

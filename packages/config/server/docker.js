@@ -1,4 +1,4 @@
-const catboxRedis = require('catbox-redis');
+const catboxRedis = require('@hapi/catbox-redis');
 
 module.exports = {
   host: {

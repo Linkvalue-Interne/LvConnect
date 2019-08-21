@@ -1,5 +1,5 @@
 const moment = require('moment');
-const Boom = require('boom');
+const Boom = require('@hapi/boom');
 const escapeRegExp = require('lodash/escapeRegExp');
 const models = require('./models');
 const uuidHash = require('../uuid-hash');
@@ -8,7 +8,7 @@ const routes = require('./routes');
 module.exports = {
   name: 'oauth',
   version: '0.0.1',
-  dependencies: ['mongodb', 'apps', 'users', 'hapi-auth-basic', 'hapi-auth-bearer-token'],
+  dependencies: ['mongodb', 'apps', 'users', 'basic', 'hapi-auth-bearer-token'],
   async register(server, { accessTokenTTL, refreshTokenTTL, authorizationCodeTTL, scopes: validScopes }) {
     server.expose('models', models);
     server.expose('accessTokenTTL', moment.duration(accessTokenTTL).asSeconds());

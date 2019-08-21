@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const cucumber = require('cypress-cucumber-preprocessor').default;
 const moment = require('moment');
 const config = require('@lvconnect/config/server');
-const { Client, Policy } = require('catbox');
-const redis = require('catbox-redis');
+const { Client, Policy } = require('@hapi/catbox');
+const CatboxRedis = require('@hapi/catbox-redis');
 
 require('@lvconnect/api/src/users/models/user.model');
 require('@lvconnect/api/src/oauth/models/access-token.model');
@@ -18,6 +18,8 @@ const {
   mailjet: { emailStore },
   oauth: { scopes, privateScopes },
 } = config;
+
+const { segment, ...redisConfig } = emailStore;
 
 const recursiveReplace = (value) => {
   if (Array.isArray(value)) {
@@ -46,11 +48,11 @@ const recursiveReplace = (value) => {
   return value;
 };
 
-const emailCache = new Client(redis, emailStore);
+const emailCache = new Client(CatboxRedis, redisConfig);
 
 module.exports = async (on) => {
   await emailCache.start();
-  const emailCachePolicy = new Policy({ expiresIn: 1000 * 60 * 60 }, emailCache, emailStore.segment);
+  const emailCachePolicy = new Policy({ expiresIn: 1000 * 60 * 60 }, emailCache, segment);
 
   on('file:preprocessor', cucumber());
   on('task', {

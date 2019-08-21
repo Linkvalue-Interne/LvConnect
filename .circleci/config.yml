@@ -1,7 +1,7 @@
 build_common: &build_common
   executor:
     name: node/node
-    tag: '11'
+    tag: '12.6.0'
   working_directory: ~/lvconnect
   environment:
     NODE_ENV: production
@@ -39,7 +39,7 @@ jobs:
   install:
     executor:
       name: node/node
-      tag: '11'
+      tag: '12.6.0'
     working_directory: ~/lvconnect
     steps:
     - checkout
@@ -74,7 +74,7 @@ jobs:
   test:
     executor:
       name: node/node
-      tag: '11'
+      tag: '12.6.0'
     working_directory: ~/lvconnect
     steps:
     - attach_workspace:
@@ -84,7 +84,7 @@ jobs:
 
   test_e2e:
     docker:
-      - image: cypress/base:10
+      - image: cypress/base:12.6.0
       - image: mongo:4.0
         command: --syncdelay 0 --nojournal
       - image: redis:5.0
@@ -94,7 +94,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-      - run: npm rebuild bcrypt --build-from-source
       - run: APP_ENV=test BABEL_ENV=dev yarn build
       - run:
           command: yarn start

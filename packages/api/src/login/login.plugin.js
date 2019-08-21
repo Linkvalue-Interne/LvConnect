@@ -1,4 +1,4 @@
-const Boom = require('boom');
+const Boom = require('@hapi/boom');
 const crypto = require('crypto');
 const uuidV4 = require('uuid/v4');
 

@@ -1,4 +1,4 @@
-const Boom = require('boom');
+const Boom = require('@hapi/boom');
 
 const { params } = require('../hookValidations');
 const { hasScopeInList } = require('../../middlewares');

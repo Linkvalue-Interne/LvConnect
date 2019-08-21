@@ -1,5 +1,5 @@
-const Boom = require('boom');
-const Joi = require('joi');
+const Boom = require('@hapi/boom');
+const Joi = require('@hapi/joi');
 const { oauth: { scopes: validScopes, privateScopes } } = require('@lvconnect/config');
 
 const fullScopes = validScopes.concat(privateScopes);

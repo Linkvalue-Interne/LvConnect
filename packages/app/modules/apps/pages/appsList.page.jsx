@@ -67,6 +67,8 @@ type AppsListProps = WithStyles & ContextRouter & ConnectedAppsListProps;
 type AppsListState = { search: string };
 
 class AppsList extends Component<AppsListProps, AppsListState> {
+  debouncedHandleSearchChange: (search: string) => void;
+
   constructor(props) {
     super(props);
 
@@ -138,8 +140,6 @@ class AppsList extends Component<AppsListProps, AppsListState> {
     this.setState({ search: e.target.value });
     this.debouncedHandleSearchChange(e.target.value);
   };
-
-  debouncedHandleSearchChange: (search: string) => void;
 
   render() {
     const {

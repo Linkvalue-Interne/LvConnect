@@ -10,7 +10,8 @@
     "no-underscore-dangle": ["error", { "allow": ["_id", "__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] }],
     "max-len": ["error", 120],
     "object-curly-newline": "off",
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "import/no-cycle": "off"
   },
   "plugins": [
     "flowtype"
