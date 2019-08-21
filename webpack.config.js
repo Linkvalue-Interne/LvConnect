@@ -1,7 +1,7 @@
 const path = require('path');
 const { DefinePlugin, ContextReplacementPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebappWebpackPlugin = require('webapp-webpack-plugin');
 // eslint-disable-next-line import/no-extraneous-dependencies

@@ -76,6 +76,8 @@ type PartnersListState = {
 };
 
 class PartnersList extends Component<PartnersListProps, PartnersListState> {
+  debouncedHandleSearchChange: (search: string) => void;
+
   constructor(props) {
     super(props);
 
@@ -149,8 +151,6 @@ class PartnersList extends Component<PartnersListProps, PartnersListState> {
     const { push } = this.props;
     return push('/dashboard/partners/new');
   };
-
-  debouncedHandleSearchChange: (search: string) => void;
 
   render() {
     const {

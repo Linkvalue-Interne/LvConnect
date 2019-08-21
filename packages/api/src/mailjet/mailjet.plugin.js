@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const previewEmail = require('preview-email');
-const catboxRedis = require('catbox-redis');
+const catboxRedis = require('@hapi/catbox-redis');
 const handlebars = require('handlebars');
 const path = require('path');
 const fs = require('fs');

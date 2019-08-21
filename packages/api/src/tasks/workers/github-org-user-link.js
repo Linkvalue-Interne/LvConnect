@@ -1,5 +1,5 @@
 const config = require('@lvconnect/config/server');
-const GithubApi = require('github');
+const GithubApi = require('@octokit/rest');
 
 exports.name = 'githubOrgUserLink';
 

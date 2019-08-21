@@ -1,4 +1,4 @@
-const Boom = require('boom');
+const Boom = require('@hapi/boom');
 const { permissions } = require('@lvconnect/config/server');
 
 const { hasRoleInList, hasScopeInList } = require('../../middlewares');

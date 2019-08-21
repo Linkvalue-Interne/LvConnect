@@ -1,4 +1,4 @@
-const Glue = require('glue');
+const Glue = require('@hapi/glue');
 const config = require('@lvconnect/config/server');
 
 const globalRoutes = require('./global-routes');
@@ -21,24 +21,24 @@ const manifest = {
   register: {
     plugins: [
       {
-        plugin: 'good',
+        plugin: '@hapi/good',
         options: {
           reporters: {
             consoleReporter: [{
-              module: 'good-squeeze',
+              module: '@hapi/good-squeeze',
               name: 'Squeeze',
               args: [{ log: '*', response: '*', error: '*' }],
             }, {
-              module: 'good-console',
+              module: '@hapi/good-console',
             }, 'stdout'],
           },
         },
       },
-      'hapi-auth-basic',
+      '@hapi/basic',
       'hapi-auth-bearer-token',
-      { plugin: 'crumb', options: config.csrf },
-      'scooter',
-      'inert',
+      { plugin: '@hapi/crumb', options: config.csrf },
+      '@hapi/scooter',
+      '@hapi/inert',
       { plugin: './mongodb/mongodb.plugin', options: config.mongodb },
       { plugin: './mailjet/mailjet.plugin', options: config.mailjet },
       { plugin: './tasks/tasks.plugin', options: config.kue },

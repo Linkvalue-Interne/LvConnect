@@ -103,7 +103,7 @@ Example using HapiJS:
 
 ```js
 import crypto from 'crypto';
-import Hapi from 'hapi';
+import Hapi from '@hapi/hapi';
 
 const server = Hapi.server({ port: 3000, host: 'localhost' });
 

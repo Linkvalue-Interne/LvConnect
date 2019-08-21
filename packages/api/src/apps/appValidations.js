@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require('@hapi/joi');
 const { Types } = require('mongoose');
 
 exports.payload = Joi.object({

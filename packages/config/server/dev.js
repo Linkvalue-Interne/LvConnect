@@ -1,4 +1,4 @@
-const catboxRedis = require('catbox-redis');
+const CatboxRedis = require('@hapi/catbox-redis');
 
 module.exports = {
   proxyWebpackDevServer: true,
@@ -8,15 +8,12 @@ module.exports = {
   server: {
     cache: {
       name: 'redisCache',
-      provider: {
-        constructor: catboxRedis,
-        options: {
-          host: 'localhost',
-          port: 6379,
-          database: 0,
-          partition: 'lvc-cache',
-        },
-      },
+      engine: new CatboxRedis({
+        host: 'localhost',
+        port: 6379,
+        database: 0,
+        partition: 'lvc-cache',
+      }),
     },
     cors: {
       origin: ['http://localhost:8000', 'http://localhost:8080'],

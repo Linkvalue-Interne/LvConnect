@@ -1,4 +1,4 @@
-const catboxMemory = require('catbox-memory');
+const CatboxMemory = require('@hapi/catbox-memory');
 
 module.exports = {
   host: {
@@ -7,12 +7,9 @@ module.exports = {
   server: {
     cache: {
       name: 'redisCache',
-      provider: {
-        constructor: catboxMemory,
-        options: {
-          partition: 'lvc-cache',
-        },
-      },
+      engine: new CatboxMemory({
+        partition: 'lvc-cache',
+      }),
     },
     cors: {
       origin: ['http://localhost:8000', 'http://localhost:8080'],
@@ -44,8 +41,7 @@ module.exports = {
     send: false,
     preview: true,
     emailStore: {
-      url: 'redis://localhost:6379',
-      database: 2,
+      url: 'redis://localhost:6379/2',
       partition: 'lvconnect',
       segment: 'emails',
     },

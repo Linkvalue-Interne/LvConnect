@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const Boom = require('boom');
+const Boom = require('@hapi/boom');
 
 const checkSignature = (secret, payload, actualHash) => {
   const hash = crypto
