@@ -39,7 +39,7 @@ module.exports = {
       trelloOrgUserLink({ user: savedUser });
     }
 
-    const token = await req.server.plugins.login.createPasswordResetToken(savedUser._id.toString());
+    const token = await req.server.plugins.login.createPasswordResetToken(savedUser._id.toString(), 0);
     req.server.plugins.mailjet.sendAccountCreationMail(req.payload, token);
 
     req.server.plugins.hooks.trigger(hooks.events.userCreated, {

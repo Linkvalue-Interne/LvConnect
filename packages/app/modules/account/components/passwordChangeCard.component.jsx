@@ -133,6 +133,11 @@ export default reduxForm({
         onPasswordChanged(editedUser);
       }
     } catch (e) {
+      if (e.status === 401) {
+        throw new SubmissionError({
+          newPassword: 'Le lien a expiré, appuyez à nouveau sur "Mot de passe oublié" sur l\'écran de connexion',
+        });
+      }
       if (e.message === 'same_password') {
         throw new SubmissionError({
           newPassword: 'Mot de passe identique à l\'ancien',

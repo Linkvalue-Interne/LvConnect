@@ -18,14 +18,14 @@ module.exports = {
       .update(rawToken)
       .digest('hex');
 
-    const storePasswordResetToken = (hashedToken, userId) => (
-      server.app.passwordResetCache.set(hashedToken, userId, cache.passwordResetTTL)
+    const storePasswordResetToken = (hashedToken, userId, ttl) => (
+      server.app.passwordResetCache.set(hashedToken, userId, ttl)
     );
 
-    const createPasswordResetToken = async (userId) => {
+    const createPasswordResetToken = async (userId, ttl = cache.passwordResetTTL) => {
       const rawToken = Array.from({ length: 5 }).map(() => Buffer.from(uuidV4()).toString('base64')).join('');
       const hashedToken = hashPasswordResetToken(rawToken);
-      await storePasswordResetToken(hashedToken, userId);
+      await storePasswordResetToken(hashedToken, userId, ttl);
       return rawToken;
     };
 
