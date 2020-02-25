@@ -64,9 +64,6 @@ const styles = theme => ({
     width: '15%',
     marginBottom: '3rem',
     marginTop: '5rem',
-    [theme.breakpoints.down('md')]: {
-      marginTop: '3rem',
-    },
     [theme.breakpoints.down('xs')]: {
       width: '25%',
     },
@@ -79,9 +76,9 @@ const styles = theme => ({
   },
   iconInput: {
     position: 'absolute',
-    width: '24px',
+    width: '20px',
     top: '50%',
-    left: '12px',
+    left: '10px',
     transform: 'translateY(-50%)',
   },
   input: {
@@ -90,11 +87,8 @@ const styles = theme => ({
     width: 'calc(100% - 48px)',
     height: '6vh',
     marginLeft: '3rem',
-    fontSize: '1.1rem',
+    fontSize: '.8rem',
     color: '#064F6F',
-    [theme.breakpoints.down('md')]: {
-      fontSize: '1rem',
-    },
   },
   submitButton: {
     border: 'none',
@@ -103,15 +97,12 @@ const styles = theme => ({
     height: '5vh',
     background: '#5BA0D1',
     color: '#fff',
-    fontSize: '1.1rem',
+    fontSize: '.8rem',
     fontWeight: '500',
     cursor: 'pointer',
     transition: 'background .1s ease-in',
     '&:hover': {
       background: '#71CBF4',
-    },
-    [theme.breakpoints.down('md')]: {
-      fontSize: '1rem',
     },
   },
   forgotPassword: {
@@ -120,7 +111,7 @@ const styles = theme => ({
     outline: 'none',
     cursor: 'pointer',
     background: 'none',
-    fontSize: '1.1rem',
+    fontSize: '.8rem',
     textAlign: 'center',
     color: '#064F6F',
     textDecoration: 'underline',
@@ -128,9 +119,6 @@ const styles = theme => ({
     textTransform: 'none',
     '&:hover': {
       background: 'none',
-    },
-    [theme.breakpoints.down('md')]: {
-      fontSize: '1rem',
     },
   },
   supportTextContainer: {
@@ -146,12 +134,9 @@ const styles = theme => ({
   supportText: {
     color: '#064F6F',
     fontWeight: 'bold',
-    fontSize: '1rem',
+    fontSize: '.8rem',
     fontFamily: 'Helvetica',
     textAlign: 'center',
-    [theme.breakpoints.down('md')]: {
-      fontSize: '1rem',
-    },
   },
 });
 
