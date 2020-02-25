@@ -17,7 +17,7 @@ import { login } from '../auth.actions';
 
 const styles = theme => ({
   loginPage: {
-    width: '47%',
+    width: '55%',
     boxSizing: 'border-box',
     [theme.breakpoints.down('sm')]: {
       width: '75%',
@@ -61,11 +61,11 @@ const styles = theme => ({
     },
   },
   logoLV: {
-    width: '17%',
-    marginBottom: '4rem',
-    marginTop: '10rem',
+    width: '15%',
+    marginBottom: '3rem',
+    marginTop: '5rem',
     [theme.breakpoints.down('md')]: {
-      marginTop: '5rem',
+      marginTop: '3rem',
     },
     [theme.breakpoints.down('xs')]: {
       width: '25%',
@@ -90,7 +90,7 @@ const styles = theme => ({
     width: 'calc(100% - 48px)',
     height: '6vh',
     marginLeft: '3rem',
-    fontSize: '1.3rem',
+    fontSize: '1.1rem',
     color: '#064F6F',
     [theme.breakpoints.down('md')]: {
       fontSize: '1rem',
@@ -103,7 +103,7 @@ const styles = theme => ({
     height: '5vh',
     background: '#5BA0D1',
     color: '#fff',
-    fontSize: '1.2rem',
+    fontSize: '1.1rem',
     fontWeight: '500',
     cursor: 'pointer',
     transition: 'background .1s ease-in',
@@ -120,7 +120,7 @@ const styles = theme => ({
     outline: 'none',
     cursor: 'pointer',
     background: 'none',
-    fontSize: '1.3rem',
+    fontSize: '1.1rem',
     textAlign: 'center',
     color: '#064F6F',
     textDecoration: 'underline',
@@ -146,7 +146,7 @@ const styles = theme => ({
   supportText: {
     color: '#064F6F',
     fontWeight: 'bold',
-    fontSize: '1.1rem',
+    fontSize: '1rem',
     fontFamily: 'Helvetica',
     textAlign: 'center',
     [theme.breakpoints.down('md')]: {
