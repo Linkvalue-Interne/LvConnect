@@ -9,10 +9,10 @@ import { Link } from 'react-router-dom';
 import type { FormProps } from 'redux-form';
 import type { ConnectedLoginProps } from './login.connector';
 
-import newTextField from '..../../../components/inputs/newTextField.component';
-import logoUrl from '../../../assets/images/icon.png';
-import userUrl from '../../../assets/images/user.png';
-import keyUrl from '../../../assets/images/key.png';
+import loginTextField from '../../../components/inputs/loginTextField.component';
+import logoUrl from '../../../assets/images/icon.svg';
+import userUrl from '../../../assets/images/user.svg';
+import keyUrl from '../../../assets/images/key.svg';
 import { login } from '../auth.actions';
 
 const styles = theme => ({
@@ -163,18 +163,17 @@ class Login extends React.Component<LoginProps> {
           <form className={classes.loginPage} onSubmit={handleSubmit}>
             <div className={classes.inputContainer}>
               <img src={userUrl} alt="Logo LinkValue" className={classes.iconInput} />
-              <Field className={classes.input} component={newTextField} type="email" name="email" label="Email" placeholder="Email" data-test-id="loginEmailInput" autoFocus />
+              <Field className={classes.input} component={loginTextField} type="email" name="email" label="Email" placeholder="Email" data-test-id="loginEmailInput" autoFocus />
             </div>
             <div className={classes.inputContainer}>
               <img src={keyUrl} alt="Logo LinkValue" className={classes.iconInput} />
-              <Field className={classes.input} component={newTextField} type="password" name="password" label="Mot de passe" placeholder="Mot de passe" data-test-id="loginPasswordInput" required />
+              <Field className={classes.input} component={loginTextField} type="password" name="password" label="Mot de passe" placeholder="Mot de passe" data-test-id="loginPasswordInput" required />
             </div>
             <button className={classes.submitButton} type="submit" data-test-id="loginSubmit">Se connecter</button>
             {window.opener
-              ? <Button className={classes.forgotPassword} type="button" href="/forgot-password" target="_blank" rel="noopener noreferrer">Mot de passe oublié ?</Button>
+              ? <Button className={classes.forgotPassword} href="/forgot-password" target="_blank" rel="noopener noreferrer">Mot de passe oublié ?</Button>
               : (
                 <Button
-                  type="button"
                   to="/forgot-password"
                   className={classes.forgotPassword}
                   component={Link}
