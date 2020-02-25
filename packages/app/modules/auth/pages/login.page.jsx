@@ -3,50 +3,119 @@
 import * as React from 'react';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
 import type { FormProps } from 'redux-form';
 import type { ConnectedLoginProps } from './login.connector';
 
-import TextField from '../../../components/inputs/textField.component';
-import bgUrl from '../../../assets/images/login-bg.svg';
-import logoUrl from '../../../assets/images/logo-lv.svg';
+import newTextField from '..../../../components/inputs/newTextField.component';
+import logoUrl from '../../../assets/images/icon.png';
+import userUrl from '../../../assets/images/user.png';
+import keyUrl from '../../../assets/images/key.png';
 import { login } from '../auth.actions';
 
 const styles = theme => ({
   loginPage: {
-    position: 'fixed',
-    top: theme.spacing.unit * 6,
-    left: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    width: '100%',
-    height: `calc(100vh - ${theme.spacing.unit * 6}px)`,
+    width: '47%',
     boxSizing: 'border-box',
-    background: `url(${bgUrl}) no-repeat`,
-    backgroundSize: 'cover',
-    [theme.breakpoints.up('sm')]: {
-      top: theme.spacing.unit * 8,
-      height: `calc(100vh - ${theme.spacing.unit * 8}px)`,
-    },
   },
-  loginButtonWrapper: {
-    marginTop: theme.spacing.unit * 2,
+  container: {
+    position: 'relative',
+    width: '100%',
+    height: '100vh',
+    margin: '0',
+    padding: '0',
+    backgroundColor: '#F8F8F8',
+  },
+  leftContainer: {
+    position: 'fixed',
+    backgroundImage: 'linear-gradient(120deg, #71CBF4 0%, #5BA0D1 100%)',
+    height: '100vh',
+    width: '50%',
+    background: 'blue',
+    transform: 'skewX(-10deg)',
+    left: '-10%',
+  },
+  rightContainer: {
+    width: '55%',
+    height: '100vh',
+    marginLeft: '45%',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
   logoLV: {
-    maxHeight: theme.spacing.unit * 10,
-    marginBottom: theme.spacing.unit * 3,
-    [theme.breakpoints.up('sm')]: {
-      maxHeight: 'none',
-      marginBottom: theme.spacing.unit * 10,
+    width: '17%',
+    marginBottom: '4rem',
+    marginTop: '10rem',
+  },
+  inputContainer: {
+    position: 'relative',
+    width: '100%',
+    background: '#FFF',
+    margin: '2rem 0',
+  },
+  iconInput: {
+    position: 'absolute',
+    width: '24px',
+    top: '50%',
+    left: '12px',
+    transform: 'translateY(-50%)',
+  },
+  input: {
+    border: 'none',
+    outline: 'none',
+    width: 'calc(100% - 48px)',
+    height: '6vh',
+    marginLeft: '3rem',
+    fontSize: '1.3rem',
+    color: '#064F6F',
+  },
+  submitButton: {
+    border: 'none',
+    margin: 0,
+    width: '100%',
+    height: '5vh',
+    background: '#5BA0D1',
+    color: '#fff',
+    fontSize: '1.2rem',
+    fontWeight: '500',
+    cursor: 'pointer',
+    transition: 'background .1s ease-in',
+    '&:hover': {
+      background: '#71CBF4',
     },
+  },
+  forgotPassword: {
+    width: '100%',
+    border: 'none',
+    outline: 'none',
+    cursor: 'pointer',
+    background: 'none',
+    fontSize: '1.3rem',
+    textAlign: 'center',
+    color: '#064F6F',
+    textDecoration: 'underline',
+    margin: '2rem 0',
+    textTransform: 'none',
+    '&:hover': {
+      background: 'none',
+    },
+  },
+  supportTextContainer: {
+    position: 'fixed',
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'center',
+    top: '93%',
+  },
+  supportText: {
+    color: '#064F6F',
+    fontWeight: 'bold',
+    fontSize: '1.1rem',
+    fontFamily: 'Helvetica',
   },
 });
 
@@ -66,51 +135,39 @@ class Login extends React.Component<LoginProps> {
     const { classes, handleSubmit } = this.props;
 
     return (
-      <form className={classes.loginPage} onSubmit={handleSubmit}>
-        <img src={logoUrl} alt="Logo LinkValue" className={classes.logoLV} />
-        <Card>
-          <CardContent>
-            <Typography variant="h5" component="h2" gutterBottom>
-              Connexion
-            </Typography>
-            <Field
-              component={TextField}
-              name="email"
-              label="Email"
-              type="email"
-              fullWidth
-              required
-              margin="normal"
-              autoFocus
-              data-test-id="loginEmailInput"
-            />
-            <Field
-              component={TextField}
-              name="password"
-              label="Mot de passe"
-              type="password"
-              fullWidth
-              required
-              margin="normal"
-              data-test-id="loginPasswordInput"
-            />
-          </CardContent>
-          <CardActions>
-            <Button type="submit" color="primary" data-test-id="loginSubmit">Se connecter</Button>
+      <div className={classes.container}>
+        <div className={classes.leftContainer} />
+        <div className={classes.rightContainer}>
+          <img src={logoUrl} alt="Logo LinkValue" className={classes.logoLV} />
+          <form className={classes.loginPage} onSubmit={handleSubmit}>
+            <div className={classes.inputContainer}>
+              <img src={userUrl} alt="Logo LinkValue" className={classes.iconInput} />
+              <Field className={classes.input} component={newTextField} type="email" name="email" label="Email" placeholder="Email" data-test-id="loginEmailInput" autoFocus />
+            </div>
+            <div className={classes.inputContainer}>
+              <img src={keyUrl} alt="Logo LinkValue" className={classes.iconInput} />
+              <Field className={classes.input} component={newTextField} type="password" name="password" label="Mot de passe" placeholder="Mot de passe" data-test-id="loginPasswordInput" required />
+            </div>
+            <button className={classes.submitButton} type="submit" data-test-id="loginSubmit">Se connecter</button>
             {window.opener
-              ? <Button href="/forgot-password" target="_blank" rel="noopener noreferrer">Mot de passe oublié</Button>
+              ? <Button className={classes.forgotPassword} type="button" href="/forgot-password" target="_blank" rel="noopener noreferrer">Mot de passe oublié ?</Button>
               : (
                 <Button
+                  type="button"
                   to="/forgot-password"
+                  className={classes.forgotPassword}
                   component={Link}
                   data-test-id="forgotPasswordButton"
                 >
-                  Mot de passe oublié
+                  Mot de passe oublié ?
                 </Button>
               )}
-          </CardActions>
-        </Card>
-      </form>
+          </form>
+          <div className={classes.supportTextContainer}>
+            <p className={classes.supportText}>Un problème ? Contactez l&apos;équipe d&apos;administation !</p>
+          </div>
+        </div>
+      </div>
     );
   }
 }

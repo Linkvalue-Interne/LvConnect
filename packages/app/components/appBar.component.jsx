@@ -139,15 +139,8 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
     }
 
     return (
-      <MuiAppBar className={`${classes.appBar} ${collapsed ? classes.appBarDesktop : ''}`}>
-        <Toolbar>
-          {menuButton}
-          <Typography variant="h6" color="inherit" className={classes.flex}>
-            LVConnect
-          </Typography>
-          {avatar}
-        </Toolbar>
-      </MuiAppBar>
+      <>
+      </>
     );
   }
 }
