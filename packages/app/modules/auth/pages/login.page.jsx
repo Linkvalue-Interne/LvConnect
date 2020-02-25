@@ -19,6 +19,9 @@ const styles = theme => ({
   loginPage: {
     width: '47%',
     boxSizing: 'border-box',
+    [theme.breakpoints.down('sm')]: {
+      width: '75%',
+    },
   },
   container: {
     position: 'relative',
@@ -36,6 +39,13 @@ const styles = theme => ({
     background: 'blue',
     transform: 'skewX(-10deg)',
     left: '-10%',
+    [theme.breakpoints.down('lg')]: {
+      left: '-20%',
+      width: '60%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   rightContainer: {
     width: '55%',
@@ -45,11 +55,21 @@ const styles = theme => ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'column',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      marginLeft: '0',
+    },
   },
   logoLV: {
     width: '17%',
     marginBottom: '4rem',
     marginTop: '10rem',
+    [theme.breakpoints.down('md')]: {
+      marginTop: '5rem',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '25%',
+    },
   },
   inputContainer: {
     position: 'relative',
@@ -72,6 +92,9 @@ const styles = theme => ({
     marginLeft: '3rem',
     fontSize: '1.3rem',
     color: '#064F6F',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '1rem',
+    },
   },
   submitButton: {
     border: 'none',
@@ -86,6 +109,9 @@ const styles = theme => ({
     transition: 'background .1s ease-in',
     '&:hover': {
       background: '#71CBF4',
+    },
+    [theme.breakpoints.down('md')]: {
+      fontSize: '1rem',
     },
   },
   forgotPassword: {
@@ -103,6 +129,9 @@ const styles = theme => ({
     '&:hover': {
       background: 'none',
     },
+    [theme.breakpoints.down('md')]: {
+      fontSize: '1rem',
+    },
   },
   supportTextContainer: {
     position: 'fixed',
@@ -110,12 +139,19 @@ const styles = theme => ({
     width: '100%',
     justifyContent: 'center',
     top: '93%',
+    [theme.breakpoints.down('xs')]: {
+      top: '88%',
+    },
   },
   supportText: {
     color: '#064F6F',
     fontWeight: 'bold',
     fontSize: '1.1rem',
     fontFamily: 'Helvetica',
+    textAlign: 'center',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '1rem',
+    },
   },
 });
 
