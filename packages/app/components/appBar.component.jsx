@@ -19,6 +19,7 @@ const styles = theme => ({
     position: 'absolute',
     width: '100%',
     order: 1,
+    zIndex: 100,
   },
   appBarDesktop: {
     marginLeft: theme.custom.drawerWidth,
@@ -139,8 +140,15 @@ class AppBar extends React.Component<AppBarProp, AppBarState> {
     }
 
     return (
-      <>
-      </>
+      <MuiAppBar className={`${classes.appBar} ${collapsed ? classes.appBarDesktop : ''}`}>
+        <Toolbar>
+          {menuButton}
+          <Typography variant="h6" color="inherit" className={classes.flex}>
+            LVConnect
+          </Typography>
+          {avatar}
+        </Toolbar>
+      </MuiAppBar>
     );
   }
 }

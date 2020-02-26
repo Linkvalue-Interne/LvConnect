@@ -26,9 +26,18 @@ const styles = theme => ({
     position: 'relative',
     backgroundColor: theme.palette.background.default,
     width: '100%',
-    height: '100%',
+    padding: theme.spacing.unit * 3,
+    height: 'calc(100% - 56px)',
+    marginTop: 56,
     boxSizing: 'border-box',
     overflowY: 'auto',
+    [theme.breakpoints.up('sm')]: {
+      height: 'calc(100% - 64px)',
+      marginTop: 64,
+    },
+  },
+  appContentWrapper: {
+    paddingBottom: theme.spacing.unit * 5,
   },
   '@global': {
     'html, body, #root': {
@@ -88,7 +97,7 @@ class App extends React.Component<AppProps, AppState> {
           <AppBar simple={simple} onDrawerOpen={this.handleDrawerOpen} />
           {!simple && <AppDrawer open={drawerOpen} onDrawerClose={this.handleDrawerClose} />}
           <div className={classes.appContent} data-test-id="appContainer">
-            <div>
+            <div className={classes.appContentWrapper}>
               {children}
             </div>
           </div>

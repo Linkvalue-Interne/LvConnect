@@ -11,7 +11,7 @@ import type { ConnectedLoginProps } from './login.connector';
 
 import loginTextField from '../../../components/inputs/loginTextField.component';
 import logoUrl from '../../../assets/images/icon.svg';
-import userUrl from '../../../assets/images/user.svg';
+import userUrl from '../../../assets/images/mail.svg';
 import keyUrl from '../../../assets/images/key.svg';
 import { login } from '../auth.actions';
 
@@ -24,7 +24,10 @@ const styles = theme => ({
     },
   },
   container: {
-    position: 'relative',
+    position: 'fixed',
+    zIndex: 101,
+    left: 0,
+    top: 0,
     width: '100%',
     height: '100vh',
     margin: '0',
@@ -78,7 +81,7 @@ const styles = theme => ({
     position: 'absolute',
     width: '20px',
     top: '50%',
-    left: '10px',
+    left: '15px',
     transform: 'translateY(-50%)',
   },
   input: {
@@ -162,11 +165,11 @@ class Login extends React.Component<LoginProps> {
           <img src={logoUrl} alt="Logo LinkValue" className={classes.logoLV} />
           <form className={classes.loginPage} onSubmit={handleSubmit}>
             <div className={classes.inputContainer}>
-              <img src={userUrl} alt="Logo LinkValue" className={classes.iconInput} />
+              <img src={userUrl} alt="Mail" className={classes.iconInput} />
               <Field className={classes.input} component={loginTextField} type="email" name="email" label="Email" placeholder="Email" data-test-id="loginEmailInput" autoFocus />
             </div>
             <div className={classes.inputContainer}>
-              <img src={keyUrl} alt="Logo LinkValue" className={classes.iconInput} />
+              <img src={keyUrl} alt="Mot de passe" className={classes.iconInput} />
               <Field className={classes.input} component={loginTextField} type="password" name="password" label="Mot de passe" placeholder="Mot de passe" data-test-id="loginPasswordInput" required />
             </div>
             <button className={classes.submitButton} type="submit" data-test-id="loginSubmit">Se connecter</button>
