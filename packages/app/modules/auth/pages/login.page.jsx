@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import type { FormProps } from 'redux-form';
 import type { ConnectedLoginProps } from './login.connector';
 
-import loginTextField from '../../../components/inputs/loginTextField.component';
+import LoginTextField from '../../../components/inputs/loginTextField.component';
 import logoUrl from '../../../assets/images/icon.svg';
 import userUrl from '../../../assets/images/mail.svg';
 import keyUrl from '../../../assets/images/key.svg';
@@ -19,19 +19,18 @@ const styles = theme => ({
   loginPage: {
     width: '55%',
     boxSizing: 'border-box',
+    flexGrow: '1',
     [theme.breakpoints.down('sm')]: {
       width: '75%',
     },
   },
   container: {
     position: 'fixed',
-    zIndex: 101,
     left: 0,
     top: 0,
-    width: '100%',
-    height: '100vh',
-    margin: '0',
-    padding: '0',
+    bottom: 0,
+    right: 0,
+    overflowY: 'auto',
     backgroundColor: '#F8F8F8',
   },
   leftContainer: {
@@ -74,33 +73,32 @@ const styles = theme => ({
   inputContainer: {
     position: 'relative',
     width: '100%',
-    background: '#FFF',
     margin: '2rem 0',
   },
   iconInput: {
     position: 'absolute',
     width: '20px',
     top: '50%',
-    left: '15px',
+    left: '14px',
     transform: 'translateY(-50%)',
   },
   input: {
     border: 'none',
     outline: 'none',
-    width: 'calc(100% - 48px)',
-    height: '6vh',
-    marginLeft: '3rem',
-    fontSize: '.8rem',
+    width: '100%',
+    padding: '14px 14px 14px 48px',
+    fontSize: '1rem',
+    background: '#FFF',
     color: '#064F6F',
   },
   submitButton: {
     border: 'none',
     margin: 0,
     width: '100%',
-    height: '5vh',
+    padding: '14px',
     background: '#5BA0D1',
     color: '#fff',
-    fontSize: '.8rem',
+    fontSize: '1rem',
     fontWeight: '500',
     cursor: 'pointer',
     transition: 'background .1s ease-in',
@@ -114,7 +112,7 @@ const styles = theme => ({
     outline: 'none',
     cursor: 'pointer',
     background: 'none',
-    fontSize: '.8rem',
+    fontSize: '1rem',
     textAlign: 'center',
     color: '#064F6F',
     textDecoration: 'underline',
@@ -124,20 +122,10 @@ const styles = theme => ({
       background: 'none',
     },
   },
-  supportTextContainer: {
-    position: 'fixed',
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'center',
-    top: '93%',
-    [theme.breakpoints.down('xs')]: {
-      top: '88%',
-    },
-  },
   supportText: {
     color: '#064F6F',
     fontWeight: 'bold',
-    fontSize: '.8rem',
+    fontSize: '1rem',
     fontFamily: 'Helvetica',
     textAlign: 'center',
   },
@@ -166,11 +154,11 @@ class Login extends React.Component<LoginProps> {
           <form className={classes.loginPage} onSubmit={handleSubmit}>
             <div className={classes.inputContainer}>
               <img src={userUrl} alt="Mail" className={classes.iconInput} />
-              <Field className={classes.input} component={loginTextField} type="email" name="email" label="Email" placeholder="Email" data-test-id="loginEmailInput" autoFocus />
+              <Field className={classes.input} component={LoginTextField} type="email" name="email" label="Email" placeholder="Email" data-test-id="loginEmailInput" autoFocus />
             </div>
             <div className={classes.inputContainer}>
               <img src={keyUrl} alt="Mot de passe" className={classes.iconInput} />
-              <Field className={classes.input} component={loginTextField} type="password" name="password" label="Mot de passe" placeholder="Mot de passe" data-test-id="loginPasswordInput" required />
+              <Field className={classes.input} component={LoginTextField} type="password" name="password" label="Mot de passe" placeholder="Mot de passe" data-test-id="loginPasswordInput" required />
             </div>
             <button className={classes.submitButton} type="submit" data-test-id="loginSubmit">Se connecter</button>
             {window.opener
@@ -186,9 +174,7 @@ class Login extends React.Component<LoginProps> {
                 </Button>
               )}
           </form>
-          <div className={classes.supportTextContainer}>
             <p className={classes.supportText}>Un problème ? Contactez l&apos;équipe d&apos;administation !</p>
-          </div>
         </div>
       </div>
     );

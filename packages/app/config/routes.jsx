@@ -13,13 +13,9 @@ import AppsList from '../modules/apps/pages/appsList.connector';
 import Home from '../modules/home/pages/home.page';
 import LoginRequired from '../modules/auth/components/loginRequired.connector';
 import NotFound from '../components/notFound.component';
-import Login from '../modules/auth/pages/login.connector';
-import ForgotPassword from '../modules/auth/pages/forgotPassword.connector';
 import ResetPassword from '../modules/auth/pages/resetPassword.connector';
 
 const routes = [
-  { path: '/login', component: Login, exact: true },
-  { path: '/forgot-password', component: ForgotPassword, exact: true },
   { path: '/reset-password', component: ResetPassword, exact: true },
   { path: '/', component: () => <Redirect to="/dashboard" />, exact: true },
   {

@@ -15,7 +15,7 @@ export type TextFieldProps = {
   'data-test-id'?: string,
 };
 
-const Input = ({
+const LoginTextField = ({
   className,
   input,
   type,
@@ -32,9 +32,8 @@ const Input = ({
   />
 );
 
-Input.defaultProps = {
+LoginTextField.defaultProps = {
   'data-test-id': null,
-  select: false,
 };
 
-export default Input;
+export default LoginTextField;

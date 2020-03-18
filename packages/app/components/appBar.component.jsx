@@ -19,7 +19,7 @@ const styles = theme => ({
     position: 'absolute',
     width: '100%',
     order: 1,
-    zIndex: 100,
+    zIndex: 102,
   },
   appBarDesktop: {
     marginLeft: theme.custom.drawerWidth,
