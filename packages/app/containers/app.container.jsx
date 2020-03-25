@@ -58,7 +58,7 @@ class App extends React.Component<AppProps> {
       <div className={classes.appRoot}>
         <CssBaseline />
         <div className={classes.appFrame}>
-          <div className={classes.ƒappContent} data-test-id="appContainer">
+          <div className={classes.appContent} data-test-id="appContainer">
             <div className={classes.appContentWrapper}>
               {children}
             </div>

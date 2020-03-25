@@ -10,7 +10,7 @@ import type { FormProps } from 'redux-form';
 import type { ConnectedLoginProps } from './login.connector';
 
 import LoginTextField from '../../../components/inputs/loginTextField.component';
-import logoUrl from '../../../assets/images/icon.svg';
+import logoUrl from '../../../assets/images/logoLV.svg';
 import userUrl from '../../../assets/images/mail.svg';
 import keyUrl from '../../../assets/images/key.svg';
 import { login } from '../auth.actions';
@@ -174,7 +174,7 @@ class Login extends React.Component<LoginProps> {
                 </Button>
               )}
           </form>
-            <p className={classes.supportText}>Un problème ? Contactez l&apos;équipe d&apos;administation !</p>
+          <p className={classes.supportText}>Un problème ? Contactez l&apos;équipe d&apos;administation !</p>
         </div>
       </div>
     );

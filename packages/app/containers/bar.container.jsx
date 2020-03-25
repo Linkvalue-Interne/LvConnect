@@ -18,15 +18,11 @@ class Bar extends React.Component<BarProps, BarState> {
     simple: false,
   };
 
-  constructor(props: BarProps) {
-    super(props);
+  state = {
+    drawerOpen: false,
+  };
 
-    this.state = {
-      drawerOpen: false,
-    };
-  }
-
-  componentWillReceiveProps(nextProps: DrawerProps) {
+  componentDidUpdate(nextProps: DrawerProps) {
     const { location } = this.props;
     if (location !== nextProps.location) {
       this.setState({ drawerOpen: false });

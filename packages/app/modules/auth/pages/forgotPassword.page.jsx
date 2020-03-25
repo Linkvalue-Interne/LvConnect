@@ -12,7 +12,7 @@ import type { ConnectedForgotPasswordProps } from './forgotPassword.connector';
 
 import LoginTextField from '../../../components/inputs/loginTextField.component';
 import mailUrl from '../../../assets/images/mail.svg';
-import logoUrl from '../../../assets/images/icon.svg';
+import logoUrl from '../../../assets/images/logoLV.svg';
 import { forgotPassword } from '../auth.actions';
 
 const styles = theme => ({
@@ -108,7 +108,7 @@ const styles = theme => ({
   },
   forgotPassword: {
     width: '100%',
-    fontSize: '1.5rem',
+    fontSize: '1.2rem',
     textAlign: 'center',
     color: '#064F6F',
     fontFamily: 'Helvetica',
@@ -121,14 +121,14 @@ const styles = theme => ({
   supportText: {
     color: '#064F6F',
     fontWeight: '400',
-    fontSize: '.8rem',
+    fontSize: '1rem',
     fontFamily: 'Helvetica',
     textAlign: 'center',
   },
   backButton: {
     width: '100%',
     color: '#064F6F',
-    fontSize: '.6rem',
+    fontSize: '.8rem',
     fontFamily: 'Helvetica',
     textTransform: 'none',
     textAlign: 'center',
@@ -170,7 +170,7 @@ class ForgotPassword extends React.Component<ForgotPasswordProps> {
             <button className={classes.submitButton} type="submit" data-test-id="forgotPasswordSubmit">Envoyer</button>
             <Button className={classes.backButton} to="/login" component={Link}>Retour ?</Button>
           </form>
-            <p className={classes.supportText}>Un problème ? Contactez l&apos;équipe d&apos;administation !</p>
+          <p className={classes.supportText}>Un problème ? Contactez l&apos;équipe d&apos;administation !</p>
         </div>
       </div>
     );
