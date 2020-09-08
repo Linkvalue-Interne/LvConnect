@@ -1,17 +1,14 @@
-const catboxRedis = require('@hapi/catbox-redis');
+const CatboxRedis = require('@hapi/catbox-redis');
 
 module.exports = {
   server: {
     cache: {
       name: 'redisCache',
-      provider: {
-        constructor: catboxRedis,
-        options: {
-          socket: process.env.REDIS_URL,
-          database: 0,
-          partition: 'lvc-cache',
-        },
-      },
+      engine: new CatboxRedis({
+        socket: process.env.REDIS_URL,
+        database: 0,
+        partition: 'lvc-cache',
+      }),
     },
     cors: {
       origin: ['https://lvconnect-staging.herokuapp.com'],
