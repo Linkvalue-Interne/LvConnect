@@ -23,7 +23,6 @@
     "version": "yarn changelog && git add CHANGELOG.md",
     "typecheck": "flow",
     "install:types": "flow-typed install -s -o",
-    "heroku-postbuild": "echo Skip build on Heroku CI...",
     "e2e": "APP_ENV=test yarn cypress run --reporter mocha-multi-reporters --reporter-options configFile=cypress/reporters.json",
     "e2e:open": "APP_ENV=test yarn cypress open"
   },
