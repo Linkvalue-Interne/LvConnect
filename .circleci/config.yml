@@ -16,20 +16,6 @@ build_common: &build_common
       paths:
       - lvconnect
 
-deploy_common: &deploy_common
-  docker:
-  - image: tmaier/dpl:latest
-  working_directory: ~/lvconnect
-  steps:
-  - attach_workspace:
-      at: ~/
-  - deploy:
-      command: dpl --provider=heroku --app=$HEROKU_APP --api-key=$HEROKU_API_KEY --skip_cleanup=true
-
-tag_filters: &tag_filters
-  tags:
-    only: /^v\d+\.\d+\.\d+/
-
 version: 2.1
 
 orbs:
@@ -65,12 +51,6 @@ jobs:
       APP_ENV: staging
       BABEL_ENV: production
 
-  build_production:
-    <<: *build_common
-    environment:
-      APP_ENV: production
-      BABEL_ENV: production
-
   test:
     executor:
       name: node/node
@@ -104,22 +84,6 @@ jobs:
       - store_test_results:
           path: reports/
 
-  hold_deployment:
-    docker:
-    - image: buildpack-deps:trusty
-    steps:
-    - run: echo "Waiting for approval before deployement"
-
-  deploy_staging:
-    <<: *deploy_common
-    environment:
-      HEROKU_APP: lvconnect-staging
-
-  deploy_production:
-    <<: *deploy_common
-    environment:
-      HEROKU_APP: lvconnect
-
 workflows:
   version: 2
   general_workflow:
@@ -146,8 +110,6 @@ workflows:
         filters:
           branches:
             only: master
-          tags:
-            ignore: /.*/
     - build_staging:
         requires:
           - install
@@ -157,29 +119,3 @@ workflows:
     - test_e2e:
         requires:
           - install
-    - deploy_staging:
-        requires:
-          - test
-          - test_e2e
-
-  release_workflow:
-    jobs:
-    - install:
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^v\d+\.\d+\.\d+/
-    - build_production:
-        requires:
-          - install
-        filters: *tag_filters
-    - hold_deployment:
-        type: approval
-        requires:
-        - build_production
-        filters: *tag_filters
-    - deploy_production:
-        requires:
-        - hold_deployment
-        filters: *tag_filters
