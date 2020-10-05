@@ -17,7 +17,7 @@
     "@hapi/boom": "^7.4.3",
     "@hapi/catbox-redis": "^5.0.3",
     "@hapi/crumb": "^7.3.1",
-    "@hapi/glue": "^6.1.1",
+    "@hapi/glue": "^8.0.0",
     "@hapi/good": "^8.2.1",
     "@hapi/good-console": "^8.1.1",
     "@hapi/good-squeeze": "^5.2.1",
