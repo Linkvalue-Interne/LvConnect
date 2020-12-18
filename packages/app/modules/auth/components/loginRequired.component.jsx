@@ -7,7 +7,6 @@ import { renderRoutes } from 'react-router-config';
 import type { ContextRouter } from 'react-router';
 import type { ConnectedLoginRequiredProps } from './loginRequired.connector';
 
-import Login from '../pages/login.connector';
 import LoadingPage from '../../../components/loadingPage.component';
 import { RolesProvider } from '../../../components/restricted.component';
 import PasswordChangeCard from '../../account/components/passwordChangeCard.component';
@@ -15,7 +14,6 @@ import PasswordChangeCard from '../../account/components/passwordChangeCard.comp
 type LoginRequiredProps = ConnectedLoginRequiredProps & ContextRouter & {
   route: any;
   children: any;
-  redirect?: boolean;
 };
 
 const LoginRequired = ({
@@ -23,7 +21,6 @@ const LoginRequired = ({
   location,
   user,
   route,
-  redirect,
   children,
   receiveUserData,
 }: LoginRequiredProps) => {
@@ -32,14 +29,14 @@ const LoginRequired = ({
   }
 
   if (!user) {
-    return redirect ? (
+    return (
       <Redirect
         to={{
           pathname: '/login',
           state: { from: location },
         }}
       />
-    ) : <Login />;
+    );
   }
 
   if (user.needPasswordChange) {

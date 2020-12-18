@@ -9,6 +9,7 @@ import LoginRequired from '../modules/auth/components/loginRequired.connector';
 import Permissions from '../modules/oauth/components/permissions.connector';
 import App from './app.container';
 import theme from '../modules/display/theme';
+import Bar from './bar.container';
 
 type OAuthProps = {
   store: any,
@@ -20,6 +21,7 @@ const Oauth = ({ store, history }: OAuthProps) => (
     <ConnectedRouter history={history}>
       <MuiThemeProvider theme={theme}>
         <App simple>
+          <Bar simple={false} />
           <LoginRequired>
             <Permissions />
           </LoginRequired>
