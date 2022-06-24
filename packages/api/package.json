@@ -41,7 +41,7 @@
     "moment": "^2.15.0",
     "mongoose": "^5.7.5",
     "nodemailer": "^5.1.1",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.7",
     "node-trello": "^1.1.2",
     "preview-email": "^0.0.10",
     "uuid": "^3.0.1"
